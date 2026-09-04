@@ -30,7 +30,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(220,38,38,0.25));border-color:rgba(248,113,113,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
 
-/* دکمه‌های ابزارها - بسیار رنگی و انیمیشنی */
 .tool-btn{background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
 .tool-btn::before{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity 0.5s}
 .tool-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);opacity:0;transition:opacity 0.5s}
@@ -70,6 +69,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .badge-pending{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
 .badge-approved{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
 .badge-new{background:rgba(129,140,248,0.15);color:#818cf8;border:1px solid rgba(129,140,248,0.25)}
+.badge-wrong{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -93,7 +93,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
 
-@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(129,140,248,0.3)}50%{box-shadow:0 0 40px rgba(129,140,248,0.6)}}
+.wrong-answer{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px;margin-bottom:8px}
+.correct-answer{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:12px;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -122,7 +123,6 @@ const Icons={
   alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01",
   message:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
-  image:"M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21",
   calendar:"M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z M16 2v4 M8 2v4 M3 10h18",
   game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2",
   award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
@@ -205,7 +205,7 @@ function Admin({user,tab,setTab,onLogout}){
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:s}=await SB.from('users').select('*').eq('role','student');
-    const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt)');
+    const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt,score)');
     if(e)setExams(e);if(s)setStudents(s);if(a)setAnswers(a);
     const {data:m}=await SB.from('messages').select('*,sender:sender_id(full_name,username)').order('created_at',{ascending:false});
     if(m)setMessages(m);
@@ -215,7 +215,7 @@ function Admin({user,tab,setTab,onLogout}){
     if(!formData.title||questions.length===0){alert('عنوان و حداقل یک سوال الزامی است');return;}
     setLoading(true);
     const {data:exam}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:parseInt(formData.duration)||60,assigned_to:formData.assigned||'all',created_by:user.id}).select().single();
-    for(const q of questions) await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,order_num:questions.indexOf(q)});
+    for(const q of questions) await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)});
     setLoading(false);setModal(null);setFormData({});setQuestions([]);setStep(1);loadAll();
   };
 
@@ -229,7 +229,7 @@ function Admin({user,tab,setTab,onLogout}){
     const nq=[...questions];nq[i].image_url=publicUrl;setQuestions(nq);
   };
 
-  const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test',image_url:''}]);
+  const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف؟')){await SB.from('exams').delete().eq('id',id);loadAll();}};
@@ -265,7 +265,7 @@ function Admin({user,tab,setTab,onLogout}){
                   <div className="flex-1">
                     <h4 className="font-bold">{ex.title}</h4>
                     <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
-                    <div className="flex gap-2"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span></div>
+                    <div className="flex gap-2"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span><span className="badge badge-new">{ex.assigned_to==='all'?'همه':'تخصصی'}</span></div>
                   </div>
                   <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/15 text-red-400 rounded-xl"><Icon d={Icons.trash} size={16}/></button>
                 </div>
@@ -383,6 +383,10 @@ function Admin({user,tab,setTab,onLogout}){
                   <input className="glass-input" type="number" placeholder="ساعت" value={formData.hours||'0'} onChange={e=>setFormData({...formData,hours:e.target.value})}/>
                   <input className="glass-input" type="number" placeholder="دقیقه" value={formData.minutes||'60'} onChange={e=>setFormData({...formData,minutes:e.target.value})}/>
                 </div>
+                <select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
+                  <option value="all">همه دانش‌آموزان</option>
+                  {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
+                </select>
                 <button onClick={()=>{setFormData({...formData,duration:(parseInt(formData.hours)||0)*60+(parseInt(formData.minutes)||60)});setStep(2);}} className="btn-glass">مرحله بعد</button>
               </div>
             )}
@@ -397,6 +401,7 @@ function Admin({user,tab,setTab,onLogout}){
                     <button onClick={()=>removeQuestion(i)} className="absolute top-2 left-2 text-red-400"><Icon d={Icons.x} size={16}/></button>
                     <span className="text-xs font-bold text-indigo-300 mb-2 block">سوال {i+1}</span>
                     <textarea className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>
+                    <input className="glass-input mb-2 text-sm" type="number" step="0.5" placeholder="نمره سوال (پیش‌فرض: 1)" value={q.score||1} onChange={e=>updateQuestion(i,'score',e.target.value)}/>
                     <div className="mb-2">
                       <label className="text-[11px] text-white/40 mb-1 block">آپلود عکس (اختیاری)</label>
                       <input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleImageUpload(e.target.files[0],i)}/>
@@ -414,7 +419,7 @@ function Admin({user,tab,setTab,onLogout}){
             )}
             {step===3&&(
               <div className="fade-in text-center">
-                <div className="glass p-4 mb-4 text-right space-y-2 text-sm"><p>عنوان: <b>{formData.title}</b></p><p>مدت: <b>{formData.duration} دقیقه</b></p><p>سوالات: <b>{questions.length}</b></p></div>
+                <div className="glass p-4 mb-4 text-right space-y-2 text-sm"><p>عنوان: <b>{formData.title}</b></p><p>مدت: <b>{formData.duration} دقیقه</b></p><p>سوالات: <b>{questions.length}</b></p><p>اختصاص به: <b>{formData.assigned==='all'?'همه':'دانش‌آموز خاص'}</b></p></div>
                 <div className="flex gap-2"><button onClick={()=>setStep(2)} className="btn-glass bg-white/5 flex-1">ویرایش</button><button onClick={createExam} className="btn-glass btn-glass-success flex-1" disabled={loading}>{loading?'ذخیره...':'ذخیره آزمون'}</button></div>
               </div>
             )}
@@ -431,12 +436,14 @@ function Student({user,tab,setTab,onLogout}){
   const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
   const [showCalc,setShowCalc]=useState(false);const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);const [objectionText,setObjectionText]=useState('');
+  const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
   const [checklist,setChecklist]=useState([]);const [newTask,setNewTask]=useState('');
   const [studyPlans,setStudyPlans]=useState([]);const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
   const [messages,setMessages]=useState([]);const [chatText,setChatText]=useState('');
   const [bestScore,setBestScore]=useState(0);
   const [toolsTab,setToolsTab]=useState('calc');
   const [chartReady,setChartReady]=useState(false);
+  const [showExamResults,setShowExamResults]=useState(null);
   const canvasRef=useRef(null);
   const gameRef=useRef(null);
 
@@ -444,12 +451,13 @@ function Student({user,tab,setTab,onLogout}){
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
-    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt)').eq('student_id',user.id);
+    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt,score,opt_a,opt_b,opt_c,opt_d)');
     const {data:c}=await SB.from('checklists').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
     const {data:p}=await SB.from('study_plans').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
     const {data:g}=await SB.from('game_scores').select('score').eq('user_id',user.id).order('score',{ascending:false}).limit(1);
     if(e)setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===String(user.id)));
-    if(a)setAnswers(a);if(c)setChecklist(c);if(p)setStudyPlans(p);
+    if(a)setAnswers(a.filter(ans=>ans.student_id===user.id));
+    if(c)setChecklist(c);if(p)setStudyPlans(p);
     if(g&&g.length>0)setBestScore(g[0].score);
     loadMessages();
   };
@@ -471,8 +479,8 @@ function Student({user,tab,setTab,onLogout}){
     if(!activeExam)return;
     for(const q of activeExam.questions){
       const ans=studentAnswers[q.id]||'';let score=0;
-      if(q.q_type==='test'&&q.correct_opt&&ans===q.correct_opt)score=1;
-      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:1,status:q.q_type==='test'?'graded':'pending'});
+      if(q.q_type==='test'&&q.correct_opt&&ans===q.correct_opt)score=parseFloat(q.score)||1;
+      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status:q.q_type==='test'?'graded':'pending'});
     }
     alert('پاسخ‌ها ثبت شد!');setActiveExam(null);loadAll();
   };
@@ -480,74 +488,75 @@ function Student({user,tab,setTab,onLogout}){
   const calcPress=(v)=>{if(v==='C')setCalcDisplay('');else if(v==='='){try{setCalcDisplay(String(new Function('return '+calcDisplay)()));}catch{setCalcDisplay('Error');}}else setCalcDisplay(calcDisplay+v);};
 
   const submitObjection=async()=>{
-    if(!objectionText.trim()||!showObjection)return;
-    const {error}=await SB.from('answers').update({objection:objectionText.trim()}).eq('id',showObjection.id);
-    if(error){alert('خطا: '+error.message);return;}
-    alert('اعتراض شما ثبت و برای مدیر ارسال شد!');setShowObjection(null);setObjectionText('');loadAll();
+    if(!objectionText.trim()||!selectedExamForObjection)return;
+    const examAnswers=answers.filter(a=>a.exam_id===selectedExamForObjection);
+    for(const a of examAnswers){
+      await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
+    }
+    alert('اعتراض شما ثبت و برای مدیر ارسال شد!');setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');loadAll();
   };
 
   const changeMyPassword=async()=>{const p=prompt("رمز جدید (حداقل ۴ کاراکتر):");if(p&&p.length>=4){await SB.from('users').update({password:p}).eq('id',user.id);const u={...user,password:p};setUser(u);sessionStorage.setItem('edu_user',JSON.stringify(u));alert("رمز تغییر کرد");}else if(p)alert("حداقل ۴ کاراکتر");};
 
-  const addTask=async()=>{if(!newTask.trim())return;const {data,error}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();if(error){alert('خطا: '+error.message);return;}if(data)setChecklist([data,...checklist]);setNewTask('');};
+  const addTask=async()=>{if(!newTask.trim())return;const {data,error}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();if(error){console.error(error);return;}if(data)setChecklist([data,...checklist]);setNewTask('');};
   const toggleTask=async(id,done)=>{await SB.from('checklists').update({is_done:!done}).eq('id',id);setChecklist(checklist.map(t=>t.id===id?{...t,is_done:!done}:t));};
   const deleteTask=async(id)=>{await SB.from('checklists').delete().eq('id',id);setChecklist(checklist.filter(t=>t.id!==id));};
 
-  const addPlan=async()=>{if(!newPlan.subject.trim()||!newPlan.time.trim())return;const {data,error}=await SB.from('study_plans').insert({user_id:user.id,day_of_week:newPlan.day,subject:newPlan.subject.trim(),time_range:newPlan.time.trim()}).select().single();if(error){alert('خطا: '+error.message);return;}if(data)setStudyPlans([data,...studyPlans]);setNewPlan({day:'شنبه',subject:'',time:''});};
+  const addPlan=async()=>{if(!newPlan.subject.trim()||!newPlan.time.trim())return;const {data,error}=await SB.from('study_plans').insert({user_id:user.id,day_of_week:newPlan.day,subject:newPlan.subject.trim(),time_range:newPlan.time.trim()}).select().single();if(error){console.error(error);return;}if(data)setStudyPlans([data,...studyPlans]);setNewPlan({day:'شنبه',subject:'',time:''});};
   const deletePlan=async(id)=>{await SB.from('study_plans').delete().eq('id',id);setStudyPlans(studyPlans.filter(p=>p.id!==id));};
 
   const sendChat=async()=>{if(!chatText.trim())return;const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);if(!admins||!admins.length)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim()});setChatText('');loadMessages();};
 
-  // ===== GAME (Breakout - Professional) =====
+  // Space Shooter Game - Optimized
   const startGame=useCallback(()=>{
     const canvas=canvasRef.current;
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
-    const W=canvas.width=380,H=canvas.height=420;
+    const W=380,H=500;
+    canvas.width=W;canvas.height=H;
+    
     let score=0,level=1,running=true;
-    let ballX=W/2,ballY=H-50,ballDX=0,ballDY=0,ballR=7;
-    let padX=W/2-40,padW=80,padH=12;
-    const colors=['#818cf8','#c084fc','#f472b6','#fb923c','#34d399','#fbbf24','#f87171'];
-    let bricks=[];
+    let playerX=W/2,playerW=40,playerH=40;
+    let bullets=[];
+    let enemies=[];
     let particles=[];
-    let trail=[];
-
-    const BASE_SPEED=5;
-    const SPEED_INC=0.6;
-
-    const buildBricks=(lvl)=>{
-      bricks=[];
-      const rows=Math.min(3+lvl,7);
-      const cols=7;
-      const brickW=Math.floor((W-28-(cols-1)*5)/cols);
-      const brickH=20,brickPad=5,brickTop=45;
-      for(let r=0;r<rows;r++){
-        bricks[r]=[];
-        for(let c=0;c<cols;c++){
-          bricks[r][c]={x:c*(brickW+brickPad)+14,y:r*(brickH+brickPad)+brickTop,alive:true,color:colors[r%colors.length],hit:false};
-        }
-      }
-      return {rows,cols,brickW,brickH};
-    };
-
-    let brickInfo=buildBricks(level);
-
-    const resetBall=()=>{
-      ballX=W/2;ballY=H-50;
-      const speed=BASE_SPEED+(level-1)*SPEED_INC;
-      const angle=(Math.random()*0.5+0.4);
-      ballDX=Math.cos(angle*Math.PI)*speed*(Math.random()>0.5?1:-1);
-      ballDY=-Math.abs(Math.sin(angle*Math.PI)*speed);
-    };
+    let lastShot=0;
+    let enemySpawnTime=0;
+    const SHOOT_COOLDOWN=250;
+    const MAX_PARTICLES=50;
 
     const moveHandler=(e)=>{
       e.preventDefault();
       const rect=canvas.getBoundingClientRect();
       const cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
       const scaleX=W/rect.width;
-      padX=Math.max(0,Math.min(W-padW,cx*scaleX-padW/2));
+      playerX=Math.max(playerW/2,Math.min(W-playerW/2,cx*scaleX));
     };
+
+    const shoot=()=>{
+      const now=Date.now();
+      if(now-lastShot<SHOOT_COOLDOWN)return;
+      lastShot=now;
+      bullets.push({x:playerX,y:H-60,speed:8});
+    };
+
     canvas.addEventListener('mousemove',moveHandler);
     canvas.addEventListener('touchmove',moveHandler,{passive:false});
+    canvas.addEventListener('click',shoot);
+    canvas.addEventListener('touchstart',shoot);
+
+    const spawnEnemy=()=>{
+      const size=30+Math.random()*20;
+      enemies.push({x:Math.random()*(W-size),y:-size,w:size,h:size,speed:1+level*0.3+Math.random(),color:`hsl(${Math.random()*360},70%,60%)`});
+    };
+
+    const spawnParticles=(x,y,color,count=8)=>{
+      for(let i=0;i<count&&particles.length<MAX_PARTICLES;i++){
+        const angle=Math.random()*Math.PI*2;
+        const speed=Math.random()*3+1;
+        particles.push({x,y,dx:Math.cos(angle)*speed,dy:Math.sin(angle)*speed,life:20,color});
+      }
+    };
 
     const saveScore=async(s)=>{
       setBestScore(prev=>Math.max(prev,s));
@@ -558,197 +567,126 @@ function Student({user,tab,setTab,onLogout}){
       running=false;
       saveScore(score);
       alert(`💥 بازی تمام شد!\n\nامتیاز: ${score}\nمرحله: ${level}\nبهترین رکورد: ${Math.max(bestScore,score)}`);
-      level=1;score=0;padW=80;
-      brickInfo=buildBricks(1);
-      particles=[];trail=[];
-      resetBall();
+      score=0;level=1;enemies=[];bullets=[];particles=[];
       running=true;
       loop();
-    };
-
-    const nextLevel=()=>{
-      level++;
-      score+=100;
-      padW=Math.max(45,80-level*4);
-      brickInfo=buildBricks(level);
-      particles=[];trail=[];
-      resetBall();
-    };
-
-    const spawnParticles=(x,y,color,count=12)=>{
-      for(let i=0;i<count;i++){
-        const angle=Math.random()*Math.PI*2;
-        const speed=Math.random()*4+2;
-        particles.push({x,y,dx:Math.cos(angle)*speed,dy:Math.sin(angle)*speed,life:40,color,size:Math.random()*3+2});
-      }
     };
 
     const loop=()=>{
       if(!running)return;
       ctx.clearRect(0,0,W,H);
 
-      // Background gradient
-      const bgGrad=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W);
-      bgGrad.addColorStop(0,'rgba(99,102,241,0.05)');
-      bgGrad.addColorStop(1,'rgba(10,10,26,0.95)');
+      // Background
+      const bgGrad=ctx.createLinearGradient(0,0,0,H);
+      bgGrad.addColorStop(0,'rgba(15,15,35,0.95)');
+      bgGrad.addColorStop(1,'rgba(10,10,26,0.98)');
       ctx.fillStyle=bgGrad;
       ctx.fillRect(0,0,W,H);
 
-      // Grid
-      ctx.strokeStyle='rgba(129,140,248,0.05)';ctx.lineWidth=1;
-      for(let i=0;i<W;i+=25){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
-      for(let i=0;i<H;i+=25){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
-
-      // Level
-      ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='bold 14px Vazirmatn';ctx.textAlign='center';
-      ctx.fillText(`مرحله ${level}`,W/2,25);
-
-      // Bricks with glow
-      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
-        const b=bricks[r][c];if(!b.alive)continue;
-        
-        // Glow effect
-        ctx.shadowColor=b.color;
-        ctx.shadowBlur=15;
-        
-        // Brick body
-        const brickGrad=ctx.createLinearGradient(b.x,b.y,b.x,b.y+brickInfo.brickH);
-        brickGrad.addColorStop(0,b.color);
-        brickGrad.addColorStop(1,b.color+'88');
-        ctx.fillStyle=brickGrad;
-        ctx.beginPath();
-        ctx.roundRect(b.x,b.y,brickInfo.brickW,brickInfo.brickH,6);
-        ctx.fill();
-        
-        // Highlight
-        ctx.fillStyle='rgba(255,255,255,0.3)';
-        ctx.fillRect(b.x+2,b.y+2,brickInfo.brickW-4,3);
-        
-        ctx.shadowBlur=0;
+      // Stars
+      ctx.fillStyle='rgba(255,255,255,0.3)';
+      for(let i=0;i<20;i++){
+        const x=(i*37+Date.now()*0.02)%W;
+        const y=(i*53+Date.now()*0.05)%H;
+        ctx.fillRect(x,y,2,2);
       }
 
-      // Paddle with gradient and glow
-      const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
-      padGrad.addColorStop(0,'#818cf8');
-      padGrad.addColorStop(0.5,'#c084fc');
-      padGrad.addColorStop(1,'#f472b6');
-      ctx.fillStyle=padGrad;
+      // Player
+      ctx.fillStyle='#818cf8';
       ctx.shadowColor='#818cf8';
-      ctx.shadowBlur=25;
+      ctx.shadowBlur=20;
       ctx.beginPath();
-      ctx.roundRect(padX,H-25,padW,padH,6);
+      ctx.moveTo(playerX,H-40);
+      ctx.lineTo(playerX-playerW/2,H-20);
+      ctx.lineTo(playerX+playerW/2,H-20);
+      ctx.closePath();
       ctx.fill();
-      
-      // Paddle highlight
-      ctx.fillStyle='rgba(255,255,255,0.4)';
-      ctx.fillRect(padX+3,H-23,padW-6,2);
       ctx.shadowBlur=0;
 
-      // Ball trail
-      trail.push({x:ballX,y:ballY,life:15});
-      trail=trail.filter(t=>{
-        t.life--;
-        ctx.globalAlpha=t.life/15*0.5;
-        ctx.fillStyle='#818cf8';
-        ctx.beginPath();
-        ctx.arc(t.x,t.y,ballR*(t.life/15),0,Math.PI*2);
-        ctx.fill();
-        ctx.globalAlpha=1;
-        return t.life>0;
+      // Bullets
+      bullets=bullets.filter(b=>{
+        b.y-=b.speed;
+        if(b.y<0)return false;
+        ctx.fillStyle='#fbbf24';
+        ctx.shadowColor='#fbbf24';
+        ctx.shadowBlur=10;
+        ctx.fillRect(b.x-2,b.y,4,10);
+        ctx.shadowBlur=0;
+        return true;
       });
 
-      // Ball with glow
-      ctx.beginPath();
-      ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
-      ctx.fillStyle='#fff';
-      ctx.shadowColor='#818cf8';
-      ctx.shadowBlur=30;
-      ctx.fill();
-      ctx.shadowBlur=0;
+      // Spawn enemies
+      enemySpawnTime++;
+      if(enemySpawnTime>60-level*5){
+        spawnEnemy();
+        enemySpawnTime=0;
+      }
+
+      // Enemies
+      enemies=enemies.filter(e=>{
+        e.y+=e.speed;
+        if(e.y>H){
+          gameOver();
+          return false;
+        }
+
+        // Draw enemy
+        ctx.fillStyle=e.color;
+        ctx.shadowColor=e.color;
+        ctx.shadowBlur=15;
+        ctx.fillRect(e.x,e.y,e.w,e.h);
+        ctx.shadowBlur=0;
+
+        // Collision with bullets
+        for(let i=bullets.length-1;i>=0;i--){
+          const b=bullets[i];
+          if(b.x>e.x&&b.x<e.x+e.w&&b.y>e.y&&b.y<e.y+e.h){
+            bullets.splice(i,1);
+            score+=10;
+            spawnParticles(e.x+e.w/2,e.y+e.h/2,e.color);
+            if(score>level*100){level++;}
+            return false;
+          }
+        }
+
+        // Collision with player
+        if(e.x<playerX+playerW/2&&e.x+e.w>playerX-playerW/2&&e.y+e.h>H-40){
+          gameOver();
+          return false;
+        }
+
+        return true;
+      });
 
       // Particles
       particles=particles.filter(p=>{
         p.x+=p.dx;
         p.y+=p.dy;
-        p.dy+=0.2; // gravity
         p.life--;
-        ctx.globalAlpha=p.life/40;
+        ctx.globalAlpha=p.life/20;
         ctx.fillStyle=p.color;
-        ctx.shadowColor=p.color;
-        ctx.shadowBlur=10;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-        ctx.fill();
-        ctx.shadowBlur=0;
+        ctx.fillRect(p.x,p.y,3,3);
         ctx.globalAlpha=1;
         return p.life>0;
       });
 
-      // Score
+      // Score & Level
       ctx.fillStyle='rgba(255,255,255,0.8)';
       ctx.font='bold 16px Vazirmatn';
       ctx.textAlign='right';
       ctx.fillText(`امتیاز: ${score}`,W-15,25);
+      ctx.textAlign='left';
+      ctx.fillText(`مرحله: ${level}`,15,25);
 
-      // Wall collision
-      if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
-      if(ballY+ballDY<ballR)ballDY=-ballDY;
-
-      // Paddle collision
-      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
-        ballDY=-Math.abs(ballDY);
-        const hitPos=(ballX-padX)/padW;
-        ballDX=(hitPos-0.5)*8;
-        spawnParticles(ballX,ballY,'#818cf8',6);
-      }
-
-      // Ball falls - GAME OVER
-      if(ballY>H+ballR){
-        gameOver();
-        return;
-      }
-
-      // Brick collision
-      let allDestroyed=true;
-      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
-        const b=bricks[r][c];
-        if(!b.alive)continue;
-        allDestroyed=false;
-        
-        if(ballX+ballR>b.x&&ballX-ballR<b.x+brickInfo.brickW&&ballY+ballR>b.y&&ballY-ballR<b.y+brickInfo.brickH){
-          b.alive=false;
-          score+=10;
-          
-          // Determine collision side
-          const overlapX=Math.min(ballX+ballR-b.x,b.x+brickInfo.brickW-(ballX-ballR));
-          const overlapY=Math.min(ballY+ballR-b.y,b.y+brickInfo.brickH-(ballY-ballR));
-          
-          if(overlapX<overlapY){
-            ballDX=-ballDX;
-          }else{
-            ballDY=-ballDY;
-          }
-          
-          spawnParticles(b.x+brickInfo.brickW/2,b.y+brickInfo.brickH/2,b.color,15);
-          break;
-        }
-      }
-
-      // All destroyed - NEXT LEVEL
-      if(allDestroyed){
-        nextLevel();
-      }
-
-      ballX+=ballDX;
-      ballY+=ballDY;
       gameRef.current=requestAnimationFrame(loop);
     };
 
-    resetBall();
     loop();
     return()=>{
       canvas.removeEventListener('mousemove',moveHandler);
       canvas.removeEventListener('touchmove',moveHandler);
+      canvas.removeEventListener('click',shoot);
+      canvas.removeEventListener('touchstart',shoot);
     };
   },[bestScore,user.id]);
 
@@ -759,18 +697,36 @@ function Student({user,tab,setTab,onLogout}){
     }
   },[tab,toolsTab,startGame]);
 
-  const getAverage=()=>{const g=answers.filter(a=>a.status==='graded');if(!g.length)return 0;return(g.reduce((s,a)=>s+parseFloat(a.score||0),0)/g.length).toFixed(2);};
+  const getExamScore=(examId)=>{
+    const examAnswers=answers.filter(a=>a.exam_id===examId);
+    if(examAnswers.length===0)return null;
+    const totalScore=examAnswers.reduce((s,a)=>s+parseFloat(a.score||0),0);
+    const maxScore=examAnswers.reduce((s,a)=>s+parseFloat(a.max_score||0),0);
+    const percentage=(totalScore/maxScore)*20;
+    return {totalScore,maxScore,percentage:percentage.toFixed(2)};
+  };
+
+  const getAverage=()=>{
+    const examScores=exams.map(ex=>getExamScore(ex.id)).filter(s=>s!==null);
+    if(examScores.length===0)return 0;
+    const avg=examScores.reduce((s,e)=>s+parseFloat(e.percentage),0)/examScores.length;
+    return avg.toFixed(2);
+  };
 
   useEffect(()=>{
     if(tab==='chart'&&chartReady){
       const ctx=document.getElementById('gradeChart');if(!ctx)return;
       if(window.myChart)window.myChart.destroy();
-      const graded=answers.filter(a=>a.status==='graded');if(!graded.length)return;
+      const examData=exams.map(ex=>{
+        const score=getExamScore(ex.id);
+        return score?{title:ex.title.substring(0,15),score:parseFloat(score.percentage)}:null;
+      }).filter(d=>d!==null);
+      if(examData.length===0)return;
       const gradient=ctx.getContext('2d').createLinearGradient(0,0,0,300);
       gradient.addColorStop(0,'rgba(129,140,248,0.4)');gradient.addColorStop(1,'rgba(129,140,248,0)');
-      window.myChart=new Chart(ctx,{type:'line',data:{labels:graded.map((a,i)=>a.exams?.title?.substring(0,12)||`آزمون ${i+1}`),datasets:[{label:'نمره',data:graded.map(a=>parseFloat(a.score||0)),borderColor:'#818cf8',backgroundColor:gradient,borderWidth:3,tension:0.4,fill:true,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9}]},options:{responsive:true,plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},scales:{y:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true},x:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.03)'}}}}});
+      window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map(d=>d.title),datasets:[{label:'نمره از 20',data:examData.map(d=>d.score),borderColor:'#818cf8',backgroundColor:gradient,borderWidth:3,tension:0.4,fill:true,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9}]},options:{responsive:true,plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},scales:{y:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},x:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.03)'}}}}});
     }
-  },[tab,chartReady,answers]);
+  },[tab,chartReady,answers,exams]);
 
   if(activeExam){
     const q=activeExam.questions[currentQ];const progress=((currentQ+1)/activeExam.questions.length)*100;
@@ -786,7 +742,10 @@ function Student({user,tab,setTab,onLogout}){
         {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/15 text-red-300 p-3 text-center text-sm font-bold animate-pulse border-b border-red-500/20">⚠️ کمتر از ۵ دقیقه!</div>}
         <div className="content">
           <div className="glass p-5 fade-in">
-            <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'} mb-3`}>{q?.q_type==='test'?'تستی':'تشریحی'}</span>
+            <div className="flex justify-between items-center mb-3">
+              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'تستی':'تشریحی'}</span>
+              <span className="badge badge-new">نمره: {q?.score||1}</span>
+            </div>
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
             <p className="mb-5 font-bold leading-relaxed">{q?.q_text}</p>
             {q?.q_type==='test'?(
@@ -824,16 +783,21 @@ function Student({user,tab,setTab,onLogout}){
             <div className="glass p-6 text-center mb-6 slide-up">
               <Icon d={Icons.award} size={32} className="mx-auto mb-2 text-amber-400"/>
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
-              <p className="text-xs text-white/40">معدل کل</p>
+              <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
             <h3 className="font-bold mb-3 text-white/60 text-sm">آزمون‌ها ({exams.length})</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
-            {exams.map(ex=>{const taken=hasTakenExam(ex.id);return(
+            {exams.map(ex=>{const taken=hasTakenExam(ex.id);const score=getExamScore(ex.id);return(
               <div key={ex.id} className={`card slide-up ${taken?'disabled':''}`}>
                 <h4 className="font-bold">{ex.title}</h4>
                 <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
-                <div className="flex gap-2 mb-3"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span></div>
-                {taken?<div className="text-center py-2 text-emerald-400 text-xs font-bold bg-emerald-500/10 rounded-xl">شرکت کرده‌اید ✓</div>:<button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون</button>}
+                <div className="flex gap-2 mb-3 flex-wrap"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span>{score&&<span className="badge badge-approved">نمره: {score.percentage}/20</span>}</div>
+                {taken?(
+                  <div className="space-y-2">
+                    <div className="text-center py-2 text-emerald-400 text-xs font-bold bg-emerald-500/10 rounded-xl">شرکت کرده‌اید ✓</div>
+                    <button onClick={()=>setShowExamResults(ex.id)} className="btn-glass text-sm">مشاهده نتایج</button>
+                  </div>
+                ):<button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون</button>}
               </div>
             );})}
           </>
@@ -841,27 +805,27 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='grades'&&(
           <>
             <h3 className="font-bold mb-3 text-white/60 text-sm">نمرات</h3>
-            {answers.length===0&&<div className="card text-center py-10 text-white/30">نمره‌ای نیست</div>}
-            {answers.map(a=>(
-              <div key={a.id} className="card">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{a.exams?.title||'آزمون'}</h4><p className="text-[11px] text-white/30 mt-1 truncate">{a.questions?.q_text}</p></div>
-                  <div className="text-left shrink-0 mr-3"><span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'تصحیح شده':'در انتظار'}</span><p className="text-2xl font-black mt-1 gradient-text">{a.score??'-'}</p></div>
+            {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
+            {exams.map(ex=>{const score=getExamScore(ex.id);if(!score)return null;const hasObjection=answers.some(a=>a.exam_id===ex.id&&a.objection);return(
+              <div key={ex.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
+                  <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
                 </div>
-                {a.objection&&a.status!=='graded'&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">اعتراض در حال بررسی</div>}
-                {a.status==='graded'&&!a.objection&&(<button onClick={()=>setShowObjection(a)} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض</button>)}
+                {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">اعتراض در حال بررسی</div>}
+                {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض به این آزمون</button>)}
               </div>
-            ))}
+            );})}
           </>
         )}
         {tab==='chart'&&(
           <>
-            <div className="glass p-6 text-center mb-6 slide-up"><Icon d={Icons.chart} size={32} className="mx-auto mb-2 text-indigo-400"/><p className="text-4xl font-black gradient-text">{getAverage()}</p><p className="text-xs text-white/40">معدل کل</p></div>
+            <div className="glass p-6 text-center mb-6 slide-up"><Icon d={Icons.chart} size={32} className="mx-auto mb-2 text-indigo-400"/><p className="text-4xl font-black gradient-text">{getAverage()}</p><p className="text-xs text-white/40">معدل کل از 20</p></div>
             <div className="glass-strong p-4 mb-4">
               <h3 className="font-bold mb-3 text-center text-sm">نمودار پیشرفت</h3>
-              {answers.filter(a=>a.status==='graded').length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}
+              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}
             </div>
-            {!chartReady&&answers.filter(a=>a.status==='graded').length>0&&<button onClick={()=>setChartReady(true)} className="btn-glass">نمایش نمودار</button>}
+            {!chartReady&&exams.filter(ex=>getExamScore(ex.id)).length>0&&<button onClick={()=>setChartReady(true)} className="btn-glass">نمایش نمودار</button>}
           </>
         )}
         {tab==='tools'&&(
@@ -899,77 +863,4 @@ function Student({user,tab,setTab,onLogout}){
             {toolsTab==='checklist'&&(
               <div className="space-y-3 slide-up">
                 <div className="flex gap-2">
-                  <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
-                  <button onClick={addTask} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.plus} size={16}/></button>
-                </div>
-                {checklist.length===0&&<p className="text-center text-white/30 py-8">خالی است</p>}
-                {checklist.map(t=>(
-                  <div key={t.id} className="glass p-3 flex items-center gap-3">
-                    <button onClick={()=>toggleTask(t.id,t.is_done)} className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${t.is_done?'bg-emerald-500 border-emerald-500':'border-white/20'}`}>{t.is_done&&<Icon d={Icons.check} size={12}/>}</button>
-                    <span className={`flex-1 text-sm ${t.is_done?'line-through text-white/30':''}`}>{t.title}</span>
-                    <button onClick={()=>deleteTask(t.id)} className="text-red-400/60 hover:text-red-400"><Icon d={Icons.trash} size={16}/></button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {toolsTab==='planner'&&(
-              <div className="space-y-3 slide-up">
-                <div className="glass p-4 space-y-3">
-                  <select className="glass-input" value={newPlan.day} onChange={e=>setNewPlan({...newPlan,day:e.target.value})}>{['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'].map(d=><option key={d}>{d}</option>)}</select>
-                  <input className="glass-input" placeholder="درس (مثال: ریاضی)" value={newPlan.subject} onChange={e=>setNewPlan({...newPlan,subject:e.target.value})}/>
-                  <input className="glass-input" placeholder="ساعت (مثال: 16-18)" value={newPlan.time} onChange={e=>setNewPlan({...newPlan,time:e.target.value})}/>
-                  <button onClick={addPlan} className="btn-glass btn-glass-success text-sm">افزودن</button>
-                </div>
-                {studyPlans.length===0&&<p className="text-center text-white/30 py-4">برنامه‌ای نیست</p>}
-                {studyPlans.map(p=>(
-                  <div key={p.id} className="glass p-3 flex items-center justify-between">
-                    <div><span className="badge badge-new mb-1">{p.day_of_week}</span><p className="font-bold text-sm">{p.subject}</p><p className="text-[11px] text-white/40">{p.time_range}</p></div>
-                    <button onClick={()=>deletePlan(p.id)} className="text-red-400/60"><Icon d={Icons.trash} size={16}/></button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {toolsTab==='game'&&(
-              <div className="text-center slide-up">
-                <div className="flex gap-3 justify-center mb-4">
-                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-xl font-black text-indigo-400">0</p></div>
-                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-xl font-black text-pink-400">{bestScore}</p></div>
-                </div>
-                <p className="text-xs text-white/30 mb-3">انگشت یا ماوس را حرکت دهید</p>
-                <canvas ref={canvasRef} id="gameCanvas"></canvas>
-              </div>
-            )}
-
-            <div className="mt-6 glass p-4 text-center">
-              <button onClick={changeMyPassword} className="btn-glass flex items-center justify-center gap-2 text-sm"><Icon d={Icons.key} size={16}/>تغییر رمز عبور</button>
-              <p className="text-[11px] text-white/30 mt-2">مدیر نیز رمز جدید شما را مشاهده می‌کند</p>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="nav-bar">
-        <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
-        <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');}}><Icon d={Icons.list}/><span>ابزارها</span></div>
-      </div>
-      {showObjection&&(
-        <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
-          <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">فقط یکبار می‌توانید اعتراض بزنید</div>
-            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
-            <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script>
-</body>
-</html>
+                  <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)}
