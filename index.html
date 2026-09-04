@@ -1,21 +1,1101 @@
-<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مؤسسه تدبیر</title><style>
-body{margin:0;font-family:tahoma;background:#6a11cb;display:flex;justify-content:center;align-items:center;height:100vh;color:#fff}
-.box{background:#fff;color:#333;padding:25px;border-radius:15px;width:330px;text-align:center;box-shadow:0 0 20px rgba(0,0,0,.3)}
-input{width:95%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
-button{width:100%;padding:10px;background:#6a11cb;color:#fff;border:none;border-radius:8px}
-.card{background:#eee;padding:10px;margin:10px 0;border-radius:8px}#panel{display:none}
-</style></head><body>
-<div class="box" id="login"><h2>مؤسسه علمی آموزشی تدبیر</h2>
-<input id="user" placeholder="نام کاربری"><input id="pass" type="password" placeholder="رمز عبور">
-<button onclick="login()">ورود</button>
-<p>ARMIN / 1010<br>ATRIN / 0000<br>AVA / 1111</p></div>
-<div class="box" id="panel"><h2 id="title"></h2><div id="content"></div><button onclick="location.reload()">خروج</button></div>
+-Ꮧ: <!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>مؤسسه علمی آموزشی تدبیر</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#10051f;
+    --bg2:#1d0b35;
+    --purple:#7c3aed;
+    --purple2:#a78bfa;
+    --text:#fff;
+    --muted:#b9a9ca;
+    --glass:rgba(255,255,255,.075);
+    --border:rgba(255,255,255,.12);
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Vazirmatn",Tahoma,sans-serif;
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(124,58,237,.35),transparent 30%),
+        radial-gradient(circle at 90% 85%,rgba(167,139,250,.20),transparent 30%),
+        linear-gradient(135deg,var(--bg),var(--bg2),#0d0318);
+}
+
+/* ================= LOGIN ================= */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+    padding:38px;
+    border-radius:30px;
+    background:var(--glass);
+    border:1px solid var(--border);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+}
+
+.logo{
+    width:76px;
+    height:76px;
+    margin:0 auto 20px;
+    border-radius:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    background:linear-gradient(135deg,var(--purple2),var(--purple));
+    box-shadow:0 15px 40px rgba(124,58,237,.4);
+}
+
+.login-card h1{
+    text-align:center;
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.login-card .description{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:30px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    font-size:11px;
+    color:#d8cce3;
+    margin-bottom:7px;
+}
+
+.input{
+    width:100%;
+    height:52px;
+    padding:0 16px;
+    border-radius:15px;
+    outline:none;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    font-family:inherit;
+    font-size:13px;
+}
+
+.input::placeholder{
+    color:#9586a5;
+}
+
+.input:focus{
+    border-color:var(--purple2);
+    box-shadow:0 0 0 3px rgba(167,139,250,.10);
+}
+
+.login-button{
+    width:100%;
+    height:52px;
+    border:0;
+    border-radius:15px;
+    color:white;
+    font-family:inherit;
+    font-weight:700;
+    cursor:pointer;
+    background:linear-gradient(135deg,var(--purple2),var(--purple));
+    box-shadow:0 12px 30px rgba(124,58,237,.3);
+    transition:.2s;
+}
+
+.login-button:hover{
+    transform:translateY(-2px);
+}
+
+.login-message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:12px;
+    font-size:11px;
+    text-align:center;
+    background:rgba(239,68,68,.12);
+    border:1px solid rgba(239,68,68,.2);
+    color:#fecaca;
+}
+
+/* ================= APP ================= */
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    right:0;
+    top:0;
+    bottom:0;
+    width:260px;
+    padding:24px 17px;
+    background:rgba(13,5,25,.72);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border-left:1px solid var(--border);
+    z-index:20;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:5px 8px 28px;
+}
+
+.brand-icon{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    background:linear-gradient(135deg,var(--purple2),var(--purple));
+}
+
+.brand-text strong{
+    display:block;
+    font-size:13px;
+}
+
+.brand-text small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:4px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.menu-item{
+    width:100%;
+    height:46px;
+    border:0;
+    border-radius:13px;
+    background:transparent;
+    color:#bcaecc;
+    text-align:right;
+    padding
+-Ꮧ: :0 14px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu-item:hover,
+.menu-item.active{
+    color:white;
+    background:rgba(124,58,237,.22);
+}
+
+.menu-item span{
+    margin-left:9px;
+}
+
+.logout{
+    position:absolute;
+    right:17px;
+    left:17px;
+    bottom:22px;
+}
+
+/* MAIN */
+
+.main{
+    margin-right:260px;
+    padding:30px;
+}
+
+.mobile-header{
+    display:none;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
+}
+
+.welcome h2{
+    font-size:24px;
+    margin-bottom:6px;
+}
+
+.welcome p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:8px 12px;
+    border-radius:17px;
+    border:1px solid var(--border);
+    background:var(--glass);
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(167,139,250,.18);
+    color:#d9ccff;
+}
+
+.profile-text strong{
+    display:block;
+    font-size:11px;
+}
+
+.profile-text small{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+/* STAT CARDS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:var(--glass);
+    border:1px solid var(--border);
+    border-radius:22px;
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:0 18px 45px rgba(0,0,0,.15);
+}
+
+.stat-card{
+    min-height:115px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.stat-icon{
+    width:50px;
+    height:50px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(124,58,237,.15);
+    font-size:20px;
+}
+
+.stat-info small{
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.stat-info strong{
+    display:block;
+    font-size:22px;
+    margin-top:4px;
+}
+
+/* GRID */
+
+.content-grid{
+    display:grid;
+    grid-template-columns:1.35fr .8fr;
+    gap:18px;
+}
+
+.section-card{
+    padding:21px;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.section-title h3{
+    font-size:15px;
+}
+
+.section-title span{
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* EMPTY */
+
+.empty{
+    min-height:145px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+}
+
+.empty-icon{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:10px;
+    background:rgba(255,255,255,.055);
+    font-size:20px;
+}
+
+.empty strong{
+    color:#e6dff0;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.empty p{
+    font-size:10px;
+    max-width:280px;
+    line-height:1.8;
+}
+
+/* QUICK ACCESS */
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.quick-button{
+    min-height:75px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    background:rgba(255,255,255,.045);
+    color:#ddd4e8;
+    font-family:inherit;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.quick-button:hover{
+    background:rgba(124,58,237,.15);
+    transform:translateY(-2px);
+}
+
+.quick-button div{
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.quick-button small{
+    font-size:10px;
+}
+
+/* CHART EMPTY */
+
+.chart-empty{
+    height:190px;
+    border-radius:16px;
+    border:1px dashed rgba(255,255,255,.10);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--muted);
+}
+
+.chart-empty div{
+    font-size:11px;
+    line-height:2;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    left:25px;
+    bottom:25px;
+    padding:13px 18px;
+    border-radius:14px;
+    background:rgba(30,15,48,.94);
+    border:1px solid var(--border);
+    color:#eee7f5;
+    font-size:11px;
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+    transform:translateY(100px);
+    opacity:0;
+    transition
+-Ꮧ: :.3s;
+    z-index:100;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .mobile-header{
+        display:flex;
+        position:fixed;
+        top:0;
+        right:0;
+        left:0;
+        height:60px;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 17px;
+        background:rgba(13,5,25,.9);
+        backdrop-filter:blur(20px);
+        border-bottom:1px solid var(--border);
+        z-index:30;
+    }
+
+    .mobile-header strong{
+        font-size:13px;
+    }
+
+    .mobile-menu{
+        border:0;
+        background:none;
+        color:white;
+        font-size:22px;
+        cursor:pointer;
+    }
+
+    .main{
+        margin-right:0;
+        padding:78px 16px 25px;
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .welcome h2{
+        font-size:19px;
+    }
+
+    .profile{
+        padding:5px;
+    }
+
+    .profile-text{
+        display:none;
+    }
+
+    .stats{
+        gap:10px;
+    }
+
+    .stat-card{
+        min-height:100px;
+        padding:14px;
+    }
+
+    .stat-icon{
+        width:42px;
+        height:42px;
+        font-size:17px;
+    }
+
+    .stat-info strong{
+        font-size:18px;
+    }
+
+    .section-card{
+        padding:16px;
+    }
+}
+
+@media(max-width:400px){
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .quick{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<section class="login-page" id="loginPage">
+
+    <div class="login-card">
+
+        <div class="logo">🎓</div>
+
+        <h1>مؤسسه علمی آموزشی تدبیر</h1>
+
+        <p class="description">
+            سامانه آموزشی هوشمند
+        </p>
+
+        <div class="input-group">
+            <label>نام کاربری</label>
+            <input
+                id="username"
+                class="input"
+                type="text"
+                autocomplete="username"
+                placeholder="نام کاربری خود را وارد کنید"
+            >
+        </div>
+
+        <div class="input-group">
+            <label>رمز عبور</label>
+            <input
+                id="password"
+                class="input"
+                type="password"
+                autocomplete="current-password"
+                placeholder="رمز عبور خود را وارد کنید"
+            >
+        </div>
+
+        <button class="login-button" onclick="login()">
+            ورود به سامانه
+        </button>
+
+        <div class="login-message" id="loginMessage"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= APP ================= -->
+
+<section class="app" id="app">
+
+    <!-- MOBILE HEADER -->
+
+    <header class="mobile-header">
+        <strong>🎓 مؤسسه تدبیر</strong>
+        <button class="mobile-menu" onclick="showToast('منوی موبایل در حال آماده‌سازی است')">
+            ☰
+        </button>
+    </header>
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">🎓</div>
+
+            <div class="brand-text">
+                <strong>مؤسسه علمی آموزشی تدبیر</strong>
+                <small>سامانه آموزشی</small>
+            </div>
+
+        </div>
+
+
+        <nav class="menu">
+
+            <button class="menu-item active">
+                <span>🏠</span>
+                داشبورد
+            </button>
+
+            <button class="menu-item">
+                <span>📝</span>
+                آزمون‌های من
+            </button>
+
+            <button class="menu-item">
+                <span>📊</span>
+                کارنامه
+            </button>
+
+            <button class="menu-item">
+                <span>📅</span>
+                برنامه‌ریزی
+            </button>
+
+            <button class="menu-item">
+                <span>🔔</span>
+                یادآورها
+            </button>
+
+            <button class="menu-item">
+                <span>💬</span>
+                پیام‌ها
+            </but
+-Ꮧ: ton>
+
+            <button class="menu-item">
+                <span>🧮</span>
+                ماشین حساب
+            </button>
+
+            <button class="menu-item">
+                <span>⚙️</span>
+                تنظیمات
+            </button>
+
+        </nav>
+
+
+        <button class="menu-item logout" onclick="logout()">
+            <span>🚪</span>
+            خروج از حساب
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div class="welcome">
+                <h2>خوش آمدید 👋</h2>
+                <p>
+                    به سامانه آموزشی مؤسسه علمی آموزشی تدبیر خوش آمدید.
+                </p>
+            </div>
+
+            <div class="profile">
+
+                <div class="avatar">👤</div>
+
+                <div class="profile-text">
+                    <strong>حساب کاربری</strong>
+                    <small>دانش‌آموز</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="card stat-card">
+
+                <div class="stat-icon">⭐</div>
+
+                <div class="stat-info">
+                    <small>میانگین کل</small>
+                    <strong>—</strong>
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-icon">📝</div>
+
+                <div class="stat-info">
+                    <small>تعداد آزمون‌ها</small>
+                    <strong>—</strong>
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-icon">✅</div>
+
+                <div class="stat-info">
+                    <small>آزمون‌های شرکت‌کرده</small>
+                    <strong>—</strong>
+                </div>
+
+            </div>
+
+
+            <div class="card stat-card">
+
+                <div class="stat-icon">⏳</div>
+
+                <div class="stat-info">
+                    <small>آزمون‌های باقی‌مانده</small>
+                    <strong>—</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTENT -->
+
+        <section class="content-grid">
+
+            <!-- RIGHT -->
+
+            <div>
+
+                <!-- GRADES -->
+
+                <div class="card section-card">
+
+                    <div class="section-title">
+                        <h3>📊 آخرین نمرات</h3>
+                        <span>داده‌ای ثبت نشده</span>
+                    </div>
+
+                    <div class="empty">
+
+                        <div class="empty-icon">📄</div>
+
+                        <strong>هنوز نمره‌ای ثبت نشده است</strong>
+
+                        <p>
+                            پس از ثبت و اعلام نتایج آزمون‌ها،
+                            نمرات شما در این قسمت نمایش داده می‌شود.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHART -->
+
+                <div class="card section-card" style="margin-top:18px">
+
+                    <div class="section-title">
+                        <h3>📈 نمودار پیشرفت</h3>
+                        <span>بدون داده</span>
+                    </div>
+
+                    <div class="chart-empty">
+
+                        <div>
+                            📈<br>
+                            برای نمایش نمودار، ابتدا باید<br>
+                            اطلاعات نمرات در سامانه ثبت شود.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EXAMS -->
+
+                <div class="card section-card" style="margin-top:18px">
+
+                    <div class="section-title">
+                        <h3>📝 آزمون‌های من</h3>
+                        <span>۰ آزمون</span>
+                    </div>
+
+                    <div class="empty">
+
+                        <div class="empty-icon">📝</div>
+
+                        <strong>آزمونی برای شما ثبت نشده است</strong>
+
+                        <p>
+                            آزمون‌های اختصاص‌داده‌شده توسط مدیر
+                            در این قسمت نمایش داده خواهند شد.
+-Ꮧ: </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEFT -->
+
+            <div>
+
+                <!-- TASKS -->
+
+                <div class="card section-card">
+
+                    <div class="section-title">
+                        <h3>✅ کارهای امروز</h3>
+                        <span>۰ کار</span>
+                    </div>
+
+                    <div class="empty">
+
+                        <div class="empty-icon">📅</div>
+
+                        <strong>کاری برای امروز ثبت نشده است</strong>
+
+                        <p>
+                            کارهای روزانه‌ای که ایجاد می‌کنید
+                            در این قسمت نمایش داده می‌شوند.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MESSAGES -->
+
+                <div class="card section-card" style="margin-top:18px">
+
+                    <div class="section-title">
+                        <h3>💬 پیام‌های مدیر</h3>
+                        <span>۰ پیام</span>
+                    </div>
+
+                    <div class="empty">
+
+                        <div class="empty-icon">💬</div>
+
+                        <strong>پیامی ندارید</strong>
+
+                        <p>
+                            پیام‌های دریافتی از مدیر
+                            در این قسمت قرار می‌گیرند.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REMINDERS -->
+
+                <div class="card section-card" style="margin-top:18px">
+
+                    <div class="section-title">
+                        <h3>🔔 یادآوری‌های نزدیک</h3>
+                        <span>۰ یادآوری</span>
+                    </div>
+
+                    <div class="empty">
+
+                        <div class="empty-icon">🔔</div>
+
+                        <strong>یادآوری‌ای ثبت نشده است</strong>
+
+                        <p>
+                            یادآوری‌های شما در این قسمت نمایش داده می‌شوند.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACCESS -->
+
+                <div class="card section-card" style="margin-top:18px">
+
+                    <div class="section-title">
+                        <h3>⚡ دسترسی سریع</h3>
+                    </div>
+
+                    <div class="quick">
+
+                        <button class="quick-button"
+                                onclick="showToast('بخش آزمون‌ها هنوز به Backend متصل نشده است')">
+                            <div>📝</div>
+                            <small>آزمون‌ها</small>
+                        </button>
+
+                        <button class="quick-button"
+                                onclick="showToast('بخش کارنامه هنوز به Backend متصل نشده است')">
+                            <div>📊</div>
+                            <small>کارنامه</small>
+                        </button>
+
+                        <button class="quick-button"
+                                onclick="showToast('بخش برنامه‌ریزی هنوز به Backend متصل نشده است')">
+                            <div>📅</div>
+                            <small>برنامه‌ریزی</small>
+                        </button>
+
+                        <button class="quick-button"
+                                onclick="showToast('بخش پیام‌ها هنوز به Backend متصل نشده است')">
+                            <div>💬</div>
+                            <small>پیام‌ها</small>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</section>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+
 <script>
-function login(){let u=user.value.toUpperCase(),p=pass.value;
-if(u=="ARMIN"&&p=="1010"){showAdmin();}
-else if(u=="ATRIN"&&p=="0000"){showStudent("ATRIN",18.5);}
-else if(u=="AVA"&&p=="1111"){showStudent("AVA",19.25);}
-else alert("نام کاربری یا رمز عبور اشتباه است.");}
-function showAdmin(){login.style.display="none";panel.style.display="block";title.innerHTML="پنل مدیر";content.innerHTML='<div class=card>تعداد دانش‌آموزان:2</div><div class=card>دانش‌آموزان: ATRIN , AVA</div>';}
-function showStudent(n,a){login.style.display="none";panel.style.display="block";title.innerHTML="سلام "+n;content.innerHTML='<div class=card>میانگین:'+a+'</div><div class=card>ریاضی:20</div><div class=card>علوم:18</div>';}
-</script></body></html>
+
+/*
+    توجه:
+    این فایل عمداً هیچ حساب کاربری،
+    رمز عبور، آزمون، نمره یا داده ساختگی ندارد.
+
+    احراز هویت واقعی باید در Backend انجام شود.
+*/
+
+
+function login(){
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    if(!username || !password
+-Ꮧ: ){
+
+        message.style.display="block";
+
+        message.textContent =
+            "لطفاً نام کاربری و رمز عبور را وارد کنید.";
+
+        return;
+    }
+
+
+    /*
+        تا زمانی که Authentication واقعی Backend
+        متصل نشده، اجازه ورود جعلی نمی‌دهیم.
+    */
+
+    message.style.display="block";
+
+    message.textContent =
+        "سامانه احراز هویت هنوز به Backend متصل نشده است.";
+
+}
+
+
+function logout(){
+
+    document.getElementById("app").style.display="none";
+
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("username").value="";
+
+    document.getElementById("password").value="";
+
+    document.getElementById("loginMessage").style.display="none";
+}
+
+
+function showToast(text){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent=text;
+
+    toast.classList.add("show");
+
+    setTimeout(function(){
+
+        toast.classList.remove("show");
+
+    },3000);
+}
+
+</script>
+
+</body>
+</html>
