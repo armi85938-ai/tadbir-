@@ -10,53 +10,85 @@
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
 <style>
 *{font-family:'Vazirmatn',sans-serif;margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 30%,#312e81 60%,#4c1d95 100%);min-height:100vh;color:#fff;overflow-x:hidden}
-.glass{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(139,92,246,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(59,130,246,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
+.glass{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
 .glass-input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
-.glass-input:focus{border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,0.15)}
+.glass-input:focus{border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,0.15);background:rgba(0,0,0,0.4)}
 .glass-input::placeholder{color:rgba(255,255,255,0.35)}
-.btn-primary{background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(139,92,246,0.4)}
+.btn-primary{background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 50%,#6d28d9 100%);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(139,92,246,0.4);position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.5s}
+.btn-primary:hover::before{left:100%}
 .btn-primary:active{transform:scale(0.97)}
 .btn-danger{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)}
 .btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%)}
 .btn-warning{background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%)}
+.btn-info{background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%)}
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-flex;align-items:center;gap:6px}
-.nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:14px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:14px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s;position:relative}
 .nav-item.active{color:#a78bfa;background:rgba(139,92,246,0.15)}
+.nav-item.active::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:#8b5cf6;border-radius:3px}
 .nav-item svg{width:22px;height:22px}
 .fade-in{animation:fadeIn 0.5s ease-out}
 .slide-up{animation:slideUp 0.5s ease-out}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;margin-bottom:12px}
-.header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px}
-.content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.5)}50%{box-shadow:0 0 40px rgba(239,68,68,0.8)}}
+.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#10b981)}
+.header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto;position:relative;z-index:1}
 .badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block}
-.badge-pending{background:rgba(245,158,11,0.2);color:#fbbf24}
-.badge-approved{background:rgba(16,185,129,0.2);color:#34d399}
-.badge-new{background:rgba(59,130,246,0.2);color:#60a5fa}
+.badge-pending{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)}
+.badge-approved{background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.3)}
+.badge-new{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 textarea.glass-input{resize:vertical;min-height:100px}
 select.glass-input{appearance:none}
 .gradient-text{background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 50%,#34d399 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.error-box{background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);border-radius:12px;padding:12px;margin:10px 0;font-size:12px;color:#fca5a5}
+.question-card{background:linear-gradient(135deg,rgba(139,92,246,0.15) 0%,rgba(59,130,246,0.1) 100%);border:2px solid rgba(139,92,246,0.3);border-radius:16px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative}
+.question-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:linear-gradient(180deg,#8b5cf6,#3b82f6);border-radius:4px}
+.question-card:hover{border-color:#8b5cf6;box-shadow:0 4px 20px rgba(139,92,246,0.3);transform:translateY(-2px)}
+.option-input{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:#fff;font-size:13px;width:100%;outline:none;transition:all 0.3s}
+.option-input:focus{border-color:#8b5cf6;background:rgba(139,92,246,0.1)}
+.timer-circle{position:relative;width:120px;height:120px}
+.timer-circle svg{transform:rotate(-90deg)}
+.timer-circle circle{fill:none;stroke-width:8}
+.timer-circle .bg{stroke:rgba(255,255,255,0.1)}
+.timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.3s}
+.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.calc-btn{background:rgba(255,255,255,0.1);border:none;color:white;padding:16px;border-radius:12px;font-size:18px;cursor:pointer;transition:all 0.2s;font-weight:600}
+.calc-btn:active{background:rgba(139,92,246,0.3);transform:scale(0.95)}
+.calc-btn.operator{background:rgba(139,92,246,0.3);color:#a78bfa}
+.calc-btn.equals{background:linear-gradient(135deg,#8b5cf6,#7c3aed);grid-column:span 2}
+.stat-card{background:linear-gradient(135deg,rgba(139,92,246,0.2) 0%,rgba(59,130,246,0.1) 100%);border:1px solid rgba(139,92,246,0.3);border-radius:16px;padding:16px;text-align:center;transition:all 0.3s}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(139,92,246,0.3)}
+.icon-glow{filter:drop-shadow(0 0 8px rgba(139,92,246,0.5))}
+.step-indicator{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+.step-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all 0.3s}
+.step-dot.active{background:#8b5cf6;width:30px;border-radius:5px;box-shadow:0 0 10px rgba(139,92,246,0.5)}
+.type-selector{display:flex;gap:8px;margin:10px 0}
+.type-btn{flex:1;padding:10px;border:2px solid rgba(255,255,255,0.1);border-radius:12px;text-align:center;cursor:pointer;transition:all 0.3s;font-size:13px;font-weight:600}
+.type-btn.active{background:rgba(139,92,246,0.3);border-color:#8b5cf6;color:#a78bfa}
+.type-btn:hover{border-color:rgba(139,92,246,0.5)}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect}=React;
+const {useState,useEffect,useRef}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-const Icon=({d,size=22})=><svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d}/></svg>;
+const Icon=({d,size=22,className=""})=><svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={d}/></svg>;
 const Icons={
   home:"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
-  users:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8",
-  exam:"M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11",
+  users:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
+  exam:"M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   grade:"M22 12h-4l-3 9L9 3l-3 9H2",
   logout:"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9",
   plus:"M12 5v14 M5 12h14",
@@ -65,7 +97,13 @@ const Icons={
   check:"M20 6L9 17l-5-5",
   trash:"M3 6h18 M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
   book:"M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5z",
-  key:"M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"
+  key:"M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4",
+  chart:"M18 20V10 M12 20V4 M6 20v-6",
+  calc:"M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5z M8 7h8 M8 11h8 M8 15h3",
+  send:"M22 2L11 13 M22 2l-7 20-4-9-9-4 20-7z",
+  bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
+  list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
+  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
 };
 
 function App(){
@@ -77,7 +115,7 @@ function App(){
     if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
   },[]);
   const login=async(un,pw)=>{
-    const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).single();
+    const {data}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).single();
     if(data){setUser(data);sessionStorage.setItem('edu_user',JSON.stringify(data));setView(data.role);return true;}
     return false;
   };
@@ -96,23 +134,53 @@ function Login({onLogin}){
     setLd(false);
   };
   return(
-    <div className="min-h-screen flex items-center justify-center p-6 fade-in">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-blue-500 rounded-full blur-3xl opacity-30 animate-pulse" style={{animationDelay:'1s'}}></div>
+      </div>
+      <div className="w-full max-w-sm relative z-10">
         <div className="text-center mb-8 slide-up">
-          <div className="w-24 h-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-2xl">
-            <Icon d={Icons.book} size={44} color="white"/>
+          <div className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-600 flex items-center justify-center shadow-2xl shadow-purple-500/50 rotate-3 hover:rotate-0 transition-all duration-500">
+            <Icon d={Icons.book} size={50} color="white" className="icon-glow"/>
           </div>
-          <h1 className="text-3xl font-black mb-2 gradient-text">سامانه آموزشی</h1>
+          <h1 className="text-4xl font-black mb-3 gradient-text">سامانه آموزشی</h1>
           <p className="text-white/50 text-sm">ورود به پنل کاربری</p>
         </div>
         <div className="glass p-6 slide-up">
           <form onSubmit={submit} className="space-y-4">
-            {err&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center">{err}</div>}
+            {err&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center fade-in">{err}</div>}
             <input className="glass-input" placeholder="نام کاربری" value={un} onChange={e=>setUn(e.target.value)} required/>
             <input className="glass-input" type="password" placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required/>
-            <button type="submit" className="btn-primary" disabled={ld}>{ld?'در حال ورود...':'ورود به سامانه'}</button>
+            <button type="submit" className="btn-primary" disabled={ld}>
+              {ld?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ورود...</span>:'ورود به سامانه'}
+            </button>
           </form>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function CircularTimer({timeLeft,totalTime}){
+  const radius=50;
+  const circumference=2*Math.PI*radius;
+  const progress=(timeLeft/totalTime)*circumference;
+  const minutes=Math.floor(timeLeft/60);
+  const seconds=timeLeft%60;
+  const isWarning=timeLeft<300;
+  const color=isWarning?'#ef4444':timeLeft<600?'#f59e0b':'#10b981';
+  return(
+    <div className="timer-circle">
+      <svg width="120" height="120">
+        <circle className="bg" cx="60" cy="60" r={radius}/>
+        <circle className="progress" cx="60" cy="60" r={radius} stroke={color} strokeDasharray={circumference} strokeDashoffset={circumference-progress} style={isWarning?{animation:'pulse-glow 1s infinite'}:{}}/>
+      </svg>
+      <div className="timer-text">
+        <div className={`text-2xl font-bold font-mono ${isWarning?'text-red-500 animate-pulse':'text-white'}`}>
+          {minutes}:{seconds<10?'0':''}{seconds}
+        </div>
+        <div className="text-xs text-white/50">باقی‌مانده</div>
       </div>
     </div>
   );
@@ -132,12 +200,9 @@ function Admin({user,tab,setTab,onLogout}){
   useEffect(()=>{loadAll();},[]);
 
   const loadAll=async()=>{
-    const {data:e,error:e1}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
-    const {data:s,error:e2}=await SB.from('users').select('*').eq('role','student');
-    const {data:a,error:e3}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt)');
-    if(e1) console.log('Error exams:',e1);
-    if(e2) console.log('Error users:',e2);
-    if(e3) console.log('Error answers:',e3);
+    const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
+    const {data:s}=await SB.from('users').select('*').eq('role','student');
+    const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt)');
     if(e) setExams(e); if(s) setStudents(s); if(a) setAnswers(a);
   };
 
@@ -145,89 +210,37 @@ function Admin({user,tab,setTab,onLogout}){
     setErrorMsg('');
     if(!formData.title){setErrorMsg('عنوان آزمون را وارد کنید');return;}
     if(questions.length===0){setErrorMsg('حداقل یک سوال اضافه کنید');return;}
-    
     setLoading(true);
-    console.log('Creating exam:',formData);
-    
     const {data:exam,error}=await SB.from('exams').insert({
-      title:formData.title,
-      description:formData.desc||'',
+      title:formData.title,description:formData.desc||'',
       duration_minutes:parseInt(formData.duration)||60,
-      assigned_to:formData.assigned||'all',
-      created_by:user.id
+      assigned_to:formData.assigned||'all',created_by:user.id
     }).select().single();
-    
-    if(error){
-      console.error('Exam error:',error);
-      setErrorMsg('خطا در ذخیره آزمون: '+error.message);
-      setLoading(false);
-      return;
-    }
-    
-    console.log('Exam created:',exam);
-    
+    if(error){setErrorMsg('خطا: '+error.message);setLoading(false);return;}
     for(let i=0;i<questions.length;i++){
-      const {error:qError}=await SB.from('questions').insert({
-        exam_id:exam.id,
-        q_text:questions[i].q_text,
-        opt_a:questions[i].opt_a||null,
-        opt_b:questions[i].opt_b||null,
-        opt_c:questions[i].opt_c||null,
-        opt_d:questions[i].opt_d||null,
+      await SB.from('questions').insert({
+        exam_id:exam.id,q_text:questions[i].q_text,
+        opt_a:questions[i].opt_a||null,opt_b:questions[i].opt_b||null,
+        opt_c:questions[i].opt_c||null,opt_d:questions[i].opt_d||null,
         correct_opt:questions[i].correct_opt||null,
-        q_type:questions[i].q_type||'test',
-        order_num:i
+        q_type:questions[i].q_type||'test',order_num:i
       });
-      if(qError){
-        console.error('Question error:',qError);
-        setErrorMsg('خطا در ذخیره سوال: '+qError.message);
-        setLoading(false);
-        return;
-      }
     }
-    
-    setLoading(false);
-    setModal(null);
-    setFormData({});
-    setQuestions([]);
-    setStep(1);
-    loadAll();
+    setLoading(false);setModal(null);setFormData({});setQuestions([]);setStep(1);loadAll();
     alert('آزمون با موفقیت ساخته شد!');
   };
 
-  const addQuestion=()=>{
-    setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test'}]);
-  };
-
-  const updateQuestion=(i,field,val)=>{
-    const nq=[...questions];nq[i][field]=val;setQuestions(nq);
-  };
-
+  const addQuestion=()=>{setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test'}]);};
+  const updateQuestion=(i,field,val)=>{const nq=[...questions];nq[i][field]=val;setQuestions(nq);};
   const removeQuestion=(i)=>{setQuestions(questions.filter((_,idx)=>idx!==i));};
-
-  const deleteExam=async(id)=>{
-    if(confirm('آیا مطمئن هستید؟')){
-      await SB.from('exams').delete().eq('id',id);
-      loadAll();
-    }
-  };
-
-  const changePassword=async(studentId)=>{
-    const newPw=prompt("رمز عبور جدید:");
-    if(newPw&&newPw.trim()){
-      await SB.from('users').update({password:newPw}).eq('id',studentId);
-      alert("رمز تغییر کرد");loadAll();
-    }
-  };
+  const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();}};
+  const changePassword=async(studentId)=>{const newPw=prompt("رمز جدید:");if(newPw){await SB.from('users').update({password:newPw}).eq('id',studentId);alert("تغییر کرد");loadAll();}};
 
   return(
     <div className="min-h-screen pb-24">
       <div className="header">
         <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-bold gradient-text">پنل مدیریت</h1>
-            <p className="text-xs text-white/40 mt-1">{user.full_name}</p>
-          </div>
+          <div><h1 className="text-xl font-bold gradient-text">پنل مدیریت</h1><p className="text-xs text-white/40 mt-1">{user.full_name}</p></div>
           <button onClick={onLogout} className="p-3 bg-white/5 rounded-xl"><Icon d={Icons.logout} size={20}/></button>
         </div>
       </div>
@@ -236,15 +249,25 @@ function Admin({user,tab,setTab,onLogout}){
         {tab==='home'&&(
           <>
             <div className="grid grid-cols-2 gap-3 mb-6">
-              <div className="glass p-4 text-center">
-                <Icon d={Icons.exam} size={32} className="mx-auto mb-2 text-violet-400"/>
+              <div className="stat-card slide-up">
+                <Icon d={Icons.exam} size={32} className="mx-auto mb-2 text-violet-400 icon-glow"/>
                 <p className="text-2xl font-bold">{exams.length}</p>
-                <p className="text-xs text-white/50">آزمون</p>
+                <p className="text-xs text-white/50">آزمون فعال</p>
               </div>
-              <div className="glass p-4 text-center">
-                <Icon d={Icons.users} size={32} className="mx-auto mb-2 text-blue-400"/>
+              <div className="stat-card slide-up" style={{animationDelay:'0.1s'}}>
+                <Icon d={Icons.users} size={32} className="mx-auto mb-2 text-blue-400 icon-glow"/>
                 <p className="text-2xl font-bold">{students.length}</p>
                 <p className="text-xs text-white/50">دانش‌آموز</p>
+              </div>
+              <div className="stat-card slide-up" style={{animationDelay:'0.2s'}}>
+                <Icon d={Icons.grade} size={32} className="mx-auto mb-2 text-green-400 icon-glow"/>
+                <p className="text-2xl font-bold">{answers.filter(a=>a.status==='pending').length}</p>
+                <p className="text-xs text-white/50">در انتظار نمره</p>
+              </div>
+              <div className="stat-card slide-up" style={{animationDelay:'0.3s'}}>
+                <Icon d={Icons.check} size={32} className="mx-auto mb-2 text-yellow-400 icon-glow"/>
+                <p className="text-2xl font-bold">{answers.filter(a=>a.status==='graded').length}</p>
+                <p className="text-xs text-white/50">تصحیح شده</p>
               </div>
             </div>
 
@@ -253,15 +276,15 @@ function Admin({user,tab,setTab,onLogout}){
             </button>
 
             <h3 className="font-bold mb-3">آزمون‌های فعال</h3>
-            {exams.length===0?<div className="card text-center py-12 text-white/40"><p>هنوز آزمونی نیست</p></div>:
+            {exams.length===0?<div className="card text-center py-12 text-white/40"><Icon d={Icons.exam} size={64} className="mx-auto mb-3 opacity-30"/><p>هنوز آزمونی نیست</p></div>:
             exams.map(ex=>(
-              <div key={ex.id} className="card">
+              <div key={ex.id} className="card slide-up">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <h4 className="font-bold">{ex.title}</h4>
-                    <p className="text-xs text-white/50 mt-1">{ex.description||'بدون توضیحات'}</p>
-                    <div className="flex gap-2 mt-2">
-                      <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+                    <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
+                    <p className="text-sm text-white/50 mb-3">{ex.description||'بدون توضیحات'}</p>
+                    <div className="flex gap-2 flex-wrap">
+                      <span className="badge badge-new"><Icon d={Icons.clock} size={12} className="inline ml-1"/>{ex.duration_minutes} دقیقه</span>
                       <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
                     </div>
                   </div>
@@ -278,9 +301,9 @@ function Admin({user,tab,setTab,onLogout}){
             {students.map(s=>(
               <div key={s.id} className="card">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold">{s.full_name[0]}</div>
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold text-xl shadow-lg">{s.full_name[0]}</div>
                   <div className="flex-1">
-                    <h4 className="font-bold">{s.full_name}</h4>
+                    <h4 className="font-bold text-lg">{s.full_name}</h4>
                     <p className="text-sm text-white/40">@{s.username}</p>
                     <p className="text-xs text-violet-300 mt-1">رمز: <span className="font-mono bg-white/10 px-2 py-1 rounded">{s.password}</span></p>
                   </div>
@@ -302,11 +325,7 @@ function Admin({user,tab,setTab,onLogout}){
                 <p className="text-sm text-violet-300 mt-2 bg-white/5 p-2 rounded">پاسخ: {a.student_answer||'بدون پاسخ'}</p>
                 <div className="flex gap-2 mt-3">
                   <input type="number" className="glass-input flex-1" placeholder="نمره" id={`score-${a.id}`}/>
-                  <button onClick={async()=>{
-                    const v=document.getElementById(`score-${a.id}`).value;
-                    await SB.from('answers').update({score:parseFloat(v),status:'graded'}).eq('id',a.id);
-                    loadAll();alert('نمره ثبت شد');
-                  }} className="btn-success btn-sm">ثبت</button>
+                  <button onClick={async()=>{const v=document.getElementById(`score-${a.id}`).value;await SB.from('answers').update({score:parseFloat(v),status:'graded'}).eq('id',a.id);loadAll();alert('ثبت شد');}} className="btn-success btn-sm">ثبت</button>
                 </div>
               </div>
             ))}
@@ -328,18 +347,43 @@ function Admin({user,tab,setTab,onLogout}){
               <button onClick={()=>setModal(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
             </div>
 
-            {errorMsg&&<div className="error-box">{errorMsg}</div>}
+            <div className="step-indicator mb-6">
+              {[1,2,3].map(s=><div key={s} className={`step-dot ${step>=s?'active':''}`}></div>)}
+            </div>
+
+            {errorMsg&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center mb-4">{errorMsg}</div>}
 
             {step===1&&(
               <div className="space-y-4 fade-in">
-                <input className="glass-input" placeholder="عنوان آزمون *" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
-                <textarea className="glass-input" placeholder="توضیحات" value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})} rows="3"/>
-                <input className="glass-input" type="number" placeholder="مدت زمان (دقیقه)" value={formData.duration||'60'} onChange={e=>setFormData({...formData,duration:e.target.value})}/>
-                <select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
-                  <option value="all">همه دانش‌آموزان</option>
-                  {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
-                </select>
-                <button onClick={()=>setStep(2)} className="btn-primary">مرحله بعد: سوالات</button>
+                <div>
+                  <label className="text-sm text-white/60 mb-2 block">عنوان آزمون *</label>
+                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل 1" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
+                </div>
+                <div>
+                  <label className="text-sm text-white/60 mb-2 block">توضیحات</label>
+                  <textarea className="glass-input" placeholder="توضیحات آزمون..." value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})} rows="3"/>
+                </div>
+                <div>
+                  <label className="text-sm text-white/60 mb-2 block">مدت زمان آزمون *</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs text-white/40 mb-1 block">ساعت</label>
+                      <input className="glass-input" type="number" min="0" max="10" placeholder="0" value={formData.hours||'0'} onChange={e=>setFormData({...formData,hours:e.target.value})}/>
+                    </div>
+                    <div>
+                      <label className="text-xs text-white/40 mb-1 block">دقیقه</label>
+                      <input className="glass-input" type="number" min="0" max="59" placeholder="60" value={formData.minutes||'60'} onChange={e=>setFormData({...formData,minutes:e.target.value})}/>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm text-white/60 mb-2 block">اختصاص به</label>
+                  <select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
+                    <option value="all">همه دانش‌آموزان</option>
+                    {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
+                  </select>
+                </div>
+                <button onClick={()=>{const total=(parseInt(formData.hours)||0)*60+(parseInt(formData.minutes)||60);setFormData({...formData,duration:total});setStep(2);}} className="btn-primary">مرحله بعد: سوالات</button>
               </div>
             )}
 
@@ -347,32 +391,48 @@ function Admin({user,tab,setTab,onLogout}){
               <div className="fade-in">
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="font-bold">سوالات ({questions.length})</h4>
-                  <button onClick={addQuestion} className="btn-sm bg-violet-600"><Icon d={Icons.plus} size={16}/>افزودن</button>
+                  <button onClick={addQuestion} className="btn-sm bg-violet-600"><Icon d={Icons.plus} size={16}/>افزودن سوال</button>
                 </div>
-                {questions.map((q,i)=>(
-                  <div key={i} className="bg-violet-600/10 border border-violet-600/30 rounded-xl p-3 mb-3">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-bold text-violet-300">سوال {i+1}</span>
-                      <button onClick={()=>removeQuestion(i)} className="text-red-400"><Icon d={Icons.x} size={18}/></button>
+                {questions.length===0?<div className="text-center py-8 text-white/40"><p>هنوز سوالی اضافه نشده</p><button onClick={addQuestion} className="btn-primary mt-4">افزودن اولین سوال</button></div>:
+                questions.map((q,i)=>(
+                  <div key={i} className="question-card slide-up">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-sm font-bold text-violet-300 flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-xs">{i+1}</span>
+                        سوال {i+1}
+                      </span>
+                      <button onClick={()=>removeQuestion(i)} className="text-red-400 hover:text-red-300"><Icon d={Icons.x} size={18}/></button>
                     </div>
-                    <textarea className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>
-                    <div className="flex gap-2 mb-2">
-                      <button onClick={()=>updateQuestion(i,'q_type','test')} className={`flex-1 py-2 rounded-lg text-sm ${q.q_type==='test'?'bg-violet-600':'bg-white/10'}`}>تستی</button>
-                      <button onClick={()=>updateQuestion(i,'q_type','descriptive')} className={`flex-1 py-2 rounded-lg text-sm ${q.q_type==='descriptive'?'bg-violet-600':'bg-white/10'}`}>تشریحی</button>
+                    <textarea className="glass-input mb-3 text-sm" placeholder="متن سوال را بنویسید..." value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>
+                    <div className="type-selector">
+                      <div className={`type-btn ${q.q_type==='test'?'active':''}`} onClick={()=>updateQuestion(i,'q_type','test')}>📝 تستی</div>
+                      <div className={`type-btn ${q.q_type==='descriptive'?'active':''}`} onClick={()=>updateQuestion(i,'q_type','descriptive')}>✍️ تشریحی</div>
                     </div>
                     {q.q_type==='test'&&(
-                      <>
-                        <div className="grid grid-cols-2 gap-2 mb-2">
-                          <input className="glass-input text-sm" placeholder="گزینه A" value={q.opt_a} onChange={e=>updateQuestion(i,'opt_a',e.target.value)}/>
-                          <input className="glass-input text-sm" placeholder="گزینه B" value={q.opt_b} onChange={e=>updateQuestion(i,'opt_b',e.target.value)}/>
-                          <input className="glass-input text-sm" placeholder="گزینه C" value={q.opt_c} onChange={e=>updateQuestion(i,'opt_c',e.target.value)}/>
-                          <input className="glass-input text-sm" placeholder="گزینه D" value={q.opt_d} onChange={e=>updateQuestion(i,'opt_d',e.target.value)}/>
+                      <div className="mt-3 space-y-2">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="relative">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">A</span>
+                            <input className="option-input pr-8" placeholder="گزینه اول" value={q.opt_a} onChange={e=>updateQuestion(i,'opt_a',e.target.value)}/>
+                          </div>
+                          <div className="relative">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">B</span>
+                            <input className="option-input pr-8" placeholder="گزینه دوم" value={q.opt_b} onChange={e=>updateQuestion(i,'opt_b',e.target.value)}/>
+                          </div>
+                          <div className="relative">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">C</span>
+                            <input className="option-input pr-8" placeholder="گزینه سوم" value={q.opt_c} onChange={e=>updateQuestion(i,'opt_c',e.target.value)}/>
+                          </div>
+                          <div className="relative">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">D</span>
+                            <input className="option-input pr-8" placeholder="گزینه چهارم" value={q.opt_d} onChange={e=>updateQuestion(i,'opt_d',e.target.value)}/>
+                          </div>
                         </div>
-                        <select className="glass-input text-sm" value={q.correct_opt} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}>
-                          <option value="">پاسخ صحیح...</option>
-                          <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                        <select className="glass-input text-sm mt-2" value={q.correct_opt} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}>
+                          <option value="">✓ پاسخ صحیح را انتخاب کنید</option>
+                          <option value="A">گزینه A</option><option value="B">گزینه B</option><option value="C">گزینه C</option><option value="D">گزینه D</option>
                         </select>
-                      </>
+                      </div>
                     )}
                   </div>
                 ))}
@@ -386,15 +446,18 @@ function Admin({user,tab,setTab,onLogout}){
             {step===3&&(
               <div className="fade-in">
                 <div className="bg-white/5 rounded-xl p-4 mb-4">
-                  <h4 className="font-bold mb-3">خلاصه</h4>
-                  <p className="text-sm mb-2"><strong>عنوان:</strong> {formData.title}</p>
-                  <p className="text-sm mb-2"><strong>مدت:</strong> {formData.duration} دقیقه</p>
-                  <p className="text-sm mb-2"><strong>سوالات:</strong> {questions.length}</p>
+                  <h4 className="font-bold mb-3 flex items-center gap-2"><Icon d={Icons.check} size={18} className="text-green-400"/>خلاصه آزمون</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between p-2 bg-white/5 rounded-lg"><span className="text-white/50">عنوان:</span><span className="font-bold">{formData.title}</span></div>
+                    <div className="flex justify-between p-2 bg-white/5 rounded-lg"><span className="text-white/50">مدت زمان:</span><span className="font-bold">{formData.duration} دقیقه</span></div>
+                    <div className="flex justify-between p-2 bg-white/5 rounded-lg"><span className="text-white/50">تعداد سوالات:</span><span className="font-bold">{questions.length}</span></div>
+                    <div className="flex justify-between p-2 bg-white/5 rounded-lg"><span className="text-white/50">اختصاص به:</span><span className="font-bold">{formData.assigned==='all'?'همه دانش‌آموزان':'دانش‌آموز خاص'}</span></div>
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={()=>setStep(2)} className="btn-primary bg-white/10 flex-1">ویرایش</button>
                   <button onClick={createExam} className="btn-success flex-1" disabled={loading}>
-                    {loading?'در حال ذخیره...':'ذخیره آزمون'}
+                    {loading?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ذخیره...</span>:'✓ ذخیره آزمون'}
                   </button>
                 </div>
               </div>
@@ -413,18 +476,26 @@ function Student({user,tab,setTab,onLogout}){
   const [currentQ,setCurrentQ]=useState(0);
   const [studentAnswers,setStudentAnswers]=useState({});
   const [timeLeft,setTimeLeft]=useState(0);
+  const [totalTime,setTotalTime]=useState(0);
+  const [showCalc,setShowCalc]=useState(false);
+  const [calcDisplay,setCalcDisplay]=useState('');
+  const [showObjection,setShowObjection]=useState(null);
+  const [objectionText,setObjectionText]=useState('');
+  const chartRef=useRef(null);
+  const [chartReady,setChartReady]=useState(false);
 
   useEffect(()=>{loadAll();},[]);
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
-    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type)').eq('student_id',user.id);
+    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt)').eq('student_id',user.id);
     if(e) setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===user.id));
     if(a) setAnswers(a);
   };
 
   const startExam=(exam)=>{
-    setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);
+    const total=exam.duration_minutes*60;
+    setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(total);setTotalTime(total);
   };
 
   useEffect(()=>{
@@ -451,43 +522,120 @@ function Student({user,tab,setTab,onLogout}){
     setActiveExam(null);loadAll();
   };
 
-  const formatTime=(s)=>{
-    const m=Math.floor(s/60);const sec=s%60;
-    return `${m}:${sec<10?'0':''}${sec}`;
+  const formatTime=(s)=>{const m=Math.floor(s/60);const sec=s%60;return `${m}:${sec<10?'0':''}${sec}`;};
+
+  const calcPress=(v)=>{
+    if(v==='C') setCalcDisplay('');
+    else if(v==='='){try{setCalcDisplay(eval(calcDisplay).toString());}catch{setCalcDisplay('Error');}}
+    else setCalcDisplay(calcDisplay+v);
   };
+
+  const submitObjection=async()=>{
+    if(!objectionText.trim()||!showObjection) return;
+    await SB.from('answers').update({objection:objectionText,objection_count:1}).eq('id',showObjection.id);
+    alert('اعتراض ثبت شد');setShowObjection(null);setObjectionText('');loadAll();
+  };
+
+  const getAverage=()=>{
+    const graded=answers.filter(a=>a.status==='graded');
+    if(graded.length===0) return 0;
+    const total=graded.reduce((s,a)=>s+parseFloat(a.score||0),0);
+    return (total/graded.length).toFixed(2);
+  };
+
+  useEffect(()=>{
+    if(tab==='chart'&&chartReady&&answers.length>0){
+      const ctx=document.getElementById('gradeChart');
+      if(ctx){
+        if(window.myChart) window.myChart.destroy();
+        const graded=answers.filter(a=>a.status==='graded');
+        window.myChart=new Chart(ctx,{
+          type:'line',
+          data:{
+            labels:graded.map((a,i)=>a.exams?.title||`آزمون ${i+1}`),
+            datasets:[{
+              label:'نمره',
+              data:graded.map(a=>parseFloat(a.score||0)),
+              borderColor:'#8b5cf6',
+              backgroundColor:'rgba(139,92,246,0.2)',
+              tension:0.4,
+              fill:true,
+              pointBackgroundColor:'#8b5cf6',
+              pointBorderColor:'#fff',
+              pointBorderWidth:2,
+              pointRadius:6
+            }]
+          },
+          options:{
+            responsive:true,
+            plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},
+            scales:{
+              y:{ticks:{color:'white',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.1)'},beginAtZero:true,max:1},
+              x:{ticks:{color:'white',font:{family:'Vazirmatn'},maxRotation:45},grid:{color:'rgba(255,255,255,0.1)'}}
+            }
+          }
+        });
+      }
+    }
+  },[tab,chartReady,answers]);
 
   if(activeExam){
     const q=activeExam.questions[currentQ];
+    const progress=((currentQ+1)/activeExam.questions.length)*100;
     return(
       <div className="min-h-screen bg-slate-900">
-        <div className="header flex justify-between items-center">
-          <div>
-            <h2 className="font-bold">{activeExam.title}</h2>
-            <p className="text-xs text-white/40">سوال {currentQ+1} از {activeExam.questions.length}</p>
+        <div className="header">
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h2 className="font-bold text-lg">{activeExam.title}</h2>
+              <p className="text-xs text-white/40 mt-1">سوال {currentQ+1} از {activeExam.questions.length}</p>
+            </div>
+            <CircularTimer timeLeft={timeLeft} totalTime={totalTime}/>
           </div>
-          <div className={`text-2xl font-mono font-bold ${timeLeft<300?'text-red-500 animate-pulse':''}`}>{formatTime(timeLeft)}</div>
+          <div className="w-full bg-white/10 rounded-full h-2">
+            <div className="bg-gradient-to-r from-violet-500 to-purple-600 h-2 rounded-full transition-all duration-300" style={{width:`${progress}%`}}></div>
+          </div>
         </div>
+        {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/20 border-2 border-red-500/50 text-red-300 p-4 text-center text-sm font-bold animate-pulse">️ عجله کن! کمتر از ۵ دقیقه زمان داری!</div>}
         <div className="content">
           <div className="card">
-            <p className="mb-4 font-bold text-lg">{q?.q_text}</p>
+            <div className="flex items-center gap-2 mb-4">
+              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 سوال تستی':'️ سوال تشریحی'}</span>
+            </div>
+            <p className="mb-6 font-bold text-lg leading-relaxed">{q?.q_text}</p>
             {q?.q_type==='test'?(
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {['A','B','C','D'].map(opt=>(
-                  <div key={opt} className={`p-3 rounded-xl cursor-pointer border-2 transition ${studentAnswers[q.id]===opt?'bg-violet-600/30 border-violet-500':'bg-white/5 border-white/10'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
-                    <strong>{opt}:</strong> {q[`opt_${opt.toLowerCase()}`]}
+                  <div key={opt} className={`p-4 rounded-xl cursor-pointer border-2 transition-all ${studentAnswers[q.id]===opt?'bg-violet-600/30 border-violet-500 shadow-lg shadow-violet-500/20':'bg-white/5 border-white/10 hover:border-violet-500/50'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${studentAnswers[q.id]===opt?'bg-violet-600 border-violet-600 scale-110':'border-white/30'}`}>{opt}</div>
+                      <span className="flex-1">{q[`opt_${opt.toLowerCase()}`]}</span>
+                      {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-violet-400"/>}
+                    </div>
                   </div>
                 ))}
               </div>
             ):(
-              <textarea className="glass-input" placeholder="پاسخ..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>
+              <textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="6"/>
             )}
           </div>
           <div className="flex gap-2 mt-4">
             {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-primary bg-white/10 flex-1">قبلی</button>}
             {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-primary flex-1">بعدی</button>:
-            <button onClick={()=>{if(confirm('ثبت نهایی؟'))submitExam();}} className="btn-success flex-1">ثبت</button>}
+            <button onClick={()=>{if(confirm('ثبت نهایی آزمون؟'))submitExam();}} className="btn-success flex-1">ثبت نهایی</button>}
           </div>
+          <button onClick={()=>setShowCalc(true)} className="btn-primary bg-white/10 mt-3 w-full flex items-center justify-center gap-2"><Icon d={Icons.calc} size={18}/>ماشین‌حساب</button>
         </div>
+        {showCalc&&(
+          <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
+            <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+              <div className="bg-black/40 p-4 rounded-xl text-2xl text-left mb-4 font-mono h-16 flex items-center justify-end overflow-x-auto border border-white/10">{calcDisplay||'0'}</div>
+              <div className="grid grid-cols-4 gap-2">
+                {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`calc-btn ${['/','*','-','+'].includes(b)?'operator':''} ${b==='='?'equals':''}`}>{b}</button>)}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -496,10 +644,7 @@ function Student({user,tab,setTab,onLogout}){
     <div className="min-h-screen pb-24">
       <div className="header">
         <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-bold gradient-text">پنل دانش‌آموز</h1>
-            <p className="text-xs text-white/40 mt-1">{user.full_name}</p>
-          </div>
+          <div><h1 className="text-xl font-bold gradient-text">پنل دانش‌آموز</h1><p className="text-xs text-white/40 mt-1">{user.full_name}</p></div>
           <button onClick={onLogout} className="p-3 bg-white/5 rounded-xl"><Icon d={Icons.logout} size={20}/></button>
         </div>
       </div>
@@ -507,17 +652,23 @@ function Student({user,tab,setTab,onLogout}){
       <div className="content">
         {tab==='home'&&(
           <>
-            <h3 className="font-bold mb-3">آزمون‌ها ({exams.length})</h3>
-            {exams.length===0?<div className="card text-center py-12 text-white/40"><p>آزمونی ندارید</p></div>:
+            <div className="stat-card mb-6 slide-up">
+              <Icon d={Icons.award} size={40} className="mx-auto mb-2 text-yellow-400 icon-glow"/>
+              <p className="text-3xl font-bold gradient-text">{getAverage()}</p>
+              <p className="text-xs text-white/50">معدل کل شما</p>
+            </div>
+
+            <h3 className="font-bold mb-3">آزمون‌های موجود ({exams.length})</h3>
+            {exams.length===0?<div className="card text-center py-12 text-white/40"><Icon d={Icons.exam} size={64} className="mx-auto mb-3 opacity-30"/><p>آزمونی ندارید</p></div>:
             exams.map(ex=>(
-              <div key={ex.id} className="card">
-                <h4 className="font-bold">{ex.title}</h4>
-                <p className="text-sm text-white/50 mt-1">{ex.description||''}</p>
-                <div className="flex gap-2 mt-2">
-                  <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+              <div key={ex.id} className="card slide-up">
+                <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
+                <p className="text-sm text-white/50 mb-3">{ex.description||'بدون توضیحات'}</p>
+                <div className="flex gap-2 flex-wrap mb-3">
+                  <span className="badge badge-new"><Icon d={Icons.clock} size={12} className="inline ml-1"/>{ex.duration_minutes} دقیقه</span>
                   <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
                 </div>
-                <button onClick={()=>startExam(ex)} className="btn-primary btn-sm mt-3">شروع</button>
+                <button onClick={()=>startExam(ex)} className="btn-primary btn-sm">شروع آزمون</button>
               </div>
             ))}
           </>
@@ -525,22 +676,72 @@ function Student({user,tab,setTab,onLogout}){
 
         {tab==='grades'&&(
           <>
-            <h3 className="font-bold mb-3">نمرات من</h3>
-            {answers.length===0?<div className="card text-center py-12 text-white/40"><p>نمره‌ای نیست</p></div>:
+            <div className="stat-card mb-6 slide-up">
+              <Icon d={Icons.chart} size={40} className="mx-auto mb-2 text-blue-400 icon-glow"/>
+              <p className="text-3xl font-bold gradient-text">{getAverage()}</p>
+              <p className="text-xs text-white/50">معدل کل</p>
+            </div>
+
+            <h3 className="font-bold mb-3">نمرات من ({answers.length})</h3>
+            {answers.length===0?<div className="card text-center py-12 text-white/40"><p>نمره‌ای ثبت نشده</p></div>:
             answers.map(a=>(
               <div key={a.id} className="card">
-                <div className="flex justify-between">
-                  <div>
-                    <h4 className="font-bold">{a.exams?.title}</h4>
-                    <p className="text-xs text-white/50">{a.questions?.q_text}</p>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1">
+                    <h4 className="font-bold">{a.exams?.title||'آزمون'}</h4>
+                    <p className="text-xs text-white/40 mt-1 line-clamp-2">{a.questions?.q_text}</p>
                   </div>
                   <div className="text-left">
                     <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'تصحیح شده':'در انتظار'}</span>
-                    <p className="text-2xl font-bold mt-2">{a.score??'-'}</p>
+                    <p className="text-3xl font-bold mt-2 gradient-text">{a.score??'-'}</p>
                   </div>
                 </div>
+                {a.objection&&a.status!=='graded'&&<div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 text-xs text-yellow-300 mt-2">اعتراض شما در حال بررسی است</div>}
+                {a.status==='graded'&&!a.objection&&<button onClick={()=>setShowObjection(a)} className="btn-warning btn-sm mt-3 w-full">درخواست بررسی مجدد</button>}
               </div>
             ))}
+          </>
+        )}
+
+        {tab==='chart'&&(
+          <>
+            <div className="stat-card mb-6 slide-up">
+              <Icon d={Icons.chart} size={40} className="mx-auto mb-2 text-violet-400 icon-glow"/>
+              <p className="text-3xl font-bold gradient-text">{getAverage()}</p>
+              <p className="text-xs text-white/50">معدل کل</p>
+            </div>
+            <div className="glass p-4 mb-4">
+              <h3 className="font-bold mb-4 text-center">نمودار پیشرفت تحصیلی</h3>
+              {answers.filter(a=>a.status==='graded').length===0?<p className="text-center text-white/40 py-8">هنوز نمره‌ای ثبت نشده</p>:<canvas id="gradeChart"></canvas>}
+            </div>
+            {!chartReady&&answers.filter(a=>a.status==='graded').length>0&&<button onClick={()=>setChartReady(true)} className="btn-primary">نمایش نمودار</button>}
+            <div className="glass p-4 mt-4">
+              <h4 className="font-bold mb-3">آمار کلی</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/5 rounded-xl p-3 text-center">
+                  <p className="text-2xl font-bold text-violet-400">{answers.length}</p>
+                  <p className="text-xs text-white/50">کل آزمون‌ها</p>
+                </div>
+                <div className="bg-white/5 rounded-xl p-3 text-center">
+                  <p className="text-2xl font-bold text-green-400">{answers.filter(a=>a.status==='graded').length}</p>
+                  <p className="text-xs text-white/50">تصحیح شده</p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {tab==='tools'&&(
+          <>
+            <h3 className="font-bold mb-4">ابزارهای کاربردی</h3>
+            <button onClick={()=>setShowCalc(true)} className="btn-primary w-full flex items-center justify-center gap-2 mb-3">
+              <Icon d={Icons.calc} size={20}/>ماشین‌حساب
+            </button>
+            <div className="glass p-4 text-center">
+              <Icon d={Icons.list} size={40} className="mx-auto mb-2 text-blue-400 icon-glow"/>
+              <p className="font-bold mb-1">چک‌لیست و یادآور</p>
+              <p className="text-xs text-white/50">به زودی اضافه می‌شود</p>
+            </div>
           </>
         )}
       </div>
@@ -548,7 +749,38 @@ function Student({user,tab,setTab,onLogout}){
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
+        <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>setTab('tools')}><Icon d={Icons.calc}/><span>ابزارها</span></div>
       </div>
+
+      {showCalc&&(
+        <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
+          <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-bold">ماشین‌حساب</h3>
+              <button onClick={()=>setShowCalc(false)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            <div className="bg-black/40 p-4 rounded-xl text-2xl text-left mb-4 font-mono h-16 flex items-center justify-end overflow-x-auto border border-white/10">{calcDisplay||'0'}</div>
+            <div className="grid grid-cols-4 gap-2">
+              {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`calc-btn ${['/','*','-','+'].includes(b)?'operator':''} ${b==='='?'equals':''}`}>{b}</button>)}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showObjection&&(
+        <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
+          <div className="glass w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold gradient-text">درخواست بررسی مجدد</h3>
+              <button onClick={()=>setShowObjection(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
+            </div>
+            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 mb-4 text-sm text-yellow-300">⚠️ فقط یکبار می‌توانید اعتراض بزنید</div>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <button onClick={submitObjection} className="btn-primary flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال اعتراض</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
