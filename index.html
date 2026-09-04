@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مؤسسه تدبیر</title><style>
+body{margin:0;font-family:tahoma;background:#6a11cb;display:flex;justify-content:center;align-items:center;height:100vh;color:#fff}
+.box{background:#fff;color:#333;padding:25px;border-radius:15px;width:330px;text-align:center;box-shadow:0 0 20px rgba(0,0,0,.3)}
+input{width:95%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:10px;background:#6a11cb;color:#fff;border:none;border-radius:8px}
+.card{background:#eee;padding:10px;margin:10px 0;border-radius:8px}#panel{display:none}
+</style></head><body>
+<div class="box" id="login"><h2>مؤسسه علمی آموزشی تدبیر</h2>
+<input id="user" placeholder="نام کاربری"><input id="pass" type="password" placeholder="رمز عبور">
+<button onclick="login()">ورود</button>
+<p>ARMIN / 1010<br>ATRIN / 0000<br>AVA / 1111</p></div>
+<div class="box" id="panel"><h2 id="title"></h2><div id="content"></div><button onclick="location.reload()">خروج</button></div>
+<script>
+function login(){let u=user.value.toUpperCase(),p=pass.value;
+if(u=="ARMIN"&&p=="1010"){showAdmin();}
+else if(u=="ATRIN"&&p=="0000"){showStudent("ATRIN",18.5);}
+else if(u=="AVA"&&p=="1111"){showStudent("AVA",19.25);}
+else alert("نام کاربری یا رمز عبور اشتباه است.");}
+function showAdmin(){login.style.display="none";panel.style.display="block";title.innerHTML="پنل مدیر";content.innerHTML='<div class=card>تعداد دانش‌آموزان:2</div><div class=card>دانش‌آموزان: ATRIN , AVA</div>';}
+function showStudent(n,a){login.style.display="none";panel.style.display="block";title.innerHTML="سلام "+n;content.innerHTML='<div class=card>میانگین:'+a+'</div><div class=card>ریاضی:20</div><div class=card>علوم:18</div>';}
+</script></body></html>
