@@ -26,6 +26,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-glass{background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.2));backdrop-filter:blur(12px);border:1px solid rgba(129,140,248,0.3);color:#fff;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;position:relative;overflow:hidden}
 .btn-glass:hover{border-color:rgba(129,140,248,0.6);box-shadow:0 0 20px rgba(99,102,241,0.2)}
 .btn-glass:active{transform:scale(0.97)}
+.btn-glass:disabled{opacity:0.5;cursor:not-allowed;pointer-events:none}
 .btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(5,150,105,0.25));border-color:rgba(52,211,153,0.4)}
 .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(220,38,38,0.25));border-color:rgba(248,113,113,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
@@ -60,7 +61,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s}
 .card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,0.3);border-color:rgba(129,140,248,0.2)}
-.card.disabled{opacity:0.5;pointer-events:none}
+.card.disabled{opacity:0.6;pointer-events:none;background:rgba(255,255,255,0.02)}
 
 .header{position:sticky;top:0;z-index:40;background:rgba(10,10,26,0.9);backdrop-filter:blur(30px);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 20px}
 .content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto;position:relative;z-index:1}
@@ -69,6 +70,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .badge-pending{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
 .badge-approved{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
 .badge-new{background:rgba(129,140,248,0.15);color:#818cf8;border:1px solid rgba(129,140,248,0.25)}
+.badge-taken{background:rgba(107,114,128,0.2);color:#9ca3af;border:1px solid rgba(107,114,128,0.3)}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -425,7 +427,8 @@ function Admin({user,tab,setTab,onLogout}){
     </div>
   );
 }
-  function Student({user,tab,setTab,onLogout}){
+
+function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
   const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
   const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
@@ -466,8 +469,18 @@ function Admin({user,tab,setTab,onLogout}){
     if(data)setMessages(data.filter(m=>m.sender_id===aid||m.receiver_id===aid));
   };
 
-  const hasTakenExam=(eid)=>answers.some(a=>a.exam_id===eid);
-  const startExam=(exam)=>{if(hasTakenExam(exam.id)){alert('قبلاً شرکت کرده‌اید');return;}setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);setTotalTime(exam.duration_minutes*60);};
+  // ✅ بررسی دقیق شرکت در آزمون
+  const hasTakenExam=(examId)=>{
+    return answers.some(a=>String(a.exam_id)===String(examId)&&String(a.student_id)===String(user.id));
+  };
+
+  const startExam=(exam)=>{
+    if(hasTakenExam(exam.id)){
+      alert('⚠️ شما قبلاً در این آزمون شرکت کرده‌اید و امکان شرکت مجدد وجود ندارد!');
+      return;
+    }
+    setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);setTotalTime(exam.duration_minutes*60);
+  };
 
   useEffect(()=>{if(activeExam&&timeLeft>0){const t=setInterval(()=>setTimeLeft(tl=>tl-1),1000);return()=>clearInterval(t);}else if(activeExam&&timeLeft===0)submitExam();},[activeExam,timeLeft]);
 
@@ -503,7 +516,7 @@ function Admin({user,tab,setTab,onLogout}){
 
   const sendChat=async()=>{if(!chatText.trim())return;const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);if(!admins||!admins.length)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim()});setChatText('');loadMessages();};
 
-  // ===== SPACE SHOOTER GAME =====
+  // ✅ بازی استاندارد و متعادل
   const startGame=useCallback(()=>{
     const canvas=canvasRef.current;
     if(!canvas)return;
@@ -511,14 +524,16 @@ function Admin({user,tab,setTab,onLogout}){
     const W=380,H=500;
     canvas.width=W;canvas.height=H;
     
-    let score=0,level=1,running=true;
-    let playerX=W/2,playerW=40;
+    let score=0,level=1,lives=3,running=true;
+    let playerX=W/2,playerW=50,playerH=50;
     let bullets=[];
     let enemies=[];
     let particles=[];
     let lastShot=0;
     let enemySpawnTime=0;
-    const SHOOT_COOLDOWN=250;
+    let invincibleUntil=0; // زمان مصونیت بعد از برخورد
+    const SHOOT_COOLDOWN=300;
+    const INVINCIBLE_DURATION=2000; // 2 ثانیه مصونیت
     const MAX_PARTICLES=50;
 
     const moveHandler=(e)=>{
@@ -533,7 +548,7 @@ function Admin({user,tab,setTab,onLogout}){
       const now=Date.now();
       if(now-lastShot<SHOOT_COOLDOWN)return;
       lastShot=now;
-      bullets.push({x:playerX,y:H-60,speed:8});
+      bullets.push({x:playerX,y:H-70,speed:7});
     };
 
     canvas.addEventListener('mousemove',moveHandler);
@@ -542,8 +557,15 @@ function Admin({user,tab,setTab,onLogout}){
     canvas.addEventListener('touchstart',shoot);
 
     const spawnEnemy=()=>{
-      const size=30+Math.random()*20;
-      enemies.push({x:Math.random()*(W-size),y:-size,w:size,h:size,speed:1+level*0.3+Math.random(),color:`hsl(${Math.random()*360},70%,60%)`});
+      const size=25+Math.random()*15;
+      enemies.push({
+        x:Math.random()*(W-size),
+        y:-size,
+        w:size,
+        h:size,
+        speed:0.8+level*0.15+Math.random()*0.5, // سرعت کمتر
+        color:`hsl(${Math.random()*360},70%,60%)`
+      });
     };
 
     const spawnParticles=(x,y,color,count=8)=>{
@@ -563,9 +585,20 @@ function Admin({user,tab,setTab,onLogout}){
       running=false;
       saveScore(score);
       alert(`💥 بازی تمام شد!\n\nامتیاز: ${score}\nمرحله: ${level}\nبهترین رکورد: ${Math.max(bestScore,score)}`);
-      score=0;level=1;enemies=[];bullets=[];particles=[];
+      score=0;level=1;lives=3;enemies=[];bullets=[];particles=[];
       running=true;
       loop();
+    };
+
+    const takeDamage=()=>{
+      const now=Date.now();
+      if(now<invincibleUntil)return; // هنوز مصون است
+      lives--;
+      invincibleUntil=now+INVINCIBLE_DURATION; // 2 ثانیه مصونیت
+      spawnParticles(playerX,H-45,'#ef4444',15);
+      if(lives<=0){
+        gameOver();
+      }
     };
 
     const loop=()=>{
@@ -578,6 +611,7 @@ function Admin({user,tab,setTab,onLogout}){
       ctx.fillStyle=bgGrad;
       ctx.fillRect(0,0,W,H);
 
+      // Stars
       ctx.fillStyle='rgba(255,255,255,0.3)';
       for(let i=0;i<20;i++){
         const x=(i*37+Date.now()*0.02)%W;
@@ -585,17 +619,23 @@ function Admin({user,tab,setTab,onLogout}){
         ctx.fillRect(x,y,2,2);
       }
 
-      ctx.fillStyle='#818cf8';
-      ctx.shadowColor='#818cf8';
-      ctx.shadowBlur=20;
-      ctx.beginPath();
-      ctx.moveTo(playerX,H-40);
-      ctx.lineTo(playerX-playerW/2,H-20);
-      ctx.lineTo(playerX+playerW/2,H-20);
-      ctx.closePath();
-      ctx.fill();
-      ctx.shadowBlur=0;
+      // Player (با افکت چشمک‌زن هنگام مصونیت)
+      const now=Date.now();
+      const isInvincible=now<invincibleUntil;
+      if(!isInvincible||Math.floor(now/100)%2===0){
+        ctx.fillStyle='#818cf8';
+        ctx.shadowColor='#818cf8';
+        ctx.shadowBlur=20;
+        ctx.beginPath();
+        ctx.moveTo(playerX,H-45);
+        ctx.lineTo(playerX-playerW/2,H-20);
+        ctx.lineTo(playerX+playerW/2,H-20);
+        ctx.closePath();
+        ctx.fill();
+        ctx.shadowBlur=0;
+      }
 
+      // Bullets
       bullets=bullets.filter(b=>{
         b.y-=b.speed;
         if(b.y<0)return false;
@@ -607,16 +647,21 @@ function Admin({user,tab,setTab,onLogout}){
         return true;
       });
 
+      // Spawn enemies (با فاصله بیشتر)
       enemySpawnTime++;
-      if(enemySpawnTime>60-level*5){
+      const spawnRate=Math.max(80,120-level*8); // حداقل 80 فریم بین هر دشمن
+      if(enemySpawnTime>spawnRate){
         spawnEnemy();
         enemySpawnTime=0;
       }
 
+      // Enemies
       enemies=enemies.filter(e=>{
         e.y+=e.speed;
+        
+        // اگر دشمن از صفحه رد شد، یک جان کم می‌شود
         if(e.y>H){
-          gameOver();
+          takeDamage();
           return false;
         }
 
@@ -626,6 +671,7 @@ function Admin({user,tab,setTab,onLogout}){
         ctx.fillRect(e.x,e.y,e.w,e.h);
         ctx.shadowBlur=0;
 
+        // Collision with bullets
         for(let i=bullets.length-1;i>=0;i--){
           const b=bullets[i];
           if(b.x>e.x&&b.x<e.x+e.w&&b.y>e.y&&b.y<e.y+e.h){
@@ -637,14 +683,17 @@ function Admin({user,tab,setTab,onLogout}){
           }
         }
 
-        if(e.x<playerX+playerW/2&&e.x+e.w>playerX-playerW/2&&e.y+e.h>H-40){
-          gameOver();
+        // Collision with player
+        if(!isInvincible&&e.x<playerX+playerW/2&&e.x+e.w>playerX-playerW/2&&e.y+e.h>H-50&&e.y<H-20){
+          takeDamage();
+          spawnParticles(e.x+e.w/2,e.y+e.h/2,e.color,12);
           return false;
         }
 
         return true;
       });
 
+      // Particles
       particles=particles.filter(p=>{
         p.x+=p.dx;
         p.y+=p.dy;
@@ -656,12 +705,18 @@ function Admin({user,tab,setTab,onLogout}){
         return p.life>0;
       });
 
+      // Score, Level & Lives
       ctx.fillStyle='rgba(255,255,255,0.8)';
       ctx.font='bold 16px Vazirmatn';
       ctx.textAlign='right';
       ctx.fillText(`امتیاز: ${score}`,W-15,25);
       ctx.textAlign='left';
       ctx.fillText(`مرحله: ${level}`,15,25);
+      
+      // Lives (hearts)
+      ctx.textAlign='center';
+      ctx.font='20px Arial';
+      ctx.fillText('❤️'.repeat(lives),W/2,25);
 
       gameRef.current=requestAnimationFrame(loop);
     };
@@ -683,7 +738,7 @@ function Admin({user,tab,setTab,onLogout}){
   },[tab,toolsTab,startGame]);
 
   const getExamScore=(examId)=>{
-    const examAnswers=answers.filter(a=>a.exam_id===examId);
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
     if(examAnswers.length===0)return null;
     const totalScore=examAnswers.reduce((s,a)=>s+parseFloat(a.score||0),0);
     const maxScore=examAnswers.reduce((s,a)=>s+parseFloat(a.max_score||0),0);
@@ -772,35 +827,53 @@ function Admin({user,tab,setTab,onLogout}){
             </div>
             <h3 className="font-bold mb-3 text-white/60 text-sm">آزمون‌ها ({exams.length})</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
-            {exams.map(ex=>{const taken=hasTakenExam(ex.id);const score=getExamScore(ex.id);return(
-              <div key={ex.id} className={`card slide-up ${taken?'disabled':''}`}>
-                <h4 className="font-bold">{ex.title}</h4>
-                <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
-                <div className="flex gap-2 mb-3 flex-wrap"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span>{score&&<span className="badge badge-approved">نمره: {score.percentage}/20</span>}</div>
-                {taken?(
-                  <div className="space-y-2">
-                    <div className="text-center py-2 text-emerald-400 text-xs font-bold bg-emerald-500/10 rounded-xl">شرکت کرده‌اید ✓</div>
-                    <button onClick={()=>setShowExamResults(ex.id)} className="btn-glass text-sm">مشاهده نتایج</button>
+            {exams.map(ex=>{
+              const taken=hasTakenExam(ex.id);
+              const score=getExamScore(ex.id);
+              return(
+                <div key={ex.id} className={`card slide-up ${taken?'disabled':''}`}>
+                  <h4 className="font-bold">{ex.title}</h4>
+                  <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
+                  <div className="flex gap-2 mb-3 flex-wrap">
+                    <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+                    <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
+                    {score&&<span className="badge badge-approved">نمره: {score.percentage}/20</span>}
+                    {taken&&<span className="badge badge-taken">✓ شرکت کرده‌اید</span>}
                   </div>
-                ):<button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون</button>}
-              </div>
-            );})}
+                  {taken?(
+                    <div className="space-y-2">
+                      <div className="text-center py-2 text-gray-400 text-xs font-bold bg-gray-500/10 rounded-xl border border-gray-500/20">
+                        ⚠️ شما قبلاً در این آزمون شرکت کرده‌اید
+                      </div>
+                      <button onClick={()=>setShowExamResults(ex.id)} className="btn-glass text-sm">مشاهده نتایج</button>
+                    </div>
+                  ):(
+                    <button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون</button>
+                  )}
+                </div>
+              );
+            })}
           </>
         )}
         {tab==='grades'&&(
           <>
             <h3 className="font-bold mb-3 text-white/60 text-sm">نمرات</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
-            {exams.map(ex=>{const score=getExamScore(ex.id);if(!score)return null;const hasObjection=answers.some(a=>a.exam_id===ex.id&&a.objection);return(
-              <div key={ex.id} className="card">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
-                  <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
+            {exams.map(ex=>{
+              const score=getExamScore(ex.id);
+              if(!score)return null;
+              const hasObjection=answers.some(a=>a.exam_id===ex.id&&a.objection);
+              return(
+                <div key={ex.id} className="card">
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
+                    <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
+                  </div>
+                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">اعتراض در حال بررسی</div>}
+                  {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض به این آزمون</button>)}
                 </div>
-                {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">اعتراض در حال بررسی</div>}
-                {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض به این آزمون</button>)}
-              </div>
-            );})}
+              );
+            })}
           </>
         )}
         {tab==='chart'&&(
@@ -904,12 +977,10 @@ function Admin({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
 
-      {/* Chat Button */}
       <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40">
         <Icon d={Icons.message} size={24}/>
       </button>
 
-      {/* Chat Modal */}
       {showChat&&(
         <div className="modal-overlay" onClick={()=>setShowChat(false)}>
           <div className="glass-strong w-full max-w-md h-[70vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
@@ -931,7 +1002,6 @@ function Admin({user,tab,setTab,onLogout}){
         </div>
       )}
 
-      {/* Objection Modal */}
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
           <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
@@ -943,7 +1013,6 @@ function Admin({user,tab,setTab,onLogout}){
         </div>
       )}
 
-      {/* Exam Results Modal */}
       {showExamResults&&(
         <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
           <div className="glass-strong w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
