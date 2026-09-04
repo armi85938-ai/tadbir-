@@ -30,25 +30,29 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(220,38,38,0.25));border-color:rgba(248,113,113,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
 
-/* دکمه‌های نورانی ابزارها */
-.tool-btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:20px 12px;text-align:center;cursor:pointer;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
-.tool-btn::before{content:'';position:absolute;inset:0;border-radius:20px;opacity:0;transition:opacity 0.4s}
+/* دکمه‌های ابزارها - بسیار رنگی و انیمیشنی */
+.tool-btn{background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.tool-btn::before{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity 0.5s}
+.tool-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);opacity:0;transition:opacity 0.5s}
 .tool-btn:hover::before,.tool-btn.active::before{opacity:1}
-.tool-btn.active{border-color:transparent;transform:translateY(-4px)}
-.tool-btn.calc::before{background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(168,85,247,0.1))}
-.tool-btn.calc.active{box-shadow:0 8px 30px rgba(99,102,241,0.3),0 0 60px rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.4)}
-.tool-btn.check::before{background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(52,211,153,0.1))}
-.tool-btn.check.active{box-shadow:0 8px 30px rgba(16,185,129,0.3),0 0 60px rgba(16,185,129,0.1);border-color:rgba(52,211,153,0.4)}
-.tool-btn.plan::before{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(251,191,36,0.1))}
-.tool-btn.plan.active{box-shadow:0 8px 30px rgba(245,158,11,0.3),0 0 60px rgba(245,158,11,0.1);border-color:rgba(251,191,36,0.4)}
-.tool-btn.game::before{background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(244,114,182,0.1))}
-.tool-btn.game.active{box-shadow:0 8px 30px rgba(236,72,153,0.3),0 0 60px rgba(236,72,153,0.1);border-color:rgba(244,114,182,0.4)}
-.tool-icon{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;position:relative;z-index:1}
-.tool-btn.calc .tool-icon{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 4px 15px rgba(99,102,241,0.4)}
-.tool-btn.check .tool-icon{background:linear-gradient(135deg,#10b981,#34d399);box-shadow:0 4px 15px rgba(16,185,129,0.4)}
-.tool-btn.plan .tool-icon{background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 4px 15px rgba(245,158,11,0.4)}
-.tool-btn.game .tool-icon{background:linear-gradient(135deg,#ec4899,#f472b6);box-shadow:0 4px 15px rgba(236,72,153,0.4)}
-.tool-label{font-size:13px;font-weight:700;position:relative;z-index:1}
+.tool-btn:hover::after,.tool-btn.active::after{opacity:1}
+.tool-btn.active{transform:translateY(-8px) scale(1.05);border-color:transparent}
+.tool-btn.calc::before{background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.15))}
+.tool-btn.calc.active{box-shadow:0 12px 40px rgba(99,102,241,0.4),0 0 80px rgba(99,102,241,0.2),inset 0 0 40px rgba(99,102,241,0.1)}
+.tool-btn.check::before{background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(52,211,153,0.15))}
+.tool-btn.check.active{box-shadow:0 12px 40px rgba(16,185,129,0.4),0 0 80px rgba(16,185,129,0.2),inset 0 0 40px rgba(16,185,129,0.1)}
+.tool-btn.plan::before{background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(251,191,36,0.15))}
+.tool-btn.plan.active{box-shadow:0 12px 40px rgba(245,158,11,0.4),0 0 80px rgba(245,158,11,0.2),inset 0 0 40px rgba(245,158,11,0.1)}
+.tool-btn.game::before{background:linear-gradient(135deg,rgba(236,72,153,0.2),rgba(244,114,182,0.15))}
+.tool-btn.game.active{box-shadow:0 12px 40px rgba(236,72,153,0.4),0 0 80px rgba(236,72,153,0.2),inset 0 0 40px rgba(236,72,153,0.1)}
+.tool-icon{width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;position:relative;z-index:1;transition:all 0.5s}
+.tool-btn:hover .tool-icon,.tool-btn.active .tool-icon{transform:scale(1.15) rotate(5deg)}
+.tool-btn.calc .tool-icon{background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 6px 20px rgba(99,102,241,0.5)}
+.tool-btn.check .tool-icon{background:linear-gradient(135deg,#10b981,#34d399);box-shadow:0 6px 20px rgba(16,185,129,0.5)}
+.tool-btn.plan .tool-icon{background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 6px 20px rgba(245,158,11,0.5)}
+.tool-btn.game .tool-icon{background:linear-gradient(135deg,#ec4899,#f472b6);box-shadow:0 6px 20px rgba(236,72,153,0.5)}
+.tool-label{font-size:14px;font-weight:800;position:relative;z-index:1;transition:all 0.3s}
+.tool-btn.active .tool-label{transform:scale(1.1)}
 
 .fade-in{animation:fadeIn 0.4s ease-out}
 .slide-up{animation:slideUp 0.5s cubic-bezier(0.16,1,0.3,1)}
@@ -77,7 +81,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 6px currentColor)}
 .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 
-#gameCanvas{border-radius:16px;border:1px solid rgba(255,255,255,0.1);width:100%;max-width:380px;margin:0 auto;display:block;touch-action:none;background:linear-gradient(180deg,rgba(15,15,35,0.9),rgba(10,10,26,0.95))}
+#gameCanvas{border-radius:20px;border:2px solid rgba(129,140,248,0.2);width:100%;max-width:380px;margin:0 auto;display:block;touch-action:none;background:linear-gradient(180deg,rgba(15,15,35,0.95),rgba(10,10,26,0.98));box-shadow:0 8px 40px rgba(99,102,241,0.2)}
 
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,26,0.95);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,0.06);padding:8px 0 calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;border-radius:14px;color:rgba(255,255,255,0.35);font-size:10px;cursor:pointer;transition:all 0.3s}
@@ -88,6 +92,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word}
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
+
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(129,140,248,0.3)}50%{box-shadow:0 0 40px rgba(129,140,248,0.6)}}
 </style>
 </head>
 <body>
@@ -118,7 +124,8 @@ const Icons={
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
   image:"M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21",
   calendar:"M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z M16 2v4 M8 2v4 M3 10h18",
-  game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2"
+  game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2",
+  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
 };
 
 function App(){
@@ -186,7 +193,6 @@ function CircularTimer({timeLeft,totalTime}){
   );
 }
 
-// ==================== ADMIN ====================
 function Admin({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);const [students,setStudents]=useState([]);const [answers,setAnswers]=useState([]);
   const [modal,setModal]=useState(null);const [step,setStep]=useState(1);const [formData,setFormData]=useState({});
@@ -419,7 +425,6 @@ function Admin({user,tab,setTab,onLogout}){
   );
 }
 
-// ==================== STUDENT ====================
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
   const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
@@ -483,31 +488,56 @@ function Student({user,tab,setTab,onLogout}){
 
   const changeMyPassword=async()=>{const p=prompt("رمز جدید (حداقل ۴ کاراکتر):");if(p&&p.length>=4){await SB.from('users').update({password:p}).eq('id',user.id);const u={...user,password:p};setUser(u);sessionStorage.setItem('edu_user',JSON.stringify(u));alert("رمز تغییر کرد");}else if(p)alert("حداقل ۴ کاراکتر");};
 
-  const addTask=async()=>{if(!newTask.trim())return;const {data}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();if(data)setChecklist([data,...checklist]);setNewTask('');};
+  const addTask=async()=>{if(!newTask.trim())return;const {data,error}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();if(error){alert('خطا: '+error.message);return;}if(data)setChecklist([data,...checklist]);setNewTask('');};
   const toggleTask=async(id,done)=>{await SB.from('checklists').update({is_done:!done}).eq('id',id);setChecklist(checklist.map(t=>t.id===id?{...t,is_done:!done}:t));};
   const deleteTask=async(id)=>{await SB.from('checklists').delete().eq('id',id);setChecklist(checklist.filter(t=>t.id!==id));};
 
-  const addPlan=async()=>{if(!newPlan.subject.trim()||!newPlan.time.trim())return;const {data}=await SB.from('study_plans').insert({user_id:user.id,day_of_week:newPlan.day,subject:newPlan.subject.trim(),time_range:newPlan.time.trim()}).select().single();if(data)setStudyPlans([data,...studyPlans]);setNewPlan({day:'شنبه',subject:'',time:''});};
+  const addPlan=async()=>{if(!newPlan.subject.trim()||!newPlan.time.trim())return;const {data,error}=await SB.from('study_plans').insert({user_id:user.id,day_of_week:newPlan.day,subject:newPlan.subject.trim(),time_range:newPlan.time.trim()}).select().single();if(error){alert('خطا: '+error.message);return;}if(data)setStudyPlans([data,...studyPlans]);setNewPlan({day:'شنبه',subject:'',time:''});};
   const deletePlan=async(id)=>{await SB.from('study_plans').delete().eq('id',id);setStudyPlans(studyPlans.filter(p=>p.id!==id));};
 
   const sendChat=async()=>{if(!chatText.trim())return;const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);if(!admins||!admins.length)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim()});setChatText('');loadMessages();};
 
-  // ===== GAME (Breakout) =====
+  // ===== GAME (Breakout - Professional) =====
   const startGame=useCallback(()=>{
     const canvas=canvasRef.current;
     if(!canvas)return;
     const ctx=canvas.getContext('2d');
-    const W=canvas.width=380,H=canvas.height=400;
-    let score=0,lives=3,running=true;
-    let ballX=W/2,ballY=H-40,ballDX=3,ballDY=-3,ballR=6;
-    let padX=W/2-35,padW=70,padH=10;
-    const brickRows=4,brickCols=7,brickW=46,brickH=18,brickPad=4,brickTop=40;
-    const colors=['#818cf8','#c084fc','#f472b6','#fb923c'];
+    const W=canvas.width=380,H=canvas.height=420;
+    let score=0,level=1,running=true;
+    let ballX=W/2,ballY=H-50,ballDX=0,ballDY=0,ballR=7;
+    let padX=W/2-40,padW=80,padH=12;
+    const colors=['#818cf8','#c084fc','#f472b6','#fb923c','#34d399','#fbbf24','#f87171'];
     let bricks=[];
-    for(let r=0;r<brickRows;r++){bricks[r]=[];for(let c=0;c<brickCols;c++)bricks[r][c]={x:c*(brickW+brickPad)+12,y:r*(brickH+brickPad)+brickTop,alive:true,color:colors[r]};}
     let particles=[];
+    let trail=[];
 
-    const spawnParticles=(x,y,color)=>{for(let i=0;i<8;i++)particles.push({x,y,dx:(Math.random()-0.5)*6,dy:(Math.random()-0.5)*6,life:30,color});};
+    const BASE_SPEED=5;
+    const SPEED_INC=0.6;
+
+    const buildBricks=(lvl)=>{
+      bricks=[];
+      const rows=Math.min(3+lvl,7);
+      const cols=7;
+      const brickW=Math.floor((W-28-(cols-1)*5)/cols);
+      const brickH=20,brickPad=5,brickTop=45;
+      for(let r=0;r<rows;r++){
+        bricks[r]=[];
+        for(let c=0;c<cols;c++){
+          bricks[r][c]={x:c*(brickW+brickPad)+14,y:r*(brickH+brickPad)+brickTop,alive:true,color:colors[r%colors.length],hit:false};
+        }
+      }
+      return {rows,cols,brickW,brickH};
+    };
+
+    let brickInfo=buildBricks(level);
+
+    const resetBall=()=>{
+      ballX=W/2;ballY=H-50;
+      const speed=BASE_SPEED+(level-1)*SPEED_INC;
+      const angle=(Math.random()*0.5+0.4);
+      ballDX=Math.cos(angle*Math.PI)*speed*(Math.random()>0.5?1:-1);
+      ballDY=-Math.abs(Math.sin(angle*Math.PI)*speed);
+    };
 
     const moveHandler=(e)=>{
       e.preventDefault();
@@ -519,71 +549,207 @@ function Student({user,tab,setTab,onLogout}){
     canvas.addEventListener('mousemove',moveHandler);
     canvas.addEventListener('touchmove',moveHandler,{passive:false});
 
+    const saveScore=async(s)=>{
+      setBestScore(prev=>Math.max(prev,s));
+      try{await SB.from('game_scores').insert({user_id:user.id,score:s});}catch(e){}
+    };
+
+    const gameOver=()=>{
+      running=false;
+      saveScore(score);
+      alert(`💥 بازی تمام شد!\n\nامتیاز: ${score}\nمرحله: ${level}\nبهترین رکورد: ${Math.max(bestScore,score)}`);
+      level=1;score=0;padW=80;
+      brickInfo=buildBricks(1);
+      particles=[];trail=[];
+      resetBall();
+      running=true;
+      loop();
+    };
+
+    const nextLevel=()=>{
+      level++;
+      score+=100;
+      padW=Math.max(45,80-level*4);
+      brickInfo=buildBricks(level);
+      particles=[];trail=[];
+      resetBall();
+    };
+
+    const spawnParticles=(x,y,color,count=12)=>{
+      for(let i=0;i<count;i++){
+        const angle=Math.random()*Math.PI*2;
+        const speed=Math.random()*4+2;
+        particles.push({x,y,dx:Math.cos(angle)*speed,dy:Math.sin(angle)*speed,life:40,color,size:Math.random()*3+2});
+      }
+    };
+
     const loop=()=>{
       if(!running)return;
       ctx.clearRect(0,0,W,H);
 
-      // BG grid
-      ctx.strokeStyle='rgba(255,255,255,0.03)';ctx.lineWidth=1;
-      for(let i=0;i<W;i+=20){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
-      for(let i=0;i<H;i+=20){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
+      // Background gradient
+      const bgGrad=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W);
+      bgGrad.addColorStop(0,'rgba(99,102,241,0.05)');
+      bgGrad.addColorStop(1,'rgba(10,10,26,0.95)');
+      ctx.fillStyle=bgGrad;
+      ctx.fillRect(0,0,W,H);
 
-      // Bricks
-      for(let r=0;r<brickRows;r++)for(let c=0;c<brickCols;c++){
+      // Grid
+      ctx.strokeStyle='rgba(129,140,248,0.05)';ctx.lineWidth=1;
+      for(let i=0;i<W;i+=25){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke();}
+      for(let i=0;i<H;i+=25){ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(W,i);ctx.stroke();}
+
+      // Level
+      ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='bold 14px Vazirmatn';ctx.textAlign='center';
+      ctx.fillText(`مرحله ${level}`,W/2,25);
+
+      // Bricks with glow
+      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
         const b=bricks[r][c];if(!b.alive)continue;
-        ctx.fillStyle=b.color;
-        ctx.shadowColor=b.color;ctx.shadowBlur=8;
-        ctx.beginPath();ctx.roundRect(b.x,b.y,brickW,brickH,4);ctx.fill();
+        
+        // Glow effect
+        ctx.shadowColor=b.color;
+        ctx.shadowBlur=15;
+        
+        // Brick body
+        const brickGrad=ctx.createLinearGradient(b.x,b.y,b.x,b.y+brickInfo.brickH);
+        brickGrad.addColorStop(0,b.color);
+        brickGrad.addColorStop(1,b.color+'88');
+        ctx.fillStyle=brickGrad;
+        ctx.beginPath();
+        ctx.roundRect(b.x,b.y,brickInfo.brickW,brickInfo.brickH,6);
+        ctx.fill();
+        
+        // Highlight
+        ctx.fillStyle='rgba(255,255,255,0.3)';
+        ctx.fillRect(b.x+2,b.y+2,brickInfo.brickW-4,3);
+        
         ctx.shadowBlur=0;
       }
 
-      // Paddle
+      // Paddle with gradient and glow
       const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
-      padGrad.addColorStop(0,'#818cf8');padGrad.addColorStop(1,'#c084fc');
-      ctx.fillStyle=padGrad;ctx.shadowColor='#818cf8';ctx.shadowBlur=15;
-      ctx.beginPath();ctx.roundRect(padX,H-20,padW,padH,5);ctx.fill();
+      padGrad.addColorStop(0,'#818cf8');
+      padGrad.addColorStop(0.5,'#c084fc');
+      padGrad.addColorStop(1,'#f472b6');
+      ctx.fillStyle=padGrad;
+      ctx.shadowColor='#818cf8';
+      ctx.shadowBlur=25;
+      ctx.beginPath();
+      ctx.roundRect(padX,H-25,padW,padH,6);
+      ctx.fill();
+      
+      // Paddle highlight
+      ctx.fillStyle='rgba(255,255,255,0.4)';
+      ctx.fillRect(padX+3,H-23,padW-6,2);
       ctx.shadowBlur=0;
 
-      // Ball
-      ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
-      ctx.fillStyle='#fff';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;ctx.fill();ctx.shadowBlur=0;
+      // Ball trail
+      trail.push({x:ballX,y:ballY,life:15});
+      trail=trail.filter(t=>{
+        t.life--;
+        ctx.globalAlpha=t.life/15*0.5;
+        ctx.fillStyle='#818cf8';
+        ctx.beginPath();
+        ctx.arc(t.x,t.y,ballR*(t.life/15),0,Math.PI*2);
+        ctx.fill();
+        ctx.globalAlpha=1;
+        return t.life>0;
+      });
+
+      // Ball with glow
+      ctx.beginPath();
+      ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
+      ctx.fillStyle='#fff';
+      ctx.shadowColor='#818cf8';
+      ctx.shadowBlur=30;
+      ctx.fill();
+      ctx.shadowBlur=0;
 
       // Particles
-      particles=particles.filter(p=>{p.x+=p.dx;p.y+=p.dy;p.life--;ctx.globalAlpha=p.life/30;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;return p.life>0;});
+      particles=particles.filter(p=>{
+        p.x+=p.dx;
+        p.y+=p.dy;
+        p.dy+=0.2; // gravity
+        p.life--;
+        ctx.globalAlpha=p.life/40;
+        ctx.fillStyle=p.color;
+        ctx.shadowColor=p.color;
+        ctx.shadowBlur=10;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur=0;
+        ctx.globalAlpha=1;
+        return p.life>0;
+      });
 
-      // Score & Lives
-      ctx.fillStyle='rgba(255,255,255,0.6)';ctx.font='bold 14px Vazirmatn';ctx.textAlign='right';
-      ctx.fillText(`امتیاز: ${score}`,W-10,22);
-      ctx.textAlign='left';ctx.fillText(`جان: ${'❤️'.repeat(lives)}`,10,22);
+      // Score
+      ctx.fillStyle='rgba(255,255,255,0.8)';
+      ctx.font='bold 16px Vazirmatn';
+      ctx.textAlign='right';
+      ctx.fillText(`امتیاز: ${score}`,W-15,25);
 
-      // Collision
+      // Wall collision
       if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
       if(ballY+ballDY<ballR)ballDY=-ballDY;
-      if(ballY+ballDY>H-25&&ballX>padX&&ballX<padX+padW){ballDY=-Math.abs(ballDY);ballDX+=(ballX-(padX+padW/2))*0.1;}
-      if(ballY+ballDY>H){lives--;if(lives<=0){running=false;saveScore(score);return;}ballX=W/2;ballY=H-40;ballDX=3;ballDY=-3;}
 
-      for(let r=0;r<brickRows;r++)for(let c=0;c<brickCols;c++){
-        const b=bricks[r][c];if(!b.alive)continue;
-        if(ballX>b.x&&ballX<b.x+brickW&&ballY-ballR<b.y+brickH&&ballY+ballR>b.y){
-          b.alive=false;ballDY=-ballDY;score+=10;spawnParticles(b.x+brickW/2,b.y+brickH/2,b.color);
+      // Paddle collision
+      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
+        ballDY=-Math.abs(ballDY);
+        const hitPos=(ballX-padX)/padW;
+        ballDX=(hitPos-0.5)*8;
+        spawnParticles(ballX,ballY,'#818cf8',6);
+      }
+
+      // Ball falls - GAME OVER
+      if(ballY>H+ballR){
+        gameOver();
+        return;
+      }
+
+      // Brick collision
+      let allDestroyed=true;
+      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
+        const b=bricks[r][c];
+        if(!b.alive)continue;
+        allDestroyed=false;
+        
+        if(ballX+ballR>b.x&&ballX-ballR<b.x+brickInfo.brickW&&ballY+ballR>b.y&&ballY-ballR<b.y+brickInfo.brickH){
+          b.alive=false;
+          score+=10;
+          
+          // Determine collision side
+          const overlapX=Math.min(ballX+ballR-b.x,b.x+brickInfo.brickW-(ballX-ballR));
+          const overlapY=Math.min(ballY+ballR-b.y,b.y+brickInfo.brickH-(ballY-ballR));
+          
+          if(overlapX<overlapY){
+            ballDX=-ballDX;
+          }else{
+            ballDY=-ballDY;
+          }
+          
+          spawnParticles(b.x+brickInfo.brickW/2,b.y+brickInfo.brickH/2,b.color,15);
+          break;
         }
       }
 
-      ballX+=ballDX;ballY+=ballDY;
+      // All destroyed - NEXT LEVEL
+      if(allDestroyed){
+        nextLevel();
+      }
+
+      ballX+=ballDX;
+      ballY+=ballDY;
       gameRef.current=requestAnimationFrame(loop);
     };
 
-    const saveScore=async(s)=>{
-      setBestScore(prev=>Math.max(prev,s));
-      try{
-        const {error}=await SB.from('game_scores').insert({user_id:user.id,score:s});
-        if(error)console.error('Game score error:',error);
-      }catch(e){console.error(e);}
-      alert(`بازی تمام شد!\nامتیاز: ${s}\nبهترین رکورد: ${Math.max(bestScore,s)}`);
-    };
-
+    resetBall();
     loop();
-    return()=>{canvas.removeEventListener('mousemove',moveHandler);canvas.removeEventListener('touchmove',moveHandler);};
+    return()=>{
+      canvas.removeEventListener('mousemove',moveHandler);
+      canvas.removeEventListener('touchmove',moveHandler);
+    };
   },[bestScore,user.id]);
 
   useEffect(()=>{
@@ -700,22 +866,21 @@ function Student({user,tab,setTab,onLogout}){
         )}
         {tab==='tools'&&(
           <>
-            {/* Grid دکمه‌های نورانی */}
-            <div className="grid grid-cols-2 gap-3 mb-5">
+            <div className="grid grid-cols-2 gap-4 mb-6">
               <div className={`tool-btn calc ${toolsTab==='calc'?'active':''}`} onClick={()=>setToolsTab('calc')}>
-                <div className="tool-icon"><Icon d={Icons.calc} size={24}/></div>
+                <div className="tool-icon"><Icon d={Icons.calc} size={28}/></div>
                 <div className="tool-label">ماشین‌حساب</div>
               </div>
               <div className={`tool-btn check ${toolsTab==='checklist'?'active':''}`} onClick={()=>setToolsTab('checklist')}>
-                <div className="tool-icon"><Icon d={Icons.check} size={24}/></div>
+                <div className="tool-icon"><Icon d={Icons.check} size={28}/></div>
                 <div className="tool-label">چک‌لیست</div>
               </div>
               <div className={`tool-btn plan ${toolsTab==='planner'?'active':''}`} onClick={()=>setToolsTab('planner')}>
-                <div className="tool-icon"><Icon d={Icons.calendar} size={24}/></div>
+                <div className="tool-icon"><Icon d={Icons.calendar} size={28}/></div>
                 <div className="tool-label">برنامه‌ریزی</div>
               </div>
               <div className={`tool-btn game ${toolsTab==='game'?'active':''}`} onClick={()=>setToolsTab('game')}>
-                <div className="tool-icon"><Icon d={Icons.game} size={24}/></div>
+                <div className="tool-icon"><Icon d={Icons.game} size={28}/></div>
                 <div className="tool-label">بازی</div>
               </div>
             </div>
@@ -769,7 +934,7 @@ function Student({user,tab,setTab,onLogout}){
             {toolsTab==='game'&&(
               <div className="text-center slide-up">
                 <div className="flex gap-3 justify-center mb-4">
-                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-xl font-black text-indigo-400" id="liveScore">0</p></div>
+                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-xl font-black text-indigo-400">0</p></div>
                   <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-xl font-black text-pink-400">{bestScore}</p></div>
                 </div>
                 <p className="text-xs text-white/30 mb-3">انگشت یا ماوس را حرکت دهید</p>
@@ -777,7 +942,7 @@ function Student({user,tab,setTab,onLogout}){
               </div>
             )}
 
-            <div className="mt-5 glass p-4 text-center">
+            <div className="mt-6 glass p-4 text-center">
               <button onClick={changeMyPassword} className="btn-glass flex items-center justify-center gap-2 text-sm"><Icon d={Icons.key} size={16}/>تغییر رمز عبور</button>
               <p className="text-[11px] text-white/30 mt-2">مدیر نیز رمز جدید شما را مشاهده می‌کند</p>
             </div>
