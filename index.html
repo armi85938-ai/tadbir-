@@ -1,838 +1,939 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#1e1b4b">
-    <title>سامانه دانش‌آموزی</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <style>
-        * { font-family: 'Vazirmatn', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
-            min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        .glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        .glass-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px 20px;
-            color: #fff;
-            font-size: 15px;
-            width: 100%;
-            outline: none;
-            transition: all 0.3s;
-        }
-        .glass-input:focus {
-            border-color: rgba(139, 92, 246, 0.6);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-        }
-        .glass-input::placeholder { color: rgba(255, 255, 255, 0.3); }
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
-        }
-        .btn-primary:active { transform: scale(0.98); }
-        .btn-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .btn-icon:active { transform: scale(0.95); }
-        .nav-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 12, 50, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
-            display: flex;
-            justify-content: space-around;
-            z-index: 50;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            padding: 8px 20px;
-            border-radius: 16px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .nav-item.active {
-            color: #a78bfa;
-            background: rgba(139, 92, 246, 0.15);
-        }
-        .nav-item svg { width: 24px; height: 24px; }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        .slide-up { animation: slideUp 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            transition: all 0.3s;
-        }
-        .card:active { transform: scale(0.98); }
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .badge-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
-        .badge-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            background: rgba(30, 27, 75, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 20px;
-        }
-        .content { padding: 20px; padding-bottom: 100px; max-width: 600px; margin: 0 auto; }
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .error-detail {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 12px;
-            font-size: 12px;
-            text-align: right;
-            direction: rtl;
-        }
-        .error-detail-title {
-            font-weight: bold;
-            color: #fca5a5;
-            margin-bottom: 8px;
-        }
-        .error-detail-code {
-            color: #fecaca;
-            font-family: monospace;
-            background: rgba(0,0,0,0.2);
-            padding: 2px 6px;
-            border-radius: 4px;
-            display: block;
-            margin: 4px 0;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f172a">
+<title>سامانه دانش‌آموزی</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
+<style>
+*{font-family:'Vazirmatn',sans-serif;margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#312e81 100%);min-height:100vh;color:#fff;overflow-x:hidden}
+.glass{background:rgba(255,255,255,0.07);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+.glass-input{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
+.glass-input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,0.2)}
+.glass-input::placeholder{color:rgba(255,255,255,0.35)}
+.btn-primary{background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 100%);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(139,92,246,0.4)}
+.btn-primary:active{transform:scale(0.97)}
+.btn-danger{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)}
+.btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%)}
+.btn-warning{background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%)}
+.btn-sm{padding:8px 14px;font-size:13px;width:auto;display:inline-flex;align-items:center;gap:6px}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.1);padding:8px 0 calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border-radius:14px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s}
+.nav-item.active{color:#a78bfa;background:rgba(139,92,246,0.15)}
+.nav-item svg{width:22px;height:22px}
+.fade-in{animation:fadeIn 0.4s ease-out}
+.slide-up{animation:slideUp 0.4s ease-out}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:16px;margin-bottom:12px}
+.timer-warning{animation:pulse-red 1s infinite;color:#ef4444;font-weight:bold}
+@keyframes pulse-red{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.05)}}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-pending{background:rgba(245,158,11,0.2);color:#fbbf24}
+.badge-approved{background:rgba(16,185,129,0.2);color:#34d399}
+.badge-new{background:rgba(59,130,246,0.2);color:#60a5fa}
+.header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px}
+.content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto}
+.calc-btn{background:rgba(255,255,255,0.1);border:none;color:white;padding:14px;border-radius:12px;font-size:18px;cursor:pointer}
+.calc-btn:active{background:rgba(255,255,255,0.2)}
+.tab-active{background:rgba(139,92,246,0.2);color:#a78bfa}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.2);border-radius:4px}
+textarea.glass-input{resize:vertical;min-height:80px}
+select.glass-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center}
+</style>
 </head>
 <body>
-    <div id="root"></div>
-    
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        
-        const supabaseClient = window.supabase.createClient(
-            "https://ixdsctccqvljdtnjfebt.supabase.co",
-            "sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h"
-        );
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-        const Icon = ({ path, size = 24 }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d={path}/>
-            </svg>
-        );
+const Icon=({d,size=22})=><svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d}/></svg>;
+const Icons={
+  home:"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
+  users:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8",
+  exam:"M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11",
+  grade:"M22 12h-4l-3 9L9 3l-3 9H2",
+  msg:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
+  logout:"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9",
+  plus:"M12 5v14 M5 12h14",
+  x:"M18 6L6 18 M6 6l12 12",
+  clock:"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M12 6v6l4 2",
+  user:"M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2 M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8",
+  check:"M20 6L9 17l-5-5",
+  trash:"M3 6h18 M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
+  chart:"M18 20V10 M12 20V4 M6 20v-6",
+  tools:"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z",
+  send:"M22 2L11 13 M22 2l-7 20-4-9-9-4 20-7z",
+  alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01",
+  bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
+  calc:"M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5z",
+  list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
+  book:"M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5z",
+  eye:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+  key:"M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"
+};
 
-        const Icons = {
-            home: "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
-            users: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M23 21v-2a4 4 0 0 0-3-3.87",
-            exam: "M9 11l3 3L22 4 M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11",
-            grade: "M22 12h-4l-3 9L9 3l-3 9H2",
-            message: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-            logout: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4 M16 17l5-5-5-5 M21 12H9",
-            plus: "M12 5v14 M5 12h14",
-            check: "M20 6L9 17l-5-5",
-            x: "M18 6L6 18 M6 6l12 12",
-            book: "M4 19.5A2.5 2.5 0 0 1 6.5 17H20",
-            alert: "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86"
-        };
+function App(){
+  const [user,setUser]=useState(null);
+  const [view,setView]=useState('login');
+  const [tab,setTab]=useState('home');
+  useEffect(()=>{
+    const s=sessionStorage.getItem('edu_user');
+    if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
+  },[]);
+  const login=async(un,pw)=>{
+    const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).single();
+    if(data){setUser(data);sessionStorage.setItem('edu_user',JSON.stringify(data));setView(data.role);return true;}
+    return false;
+  };
+  const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
+  if(view==='login') return <Login onLogin={login}/>;
+  if(view==='admin') return <Admin user={user} tab={tab} setTab={setTab} onLogout={logout}/>;
+  return <Student user={user} tab={tab} setTab={setTab} onLogout={logout}/>;
+}
 
-        function App() {
-            const [user, setUser] = useState(null);
-            const [currentPage, setCurrentPage] = useState('login');
-            const [activeTab, setActiveTab] = useState('home');
-            const [loading, setLoading] = useState(true);
+// ================= LOGIN =================
+function Login({onLogin}){
+  const [un,setUn]=useState('');const [pw,setPw]=useState('');const [err,setErr]=useState('');const [ld,setLd]=useState(false);
+  const submit=async(e)=>{
+    e.preventDefault();setLd(true);setErr('');
+    const ok=await onLogin(un,pw);
+    if(!ok) setErr('نام کاربری یا رمز عبور اشتباه است');
+    setLd(false);
+  };
+  return(
+    <div className="min-h-screen flex items-center justify-center p-6 fade-in relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-500 rounded-full blur-3xl"></div>
+      </div>
+      <div className="w-full max-w-sm relative z-10">
+        <div className="text-center mb-8 slide-up">
+          <div className="w-24 h-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-2xl shadow-purple-500/40 rotate-3">
+            <Icon d={Icons.book} size={44} color="white"/>
+          </div>
+          <h1 className="text-3xl font-black mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-200">سامانه دانش‌آموزی</h1>
+          <p className="text-white/40 text-sm">ورود به پنل کاربری</p>
+        </div>
+        <div className="glass p-6 slide-up">
+          <form onSubmit={submit} className="space-y-4">
+            {err&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center fade-in">{err}</div>}
+            <input className="glass-input" placeholder="نام کاربری" value={un} onChange={e=>setUn(e.target.value)} required/>
+            <input className="glass-input" type="password" placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required/>
+            <button type="submit" className="btn-primary" disabled={ld}>{ld?'در حال ورود...':'ورود به سامانه'}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-            useEffect(() => {
-                const savedUser = sessionStorage.getItem('schoolUser');
-                if (savedUser) {
-                    const userData = JSON.parse(savedUser);
-                    setUser(userData);
-                    setCurrentPage(userData.role);
-                }
-                setLoading(false);
-            }, []);
+// ================= ADMIN PANEL =================
+function Admin({user,tab,setTab,onLogout}){
+  const [exams,setExams]=useState([]);
+  const [students,setStudents]=useState([]);
+  const [answers,setAnswers]=useState([]);
+  const [messages,setMessages]=useState([]);
+  const [announcements,setAnnouncements]=useState([]);
+  const [modal,setModal]=useState(null);
+  const [subTab,setSubTab]=useState('list');
+  const [formData,setFormData]=useState({});
+  const [questions,setQuestions]=useState([]);
+  const [selectedStudent,setSelectedStudent]=useState(null);
+  const [selectedExam,setSelectedExam]=useState(null);
+  const [chatStudent,setChatStudent]=useState(null);
+  const [chatMessages,setChatMessages]=useState([]);
+  const [chatText,setChatText]=useState('');
+  const [loading,setLoading]=useState(false);
 
-            const handleLogin = async (username, password) => {
-                try {
-                    console.log('🔍 در حال جستجو برای:', username.toUpperCase());
-                    
-                    const { data, error } = await supabaseClient
-                        .from('users')
-                        .select('*')
-                        .eq('username', username.toUpperCase())
-                        .eq('password', password)
-                        .single();
-                    
-                    console.log('📊 نتیجه:', { data, error });
-                    
-                    if (error) {
-                        console.error('❌ خطا:', error);
-                        return { 
-                            success: false, 
-                            error: error.message,
-                            details: error 
-                        };
-                    }
-                    
-                    if (!data) {
-                        return { 
-                            success: false, 
-                            error: 'کاربر یافت نشد. نام کاربری و رمز عبور را بررسی کنید.',
-                            details: 'هیچ داده‌ای برگردانده نشد'
-                        };
-                    }
-                    
-                    setUser(data);
-                    sessionStorage.setItem('schoolUser', JSON.stringify(data));
-                    setCurrentPage(data.role);
-                    return { success: true };
-                } catch (err) {
-                    console.error('❌ خطای غیرمنتظره:', err);
-                    return { 
-                        success: false, 
-                        error: 'خطا در ارتباط با سرور',
-                        details: err.message 
-                    };
-                }
-            };
+  useEffect(()=>{loadAll();},[]);
 
-            const handleLogout = () => {
-                setUser(null);
-                setCurrentPage('login');
-                setActiveTab('home');
-                sessionStorage.removeItem('schoolUser');
-            };
+  const loadAll=async()=>{
+    const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
+    const {data:s}=await SB.from('users').select('*').eq('role','student');
+    const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text)');
+    const {data:m}=await SB.from('messages').select('*,users!messages_sender_id_fkey(username,full_name),users!messages_receiver_id_fkey(username,full_name)').order('created_at',{ascending:false});
+    const {data:an}=await SB.from('announcements').select('*').order('created_at',{ascending:false});
+    if(e) setExams(e); if(s) setStudents(s); if(a) setAnswers(a); if(m) setMessages(m); if(an) setAnnouncements(an);
+  };
 
-            if (loading) {
-                return (
-                    <div className="min-h-screen flex items-center justify-center">
-                        <div className="loading"></div>
+  const createExam=async()=>{
+    if(!formData.title||questions.length===0){alert('عنوان و حداقل یک سوال لازم است');return;}
+    setLoading(true);
+    const {data:exam}=await SB.from('exams').insert({
+      title:formData.title,description:formData.desc||'',
+      duration_minutes:parseInt(formData.duration)||60,
+      assigned_to:formData.assigned||'all',created_by:user.id
+    }).select().single();
+    if(exam){
+      for(let i=0;i<questions.length;i++){
+        await SB.from('questions').insert({...questions[i],exam_id:exam.id,order_num:i});
+      }
+    }
+    setLoading(false);setModal(null);setFormData({});setQuestions([]);loadAll();
+  };
+
+  const addQuestion=()=>{
+    setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:formData.qType||'test'}]);
+  };
+
+  const updateQuestion=(i,field,val)=>{
+    const nq=[...questions];nq[i][field]=val;setQuestions(nq);
+  };
+
+  const removeQuestion=(i)=>{setQuestions(questions.filter((_,idx)=>idx!==i));};
+
+  const deleteExam=async(id)=>{
+    if(confirm('آیا مطمئن هستید؟ این آزمون و تمام نمرات مرتبط حذف می‌شوند.')){
+      await SB.from('exams').delete().eq('id',id);
+      loadAll();
+    }
+  };
+
+  const gradeAnswer=async(id,score)=>{
+    await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);
+    loadAll();
+  };
+
+  const changePassword=async(studentId)=>{
+    const newPw=prompt("رمز عبور جدید را وارد کنید:");
+    if(newPw&&newPw.trim()){
+      await SB.from('users').update({password:newPw}).eq('id',studentId);
+      alert("رمز با موفقیت تغییر کرد");loadAll();
+    }
+  };
+
+  const sendMessage=async()=>{
+    if(!chatText.trim()||!chatStudent) return;
+    await SB.from('messages').insert({sender_id:user.id,receiver_id:chatStudent.id,content:chatText});
+    setChatText('');loadChatMessages(chatStudent.id);loadAll();
+  };
+
+  const loadChatMessages=async(studentId)=>{
+    const {data}=await SB.from('messages').select('*').or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`).or(`sender_id.eq.${studentId},receiver_id.eq.${studentId}`).order('created_at',{ascending:true});
+    if(data) setChatMessages(data);
+  };
+
+  const openChat=(student)=>{
+    setChatStudent(student);setChatMessages([]);setSubTab('chat');
+    loadChatMessages(student.id);
+  };
+
+  const createAnnouncement=async()=>{
+    if(!formData.annTitle||!formData.annDate) return;
+    await SB.from('announcements').insert({
+      title:formData.annTitle,description:formData.annDesc||'',
+      target_date:formData.annDate,created_by:user.id
+    });
+    setModal(null);setFormData({});loadAll();
+  };
+
+  const getCountdown=(target)=>{
+    if(!target) return '';
+    const diff=new Date(target)-new Date();
+    if(diff<=0) return "زمان فرا رسیده!";
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m=Math.floor((diff%(1000*60*60))/(1000*60));
+    const s=Math.floor((diff%(1000*60))/1000);
+    return `${d} روز و ${h} ساعت و ${m} دقیقه و ${s} ثانیه`;
+  };
+
+  const [countdown,setCountdown]=useState('');
+  useEffect(()=>{
+    if(announcements.length>0){
+      const update=()=>setCountdown(getCountdown(announcements[0].target_date));
+      update();const t=setInterval(update,1000);
+      return ()=>clearInterval(t);
+    }
+  },[announcements]);
+
+  const getStudentAverage=(studentId)=>{
+    const studentAnswers=answers.filter(a=>a.student_id===studentId&&a.status==='graded');
+    if(studentAnswers.length===0) return 0;
+    const total=studentAnswers.reduce((sum,a)=>sum+parseFloat(a.score||0),0);
+    return (total/studentAnswers.length).toFixed(2);
+  };
+
+  const getStudentGrades=(studentId)=>{
+    return answers.filter(a=>a.student_id===studentId);
+  };
+
+  return(
+    <div className="min-h-screen pb-24">
+      <div className="header">
+        <div className="max-w-600 mx-auto flex justify-between items-center">
+          <div><h1 className="text-lg font-bold">پنل مدیریت</h1><p className="text-xs text-white/40">{user.full_name}</p></div>
+          <button onClick={onLogout} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.logout} size={20}/></button>
+        </div>
+      </div>
+
+      <div className="content">
+        {tab==='home'&&(
+          <>
+            {announcements.length>0&&(
+              <div className="glass p-4 mb-4 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-blue-500/30 slide-up">
+                <h3 className="font-bold mb-1 flex items-center gap-2"><Icon d={Icons.bell} size={18}/>اعلان فعال</h3>
+                <p className="text-sm text-white/80">{announcements[0].title}</p>
+                {announcements[0].description&&<p className="text-xs text-white/50 mt-1">{announcements[0].description}</p>}
+                <p className="text-xs text-cyan-300 mt-2 font-mono font-bold">{countdown}</p>
+              </div>
+            )}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <button onClick={()=>{setModal('exam');setFormData({});setQuestions([]);}} className="glass p-4 text-center hover:bg-white/10 transition">
+                <Icon d={Icons.plus} size={28} className="mx-auto mb-2 text-violet-400"/>
+                <p className="text-sm font-bold">آزمون جدید</p>
+              </button>
+              <button onClick={()=>{setModal('ann');setFormData({});}} className="glass p-4 text-center hover:bg-white/10 transition">
+                <Icon d={Icons.bell} size={28} className="mx-auto mb-2 text-blue-400"/>
+                <p className="text-sm font-bold">اعلان جدید</p>
+              </button>
+            </div>
+            <h3 className="font-bold mb-3">آزمون‌های فعال ({exams.length})</h3>
+            {exams.length===0?<div className="card text-center py-8 text-white/40"><Icon d={Icons.exam} size={48} className="mx-auto mb-3 opacity-30"/><p>هنوز آزمونی نیست</p></div>:
+            exams.map(ex=>(
+              <div key={ex.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="flex-1">
+                    <h4 className="font-bold">{ex.title}</h4>
+                    <p className="text-xs text-white/40 mt-1">{ex.description||'بدون توضیحات'}</p>
+                    <div className="flex gap-2 mt-2 flex-wrap">
+                      <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+                      <span className="badge" style={{background:'rgba(139,92,246,0.2)',color:'#a78bfa'}}>{ex.assigned_to==='all'?'همه':'اختصاصی'}</span>
+                      <span className="badge" style={{background:'rgba(16,185,129,0.2)',color:'#34d399'}}>{ex.questions?.length||0} سوال</span>
                     </div>
-                );
-            }
-
-            if (currentPage === 'login') {
-                return <LoginPage onLogin={handleLogin} />;
-            } else if (currentPage === 'admin') {
-                return <AdminPanel user={user} activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />;
-            } else {
-                return <StudentPanel user={user} activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />;
-            }
-        }
-
-        function LoginPage({ onLogin }) {
-            const [username, setUsername] = useState('');
-            const [password, setPassword] = useState('');
-            const [error, setError] = useState('');
-            const [errorDetails, setErrorDetails] = useState('');
-            const [isLoading, setIsLoading] = useState(false);
-
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-                setError('');
-                setErrorDetails('');
-                setIsLoading(true);
-                
-                const result = await onLogin(username, password);
-                
-                if (!result.success) {
-                    setError(result.error);
-                    if (result.details) {
-                        setErrorDetails(typeof result.details === 'object' ? JSON.stringify(result.details, null, 2) : result.details);
-                    }
-                }
-                setIsLoading(false);
-            };
-
-            return (
-                <div className="min-h-screen flex items-center justify-center p-6 fade-in">
-                    <div className="w-full max-w-sm">
-                        <div className="text-center mb-8 slide-up">
-                            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/30">
-                                <Icon path={Icons.book} size={36} />
-                            </div>
-                            <h1 className="text-3xl font-black mb-2">سامانه دانش‌آموزی</h1>
-                            <p className="text-white/40 text-sm">برای ورود اطلاعات خود را وارد کنید</p>
-                        </div>
-
-                        <div className="glass p-6 slide-up">
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {error && (
-                                    <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center">
-                                        {error}
-                                        {errorDetails && (
-                                            <div className="error-detail">
-                                                <div className="error-detail-title">جزئیات خطا:</div>
-                                                <code className="error-detail-code">{errorDetails}</code>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-                                
-                                <div>
-                                    <input
-                                        type="text"
-                                        className="glass-input"
-                                        placeholder="نام کاربری"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                        required
-                                        autoComplete="username"
-                                    />
-                                </div>
-                                
-                                <div>
-                                    <input
-                                        type="password"
-                                        className="glass-input"
-                                        placeholder="رمز عبور"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required
-                                        autoComplete="current-password"
-                                    />
-                                </div>
-                                
-                                <button type="submit" className="btn-primary" disabled={isLoading}>
-                                    {isLoading ? <span className="loading"></span> : 'ورود به سامانه'}
-                                </button>
-                            </form>
-
-                            <div className="mt-4 text-center text-xs text-white/30">
-                                برای مشاهده جزئیات خطا، تلاش کنید لاگین کنید
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                  <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/20 text-red-400 rounded-xl mr-2"><Icon d={Icons.trash} size={18}/></button>
                 </div>
-            );
-        }
+              </div>
+            ))}
+          </>
+        )}
 
-        function AdminPanel({ user, activeTab, setActiveTab, onLogout }) {
-            const [exams, setExams] = useState([]);
-            const [students, setStudents] = useState([]);
-            const [grades, setGrades] = useState([]);
-            const [showModal, setShowModal] = useState(false);
-            const [modalType, setModalType] = useState('');
-            const [formData, setFormData] = useState({});
+        {tab==='students'&&(
+          <>
+            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+              <button onClick={()=>setSubTab('list')} className={`btn-sm ${subTab==='list'?'btn-primary':'bg-white/10'}`}>لیست دانش‌آموزان</button>
+              <button onClick={()=>setSubTab('report')} className={`btn-sm ${subTab==='report'?'btn-primary':'bg-white/10'}`}>گزارش نمرات</button>
+              <button onClick={()=>setSubTab('objections')} className={`btn-sm ${subTab==='objections'?'btn-primary':'bg-white/10'}`}>اعتراض‌ها ({answers.filter(a=>a.objection&&a.status!=='graded').length})</button>
+            </div>
 
-            useEffect(() => {
-                loadData();
-            }, []);
-
-            const loadData = async () => {
-                const { data: examsData } = await supabaseClient.from('exams').select('*').order('created_at', { ascending: false });
-                const { data: studentsData } = await supabaseClient.from('users').select('*').eq('role', 'student');
-                const { data: gradesData } = await supabaseClient.from('grades').select('*, users(username, full_name), exams(title)');
-                
-                if (examsData) setExams(examsData);
-                if (studentsData) setStudents(studentsData);
-                if (gradesData) setGrades(gradesData);
-            };
-
-            const createExam = async () => {
-                if (!formData.title) return;
-                await supabaseClient.from('exams').insert({
-                    title: formData.title,
-                    description: formData.description || ''
-                });
-                setShowModal(false);
-                setFormData({});
-                loadData();
-            };
-
-            const addGrade = async () => {
-                if (!formData.student_id || !formData.exam_id || !formData.score) return;
-                await supabaseClient.from('grades').insert({
-                    student_id: formData.student_id,
-                    exam_id: formData.exam_id,
-                    score: parseFloat(formData.score),
-                    status: 'pending'
-                });
-                setShowModal(false);
-                setFormData({});
-                loadData();
-            };
-
-            const updateGrade = async (id, newScore) => {
-                await supabaseClient.from('grades').update({
-                    score: parseFloat(newScore),
-                    status: 'approved'
-                }).eq('id', id);
-                loadData();
-            };
-
-            return (
-                <div className="min-h-screen pb-24">
-                    <div className="header">
-                        <div className="max-w-600 mx-auto flex justify-between items-center">
-                            <div>
-                                <h1 className="text-xl font-bold">پنل مدیریت</h1>
-                                <p className="text-xs text-white/40 mt-1">{user?.full_name}</p>
-                            </div>
-                            <button onClick={onLogout} className="btn-icon">
-                                <Icon path={Icons.logout} size={20} />
-                            </button>
+            {subTab==='list'&&(
+              <>
+                <h3 className="font-bold mb-3">دانش‌آموزان ({students.length})</h3>
+                {students.map(s=>(
+                  <div key={s.id} className="card">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold text-lg">{s.full_name[0]}</div>
+                        <div>
+                          <h4 className="font-bold">{s.full_name}</h4>
+                          <p className="text-xs text-white/40">@{s.username}</p>
+                          <p className="text-xs text-violet-300 mt-1">رمز: <span className="font-mono">{s.password}</span></p>
                         </div>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/10"><Icon d={Icons.key} size={14}/>تغییر رمز</button>
+                        <button onClick={()=>openChat(s)} className="btn-sm bg-blue-500/20 text-blue-300"><Icon d={Icons.msg} size={14}/>پیام</button>
+                      </div>
                     </div>
+                  </div>
+                ))}
+              </>
+            )}
 
-                    <div className="content">
-                        {activeTab === 'home' && (
-                            <>
-                                <div className="mb-6">
-                                    <button 
-                                        onClick={() => { setModalType('exam'); setShowModal(true); }}
-                                        className="btn-primary flex items-center justify-center gap-2"
-                                    >
-                                        <Icon path={Icons.plus} size={20} />
-                                        ساخت آزمون جدید
-                                    </button>
-                                </div>
-
-                                <h2 className="text-lg font-bold mb-4">آزمون‌ها</h2>
-                                {exams.length === 0 ? (
-                                    <div className="card text-center py-8 text-white/40">
-                                        <Icon path={Icons.exam} size={48} className="mx-auto mb-3 opacity-30" />
-                                        <p>هنوز آزمونی ثبت نشده</p>
-                                    </div>
-                                ) : (
-                                    exams.map(exam => (
-                                        <div key={exam.id} className="card">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h3 className="font-bold text-lg">{exam.title}</h3>
-                                                    <p className="text-sm text-white/40 mt-1">{exam.description || 'بدون توضیحات'}</p>
-                                                </div>
-                                                <span className="text-xs text-white/30">
-                                                    {new Date(exam.created_at).toLocaleDateString('fa-IR')}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ))
-                                )}
-
-                                <h2 className="text-lg font-bold mb-4 mt-6">ثبت نمره</h2>
-                                <button 
-                                    onClick={() => { setModalType('grade'); setShowModal(true); }}
-                                    className="btn-primary flex items-center justify-center gap-2"
-                                >
-                                    <Icon path={Icons.grade} size={20} />
-                                    ثبت نمره جدید
-                                </button>
-                            </>
-                        )}
-
-                        {activeTab === 'students' && (
-                            <>
-                                <h2 className="text-lg font-bold mb-4">دانش‌آموزان</h2>
-                                {students.map(student => (
-                                    <div key={student.id} className="card flex items-center gap-4">
-                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold text-lg">
-                                            {student.full_name.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold">{student.full_name}</h3>
-                                            <p className="text-sm text-white/40">{student.username}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </>
-                        )}
-
-                        {activeTab === 'grades' && (
-                            <>
-                                <h2 className="text-lg font-bold mb-4">نمرات و اعتراض‌ها</h2>
-                                {grades.length === 0 ? (
-                                    <div className="card text-center py-8 text-white/40">
-                                        <Icon path={Icons.grade} size={48} className="mx-auto mb-3 opacity-30" />
-                                        <p>هنوز نمره‌ای ثبت نشده</p>
-                                    </div>
-                                ) : (
-                                    grades.map(grade => (
-                                        <div key={grade.id} className="card">
-                                            <div className="flex justify-between items-start mb-3">
-                                                <div>
-                                                    <h3 className="font-bold">{grade.users?.full_name || 'دانش‌آموز'}</h3>
-                                                    <p className="text-sm text-white/40 mt-1">{grade.exams?.title || 'آزمون'}</p>
-                                                </div>
-                                                <div className="text-left">
-                                                    <span className={`badge ${grade.status === 'approved' ? 'badge-approved' : 'badge-pending'}`}>
-                                                        {grade.status === 'approved' ? 'تایید شده' : 'در انتظار'}
-                                                    </span>
-                                                    <p className="text-2xl font-bold mt-2">{grade.score || '-'}</p>
-                                                </div>
-                                            </div>
-                                            
-                                            {grade.objection && (
-                                                <div className="mt-3 p-3 bg-white/5 rounded-xl">
-                                                    <p className="text-xs text-white/40 mb-1">اعتراض دانش‌آموز:</p>
-                                                    <p className="text-sm">{grade.objection}</p>
-                                                    {grade.status !== 'approved' && (
-                                                        <button 
-                                                            onClick={() => {
-                                                                const newScore = prompt('نمره جدید:', grade.score);
-                                                                if (newScore) updateGrade(grade.id, newScore);
-                                                            }}
-                                                            className="btn-primary btn-sm mt-3 w-full"
-                                                        >
-                                                            بروزرسانی نمره
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))
-                                )}
-                            </>
-                        )}
-
-                        {activeTab === 'messages' && (
-                            <div className="card text-center py-8 text-white/40">
-                                <Icon path={Icons.message} size={48} className="mx-auto mb-3 opacity-30" />
-                                <p>سیستم پیام‌رسانی</p>
+            {subTab==='report'&&(
+              <>
+                <h3 className="font-bold mb-3">کارنامه دانش‌آموزان</h3>
+                {students.map(s=>{
+                  const avg=getStudentAverage(s.id);
+                  const grades=getStudentGrades(s.id);
+                  return(
+                    <div key={s.id} className="card">
+                      <div className="flex justify-between items-center mb-3">
+                        <div>
+                          <h4 className="font-bold">{s.full_name}</h4>
+                          <p className="text-xs text-white/40">@{s.username}</p>
+                        </div>
+                        <div className="text-left">
+                          <p className="text-xs text-white/40">معدل</p>
+                          <p className="text-2xl font-black text-violet-400">{avg}</p>
+                        </div>
+                      </div>
+                      {grades.length>0&&(
+                        <div className="space-y-2">
+                          {grades.map(g=>(
+                            <div key={g.id} className="flex justify-between items-center p-2 bg-white/5 rounded-lg text-sm">
+                              <span>{g.exams?.title||'آزمون'}</span>
+                              <span className={`font-bold ${g.status==='graded'?'text-green-400':'text-yellow-400'}`}>{g.score||'-'}</span>
                             </div>
-                        )}
+                          ))}
+                        </div>
+                      )}
                     </div>
+                  );
+                })}
+              </>
+            )}
 
-                    <div className="nav-bar">
-                        <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')}>
-                            <Icon path={Icons.home} />
-                            <span>خانه</span>
-                        </div>
-                        <div className={`nav-item ${activeTab === 'students' ? 'active' : ''}`} onClick={() => setActiveTab('students')}>
-                            <Icon path={Icons.users} />
-                            <span>دانش‌آموزان</span>
-                        </div>
-                        <div className={`nav-item ${activeTab === 'grades' ? 'active' : ''}`} onClick={() => setActiveTab('grades')}>
-                            <Icon path={Icons.grade} />
-                            <span>نمرات</span>
-                        </div>
-                        <div className={`nav-item ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>
-                            <Icon path={Icons.message} />
-                            <span>پیام‌ها</span>
-                        </div>
+            {subTab==='objections'&&(
+              <>
+                <h3 className="font-bold mb-3">اعتراض‌های دانش‌آموزان</h3>
+                {answers.filter(a=>a.objection).length===0?<div className="card text-center py-8 text-white/40"><p>اعتراضی ثبت نشده</p></div>:
+                answers.filter(a=>a.objection).map(a=>(
+                  <div key={a.id} className="card">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-bold">{a.users?.full_name}</h4>
+                        <p className="text-xs text-white/40">{a.exams?.title} - {a.questions?.q_text?.substring(0,50)}...</p>
+                      </div>
+                      <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'نمره داده شده':'در انتظار'}</span>
                     </div>
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 my-2">
+                      <p className="text-xs text-yellow-300 mb-1">متن اعتراض:</p>
+                      <p className="text-sm">{a.objection}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input type="number" className="glass-input flex-1" placeholder="نمره جدید" defaultValue={a.score||0} id={`grade-${a.id}`}/>
+                      <button onClick={()=>{const v=document.getElementById(`grade-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت نمره</button>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
 
-                    {showModal && (
-                        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                            <div className="glass p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold">
-                                        {modalType === 'exam' ? 'ساخت آزمون جدید' : 'ثبت نمره'}
-                                    </h3>
-                                    <button onClick={() => setShowModal(false)} className="btn-icon">
-                                        <Icon path={Icons.x} size={18} />
-                                    </button>
-                                </div>
-                                
-                                {modalType === 'exam' ? (
-                                    <div className="space-y-4">
-                                        <input
-                                            className="glass-input"
-                                            placeholder="عنوان آزمون"
-                                            value={formData.title || ''}
-                                            onChange={e => setFormData({...formData, title: e.target.value})}
-                                        />
-                                        <textarea
-                                            className="glass-input"
-                                            placeholder="توضیحات (اختیاری)"
-                                            rows="3"
-                                            value={formData.description || ''}
-                                            onChange={e => setFormData({...formData, description: e.target.value})}
-                                        />
-                                        <button onClick={createExam} className="btn-primary">ساخت آزمون</button>
-                                    </div>
-                                ) : (
-                                    <div className="space-y-4">
-                                        <select
-                                            className="glass-input"
-                                            value={formData.student_id || ''}
-                                            onChange={e => setFormData({...formData, student_id: e.target.value})}
-                                        >
-                                            <option value="">انتخاب دانش‌آموز</option>
-                                            {students.map(s => (
-                                                <option key={s.id} value={s.id}>{s.full_name}</option>
-                                            ))}
-                                        </select>
-                                        <select
-                                            className="glass-input"
-                                            value={formData.exam_id || ''}
-                                            onChange={e => setFormData({...formData, exam_id: e.target.value})}
-                                        >
-                                            <option value="">انتخاب آزمون</option>
-                                            {exams.map(e => (
-                                                <option key={e.id} value={e.id}>{e.title}</option>
-                                            ))}
-                                        </select>
-                                        <input
-                                            type="number"
-                                            className="glass-input"
-                                            placeholder="نمره"
-                                            value={formData.score || ''}
-                                            onChange={e => setFormData({...formData, score: e.target.value})}
-                                        />
-                                        <button onClick={addGrade} className="btn-primary">ثبت نمره</button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
+            {subTab==='chat'&&chatStudent&&(
+              <div className="fixed inset-0 bg-slate-900 z-50 flex flex-col">
+                <div className="header flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <button onClick={()=>setSubTab('list')} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={20}/></button>
+                    <div>
+                      <h4 className="font-bold">{chatStudent.full_name}</h4>
+                      <p className="text-xs text-white/40">@{chatStudent.username}</p>
+                    </div>
+                  </div>
                 </div>
-            );
-        }
-
-        function StudentPanel({ user, activeTab, setActiveTab, onLogout }) {
-            const [exams, setExams] = useState([]);
-            const [grades, setGrades] = useState([]);
-            const [showModal, setShowModal] = useState(false);
-            const [selectedGrade, setSelectedGrade] = useState(null);
-            const [objectionText, setObjectionText] = useState('');
-
-            useEffect(() => {
-                loadData();
-            }, []);
-
-            const loadData = async () => {
-                const { data: examsData } = await supabaseClient.from('exams').select('*').order('created_at', { ascending: false });
-                const { data: gradesData } = await supabaseClient.from('grades').select('*, exams(title)').eq('student_id', user.id);
-                
-                if (examsData) setExams(examsData);
-                if (gradesData) setGrades(gradesData);
-            };
-
-            const submitObjection = async () => {
-                if (!objectionText.trim() || !selectedGrade) return;
-                await supabaseClient.from('grades').update({
-                    objection: objectionText,
-                    status: 'pending'
-                }).eq('id', selectedGrade.id);
-                setShowModal(false);
-                setObjectionText('');
-                setSelectedGrade(null);
-                loadData();
-            };
-
-            return (
-                <div className="min-h-screen pb-24">
-                    <div className="header">
-                        <div className="max-w-600 mx-auto flex justify-between items-center">
-                            <div>
-                                <h1 className="text-xl font-bold">پنل دانش‌آموز</h1>
-                                <p className="text-xs text-white/40 mt-1">{user?.full_name}</p>
-                            </div>
-                            <button onClick={onLogout} className="btn-icon">
-                                <Icon path={Icons.logout} size={20} />
-                            </button>
-                        </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                  {chatMessages.filter(m=>m.sender_id===chatStudent.id||m.receiver_id===chatStudent.id).map(m=>(
+                    <div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}>
+                      <div className={`max-w-[80%] p-3 rounded-2xl ${m.sender_id===user.id?'bg-violet-600':'bg-white/10'}`}>
+                        <p className="text-sm">{m.content}</p>
+                        <p className="text-xs text-white/40 mt-1">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}</p>
+                      </div>
                     </div>
-
-                    <div className="content">
-                        {activeTab === 'home' && (
-                            <>
-                                <div className="glass p-6 mb-6 slide-up">
-                                    <h2 className="text-lg font-bold mb-2">خوش آمدی! </h2>
-                                    <p className="text-white/60 text-sm">می‌توانی آزمون‌ها را مشاهده کنی و نمرات خود را بررسی کنی.</p>
-                                </div>
-
-                                <h2 className="text-lg font-bold mb-4">آزمون‌های موجود</h2>
-                                {exams.length === 0 ? (
-                                    <div className="card text-center py-8 text-white/40">
-                                        <Icon path={Icons.exam} size={48} className="mx-auto mb-3 opacity-30" />
-                                        <p>هنوز آزمونی ثبت نشده</p>
-                                    </div>
-                                ) : (
-                                    exams.map(exam => (
-                                        <div key={exam.id} className="card">
-                                            <h3 className="font-bold text-lg mb-1">{exam.title}</h3>
-                                            <p className="text-sm text-white/40">{exam.description || 'بدون توضیحات'}</p>
-                                            <button className="btn-primary mt-4">شرکت در آزمون</button>
-                                        </div>
-                                    ))
-                                )}
-                            </>
-                        )}
-
-                        {activeTab === 'grades' && (
-                            <>
-                                <h2 className="text-lg font-bold mb-4">نمرات من</h2>
-                                {grades.length === 0 ? (
-                                    <div className="card text-center py-8 text-white/40">
-                                        <Icon path={Icons.grade} size={48} className="mx-auto mb-3 opacity-30" />
-                                        <p>هنوز نمره‌ای ثبت نشده</p>
-                                    </div>
-                                ) : (
-                                    grades.map(grade => (
-                                        <div key={grade.id} className="card">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h3 className="font-bold">{grade.exams?.title || 'آزمون'}</h3>
-                                                    <p className="text-sm text-white/40 mt-1">
-                                                        وضعیت: {grade.status === 'approved' ? 'تایید شده' : 'در انتظار بررسی'}
-                                                    </p>
-                                                </div>
-                                                <div className="text-left">
-                                                    <span className="text-3xl font-black">{grade.score || '-'}</span>
-                                                </div>
-                                            </div>
-                                            
-                                            {grade.objection && grade.status !== 'approved' && (
-                                                <div className="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
-                                                    <p className="text-yellow-300 text-sm">اعتراض شما در حال بررسی است</p>
-                                                </div>
-                                            )}
-                                            
-                                            {grade.status === 'approved' && !grade.objection && (
-                                                <button 
-                                                    onClick={() => { setSelectedGrade(grade); setShowModal(true); }}
-                                                    className="btn-primary mt-3 w-full"
-                                                >
-                                                    درخواست بررسی مجدد
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))
-                                )}
-                            </>
-                        )}
-
-                        {activeTab === 'messages' && (
-                            <>
-                                <h2 className="text-lg font-bold mb-4">پیام‌ها</h2>
-                                <div className="card">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold">
-                                            م
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-sm">مدیریت مدرسه</h3>
-                                            <p className="text-sm text-white/60 mt-1">به سامانه خوش آمدید</p>
-                                            <span className="text-xs text-white/30 mt-2 block">امروز</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                    </div>
-
-                    <div className="nav-bar">
-                        <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')}>
-                            <Icon path={Icons.home} />
-                            <span>خانه</span>
-                        </div>
-                        <div className={`nav-item ${activeTab === 'grades' ? 'active' : ''}`} onClick={() => setActiveTab('grades')}>
-                            <Icon path={Icons.grade} />
-                            <span>نمرات</span>
-                        </div>
-                        <div className={`nav-item ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>
-                            <Icon path={Icons.message} />
-                            <span>پیام‌ها</span>
-                        </div>
-                    </div>
-
-                    {showModal && (
-                        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-                            <div className="glass p-6 w-full max-w-md" onClick={e => e.stopPropagation()}>
-                                <div className="flex justify-between items-center mb-4">
-                                    <h3 className="text-lg font-bold">درخواست بررسی مجدد</h3>
-                                    <button onClick={() => setShowModal(false)} className="btn-icon">
-                                        <Icon path={Icons.x} size={18} />
-                                    </button>
-                                </div>
-                                <p className="text-sm text-white/60 mb-4">دلیل درخواست خود را برای بررسی مجدد نمره بنویسید:</p>
-                                <textarea
-                                    className="glass-input mb-4"
-                                    placeholder="متن اعتراض..."
-                                    rows="4"
-                                    value={objectionText}
-                                    onChange={e => setObjectionText(e.target.value)}
-                                />
-                                <button onClick={submitObjection} className="btn-primary">
-                                    ارسال درخواست
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                  ))}
                 </div>
-            );
-        }
+                <div className="p-4 border-t border-white/10 flex gap-2">
+                  <input className="glass-input flex-1" placeholder="پیام خود را بنویسید..." value={chatText} onChange={e=>setChatText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendMessage()}/>
+                  <button onClick={sendMessage} className="btn-primary w-auto px-6"><Icon d={Icons.send} size={20}/></button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+        {tab==='grading'&&(
+          <>
+            <h3 className="font-bold mb-3">پاسخ‌برگ‌ها برای تصحیح</h3>
+            {answers.filter(a=>a.status==='pending').length===0?<div className="card text-center py-8 text-white/40"><p>پاسخ‌برگی در انتظار نیست</p></div>:
+            answers.filter(a=>a.status==='pending').map(a=>(
+              <div key={a.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="font-bold">{a.users?.full_name}</h4>
+                    <p className="text-xs text-white/40">{a.exams?.title}</p>
+                  </div>
+                  <span className="badge badge-pending">در انتظار نمره</span>
+                </div>
+                <div className="bg-white/5 rounded-xl p-3 my-2">
+                  <p className="text-xs text-white/40 mb-1">سوال:</p>
+                  <p className="text-sm mb-2">{a.questions?.q_text}</p>
+                  <p className="text-xs text-white/40 mb-1">پاسخ دانش‌آموز:</p>
+                  <p className="text-sm text-violet-300">{a.student_answer||'بدون پاسخ'}</p>
+                  {a.questions?.correct_opt&&<p className="text-xs text-green-400 mt-2">پاسخ صحیح: {a.questions.correct_opt}</p>}
+                </div>
+                <div className="flex items-center gap-2">
+                  <input type="number" className="glass-input flex-1" placeholder="نمره" id={`score-${a.id}`}/>
+                  <button onClick={()=>{const v=document.getElementById(`score-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت</button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+
+        {tab==='messages'&&(
+          <>
+            <h3 className="font-bold mb-3">پیام‌های دریافتی</h3>
+            {messages.filter(m=>m.receiver_id===user.id).length===0?<div className="card text-center py-8 text-white/40"><p>پیامی ندارید</p></div>:
+            messages.filter(m=>m.receiver_id===user.id).map(m=>(
+              <div key={m.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <h4 className="font-bold">{m.users_sender?.full_name}</h4>
+                  <span className="text-xs text-white/40">{new Date(m.created_at).toLocaleDateString('fa-IR')}</span>
+                </div>
+                <p className="text-sm text-white/80">{m.content}</p>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+
+      <div className="nav-bar">
+        <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
+        <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>{setTab('students');setSubTab('list');}}><Icon d={Icons.users}/><span>دانش‌آموزان</span></div>
+        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
+        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>setTab('messages')}><Icon d={Icons.msg}/><span>پیام‌ها</span></div>
+      </div>
+
+      {modal==='exam'&&(
+        <div className="modal-overlay" onClick={()=>setModal(null)}>
+          <div className="glass w-full max-w-md p-5 max-h-[90vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold">طراحی آزمون جدید</h3>
+              <button onClick={()=>setModal(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            <input className="glass-input mb-3" placeholder="عنوان آزمون *" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
+            <textarea className="glass-input mb-3" placeholder="توضیحات (اختیاری)" value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})}/>
+            <input className="glass-input mb-3" type="number" placeholder="مدت زمان (دقیقه)" value={formData.duration||'60'} onChange={e=>setFormData({...formData,duration:e.target.value})}/>
+            <select className="glass-input mb-4" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
+              <option value="all">تمام دانش‌آموزان</option>
+              {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
+            </select>
+            <div className="border-t border-white/10 pt-4 mt-4">
+              <div className="flex justify-between items-center mb-3">
+                <h4 className="font-bold">سوالات ({questions.length})</h4>
+                <button onClick={addQuestion} className="btn-sm bg-violet-600"><Icon d={Icons.plus} size={16}/>افزودن سوال</button>
+              </div>
+              {questions.map((q,i)=>(
+                <div key={i} className="bg-white/5 rounded-xl p-3 mb-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-bold text-violet-300">سوال {i+1}</span>
+                    <button onClick={()=>removeQuestion(i)} className="text-red-400"><Icon d={Icons.x} size={16}/></button>
+                  </div>
+                  <input className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)}/>
+                  <div className="grid grid-cols-2 gap-2 mb-2">
+                    <input className="glass-input text-sm" placeholder="گزینه A" value={q.opt_a} onChange={e=>updateQuestion(i,'opt_a',e.target.value)}/>
+                    <input className="glass-input text-sm" placeholder="گزینه B" value={q.opt_b} onChange={e=>updateQuestion(i,'opt_b',e.target.value)}/>
+                    <input className="glass-input text-sm" placeholder="گزینه C" value={q.opt_c} onChange={e=>updateQuestion(i,'opt_c',e.target.value)}/>
+                    <input className="glass-input text-sm" placeholder="گزینه D" value={q.opt_d} onChange={e=>updateQuestion(i,'opt_d',e.target.value)}/>
+                  </div>
+                  <select className="glass-input text-sm" value={q.correct_opt} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}>
+                    <option value="">پاسخ صحیح...</option>
+                    <option value="A">گزینه A</option><option value="B">گزینه B</option><option value="C">گزینه C</option><option value="D">گزینه D</option>
+                  </select>
+                </div>
+              ))}
+            </div>
+            <button onClick={createExam} className="btn-primary mt-4" disabled={loading}>{loading?'در حال ذخیره...':'ذخیره آزمون'}</button>
+          </div>
+        </div>
+      )}
+
+      {modal==='ann'&&(
+        <div className="modal-overlay" onClick={()=>setModal(null)}>
+          <div className="glass w-full max-w-md p-5 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold">اعلان جدید</h3>
+              <button onClick={()=>setModal(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            <input className="glass-input mb-3" placeholder="عنوان اعلان" value={formData.annTitle||''} onChange={e=>setFormData({...formData,annTitle:e.target.value})}/>
+            <textarea className="glass-input mb-3" placeholder="توضیحات" value={formData.annDesc||''} onChange={e=>setFormData({...formData,annDesc:e.target.value})}/>
+            <input className="glass-input mb-4" type="datetime-local" value={formData.annDate||''} onChange={e=>setFormData({...formData,annDate:e.target.value})}/>
+            <button onClick={createAnnouncement} className="btn-primary">ثبت اعلان</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ================= STUDENT PANEL =================
+function Student({user,tab,setTab,onLogout}){
+  const [exams,setExams]=useState([]);
+  const [answers,setAnswers]=useState([]);
+  const [messages,setMessages]=useState([]);
+  const [announcements,setAnnouncements]=useState([]);
+  const [activeExam,setActiveExam]=useState(null);
+  const [currentQ,setCurrentQ]=useState(0);
+  const [studentAnswers,setStudentAnswers]=useState({});
+  const [timeLeft,setTimeLeft]=useState(0);
+  const [showCalc,setShowCalc]=useState(false);
+  const [calcDisplay,setCalcDisplay]=useState('');
+  const [checklist,setChecklist]=useState(JSON.parse(localStorage.getItem('checklist_'+user?.id)||'[]'));
+  const [newTask,setNewTask]=useState('');
+  const [reminder,setReminder]=useState(JSON.parse(localStorage.getItem('reminder_'+user?.id)||'{"text":"","date":""}'));
+  const [showObjection,setShowObjection]=useState(null);
+  const [objectionText,setObjectionText]=useState('');
+  const [sendMessageText,setSendMessageText]=useState('');
+  const chartRef=useRef(null);
+  const [chartReady,setChartReady]=useState(false);
+
+  useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{localStorage.setItem('checklist_'+user?.id,JSON.stringify(checklist));},[checklist,user]);
+  useEffect(()=>{localStorage.setItem('reminder_'+user?.id,JSON.stringify(reminder));},[reminder,user]);
+
+  const loadAll=async()=>{
+    const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
+    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text)').eq('student_id',user.id);
+    const {data:m}=await SB.from('messages').select('*,users!messages_sender_id_fkey(full_name,username)').eq('receiver_id',user.id).order('created_at',{ascending:false});
+    const {data:an}=await SB.from('announcements').select('*').order('target_date',{ascending:true}).limit(1);
+    if(e) setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===user.id));
+    if(a) setAnswers(a);
+    if(m) setMessages(m);
+    if(an&&an.length>0) setAnnouncements(an);
+  };
+
+  const startExam=(exam)=>{
+    setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);
+  };
+
+  useEffect(()=>{
+    if(activeExam&&timeLeft>0){
+      const t=setInterval(()=>setTimeLeft(tl=>tl-1),1000);
+      return ()=>clearInterval(t);
+    }else if(activeExam&&timeLeft===0){
+      submitExam();
+    }
+  },[activeExam,timeLeft]);
+
+  const submitExam=async()=>{
+    if(!activeExam) return;
+    for(const q of activeExam.questions){
+      const ans=studentAnswers[q.id]||'';
+      let score=0;
+      if(q.q_type==='test'&&q.correct_opt){
+        if(ans===q.correct_opt) score=1;
+      }
+      await SB.from('answers').insert({
+        exam_id:activeExam.id,student_id:user.id,question_id:q.id,
+        student_answer:ans,score:score,max_score:1,status:q.q_type==='test'?'graded':'pending'
+      });
+    }
+    alert('پاسخ‌های شما ثبت شد!');
+    setActiveExam(null);loadAll();
+  };
+
+  const formatTime=(s)=>{
+    const m=Math.floor(s/60);const sec=s%60;
+    return `${m}:${sec<10?'0':''}${sec}`;
+  };
+
+  const calcPress=(v)=>{
+    if(v==='C') setCalcDisplay('');
+    else if(v==='='){try{setCalcDisplay(eval(calcDisplay).toString());}catch{setCalcDisplay('Error');}}
+    else setCalcDisplay(calcDisplay+v);
+  };
+
+  const addTask=()=>{
+    if(newTask.trim()){setChecklist([...checklist,{text:newTask,done:false}]);setNewTask('');}
+  };
+
+  const toggleTask=(i)=>{
+    const n=[...checklist];n[i].done=!n[i].done;setChecklist(n);
+  };
+
+  const deleteTask=(i)=>{setChecklist(checklist.filter((_,idx)=>idx!==i));};
+
+  const submitObjection=async()=>{
+    if(!objectionText.trim()||!showObjection) return;
+    await SB.from('answers').update({objection:objectionText,objection_count:1}).eq('id',showObjection.id);
+    alert('اعتراض شما ثبت شد');
+    setShowObjection(null);setObjectionText('');loadAll();
+  };
+
+  const sendToAdmin=async()=>{
+    if(!sendMessageText.trim()) return;
+    const admins=await SB.from('users').select('id').eq('role','admin').limit(1);
+    if(admins.data&&admins.data.length>0){
+      await SB.from('messages').insert({sender_id:user.id,receiver_id:admins.data[0].id,content:sendMessageText});
+      alert('پیام ارسال شد');setSendMessageText('');
+    }
+  };
+
+  const getCountdown=(target)=>{
+    if(!target) return '';
+    const diff=new Date(target)-new Date();
+    if(diff<=0) return "زمان فرا رسیده!";
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m=Math.floor((diff%(1000*60*60))/(1000*60));
+    const s=Math.floor((diff%(1000*60))/1000);
+    return `${d} روز و ${h} ساعت و ${m} دقیقه و ${s} ثانیه`;
+  };
+
+  const [countdown,setCountdown]=useState('');
+  useEffect(()=>{
+    if(announcements.length>0){
+      const u=()=>setCountdown(getCountdown(announcements[0].target_date));
+      u();const t=setInterval(u,1000);
+      return ()=>clearInterval(t);
+    }
+  },[announcements]);
+
+  const getAverage=()=>{
+    const graded=answers.filter(a=>a.status==='graded');
+    if(graded.length===0) return 0;
+    const total=graded.reduce((s,a)=>s+parseFloat(a.score||0),0);
+    return (total/graded.length).toFixed(2);
+  };
+
+  useEffect(()=>{
+    if(tab==='chart'&&chartReady){
+      const ctx=document.getElementById('gradeChart');
+      if(ctx){
+        if(window.myChart) window.myChart.destroy();
+        const graded=answers.filter(a=>a.status==='graded');
+        window.myChart=new Chart(ctx,{
+          type:'line',
+          data:{
+            labels:graded.map((a,i)=>`آزمون ${i+1}`),
+            datasets:[{label:'نمره',data:graded.map(a=>parseFloat(a.score||0)),borderColor:'#8b5cf6',backgroundColor:'rgba(139,92,246,0.2)',tension:0.4,fill:true}]
+          },
+          options:{responsive:true,plugins:{legend:{labels:{color:'white'}}},scales:{y:{ticks:{color:'white'},grid:{color:'rgba(255,255,255,0.1)'}},x:{ticks:{color:'white'},grid:{color:'rgba(255,255,255,0.1)'}}}}
+        });
+      }
+    }
+  },[tab,chartReady,answers]);
+
+  if(activeExam){
+    const q=activeExam.questions[currentQ];
+    return(
+      <div className="min-h-screen bg-slate-900">
+        <div className="header flex justify-between items-center">
+          <div>
+            <h2 className="font-bold text-lg">{activeExam.title}</h2>
+            <p className="text-xs text-white/40">سوال {currentQ+1} از {activeExam.questions.length}</p>
+          </div>
+          <div className={`text-xl font-mono font-bold ${timeLeft<300?'timer-warning':'text-white'}`}>{formatTime(timeLeft)}</div>
+        </div>
+        {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/20 border border-red-500/50 text-red-300 p-3 text-center text-sm font-bold">⚠️ عجله کن! کمتر از ۵ دقیقه زمان داری!</div>}
+        <div className="content">
+          <div className="card">
+            <p className="mb-4 font-bold text-lg">{q?.q_text}</p>
+            {q?.q_type==='test'?(
+              <div className="space-y-2">
+                {['A','B','C','D'].map(opt=>(
+                  <label key={opt} className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition ${studentAnswers[q.id]===opt?'bg-violet-600/30 border-violet-500':'bg-white/5 border-white/10'}`}>
+                    <input type="radio" name={`q-${q.id}`} checked={studentAnswers[q.id]===opt} onChange={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})} className="w-5 h-5 accent-violet-500"/>
+                    <span>گزینه {opt}: {q[`opt_${opt.toLowerCase()}`]}</span>
+                  </label>
+                ))}
+              </div>
+            ):(
+              <textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>
+            )}
+          </div>
+          <div className="flex gap-2 mt-4">
+            {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-primary bg-white/10 flex-1">قبلی</button>}
+            {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-primary flex-1">بعدی</button>:
+            <button onClick={()=>{if(confirm('آیا مطمئن هستید؟'))submitExam();}} className="btn-success flex-1">ثبت نهایی</button>}
+          </div>
+          <button onClick={()=>setShowCalc(true)} className="btn-primary bg-white/10 mt-2 w-full flex items-center justify-center gap-2"><Icon d={Icons.calc} size={18}/>ماشین‌حساب</button>
+        </div>
+        {showCalc&&(
+          <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
+            <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+              <div className="bg-black/40 p-4 rounded-xl text-2xl text-left mb-4 font-mono h-16 flex items-center justify-end overflow-x-auto">{calcDisplay||'0'}</div>
+              <div className="grid grid-cols-4 gap-2">
+                {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className="calc-btn">{b}</button>)}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return(
+    <div className="min-h-screen pb-24">
+      <div className="header">
+        <div className="max-w-600 mx-auto flex justify-between items-center">
+          <div><h1 className="text-lg font-bold">پنل دانش‌آموز</h1><p className="text-xs text-white/40">{user.full_name}</p></div>
+          <button onClick={onLogout} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.logout} size={20}/></button>
+        </div>
+      </div>
+
+      <div className="content">
+        {tab==='home'&&(
+          <>
+            {announcements.length>0&&(
+              <div className="glass p-4 mb-4 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-blue-500/30 slide-up">
+                <h3 className="font-bold mb-1 flex items-center gap-2"><Icon d={Icons.bell} size={18}/>اعلان مهم</h3>
+                <p className="text-sm text-white/80">{announcements[0].title}</p>
+                {announcements[0].description&&<p className="text-xs text-white/50 mt-1">{announcements[0].description}</p>}
+                <p className="text-xs text-cyan-300 mt-2 font-mono font-bold">{countdown}</p>
+              </div>
+            )}
+            <h3 className="font-bold mb-3">آزمون‌های موجود ({exams.length})</h3>
+            {exams.length===0?<div className="card text-center py-8 text-white/40"><Icon d={Icons.exam} size={48} className="mx-auto mb-3 opacity-30"/><p>آزمونی ندارید</p></div>:
+            exams.map(ex=>(
+              <div key={ex.id} className="card">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h4 className="font-bold">{ex.title}</h4>
+                    <p className="text-xs text-white/40 mt-1">{ex.description||'بدون توضیحات'}</p>
+                    <div className="flex gap-2 mt-2">
+                      <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+                      <span className="badge" style={{background:'rgba(16,185,129,0.2)',color:'#34d399'}}>{ex.questions?.length||0} سوال</span>
+                    </div>
+                  </div>
+                  <button onClick={()=>startExam(ex)} className="btn-primary btn-sm">شروع</button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+
+        {tab==='grades'&&(
+          <>
+            <div className="glass p-4 mb-4 text-center bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20">
+              <p className="text-sm text-white/60 mb-1">معدل کل شما</p>
+              <p className="text-4xl font-black text-violet-400">{getAverage()}</p>
+            </div>
+            <h3 className="font-bold mb-3">نمرات من ({answers.length})</h3>
+            {answers.length===0?<div className="card text-center py-8 text-white/40"><p>هنوز نمره‌ای ثبت نشده</p></div>:
+            answers.map(a=>(
+              <div key={a.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="font-bold">{a.exams?.title||'آزمون'}</h4>
+                    <p className="text-xs text-white/40 mt-1 line-clamp-2">{a.questions?.q_text}</p>
+                  </div>
+                  <div className="text-left">
+                    <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'تصحیح شده':'در انتظار'}</span>
+                    <p className="text-2xl font-bold mt-2">{a.score??'-'}</p>
+                  </div>
+                </div>
+                {a.objection&&a.status!=='graded'&&<div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-2 text-xs text-yellow-300">اعتراض شما در حال بررسی است</div>}
+                {a.status==='graded'&&!a.objection&&<button onClick={()=>setShowObjection(a)} className="btn-warning btn-sm mt-2 w-full">درخواست بررسی مجدد</button>}
+              </div>
+            ))}
+          </>
+        )}
+
+        {tab==='chart'&&(
+          <>
+            <div className="glass p-4 mb-4 text-center">
+              <p className="text-sm text-white/60 mb-1">معدل کل</p>
+              <p className="text-4xl font-black text-violet-400 mb-4">{getAverage()}</p>
+              <canvas id="gradeChart"></canvas>
+            </div>
+            <p className="text-xs text-white/30 text-center">نمودار بر اساس نمرات ثبت شده</p>
+            {!chartReady&&<button onClick={()=>setChartReady(true)} className="btn-primary mt-4">نمایش نمودار</button>}
+          </>
+        )}
+
+        {tab==='messages'&&(
+          <>
+            <div className="flex gap-2 mb-4">
+              <button onClick={()=>setTab('messages')} className="btn-sm btn-primary">پیام‌های دریافتی</button>
+              <button onClick={()=>setTab('sendmsg')} className="btn-sm bg-white/10">ارسال پیام به مدیر</button>
+            </div>
+            {messages.length===0?<div className="card text-center py-8 text-white/40"><p>پیامی ندارید</p></div>:
+            messages.map(m=>(
+              <div key={m.id} className="card">
+                <div className="flex justify-between items-start mb-2">
+                  <h4 className="font-bold">از: {m.users_sender?.full_name}</h4>
+                  <span className="text-xs text-white/40">{new Date(m.created_at).toLocaleDateString('fa-IR')}</span>
+                </div>
+                <p className="text-sm text-white/80">{m.content}</p>
+              </div>
+            ))}
+          </>
+        )}
+
+        {tab==='sendmsg'&&(
+          <>
+            <h3 className="font-bold mb-3">ارسال پیام به مدیر</h3>
+            <div className="card">
+              <textarea className="glass-input mb-3" placeholder="متن پیام خود را بنویسید..." value={sendMessageText} onChange={e=>setSendMessageText(e.target.value)} rows="5"/>
+              <button onClick={sendToAdmin} className="btn-primary flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال پیام</button>
+            </div>
+          </>
+        )}
+
+        {tab==='tools'&&(
+          <>
+            <div className="card mb-4">
+              <h3 className="font-bold mb-3 flex items-center gap-2"><Icon d={Icons.list} size={18}/>چک‌لیست روزانه</h3>
+              <div className="flex gap-2 mb-3">
+                <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
+                <button onClick={addTask} className="btn-primary w-auto px-4">+</button>
+              </div>
+              {checklist.length===0?<p className="text-sm text-white/40 text-center py-2">کاری اضافه نشده</p>:
+              checklist.map((task,i)=>(
+                <div key={i} className="flex items-center gap-2 mb-2 p-2 bg-white/5 rounded-lg">
+                  <input type="checkbox" checked={task.done} onChange={()=>toggleTask(i)} className="w-5 h-5 accent-violet-500"/>
+                  <span className={`flex-1 ${task.done?'line-through text-white/40':''}`}>{task.text}</span>
+                  <button onClick={()=>deleteTask(i)} className="text-red-400"><Icon d={Icons.x} size={16}/></button>
+                </div>
+              ))}
+            </div>
+
+            <div className="card mb-4">
+              <h3 className="font-bold mb-3 flex items-center gap-2"><Icon d={Icons.bell} size={18}/>یادآور</h3>
+              <input className="glass-input mb-2" placeholder="متن یادآور" value={reminder.text} onChange={e=>setReminder({...reminder,text:e.target.value})}/>
+              <input className="glass-input mb-3" type="datetime-local" value={reminder.date} onChange={e=>setReminder({...reminder,date:e.target.value})}/>
+              <p className="text-xs text-white/40">یادآور در مرورگر شما ذخیره می‌شود</p>
+            </div>
+
+            <button onClick={()=>setShowCalc(true)} className="btn-primary w-full flex items-center justify-center gap-2">
+              <Icon d={Icons.calc} size={20}/>ماشین‌حساب
+            </button>
+          </>
+        )}
+      </div>
+
+      <div className="nav-bar">
+        <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
+        <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
+        <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
+        <div className={`nav-item ${tab==='messages'||tab==='sendmsg'?'active':''}`} onClick={()=>setTab('messages')}><Icon d={Icons.msg}/><span>پیام‌ها</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>setTab('tools')}><Icon d={Icons.tools}/><span>ابزارها</span></div>
+      </div>
+
+      {showCalc&&(
+        <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
+          <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="bg-black/40 p-4 rounded-xl text-2xl text-left mb-4 font-mono h-16 flex items-center justify-end overflow-x-auto">{calcDisplay||'0'}</div>
+            <div className="grid grid-cols-4 gap-2">
+              {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className="calc-btn">{b}</button>)}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showObjection&&(
+        <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
+          <div className="glass w-full max-w-md p-5 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold">درخواست بررسی مجدد</h3>
+              <button onClick={()=>setShowObjection(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            <p className="text-sm text-white/60 mb-3">توجه: فقط یکبار می‌توانید اعتراض بزنید.</p>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض خود را بنویسید..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <button onClick={submitObjection} className="btn-primary flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال اعتراض</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+</script>
 </body>
 </html>
