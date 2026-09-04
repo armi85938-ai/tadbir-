@@ -162,9 +162,11 @@
     
     <script type="text/babel">
         const { useState, useEffect } = React;
+        
+        // 🔑 اطلاعات جدید ساپ‌بیس شما اینجاست:
         const supabaseClient = window.supabase.createClient(
-            "https://rzcbwczpjytcfeewjumk.supabase.co",
-            "sb_publishable_tuQ6vkwm9E3-E7BsFCaiIQ_2xA7Cm86"
+            "https://ixdsctccqvljdtnjfebt.supabase.co",
+            "sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h"
         );
 
         const Icon = ({ path, size = 24 }) => (
@@ -315,13 +317,6 @@
                                     {isLoading ? <span className="loading"></span> : 'ورود به سامانه'}
                                 </button>
                             </form>
-
-                            <div className="mt-6 p-4 bg-white/5 rounded-xl text-xs text-white/30 space-y-1">
-                                <div className="font-bold mb-2 text-white/50">اطلاعات ورود:</div>
-                                <div>مدیر: <span className="text-violet-300">ARMIN</span> / <span className="text-violet-300">1010</span></div>
-                                <div>دانش‌آموز: <span className="text-violet-300">AVA</span> / <span className="text-violet-300">1111</span></div>
-                                <div>دانش‌آموز: <span className="text-violet-300">ATRIN</span> / <span className="text-violet-300">0000</span></div>
-                            </div>
                         </div>
                     </div>
                 </div>
