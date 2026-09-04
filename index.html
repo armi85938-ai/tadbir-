@@ -69,7 +69,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .badge-pending{background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.25)}
 .badge-approved{background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.25)}
 .badge-new{background:rgba(129,140,248,0.15);color:#818cf8;border:1px solid rgba(129,140,248,0.25)}
-.badge-wrong{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
 
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -92,9 +91,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word}
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
-
-.wrong-answer{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px;margin-bottom:8px}
-.correct-answer{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:12px;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -265,7 +261,7 @@ function Admin({user,tab,setTab,onLogout}){
                   <div className="flex-1">
                     <h4 className="font-bold">{ex.title}</h4>
                     <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
-                    <div className="flex gap-2"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span><span className="badge badge-new">{ex.assigned_to==='all'?'همه':'تخصصی'}</span></div>
+                    <div className="flex gap-2 flex-wrap"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span><span className="badge badge-new">{ex.assigned_to==='all'?'همه':'تخصصی'}</span></div>
                   </div>
                   <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/15 text-red-400 rounded-xl"><Icon d={Icons.trash} size={16}/></button>
                 </div>
@@ -429,12 +425,11 @@ function Admin({user,tab,setTab,onLogout}){
     </div>
   );
 }
-
-function Student({user,tab,setTab,onLogout}){
+  function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
   const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
   const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
-  const [showCalc,setShowCalc]=useState(false);const [calcDisplay,setCalcDisplay]=useState('');
+  const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);const [objectionText,setObjectionText]=useState('');
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
   const [checklist,setChecklist]=useState([]);const [newTask,setNewTask]=useState('');
@@ -444,6 +439,7 @@ function Student({user,tab,setTab,onLogout}){
   const [toolsTab,setToolsTab]=useState('calc');
   const [chartReady,setChartReady]=useState(false);
   const [showExamResults,setShowExamResults]=useState(null);
+  const [showChat,setShowChat]=useState(false);
   const canvasRef=useRef(null);
   const gameRef=useRef(null);
 
@@ -507,7 +503,7 @@ function Student({user,tab,setTab,onLogout}){
 
   const sendChat=async()=>{if(!chatText.trim())return;const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);if(!admins||!admins.length)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim()});setChatText('');loadMessages();};
 
-  // Space Shooter Game - Optimized
+  // ===== SPACE SHOOTER GAME =====
   const startGame=useCallback(()=>{
     const canvas=canvasRef.current;
     if(!canvas)return;
@@ -516,7 +512,7 @@ function Student({user,tab,setTab,onLogout}){
     canvas.width=W;canvas.height=H;
     
     let score=0,level=1,running=true;
-    let playerX=W/2,playerW=40,playerH=40;
+    let playerX=W/2,playerW=40;
     let bullets=[];
     let enemies=[];
     let particles=[];
@@ -576,14 +572,12 @@ function Student({user,tab,setTab,onLogout}){
       if(!running)return;
       ctx.clearRect(0,0,W,H);
 
-      // Background
       const bgGrad=ctx.createLinearGradient(0,0,0,H);
       bgGrad.addColorStop(0,'rgba(15,15,35,0.95)');
       bgGrad.addColorStop(1,'rgba(10,10,26,0.98)');
       ctx.fillStyle=bgGrad;
       ctx.fillRect(0,0,W,H);
 
-      // Stars
       ctx.fillStyle='rgba(255,255,255,0.3)';
       for(let i=0;i<20;i++){
         const x=(i*37+Date.now()*0.02)%W;
@@ -591,7 +585,6 @@ function Student({user,tab,setTab,onLogout}){
         ctx.fillRect(x,y,2,2);
       }
 
-      // Player
       ctx.fillStyle='#818cf8';
       ctx.shadowColor='#818cf8';
       ctx.shadowBlur=20;
@@ -603,7 +596,6 @@ function Student({user,tab,setTab,onLogout}){
       ctx.fill();
       ctx.shadowBlur=0;
 
-      // Bullets
       bullets=bullets.filter(b=>{
         b.y-=b.speed;
         if(b.y<0)return false;
@@ -615,14 +607,12 @@ function Student({user,tab,setTab,onLogout}){
         return true;
       });
 
-      // Spawn enemies
       enemySpawnTime++;
       if(enemySpawnTime>60-level*5){
         spawnEnemy();
         enemySpawnTime=0;
       }
 
-      // Enemies
       enemies=enemies.filter(e=>{
         e.y+=e.speed;
         if(e.y>H){
@@ -630,14 +620,12 @@ function Student({user,tab,setTab,onLogout}){
           return false;
         }
 
-        // Draw enemy
         ctx.fillStyle=e.color;
         ctx.shadowColor=e.color;
         ctx.shadowBlur=15;
         ctx.fillRect(e.x,e.y,e.w,e.h);
         ctx.shadowBlur=0;
 
-        // Collision with bullets
         for(let i=bullets.length-1;i>=0;i--){
           const b=bullets[i];
           if(b.x>e.x&&b.x<e.x+e.w&&b.y>e.y&&b.y<e.y+e.h){
@@ -649,7 +637,6 @@ function Student({user,tab,setTab,onLogout}){
           }
         }
 
-        // Collision with player
         if(e.x<playerX+playerW/2&&e.x+e.w>playerX-playerW/2&&e.y+e.h>H-40){
           gameOver();
           return false;
@@ -658,7 +645,6 @@ function Student({user,tab,setTab,onLogout}){
         return true;
       });
 
-      // Particles
       particles=particles.filter(p=>{
         p.x+=p.dx;
         p.y+=p.dy;
@@ -670,7 +656,6 @@ function Student({user,tab,setTab,onLogout}){
         return p.life>0;
       });
 
-      // Score & Level
       ctx.fillStyle='rgba(255,255,255,0.8)';
       ctx.font='bold 16px Vazirmatn';
       ctx.textAlign='right';
@@ -863,4 +848,176 @@ function Student({user,tab,setTab,onLogout}){
             {toolsTab==='checklist'&&(
               <div className="space-y-3 slide-up">
                 <div className="flex gap-2">
-                  <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)}
+                  <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
+                  <button onClick={addTask} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.plus} size={16}/></button>
+                </div>
+                {checklist.length===0&&<p className="text-center text-white/30 py-8">خالی است</p>}
+                {checklist.map(t=>(
+                  <div key={t.id} className="glass p-3 flex items-center gap-3">
+                    <button onClick={()=>toggleTask(t.id,t.is_done)} className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${t.is_done?'bg-emerald-500 border-emerald-500':'border-white/20'}`}>{t.is_done&&<Icon d={Icons.check} size={12}/>}</button>
+                    <span className={`flex-1 text-sm ${t.is_done?'line-through text-white/30':''}`}>{t.title}</span>
+                    <button onClick={()=>deleteTask(t.id)} className="text-red-400/60 hover:text-red-400"><Icon d={Icons.trash} size={16}/></button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {toolsTab==='planner'&&(
+              <div className="space-y-3 slide-up">
+                <div className="glass p-4 space-y-3">
+                  <select className="glass-input" value={newPlan.day} onChange={e=>setNewPlan({...newPlan,day:e.target.value})}>{['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'].map(d=><option key={d}>{d}</option>)}</select>
+                  <input className="glass-input" placeholder="درس (مثال: ریاضی)" value={newPlan.subject} onChange={e=>setNewPlan({...newPlan,subject:e.target.value})}/>
+                  <input className="glass-input" placeholder="ساعت (مثال: 16-18)" value={newPlan.time} onChange={e=>setNewPlan({...newPlan,time:e.target.value})}/>
+                  <button onClick={addPlan} className="btn-glass btn-glass-success text-sm">افزودن</button>
+                </div>
+                {studyPlans.length===0&&<p className="text-center text-white/30 py-4">برنامه‌ای نیست</p>}
+                {studyPlans.map(p=>(
+                  <div key={p.id} className="glass p-3 flex items-center justify-between">
+                    <div><span className="badge badge-new mb-1">{p.day_of_week}</span><p className="font-bold text-sm">{p.subject}</p><p className="text-[11px] text-white/40">{p.time_range}</p></div>
+                    <button onClick={()=>deletePlan(p.id)} className="text-red-400/60"><Icon d={Icons.trash} size={16}/></button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {toolsTab==='game'&&(
+              <div className="text-center slide-up">
+                <div className="flex gap-3 justify-center mb-4">
+                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-xl font-black text-pink-400">{bestScore}</p></div>
+                </div>
+                <p className="text-xs text-white/30 mb-3">برای شلیک کلیک/لمس کنید | حرکت: ماوس/انگشت</p>
+                <canvas ref={canvasRef} id="gameCanvas"></canvas>
+              </div>
+            )}
+
+            <div className="mt-6 glass p-4 text-center">
+              <button onClick={changeMyPassword} className="btn-glass flex items-center justify-center gap-2 text-sm"><Icon d={Icons.key} size={16}/>تغییر رمز عبور</button>
+              <p className="text-[11px] text-white/30 mt-2">مدیر نیز رمز جدید شما را مشاهده می‌کند</p>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="nav-bar">
+        <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
+        <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
+        <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');}}><Icon d={Icons.list}/><span>ابزارها</span></div>
+      </div>
+
+      {/* Chat Button */}
+      <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40">
+        <Icon d={Icons.message} size={24}/>
+      </button>
+
+      {/* Chat Modal */}
+      {showChat&&(
+        <div className="modal-overlay" onClick={()=>setShowChat(false)}>
+          <div className="glass-strong w-full max-w-md h-[70vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/5">
+              <h3 className="font-bold gradient-text">پیام به مدیر</h3>
+              <button onClick={()=>setShowChat(false)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            <div className="flex-1 overflow-y-auto mb-3 space-y-1">
+              {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید</p>}
+              {messages.map(m=>(
+                <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}</div>
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <input className="glass-input flex-1 text-sm" placeholder="پیام شما..." value={chatText} onChange={e=>setChatText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendChat()}/>
+              <button onClick={sendChat} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.send} size={16}/></button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Objection Modal */}
+      {showObjection&&(
+        <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
+          <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض به آزمون</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">فقط یکبار می‌توانید اعتراض بزنید</div>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
+          </div>
+        </div>
+      )}
+
+      {/* Exam Results Modal */}
+      {showExamResults&&(
+        <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
+          <div className="glass-strong w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-bold gradient-text">نتایج آزمون</h3>
+              <button onClick={()=>setShowExamResults(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            {(()=>{
+              const exam=exams.find(e=>e.id===showExamResults);
+              if(!exam)return null;
+              const score=getExamScore(exam.id);
+              const examAnswers=answers.filter(a=>a.exam_id===exam.id);
+              return(
+                <>
+                  <div className="glass p-4 mb-4 text-center">
+                    <h4 className="font-bold mb-2">{exam.title}</h4>
+                    <p className="text-3xl font-black gradient-text">{score.percentage}/20</p>
+                    <p className="text-xs text-white/40 mt-1">{score.totalScore} از {score.maxScore}</p>
+                  </div>
+                  <h4 className="font-bold text-sm mb-3 text-white/70">جزئیات سوالات:</h4>
+                  {examAnswers.map((a,idx)=>{
+                    const q=exam.questions.find(qq=>qq.id===a.question_id);
+                    if(!q)return null;
+                    const isCorrect=q.q_type==='test'&&a.student_answer===q.correct_opt;
+                    const isWrong=q.q_type==='test'&&a.student_answer&&a.student_answer!==q.correct_opt;
+                    return(
+                      <div key={a.id} className={`glass p-3 mb-2 ${isWrong?'border-red-500/30':isCorrect?'border-emerald-500/30':''}`}>
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="text-xs text-white/40">سوال {idx+1}</span>
+                          <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'تصحیح شده':'در انتظار تصحیح مدیر'}</span>
+                        </div>
+                        <p className="text-sm mb-2">{q.q_text}</p>
+                        {q.q_type==='test'?(
+                          <div className="space-y-1 text-xs">
+                            {isWrong&&(
+                              <>
+                                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+                                  <span className="text-red-300">پاسخ شما: {a.student_answer}</span>
+                                </div>
+                                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2">
+                                  <span className="text-emerald-300">پاسخ صحیح: {q.correct_opt}</span>
+                                </div>
+                              </>
+                            )}
+                            {isCorrect&&(
+                              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2">
+                                <span className="text-emerald-300">✓ پاسخ صحیح: {a.student_answer}</span>
+                              </div>
+                            )}
+                          </div>
+                        ):(
+                          <div className="text-xs">
+                            <p className="text-white/40 mb-1">پاسخ شما:</p>
+                            <p className="bg-white/5 p-2 rounded">{a.student_answer||'بدون پاسخ'}</p>
+                          </div>
+                        )}
+                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                          <span className="text-xs text-white/40">نمره: {q.score||1}</span>
+                          <span className="text-sm font-bold gradient-text">کسب شده: {a.score||0}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
