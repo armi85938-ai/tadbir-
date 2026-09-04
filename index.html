@@ -14,68 +14,79 @@
 <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
 <style>
 *{font-family:'Vazirmatn',sans-serif;margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 30%,#312e81 60%,#4c1d95 100%);min-height:100vh;color:#fff;overflow-x:hidden}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(139,92,246,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(59,130,246,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
-.glass{background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
-.glass-input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
-.glass-input:focus{border-color:#8b5cf6;box-shadow:0 0 0 4px rgba(139,92,246,0.15);background:rgba(0,0,0,0.4)}
-.glass-input::placeholder{color:rgba(255,255,255,0.35)}
-.btn-primary{background:linear-gradient(135deg,#8b5cf6 0%,#7c3aed 50%,#6d28d9 100%);color:#fff;border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(139,92,246,0.4);position:relative;overflow:hidden}
-.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.5s}
+body{background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(120,119,198,0.3) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(255,119,198,0.15) 0%,transparent 50%),radial-gradient(circle at 40% 20%,rgba(120,200,255,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
+.glass{background:rgba(255,255,255,0.05);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.1)}
+.glass-strong{background:rgba(255,255,255,0.08);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.15)}
+.glass-input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
+.glass-input:focus{border-color:#a78bfa;box-shadow:0 0 0 4px rgba(167,139,250,0.2);background:rgba(0,0,0,0.4)}
+.glass-input::placeholder{color:rgba(255,255,255,0.3)}
+.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(102,126,234,0.4);position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
 .btn-primary:hover::before{left:100%}
 .btn-primary:active{transform:scale(0.97)}
-.btn-danger{background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)}
-.btn-success{background:linear-gradient(135deg,#10b981 0%,#059669 100%)}
-.btn-warning{background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%)}
-.btn-info{background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%)}
+.btn-danger{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.btn-success{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
+.btn-warning{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-flex;align-items:center;gap:6px}
-.nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50;box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:14px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s;position:relative}
-.nav-item.active{color:#a78bfa;background:rgba(139,92,246,0.15)}
-.nav-item.active::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:#8b5cf6;border-radius:3px}
+.btn-glow{animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(250,112,154,0.5),0 0 40px rgba(250,112,154,0.3)}50%{box-shadow:0 0 30px rgba(250,112,154,0.8),0 0 60px rgba(250,112,154,0.5)}}
+.nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,12,41,0.95);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50;box-shadow:0 -4px 30px rgba(0,0,0,0.5)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:16px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s;position:relative}
+.nav-item.active{color:#a78bfa;background:rgba(167,139,250,0.15)}
+.nav-item.active::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:linear-gradient(90deg,#667eea,#764ba2);border-radius:3px}
 .nav-item svg{width:22px;height:22px}
 .fade-in{animation:fadeIn 0.5s ease-out}
 .slide-up{animation:slideUp 0.5s ease-out}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.5)}50%{box-shadow:0 0 40px rgba(239,68,68,0.8)}}
-.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8b5cf6,#3b82f6,#10b981)}
-.header{position:sticky;top:0;z-index:40;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(245,87,108,0.5)}50%{box-shadow:0 0 40px rgba(245,87,108,0.8)}}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#667eea,#764ba2,#f093fb)}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(102,126,234,0.2)}
+.card.disabled{opacity:0.5;filter:grayscale(0.8)}
+.header{position:sticky;top:0;z-index:40;background:rgba(15,12,41,0.95);backdrop-filter:blur(30px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px;box-shadow:0 4px 30px rgba(0,0,0,0.3)}
 .content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto;position:relative;z-index:1}
 .badge{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block}
-.badge-pending{background:rgba(245,158,11,0.2);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)}
-.badge-approved{background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.3)}
-.badge-new{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.badge-pending{background:rgba(250,112,154,0.2);color:#fa709a;border:1px solid rgba(250,112,154,0.3)}
+.badge-approved{background:rgba(79,172,254,0.2);color:#4facfe;border:1px solid rgba(79,172,254,0.3)}
+.badge-new{background:rgba(102,126,234,0.2);color:#667eea;border:1px solid rgba(102,126,234,0.3)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(15px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 textarea.glass-input{resize:vertical;min-height:100px}
 select.glass-input{appearance:none}
-.gradient-text{background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 50%,#34d399 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.question-card{background:linear-gradient(135deg,rgba(139,92,246,0.15) 0%,rgba(59,130,246,0.1) 100%);border:2px solid rgba(139,92,246,0.3);border-radius:16px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative}
-.question-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:linear-gradient(180deg,#8b5cf6,#3b82f6);border-radius:4px}
-.question-card:hover{border-color:#8b5cf6;box-shadow:0 4px 20px rgba(139,92,246,0.3);transform:translateY(-2px)}
-.option-input{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px;color:#fff;font-size:13px;width:100%;outline:none;transition:all 0.3s}
-.option-input:focus{border-color:#8b5cf6;background:rgba(139,92,246,0.1)}
+.gradient-text{background:linear-gradient(135deg,#667eea 0%,#f093fb 50%,#4facfe 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.question-card{background:linear-gradient(135deg,rgba(102,126,234,0.15) 0%,rgba(118,75,162,0.1) 100%);border:2px solid rgba(102,126,234,0.3);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative}
+.question-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:linear-gradient(180deg,#667eea,#f093fb);border-radius:4px}
+.question-card:hover{border-color:#667eea;box-shadow:0 4px 25px rgba(102,126,234,0.3);transform:translateY(-2px)}
+.option-input{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px;color:#fff;font-size:13px;width:100%;outline:none;transition:all 0.3s}
+.option-input:focus{border-color:#a78bfa;background:rgba(167,139,250,0.1)}
 .timer-circle{position:relative;width:120px;height:120px}
 .timer-circle svg{transform:rotate(-90deg)}
 .timer-circle circle{fill:none;stroke-width:8}
 .timer-circle .bg{stroke:rgba(255,255,255,0.1)}
 .timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.3s}
 .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.calc-btn{background:rgba(255,255,255,0.1);border:none;color:white;padding:16px;border-radius:12px;font-size:18px;cursor:pointer;transition:all 0.2s;font-weight:600}
-.calc-btn:active{background:rgba(139,92,246,0.3);transform:scale(0.95)}
-.calc-btn.operator{background:rgba(139,92,246,0.3);color:#a78bfa}
-.calc-btn.equals{background:linear-gradient(135deg,#8b5cf6,#7c3aed);grid-column:span 2}
-.stat-card{background:linear-gradient(135deg,rgba(139,92,246,0.2) 0%,rgba(59,130,246,0.1) 100%);border:1px solid rgba(139,92,246,0.3);border-radius:16px;padding:16px;text-align:center;transition:all 0.3s}
-.stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(139,92,246,0.3)}
-.icon-glow{filter:drop-shadow(0 0 8px rgba(139,92,246,0.5))}
+.calc-btn{background:rgba(255,255,255,0.1);border:none;color:white;padding:16px;border-radius:14px;font-size:18px;cursor:pointer;transition:all 0.2s;font-weight:600}
+.calc-btn:active{background:rgba(167,139,250,0.3);transform:scale(0.95)}
+.calc-btn.operator{background:rgba(102,126,234,0.3);color:#a78bfa}
+.calc-btn.equals{background:linear-gradient(135deg,#667eea,#764ba2);grid-column:span 2}
+.stat-card{background:linear-gradient(135deg,rgba(102,126,234,0.2) 0%,rgba(118,75,162,0.1) 100%);border:1px solid rgba(102,126,234,0.3);border-radius:20px;padding:20px;text-align:center;transition:all 0.3s}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(102,126,234,0.3)}
+.icon-glow{filter:drop-shadow(0 0 10px rgba(167,139,250,0.6))}
 .step-indicator{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
 .step-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all 0.3s}
-.step-dot.active{background:#8b5cf6;width:30px;border-radius:5px;box-shadow:0 0 10px rgba(139,92,246,0.5)}
+.step-dot.active{background:linear-gradient(135deg,#667eea,#764ba2);width:30px;border-radius:5px;box-shadow:0 0 15px rgba(102,126,234,0.6)}
 .type-selector{display:flex;gap:8px;margin:10px 0}
-.type-btn{flex:1;padding:10px;border:2px solid rgba(255,255,255,0.1);border-radius:12px;text-align:center;cursor:pointer;transition:all 0.3s;font-size:13px;font-weight:600}
-.type-btn.active{background:rgba(139,92,246,0.3);border-color:#8b5cf6;color:#a78bfa}
-.type-btn:hover{border-color:rgba(139,92,246,0.5)}
+.type-btn{flex:1;padding:12px;border:2px solid rgba(255,255,255,0.1);border-radius:14px;text-align:center;cursor:pointer;transition:all 0.3s;font-size:13px;font-weight:600}
+.type-btn.active{background:linear-gradient(135deg,rgba(102,126,234,0.3),rgba(118,75,162,0.3));border-color:#667eea;color:#a78bfa;box-shadow:0 4px 15px rgba(102,126,234,0.3)}
+.type-btn:hover{border-color:rgba(102,126,234,0.5)}
+.objection-btn{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);color:#fff;border:none;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(250,112,154,0.4);position:relative;overflow:hidden}
+.objection-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);transition:left 0.5s}
+.objection-btn:hover::before{left:100%}
+.objection-btn:active{transform:scale(0.97)}
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation:shimmer 2s infinite}
+@keyframes shimmer{0%{left:-100%}100%{left:100%}}
 </style>
 </head>
 <body>
@@ -103,7 +114,8 @@ const Icons={
   send:"M22 2L11 13 M22 2l-7 20-4-9-9-4 20-7z",
   bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
-  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
+  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12",
+  alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01"
 };
 
 function App(){
@@ -137,17 +149,18 @@ function Login({onLogin}){
     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-20 left-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-blue-500 rounded-full blur-3xl opacity-30 animate-pulse" style={{animationDelay:'1s'}}></div>
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-pink-500 rounded-full blur-3xl opacity-30 animate-pulse" style={{animationDelay:'1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay:'2s'}}></div>
       </div>
       <div className="w-full max-w-sm relative z-10">
         <div className="text-center mb-8 slide-up">
-          <div className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-600 flex items-center justify-center shadow-2xl shadow-purple-500/50 rotate-3 hover:rotate-0 transition-all duration-500">
+          <div className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/50 rotate-3 hover:rotate-0 transition-all duration-500">
             <Icon d={Icons.book} size={50} color="white" className="icon-glow"/>
           </div>
           <h1 className="text-4xl font-black mb-3 gradient-text">سامانه آموزشی</h1>
           <p className="text-white/50 text-sm">ورود به پنل کاربری</p>
         </div>
-        <div className="glass p-6 slide-up">
+        <div className="glass-strong p-6 slide-up">
           <form onSubmit={submit} className="space-y-4">
             {err&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center fade-in">{err}</div>}
             <input className="glass-input" placeholder="نام کاربری" value={un} onChange={e=>setUn(e.target.value)} required/>
@@ -169,7 +182,7 @@ function CircularTimer({timeLeft,totalTime}){
   const minutes=Math.floor(timeLeft/60);
   const seconds=timeLeft%60;
   const isWarning=timeLeft<300;
-  const color=isWarning?'#ef4444':timeLeft<600?'#f59e0b':'#10b981';
+  const color=isWarning?'#f5576c':timeLeft<600?'#fee140':'#4facfe';
   return(
     <div className="timer-circle">
       <svg width="120" height="120">
@@ -177,7 +190,7 @@ function CircularTimer({timeLeft,totalTime}){
         <circle className="progress" cx="60" cy="60" r={radius} stroke={color} strokeDasharray={circumference} strokeDashoffset={circumference-progress} style={isWarning?{animation:'pulse-glow 1s infinite'}:{}}/>
       </svg>
       <div className="timer-text">
-        <div className={`text-2xl font-bold font-mono ${isWarning?'text-red-500 animate-pulse':'text-white'}`}>
+        <div className={`text-2xl font-bold font-mono ${isWarning?'text-red-400 animate-pulse':'text-white'}`}>
           {minutes}:{seconds<10?'0':''}{seconds}
         </div>
         <div className="text-xs text-white/50">باقی‌مانده</div>
@@ -196,6 +209,7 @@ function Admin({user,tab,setTab,onLogout}){
   const [questions,setQuestions]=useState([]);
   const [loading,setLoading]=useState(false);
   const [errorMsg,setErrorMsg]=useState('');
+  const [subTab,setSubTab]=useState('list');
 
   useEffect(()=>{loadAll();},[]);
 
@@ -235,6 +249,7 @@ function Admin({user,tab,setTab,onLogout}){
   const removeQuestion=(i)=>{setQuestions(questions.filter((_,idx)=>idx!==i));};
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();}};
   const changePassword=async(studentId)=>{const newPw=prompt("رمز جدید:");if(newPw){await SB.from('users').update({password:newPw}).eq('id',studentId);alert("تغییر کرد");loadAll();}};
+  const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();alert('نمره ثبت شد');};
 
   return(
     <div className="min-h-screen pb-24">
@@ -250,7 +265,7 @@ function Admin({user,tab,setTab,onLogout}){
           <>
             <div className="grid grid-cols-2 gap-3 mb-6">
               <div className="stat-card slide-up">
-                <Icon d={Icons.exam} size={32} className="mx-auto mb-2 text-violet-400 icon-glow"/>
+                <Icon d={Icons.exam} size={32} className="mx-auto mb-2 text-purple-400 icon-glow"/>
                 <p className="text-2xl font-bold">{exams.length}</p>
                 <p className="text-xs text-white/50">آزمون فعال</p>
               </div>
@@ -260,25 +275,25 @@ function Admin({user,tab,setTab,onLogout}){
                 <p className="text-xs text-white/50">دانش‌آموز</p>
               </div>
               <div className="stat-card slide-up" style={{animationDelay:'0.2s'}}>
-                <Icon d={Icons.grade} size={32} className="mx-auto mb-2 text-green-400 icon-glow"/>
+                <Icon d={Icons.grade} size={32} className="mx-auto mb-2 text-pink-400 icon-glow"/>
                 <p className="text-2xl font-bold">{answers.filter(a=>a.status==='pending').length}</p>
                 <p className="text-xs text-white/50">در انتظار نمره</p>
               </div>
               <div className="stat-card slide-up" style={{animationDelay:'0.3s'}}>
-                <Icon d={Icons.check} size={32} className="mx-auto mb-2 text-yellow-400 icon-glow"/>
-                <p className="text-2xl font-bold">{answers.filter(a=>a.status==='graded').length}</p>
-                <p className="text-xs text-white/50">تصحیح شده</p>
+                <Icon d={Icons.alert} size={32} className="mx-auto mb-2 text-yellow-400 icon-glow"/>
+                <p className="text-2xl font-bold">{answers.filter(a=>a.objection&&a.status!=='graded').length}</p>
+                <p className="text-xs text-white/50">اعتراض</p>
               </div>
             </div>
 
-            <button onClick={()=>{setModal('exam');setFormData({});setQuestions([]);setStep(1);setErrorMsg('');}} className="btn-primary flex items-center justify-center gap-2 mb-6">
+            <button onClick={()=>{setModal('exam');setFormData({});setQuestions([]);setStep(1);setErrorMsg('');}} className="btn-primary flex items-center justify-center gap-2 mb-6 shimmer">
               <Icon d={Icons.plus} size={20}/>ساخت آزمون جدید
             </button>
 
             <h3 className="font-bold mb-3">آزمون‌های فعال</h3>
             {exams.length===0?<div className="card text-center py-12 text-white/40"><Icon d={Icons.exam} size={64} className="mx-auto mb-3 opacity-30"/><p>هنوز آزمونی نیست</p></div>:
             exams.map(ex=>(
-              <div key={ex.id} className="card slide-up">
+              <div key={ex.id} className="card slide-up shimmer">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
@@ -297,35 +312,77 @@ function Admin({user,tab,setTab,onLogout}){
 
         {tab==='students'&&(
           <>
-            <h3 className="font-bold mb-4">دانش‌آموزان</h3>
-            {students.map(s=>(
-              <div key={s.id} className="card">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-purple-700 flex items-center justify-center font-bold text-xl shadow-lg">{s.full_name[0]}</div>
-                  <div className="flex-1">
-                    <h4 className="font-bold text-lg">{s.full_name}</h4>
-                    <p className="text-sm text-white/40">@{s.username}</p>
-                    <p className="text-xs text-violet-300 mt-1">رمز: <span className="font-mono bg-white/10 px-2 py-1 rounded">{s.password}</span></p>
+            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+              <button onClick={()=>setSubTab('list')} className={`btn-sm ${subTab==='list'?'btn-primary':'bg-white/10'}`}>لیست دانش‌آموزان</button>
+              <button onClick={()=>setSubTab('objections')} className={`btn-sm ${subTab==='objections'?'btn-primary':'bg-white/10'}`}>اعتراض‌ها ({answers.filter(a=>a.objection&&a.status!=='graded').length})</button>
+            </div>
+
+            {subTab==='list'&&(
+              <>
+                <h3 className="font-bold mb-4">دانش‌آموزان</h3>
+                {students.map(s=>(
+                  <div key={s.id} className="card">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center font-bold text-xl shadow-lg">{s.full_name[0]}</div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-lg">{s.full_name}</h4>
+                        <p className="text-sm text-white/40">@{s.username}</p>
+                        <p className="text-xs text-purple-300 mt-1">رمز: <span className="font-mono bg-white/10 px-2 py-1 rounded">{s.password}</span></p>
+                      </div>
+                      <button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/10"><Icon d={Icons.key} size={14}/>تغییر</button>
+                    </div>
                   </div>
-                  <button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/10"><Icon d={Icons.key} size={14}/>تغییر</button>
-                </div>
-              </div>
-            ))}
+                ))}
+              </>
+            )}
+
+            {subTab==='objections'&&(
+              <>
+                <h3 className="font-bold mb-4">اعتراض‌های دانش‌آموزان</h3>
+                {answers.filter(a=>a.objection&&a.status!=='graded').length===0?<div className="card text-center py-12 text-white/40"><p>اعتراضی ثبت نشده</p></div>:
+                answers.filter(a=>a.objection&&a.status!=='graded').map(a=>(
+                  <div key={a.id} className="card">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h4 className="font-bold">{a.users?.full_name}</h4>
+                        <p className="text-xs text-white/40">@{a.users?.username}</p>
+                        <p className="text-sm text-purple-300 mt-1">{a.exams?.title}</p>
+                      </div>
+                      <span className="badge badge-pending">اعتراض</span>
+                    </div>
+                    <div className="bg-white/5 rounded-xl p-3 my-3">
+                      <p className="text-xs text-white/40 mb-2">سوال:</p>
+                      <p className="text-sm mb-3">{a.questions?.q_text}</p>
+                      <p className="text-xs text-white/40 mb-2">پاسخ دانش‌آموز:</p>
+                      <p className="text-sm text-purple-300 bg-white/5 p-2 rounded">{a.student_answer||'بدون پاسخ'}</p>
+                      <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mt-3">
+                        <p className="text-xs text-pink-300 mb-1">متن اعتراض:</p>
+                        <p className="text-sm">{a.objection}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <input type="number" className="glass-input flex-1" placeholder="نمره جدید" id={`grade-${a.id}`} defaultValue={a.score||0}/>
+                      <button onClick={()=>{const v=document.getElementById(`grade-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت نمره جدید</button>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </>
         )}
 
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-4">پاسخ‌برگ‌ها</h3>
-            {answers.filter(a=>a.status==='pending').length===0?<div className="card text-center py-12 text-white/40"><p>پاسخ‌برگی نیست</p></div>:
-            answers.filter(a=>a.status==='pending').map(a=>(
+            {answers.filter(a=>a.status==='pending'&&!a.objection).length===0?<div className="card text-center py-12 text-white/40"><p>پاسخ‌برگی نیست</p></div>:
+            answers.filter(a=>a.status==='pending'&&!a.objection).map(a=>(
               <div key={a.id} className="card">
                 <h4 className="font-bold">{a.users?.full_name} - {a.exams?.title}</h4>
                 <p className="text-sm text-white/50 mt-2">{a.questions?.q_text}</p>
-                <p className="text-sm text-violet-300 mt-2 bg-white/5 p-2 rounded">پاسخ: {a.student_answer||'بدون پاسخ'}</p>
+                <p className="text-sm text-purple-300 mt-2 bg-white/5 p-2 rounded">پاسخ: {a.student_answer||'بدون پاسخ'}</p>
                 <div className="flex gap-2 mt-3">
                   <input type="number" className="glass-input flex-1" placeholder="نمره" id={`score-${a.id}`}/>
-                  <button onClick={async()=>{const v=document.getElementById(`score-${a.id}`).value;await SB.from('answers').update({score:parseFloat(v),status:'graded'}).eq('id',a.id);loadAll();alert('ثبت شد');}} className="btn-success btn-sm">ثبت</button>
+                  <button onClick={()=>{const v=document.getElementById(`score-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت</button>
                 </div>
               </div>
             ))}
@@ -335,13 +392,13 @@ function Admin({user,tab,setTab,onLogout}){
 
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>setTab('students')}><Icon d={Icons.users}/><span>دانش‌آموزان</span></div>
+        <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>{setTab('students');setSubTab('list');}}><Icon d={Icons.users}/><span>دانش‌آموزان</span></div>
         <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
       </div>
 
       {modal==='exam'&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
-          <div className="glass w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
+          <div className="glass-strong w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold gradient-text">ساخت آزمون</h3>
               <button onClick={()=>setModal(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
@@ -391,14 +448,14 @@ function Admin({user,tab,setTab,onLogout}){
               <div className="fade-in">
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="font-bold">سوالات ({questions.length})</h4>
-                  <button onClick={addQuestion} className="btn-sm bg-violet-600"><Icon d={Icons.plus} size={16}/>افزودن سوال</button>
+                  <button onClick={addQuestion} className="btn-sm bg-purple-600"><Icon d={Icons.plus} size={16}/>افزودن سوال</button>
                 </div>
                 {questions.length===0?<div className="text-center py-8 text-white/40"><p>هنوز سوالی اضافه نشده</p><button onClick={addQuestion} className="btn-primary mt-4">افزودن اولین سوال</button></div>:
                 questions.map((q,i)=>(
                   <div key={i} className="question-card slide-up">
                     <div className="flex justify-between items-center mb-3">
-                      <span className="text-sm font-bold text-violet-300 flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-violet-600 flex items-center justify-center text-xs">{i+1}</span>
+                      <span className="text-sm font-bold text-purple-300 flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-purple-600 flex items-center justify-center text-xs">{i+1}</span>
                         سوال {i+1}
                       </span>
                       <button onClick={()=>removeQuestion(i)} className="text-red-400 hover:text-red-300"><Icon d={Icons.x} size={18}/></button>
@@ -412,19 +469,19 @@ function Admin({user,tab,setTab,onLogout}){
                       <div className="mt-3 space-y-2">
                         <div className="grid grid-cols-2 gap-2">
                           <div className="relative">
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">A</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 font-bold text-sm">A</span>
                             <input className="option-input pr-8" placeholder="گزینه اول" value={q.opt_a} onChange={e=>updateQuestion(i,'opt_a',e.target.value)}/>
                           </div>
                           <div className="relative">
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">B</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 font-bold text-sm">B</span>
                             <input className="option-input pr-8" placeholder="گزینه دوم" value={q.opt_b} onChange={e=>updateQuestion(i,'opt_b',e.target.value)}/>
                           </div>
                           <div className="relative">
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">C</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 font-bold text-sm">C</span>
                             <input className="option-input pr-8" placeholder="گزینه سوم" value={q.opt_c} onChange={e=>updateQuestion(i,'opt_c',e.target.value)}/>
                           </div>
                           <div className="relative">
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-violet-400 font-bold text-sm">D</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 font-bold text-sm">D</span>
                             <input className="option-input pr-8" placeholder="گزینه چهارم" value={q.opt_d} onChange={e=>updateQuestion(i,'opt_d',e.target.value)}/>
                           </div>
                         </div>
@@ -493,7 +550,12 @@ function Student({user,tab,setTab,onLogout}){
     if(a) setAnswers(a);
   };
 
+  const hasTakenExam=(examId)=>{
+    return answers.some(a=>a.exam_id===examId);
+  };
+
   const startExam=(exam)=>{
+    if(hasTakenExam(exam.id)){alert('شما قبلاً در این آزمون شرکت کرده‌اید!');return;}
     const total=exam.duration_minutes*60;
     setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(total);setTotalTime(total);
   };
@@ -533,7 +595,7 @@ function Student({user,tab,setTab,onLogout}){
   const submitObjection=async()=>{
     if(!objectionText.trim()||!showObjection) return;
     await SB.from('answers').update({objection:objectionText,objection_count:1}).eq('id',showObjection.id);
-    alert('اعتراض ثبت شد');setShowObjection(null);setObjectionText('');loadAll();
+    alert('اعتراض شما ثبت شد و به مدیر ارسال می‌شود');setShowObjection(null);setObjectionText('');loadAll();
   };
 
   const getAverage=()=>{
@@ -556,11 +618,11 @@ function Student({user,tab,setTab,onLogout}){
             datasets:[{
               label:'نمره',
               data:graded.map(a=>parseFloat(a.score||0)),
-              borderColor:'#8b5cf6',
-              backgroundColor:'rgba(139,92,246,0.2)',
+              borderColor:'#667eea',
+              backgroundColor:'rgba(102,126,234,0.2)',
               tension:0.4,
               fill:true,
-              pointBackgroundColor:'#8b5cf6',
+              pointBackgroundColor:'#667eea',
               pointBorderColor:'#fff',
               pointBorderWidth:2,
               pointRadius:6
@@ -593,24 +655,24 @@ function Student({user,tab,setTab,onLogout}){
             <CircularTimer timeLeft={timeLeft} totalTime={totalTime}/>
           </div>
           <div className="w-full bg-white/10 rounded-full h-2">
-            <div className="bg-gradient-to-r from-violet-500 to-purple-600 h-2 rounded-full transition-all duration-300" style={{width:`${progress}%`}}></div>
+            <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300" style={{width:`${progress}%`}}></div>
           </div>
         </div>
         {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/20 border-2 border-red-500/50 text-red-300 p-4 text-center text-sm font-bold animate-pulse">️ عجله کن! کمتر از ۵ دقیقه زمان داری!</div>}
         <div className="content">
           <div className="card">
             <div className="flex items-center gap-2 mb-4">
-              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 سوال تستی':'️ سوال تشریحی'}</span>
+              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?' سوال تستی':'✍️ سوال تشریحی'}</span>
             </div>
             <p className="mb-6 font-bold text-lg leading-relaxed">{q?.q_text}</p>
             {q?.q_type==='test'?(
               <div className="space-y-3">
                 {['A','B','C','D'].map(opt=>(
-                  <div key={opt} className={`p-4 rounded-xl cursor-pointer border-2 transition-all ${studentAnswers[q.id]===opt?'bg-violet-600/30 border-violet-500 shadow-lg shadow-violet-500/20':'bg-white/5 border-white/10 hover:border-violet-500/50'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
+                  <div key={opt} className={`p-4 rounded-xl cursor-pointer border-2 transition-all ${studentAnswers[q.id]===opt?'bg-purple-600/30 border-purple-500 shadow-lg shadow-purple-500/20':'bg-white/5 border-white/10 hover:border-purple-500/50'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${studentAnswers[q.id]===opt?'bg-violet-600 border-violet-600 scale-110':'border-white/30'}`}>{opt}</div>
+                      <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${studentAnswers[q.id]===opt?'bg-purple-600 border-purple-600 scale-110':'border-white/30'}`}>{opt}</div>
                       <span className="flex-1">{q[`opt_${opt.toLowerCase()}`]}</span>
-                      {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-violet-400"/>}
+                      {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-purple-400"/>}
                     </div>
                   </div>
                 ))}
@@ -628,7 +690,11 @@ function Student({user,tab,setTab,onLogout}){
         </div>
         {showCalc&&(
           <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
-            <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="glass-strong p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="font-bold">ماشین‌حساب</h3>
+                <button onClick={()=>setShowCalc(false)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+              </div>
               <div className="bg-black/40 p-4 rounded-xl text-2xl text-left mb-4 font-mono h-16 flex items-center justify-end overflow-x-auto border border-white/10">{calcDisplay||'0'}</div>
               <div className="grid grid-cols-4 gap-2">
                 {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`calc-btn ${['/','*','-','+'].includes(b)?'operator':''} ${b==='='?'equals':''}`}>{b}</button>)}
@@ -660,17 +726,25 @@ function Student({user,tab,setTab,onLogout}){
 
             <h3 className="font-bold mb-3">آزمون‌های موجود ({exams.length})</h3>
             {exams.length===0?<div className="card text-center py-12 text-white/40"><Icon d={Icons.exam} size={64} className="mx-auto mb-3 opacity-30"/><p>آزمونی ندارید</p></div>:
-            exams.map(ex=>(
-              <div key={ex.id} className="card slide-up">
-                <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
-                <p className="text-sm text-white/50 mb-3">{ex.description||'بدون توضیحات'}</p>
-                <div className="flex gap-2 flex-wrap mb-3">
-                  <span className="badge badge-new"><Icon d={Icons.clock} size={12} className="inline ml-1"/>{ex.duration_minutes} دقیقه</span>
-                  <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
+            exams.map(ex=>{
+              const taken=hasTakenExam(ex.id);
+              return(
+                <div key={ex.id} className={`card slide-up ${taken?'disabled':''}`}>
+                  <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
+                  <p className="text-sm text-white/50 mb-3">{ex.description||'بدون توضیحات'}</p>
+                  <div className="flex gap-2 flex-wrap mb-3">
+                    <span className="badge badge-new"><Icon d={Icons.clock} size={12} className="inline ml-1"/>{ex.duration_minutes} دقیقه</span>
+                    <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
+                    {taken&&<span className="badge badge-pending">شرکت کرده‌اید</span>}
+                  </div>
+                  {taken?(
+                    <div className="text-center py-2 text-white/40 text-sm">شما قبلاً در این آزمون شرکت کرده‌اید</div>
+                  ):(
+                    <button onClick={()=>startExam(ex)} className="btn-primary btn-sm shimmer">شروع آزمون</button>
+                  )}
                 </div>
-                <button onClick={()=>startExam(ex)} className="btn-primary btn-sm">شروع آزمون</button>
-              </div>
-            ))}
+              );
+            })}
           </>
         )}
 
@@ -696,8 +770,12 @@ function Student({user,tab,setTab,onLogout}){
                     <p className="text-3xl font-bold mt-2 gradient-text">{a.score??'-'}</p>
                   </div>
                 </div>
-                {a.objection&&a.status!=='graded'&&<div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 text-xs text-yellow-300 mt-2">اعتراض شما در حال بررسی است</div>}
-                {a.status==='graded'&&!a.objection&&<button onClick={()=>setShowObjection(a)} className="btn-warning btn-sm mt-3 w-full">درخواست بررسی مجدد</button>}
+                {a.objection&&a.status!=='graded'&&<div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 text-xs text-pink-300 mt-2">اعتراض شما در حال بررسی است</div>}
+                {a.status==='graded'&&!a.objection&&(
+                  <button onClick={()=>setShowObjection(a)} className="objection-btn btn-glow mt-3 w-full flex items-center justify-center gap-2">
+                    <Icon d={Icons.alert} size={18}/>درخواست بررسی مجدد
+                  </button>
+                )}
               </div>
             ))}
           </>
@@ -706,11 +784,11 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='chart'&&(
           <>
             <div className="stat-card mb-6 slide-up">
-              <Icon d={Icons.chart} size={40} className="mx-auto mb-2 text-violet-400 icon-glow"/>
+              <Icon d={Icons.chart} size={40} className="mx-auto mb-2 text-purple-400 icon-glow"/>
               <p className="text-3xl font-bold gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/50">معدل کل</p>
             </div>
-            <div className="glass p-4 mb-4">
+            <div className="glass-strong p-4 mb-4">
               <h3 className="font-bold mb-4 text-center">نمودار پیشرفت تحصیلی</h3>
               {answers.filter(a=>a.status==='graded').length===0?<p className="text-center text-white/40 py-8">هنوز نمره‌ای ثبت نشده</p>:<canvas id="gradeChart"></canvas>}
             </div>
@@ -719,11 +797,11 @@ function Student({user,tab,setTab,onLogout}){
               <h4 className="font-bold mb-3">آمار کلی</h4>
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-violet-400">{answers.length}</p>
+                  <p className="text-2xl font-bold text-purple-400">{answers.length}</p>
                   <p className="text-xs text-white/50">کل آزمون‌ها</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-green-400">{answers.filter(a=>a.status==='graded').length}</p>
+                  <p className="text-2xl font-bold text-blue-400">{answers.filter(a=>a.status==='graded').length}</p>
                   <p className="text-xs text-white/50">تصحیح شده</p>
                 </div>
               </div>
@@ -734,7 +812,7 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='tools'&&(
           <>
             <h3 className="font-bold mb-4">ابزارهای کاربردی</h3>
-            <button onClick={()=>setShowCalc(true)} className="btn-primary w-full flex items-center justify-center gap-2 mb-3">
+            <button onClick={()=>setShowCalc(true)} className="btn-primary w-full flex items-center justify-center gap-2 mb-3 shimmer">
               <Icon d={Icons.calc} size={20}/>ماشین‌حساب
             </button>
             <div className="glass p-4 text-center">
@@ -755,7 +833,7 @@ function Student({user,tab,setTab,onLogout}){
 
       {showCalc&&(
         <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
-          <div className="glass p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
+          <div className="glass-strong p-4 w-72 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-bold">ماشین‌حساب</h3>
               <button onClick={()=>setShowCalc(false)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={18}/></button>
@@ -770,14 +848,14 @@ function Student({user,tab,setTab,onLogout}){
 
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
-          <div className="glass w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
+          <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold gradient-text">درخواست بررسی مجدد</h3>
               <button onClick={()=>setShowObjection(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
             </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 mb-4 text-sm text-yellow-300">⚠️ فقط یکبار می‌توانید اعتراض بزنید</div>
-            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
-            <button onClick={submitObjection} className="btn-primary flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال اعتراض</button>
+            <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mb-4 text-sm text-pink-300">⚠️ فقط یکبار می‌توانید اعتراض بزنید</div>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض خود را بنویسید..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <button onClick={submitObjection} className="objection-btn btn-glow flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال اعتراض به مدیر</button>
           </div>
         </div>
       )}
