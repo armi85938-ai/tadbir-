@@ -1,15 +1,191 @@
--Ꮧ: <!DOCTYPE html>
+const SUPABASE_URL = "https://rzcbwczpjytcfeewjumk.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_tuQ6vkwm9E3-E7BsFCaiIQ_2xA7Cm86";
+
+
+const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+ <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>سامانه آموزشی تدبیر</title>
 
-<style>
+<link rel="stylesheet" href="style.css">
 
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="login-page" id="loginPage">
+
+
+<div class="login-card">
+
+
+<div class="logo">
+🎓
+</div>
+
+
+<h1>
+سامانه آموزشی تدبیر
+</h1>
+
+
+<p>
+مدیریت هوشمند آموزش
+</p>
+
+
+
+<input id="username" placeholder="نام کاربری">
+
+
+<input id="password" type="password" placeholder="رمز عبور">
+
+
+
+<button onclick="login()">
+ورود
+</button>
+
+
+<div id="error"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="app" id="app">
+
+
+<header>
+
+<strong>
+🎓 تدبیر
+</strong>
+
+
+<button onclick="logout()">
+خروج
+</button>
+
+
+</header>
+
+
+
+
+<main>
+
+
+<h2>
+سلام <span id="fullname"></span>
+</h2>
+
+
+<p id="role"></p>
+
+
+
+<div id="adminPanel" class="panel">
+
+
+<h3>
+پنل معلم
+</h3>
+
+
+<button onclick="createExam()">
+ساخت آزمون
+</button>
+
+
+<button onclick="addGrade()">
+ثبت نمره
+</button>
+
+
+<button onclick="sendMessage()">
+ارسال پیام
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="studentPanel" class="panel">
+
+
+<h3>
+پنل دانش‌آموز
+</h3>
+
+
+<button onclick="loadExams()">
+مشاهده آزمون‌ها
+</button>
+
+
+<button onclick="loadGrades()">
+مشاهده نمرات
+</button>
+
+
+<button onclick="loadMessages()">
+پیام‌ها
+</button>
+
+
+</div>
+
+
+
+
+<div id="content" class="content">
+
+</div>
+
+
+
+</main>
+
+
+</div>
+
+
+
+<script src="supabase.js"></script>
+
+<script src="app.js"></script>
+
+
+</body>
+
+</html>
+ @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap');
 
 
 *{
@@ -23,19 +199,34 @@ body{
 
     font-family:"Vazirmatn",Tahoma,sans-serif;
 
+    min-height:100vh;
+
     background:
-    radial-gradient(circle at top right,#6d28d9,transparent 35%),
+    radial-gradient(circle at top right,#7c3aed,transparent 35%),
     radial-gradient(circle at bottom left,#2563eb,transparent 30%),
     linear-gradient(135deg,#05010b,#16052b);
-
-    min-height:100vh;
 
     color:white;
 
 }
 
 
-/* ===== LOGIN ===== */
+
+button{
+
+    font-family:inherit;
+
+    border:none;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+/* LOGIN */
 
 
 .login-page{
@@ -44,9 +235,9 @@ body{
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     padding:20px;
 
@@ -58,22 +249,24 @@ body{
 
     width:100%;
 
-    max-width:420px;
+    max-width:400px;
 
     padding:35px;
 
-    border-radius:32px;
+    border-radius:30px;
 
     background:
-    rgba(255,255,255,.08);
+    rgba(255,255,255,.1);
 
     border:
     1px solid rgba(255,255,255,.15);
 
     backdrop-filter:blur(25px);
 
+    text-align:center;
+
     box-shadow:
-    0 30px 90px rgba(0,0,0,.5);
+    0 30px 80px rgba(0,0,0,.5);
 
 }
 
@@ -93,9 +286,9 @@ body{
 
     justify-content:center;
 
-    border-radius:30px;
-
     font-size:45px;
+
+    border-radius:30px;
 
     background:
     linear-gradient(135deg,#c084fc,#7c3aed);
@@ -104,17 +297,9 @@ body{
 
 
 
-.login-title{
-
-    text-align:center;
+.login-card h1{
 
     margin-top:25px;
-
-}
-
-
-
-.login-title h1{
 
     font-size:22px;
 
@@ -122,19 +307,19 @@ body{
 
 
 
-.login-title p{
+.login-card p{
 
-    color:#c4b5fd;
+    color:#ddd6fe;
 
-    font-size:12px;
+    margin:10px 0 25px;
 
-    margin-top:8px;
+    font-size:13px;
 
 }
 
 
 
-.input{
+input{
 
     width:100%;
 
@@ -143,101 +328,73 @@ body{
     margin-top:15px;
 
     border-radius:16px;
-
-    border:
-
-    1px solid rgba(255,255,255,.15);
-
-
-    background:
-
-    rgba(255,255,255,.06);
-
-
-    color:white;
 
     padding:0 18px;
 
+    background:
+    rgba(255,255,255,.08);
+
+    border:
+    1px solid rgba(255,255,255,.2);
+
+    color:white;
+
     outline:none;
 
-    font-family:inherit;
+    font-size:15px;
 
 }
 
 
 
-.input::placeholder{
+input::placeholder{
 
-    color:#a78bfa;
+    color:#c4b5fd;
 
 }
 
 
 
-.login-btn{
+.login-card button{
 
     width:100%;
 
     height:55px;
 
-    margin-top:20px;
-
-    border:0;
+    margin-top:25px;
 
     border-radius:16px;
 
     color:white;
 
-    font-family:inherit;
+    font-size:16px;
 
     font-weight:700;
 
-    font-size:15px;
-
-    cursor:pointer;
-
     background:
-
     linear-gradient(135deg,#c084fc,#7c3aed);
 
-    transition:.3s;
-
 }
 
 
 
-.login-btn:active{
-
-    transform:scale(.97);
-
-}
 
 
-
-.error{
-
-    display:none;
+#error{
 
     margin-top:15px;
 
-    padding:12px;
-
-    border-radius:12px;
-
-    background:
-    rgba(239,68,68,.15);
-
     color:#fecaca;
 
-    font-size:12px;
-
-    text-align:center;
+    font-size:13px;
 
 }
 
 
 
-/* ===== APP ===== */
+
+
+/* APP */
 
 
 .app{
@@ -250,17 +407,9 @@ body{
 
 
 
-.header{
+header{
 
-    position:fixed;
-
-    top:0;
-
-    right:0;
-
-    left:0;
-
-    height:65px;
+    height:70px;
 
     padding:0 20px;
 
@@ -271,12 +420,21 @@ body{
     align-items:center;
 
 
+    position:fixed;
+
+    top:0;
+
+    right:0;
+
+    left:0;
+
+
     background:
 
-    rgba(10,5,20,.75);
-
+    rgba(10,5,20,.85);
 
     backdrop-filter:blur(20px);
+
 
     border-bottom:
 
@@ -289,47 +447,74 @@ body{
 
 
 
-.header strong{
-
-    font-size:15px;
-
-}
-
-
-
-.avatar{
-
-    width:40px;
-
-    height:40px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
+header button{
 
     background:
 
-    rgba(192,132,252,.25);
+    rgba(255,255,255,.1);
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:12px;
 
 }
 
 
 
-.container{
+
+main{
 
     padding:
 
-    85px 18px 90px;
+    100px 18px 40px;
 
 }
 
 
 
-.welcome{
+main h2{
+
+    font-size:24px;
+
+}
+
+
+
+main p{
+
+    color:#ddd6fe;
+
+}
+
+
+
+
+
+.panel{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    border-radius:25px;
+
+    background:
+
+    rgba(255,255,255,.08);
+
+    border:
+
+    1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(20px);
+
+}
+
+
+
+.panel h3{
 
     margin-bottom:20px;
 
@@ -337,38 +522,32 @@ body{
 
 
 
-.welcome h2{
 
-    font-size:22px;
+.panel button{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:16px;
+
+    border-radius:16px;
+
+    color:white;
+
+    background:
+
+    linear-gradient(135deg,#8b5cf6,#6d28d9);
+
+    font-size:15px;
 
 }
 
 
 
-.welcome p{
+.content{
 
-    color:#c4b5fd;
-
-    font-size:12px;
-
-    margin-top:5px;
-
-}
-
-
-
-/* CARDS */
-
-
-.grid{
-
-    display:grid;
-
-    grid-template-columns:
-
-    repeat(2,1fr);
-
-    gap:14px;
+    margin-top:25px;
 
 }
 
@@ -378,693 +557,56 @@ body{
 
     background:
 
-    rgba(255,255,255,.08);
+    rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    padding:18px;
+
+    margin-top:15px;
 
     border:
 
     1px solid rgba(255,255,255,.12);
 
-    border-radius:24px;
-
-    padding:20px;
-
-    backdrop-filter:blur(20px);
-
 }
 
 
 
-.card small{
-
-    color:#c4b5fd;
-
-}
 
 
+@media(max-width:450px){
 
-.card strong{
 
-    display:block;
+.login-card{
 
-    margin-top:8px;
-
-    font-size:25px;
+    padding:25px;
 
 }
 
 
+main{
 
-.section{
+    padding-left:15px;
 
-    margin-top:18px;
-
-}
-
-
-
-.section h3{
-
-    font-size:16px;
-
-    margin-bottom:12px;
+    padding-right:15px;
 
 }
 
 
-
-/* BOTTOM MENU */
-
-
-.bottom-menu{
-
-    position:fixed;
-
-    bottom:0;
-
-    right:0;
-
-    left:0;
-
-    height:75px;
-
-
-    display:flex;
-
-    justify-content:space-around;
-
-    align-items:center;
-
-
-    background:
-
-    rgba(10,5,20,.9);
-
-
-    backdrop-filter:blur(20px);
-
-
-    bor
--Ꮧ: der-top:
-
-    1px solid rgba(255,255,255,.1);
-
-
 }
+-Ꮧ: let currentUser = null;
 
 
+/* =========================
+   LOGIN
+========================= */
 
-.bottom-menu button{
 
-    border:0;
+async function login(){
 
-    background:none;
 
-    color:#c4b5fd;
-
-    font-family:inherit;
-
-    font-size:11px;
-
-}
-
-
-
-.bottom-menu span{
-
-    display:block;
-
-    font-size:22px;
-
-    margin-bottom:4px;
-
-}
-
-
-
-.action{
-
-    width:100%;
-
-    padding:15px;
-
-    border-radius:16px;
-
-    border:0;
-
-    margin-top:10px;
-
-    font-family:inherit;
-
-    color:white;
-
-    background:
-
-    linear-gradient(135deg,#8b5cf6,#6d28d9);
-
-}
-
-
-
-@media(max-width:350px){
-
-.grid{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-
-</style>
-
-</head>
-
-<body>
--Ꮧ: <!-- ================= LOGIN ================= -->
-
-<section class="login-page" id="loginPage">
-
-<div class="login-card">
-
-
-<div class="logo">
-🎓
-</div>
-
-
-<div class="login-title">
-
-<h1>
-مؤسسه علمی آموزشی تدبیر
-</h1>
-
-<p>
-سامانه مدیریت آموزش هوشمند
-</p>
-
-</div>
-
-
-
-<input
-class="input"
-id="username"
-placeholder="نام کاربری"
->
-
-
-<input
-class="input"
-id="password"
-type="password"
-placeholder="رمز عبور"
->
-
-
-
-<button
-class="login-btn"
-onclick="login()">
-
-ورود به سامانه
-
-</button>
-
-
-
-<div
-class="error"
-id="error">
-
-</div>
-
-
-
-</div>
-
-</section>
-
-
-
-
-
-
-<!-- ================= APP ================= -->
-
-<section class="app" id="app">
-
-
-
-<header class="header">
-
-
-<strong>
-🎓 تدبیر
-</strong>
-
-
-<div class="avatar">
-👤
-</div>
-
-
-</header>
-
-
-
-
-
-<main class="container">
-
-
-<div class="welcome">
-
-<h2>
-سلام <span id="name">کاربر</span> 👋
-</h2>
-
-<p id="role">
-به سامانه آموزشی خوش آمدید
-</p>
-
-
-</div>
-
-
-
-
-
-<!-- DASHBOARD CARDS -->
-
-
-<div class="grid">
-
-
-<div class="card">
-
-<small>
-آزمون‌ها
-</small>
-
-<strong id="examCount">
-0
-</strong>
-
-</div>
-
-
-
-<div class="card">
-
-<small>
-نمره میانگین
-</small>
-
-<strong id="average">
--
-</strong>
-
-</div>
-
-
-
-
-<div class="card">
-
-<small>
-پیام‌ها
-</small>
-
-<strong id="messageCount">
-0
-</strong>
-
-</div>
-
-
-
-<div class="card">
-
-<small>
-وضعیت حساب
-</small>
-
-<strong>
-فعال
-</strong>
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-<!-- ================= MANAGER PANEL ================= -->
-
-
-<div
-class="section"
-id="managerPanel"
-style="display:none">
-
-
-
-<h3>
-👨‍💼 پنل مدیریت
-</h3>
-
-
-
-<div class="card">
-
-
-<button class="action"
-onclick="createExam()">
-
-📝 ساخت آزمون جدید
-
-</button>
-
-
-
-<button class="action"
-onclick="gradeStudents()">
-
-📊 ثبت نمره دانش‌آموز
-
-</button>
-
-
-
-<button class="action"
-onclick="sendMessage()">
-
-💬 ارسال پیام به دانش‌آموزان
-
-</button>
-
-
-
-<button class="action"
-onclick="showStudents()">
-
-👥 مدیریت دانش‌آموزان
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- ================= STUDENT PANEL ================= -->
-
-
-<div
-class="section"
-id="studentPanel"
-style="display:none">
-
-
-
-<h3>
-👨‍🎓 پنل دانش‌آموز
-</h3>
-
-
-
-
-<div class="card">
-
-
-<button class="action"
-onclick="startExam()">
-
-📝 شرکت در آزمون
-
-</button>
-
-
-
-
-<button class="action"
-onclick="showChart()">
-
-📈 نمودار پیشرفت تحصیلی
-
-</button>
-
-
-
-
-<button class="action"
-onclick="sendToManager()">
-
-💬 پیام به مدیر
-
-</button>
-
-
-
-<button class="action"
-onclick="requestReview()">
-
-⚠ اعتراض به نمره
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- ================= CONTENT AREA ================= -->
-
-
-<div class="section">
-
-
-<h3>
-آخرین فعالیت‌ها
-</h3>
-
-
-<div class="card" id="activity">
-
-
-هنوز فعالیتی ثبت نشده است.
-
-</div>
-
-
-
-</div>
-
-
-
-</main>
-
-
-
-
-
-<!-- MOBILE MENU -->
-
-
-<nav class="bottom-menu">
-
-
-<button>
-
-<span>
-🏠
-</span>
-
-خانه
-
-</button>
-
-
-
-<button>
-
-<span>
-📝
-</span>
-
-آزمون
-
-</button>
-
-
-
-
-<button>
-
-<span>
-💬
-</span>
-
-پیام
-
-</button>
-
-
-
-
-<button onclick="logout()">
-
-<span>
-🚪
-</span>
-
-خروج
-
-</button>
-
-
-
-</nav>
-
-
-
-</section>
--Ꮧ: <!-- ================= MODAL AREA ================= -->
-
-
-<div id="modal"
-style="
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.7);
-z-index:100;
-align-items:center;
-justify-content:center;
-padding:20px;
-">
-
-
-<div
-class="card"
-style="
-width:100%;
-max-width:420px;
-">
-
-
-
-<h3 id="modalTitle">
-عنوان
-</h3>
-
-
-<div id="modalBody">
-
-</div>
-
-
-<button
-class="action"
-onclick="closeModal()">
-
-بستن
-
-</button>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<script>
-
-
-// اطلاعات اولیه سیستم
-
-let exams =
-JSON.parse(localStorage.getItem("exams")) || [];
-
-let messages =
-JSON.parse(localStorage.getItem("messages")) || [];
-
-let grades =
-JSON.parse(localStorage.getItem("grades")) || [];
-
-let objections =
-JSON.parse(localStorage.getItem("objections")) || [];
-
-
-
-
-
-// کاربران
-
-const users = {
-
-
-"ARMIN":{
-password:"1010",
-role:"مدیر"
-},
-
-
-"ATRIN":{
-password:"0000",
-role:"دانش‌آموز"
-},
-
-
-"AVA":{
-password:"1111",
-role:"دانش‌آموز"
-}
-
-
-};
-
-
-
-
-
-
-// ورود
-
-
-function login(){
-
-
-let username =
+const username =
 document
 .getElementById("username")
 .value
@@ -1072,8 +614,7 @@ document
 .toUpperCase();
 
 
-
-let password =
+const password =
 document
 .getElementById("password")
 .value
@@ -1081,15 +622,66 @@ document
 
 
 
-let error =
+const error =
 document.getElementById("error");
 
 
 
-if(
-users[username] &&
-users[username].password===password
-){
+if(!username || !password){
+
+error.innerHTML="اطلاعات را کامل وارد کنید";
+return;
+
+}
+
+
+
+const {data,error:err}=await db
+.from("users")
+.select("*")
+.eq("username",username)
+.eq("password",password)
+.single();
+
+
+
+if(err || !data){
+
+
+error.innerHTML="نام کاربری یا رمز اشتباه است";
+
+return;
+
+
+}
+
+
+
+currentUser=data;
+
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(data)
+);
+
+
+
+openApp();
+
+
+}
+
+
+
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+
+function openApp(){
 
 
 
@@ -1106,36 +698,31 @@ document
 
 
 document
-.getElementById("name")
-.innerHTML=username;
+.getElementById("fullname")
+.innerHTML=currentUser.fullname || currentUser.username;
 
 
 
 document
 .getElementById("role")
-.innerHTML=
-users[username].role;
+.innerHTML=currentUser.role;
 
 
 
-localStorage.setItem(
-"currentUser",
-username
-);
-
-
-
-
-if(users[username].role==="مدیر"){
+if(currentUser.role==="admin"){
 
 
 document
-.getElementById("managerPanel")
+.getElementById("adminPanel")
 .style.display="block";
 
 
-}
+document
+.getElementById("studentPanel")
+.style.display="none";
 
+
+}
 
 else{
 
@@ -1145,24 +732,9 @@ document
 .style.display="block";
 
 
-}
-
-
-
-updateDashboard();
-
-
-
-}
-
-else{
-
-
-error.style.display="block";
-
-
-error.innerHTML=
-"نام کاربری یا رمز عبور اشتباه است";
+document
+.getElementById("adminPanel")
+.style.display="none";
 
 
 }
@@ -1177,9 +749,9 @@ error.innerHTML=
 
 
 
-
-
-// خروج
+/* =========================
+   LOGOUT
+========================= */
 
 
 function logout(){
@@ -1201,18 +773,22 @@ location.reload();
 
 
 
+/* =========================
+   CREATE EXAM
+========================= */
 
-// ساخت آزمون مدیر
 
-
-function createExam(){
+async function createExam(){
 
 
 
 let title =
-prompt(
-"نام آزمون را وارد کنید"
-);
+prompt("عنوان آزمون");
+
+
+
+let type =
+prompt("نوع آزمون");
 
 
 
@@ -1220,99 +796,33 @@ if(!title)return;
 
 
 
-let type =
-prompt(
-"نوع آزمون: تستی یا تشریحی"
-);
-
-
-
-let exam={
-
-id:Date.now(),
+const {error}=await db
+.from("exams")
+.insert({
 
 title:title,
 
 type:type,
 
-date:new Date()
-.toLocaleDateString("fa")
-
-};
+teacher:
+currentUser.username
 
 
-
-exams.push(exam);
+});
 
 
 
-localStorage.setItem(
-"exams",
-JSON.stringify(exams)
-);
+if(error){
 
-
-
-alert(
-"آزمون ساخته شد"
-);
-
-
-
-updateDashboard();
-
-
-}
-
-
-
-
-
-
-
-
-
-// نمایش آزمون‌ها برای دانش‌آموز
-
-
-function startExam(){
-
-
-if(exams.length===0){
-
-
-alert(
-"فعلاً آزمونی وجود ندارد"
-);
-
+alert("خطا در ساخت آزمون");
 
 return;
 
-
 }
 
 
 
-let text="آزمون‌ها:\n\n";
-
-
-exams.forEach((e,i)=>{
-
-
-text +=
-(i+1)+
-" - "+
-e.title+
-" ("+
-e.type+
-")\n";
-
-
-});
-
-
-
-alert(text);
+alert("آزمون ساخته شد");
 
 
 
@@ -1325,522 +835,30 @@ alert(text);
 
 
 
+/* =========================
+   LOAD EXAMS
+========================= */
 
-// ثبت نمره مدیر
 
+async function loadExams(){
 
-function gradeStudents(){
 
 
-let student =
-prompt(
-"نام دانش‌آموز"
-);
+const {data,error}=await db
+.from("exams")
+.select("*")
+.order("id",{ascending:false});
 
 
 
-let score =
-prompt(
-"نمره را وارد کنید"
-);
+let html="";
 
 
 
-if(!student || !score)return;
+if(!data || data.length===0){
 
 
-
-grades.push({
-
-student:student,
-
-score:score,
-
-date:
-new Date()
-.toLocaleDateString("fa")
-
-});
-
-
-
-localStorage.setItem(
-
-"grades",
-
-JSON.stringify(grades)
-
-);
-
-
-
-alert(
-"نمره ثبت شد"
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ارسال پیام مدیر
-
-
-function sendMessage(){
-
-
-let to =
-prompt(
-"نام دانش‌آموز"
-);
-
-
-
-let text =
-prompt(
-"متن پیام"
-);
-
-
-
-if(!to || !text)return;
-
-
-
-messages.push({
-
-from:"ARMIN",
-
-to:to,
-
-text:text,
-
-date:
-new Date()
-.toLocaleDateString("fa")
-
-});
-
-
-
-localStorage.setItem(
-
-"messages",
-
-JSON.stringify(messages)
-
-);
-
-
-
-alert(
-"پیام ارسال شد"
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// پیام دانش‌آموز به مدیر
-
-
-function sendToManager(){
-
-
-let text =
-prompt(
-"پیام شما به مدیر"
-);
-
-
-
-if(!text)return;
-
-
-
-let user =
-localStorage.getItem(
-"currentUser"
-);
-
-
-
-messages.push({
-
-from:user,
-
-to:"ARMIN",
-
-text:text,
-
-date:
-new Date()
-.toLocaleDateString("fa")
-
-});
-
-
-
-localStorage.setItem(
-"messages",
-JSON.stringify(messages)
-);
-
-
-
-alert(
-"پیام ارسال شد"
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// اعتراض نمره
-
-
-function requestReview(){
-
-
-
-let user =
-localStorage.getItem(
-"currentUser"
-);
-
-
-
-let check =
-objections.find(
-x=>x.student===user
-);
-
-
-
-if(check){
-
-
-alert(
-"شما قبلاً اعتراض ثبت کرده‌اید"
-);
-
-
-return;
-
-
-}
-
-
-
-let text =
-prompt(
-"دلیل اعتراض"
-);
-
-
-
-if(!text)return;
-
-
-
-objections.push({
-
-student:user,
-
-text:text,
-
-sta
--Ꮧ: tus:"در انتظار بررسی"
-
-});
-
-
-
-localStorage.setItem(
-
-"objections",
-
-JSON.stringify(objections)
-
-);
-
-
-
-alert(
-"اعتراض ثبت شد"
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-// نمودار ساده
-
-
-function showChart(){
-
-
-
-document.getElementById("activity")
-.innerHTML=`
-
-📈 نمودار پیشرفت
-
-<br><br>
-
-ریاضی:
-████████░░ 80%
-
-<br>
-
-علوم:
-███████░░░ 70%
-
-<br>
-
-ادبیات:
-█████████░ 90%
-
-`;
-
-
-
-}
-
-
-
-
-
-
-// مدیریت دانش‌آموزان
-
-
-function showStudents(){
-
-
-
-alert(
-"لیست دانش‌آموزان:\n\nATRIN\nAVA"
-);
-
-
-}
-
-
-
-
-
-
-
-
-// نمایش نمرات
-
-
-function updateDashboard(){
-
-
-
-document
-.getElementById("examCount")
-.innerHTML=
-exams.length;
-
-
-
-document
-.getElementById("messageCount")
-.innerHTML=
-messages.length;
-
-
-
-}
-
-
-
-
-
-function closeModal(){
-
-
-document
-.getElementById("modal")
-.style.display="none";
-
-
-}
-
-
-
-</script>
--Ꮧ: <style>
-
-/* بهبود نسخه موبایل */
-
-@media(max-width:600px){
-
-    .container{
-        padding-right:15px;
-        padding-left:15px;
-        padding-bottom:100px;
-    }
-
-
-    .card{
-
-        border-radius:20px;
-
-        padding:16px;
-
-    }
-
-
-    .grid{
-
-        gap:10px;
-
-    }
-
-
-    .card strong{
-
-        font-size:22px;
-
-    }
-
-
-    .bottom-menu{
-
-        height:70px;
-
-    }
-
-
-}
-
-
-
-button{
-
-    cursor:pointer;
-
-}
-
-
-
-.fade{
-
-    animation:
-    fade .4s ease;
-
-}
-
-
-
-@keyframes fade{
-
-from{
-
-opacity:0;
-
-transform:translateY(15px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:none;
-
-}
-
-}
-
-
-</style>
-
-
-
-<script>
-
-
-// ورود خودکار
-
-window.addEventListener(
-"load",
-()=>{
-
-
-let user =
-localStorage.getItem(
-"currentUser"
-);
-
-
-
-if(user && users[user]){
-
-
-document
-.getElementById("loginPage")
-.style.display="none";
-
-
-document
-.getElementById("app")
-.style.display="block";
-
-
-
-document
-.getElementById("name")
-.innerHTML=user;
-
-
-
-document
-.getElementById("role")
-.innerHTML=
-users[user].role;
-
-
-
-if(users[user].role==="مدیر"){
-
-
-document
-.getElementById("managerPanel")
-.style.display="block";
+html="آزمونی وجود ندارد";
 
 
 }
@@ -1848,94 +866,24 @@ document
 else{
 
 
-document
-.getElementById("studentPanel")
-.style.display="block";
-
-
-}
-
-
-
-updateDashboard();
-
-
-
-}
-
-
-}
-
-);
-
-
-
-
-
-
-// نمایش پیام ها
-
-
-function showMessages(){
-
-
-let user =
-localStorage.getItem(
-"currentUser"
-);
-
-
-
-let result =
-messages.filter(
-m =>
-m.to===user ||
-m.from===user
-);
-
-
-
-if(result.length===0){
-
-document
-.getElementById("activity")
-.innerHTML=
-"پیامی وجود ندارد";
-
-return;
-
-}
-
-
-
-let html="";
-
-
-result.forEach(m=>{
+data.forEach(e=>{
 
 
 html+=`
 
 <div class="card">
 
-<b>
-${m.from}
-</b>
+<h3>
+${e.title}
+</h3>
 
-<br>
 
-${m.text}
-
-<br>
-
-<small>
-${m.date}
-</small>
+<p>
+نوع: ${e.type}
+</p>
 
 
 </div>
-
-<br>
 
 `;
 
@@ -1944,8 +892,12 @@ ${m.date}
 });
 
 
+}
+
+
+
 document
-.getElementById("activity")
+.getElementById("content")
 .innerHTML=html;
 
 
@@ -1958,32 +910,44 @@ document
 
 
 
-// نمایش نمرات دانش آموز
+/* =========================
+   ADD GRADE
+========================= */
 
 
-function showGrades(){
-
-
-let user =
-localStorage.getItem(
-"currentUser"
-);
+async function addGrade(){
 
 
 
-let data =
-grades.filter(
-g=>g.student===user
-);
+let student =
+prompt("نام کاربری دانش‌آموز");
 
 
 
-if(data.length===0){
+let grade =
+prompt("نمره");
 
-document
-.getElementById("activity")
-.innerHTML=
-"هنوز نمره‌ای ثبت نشده";
+
+
+if(!student || !grade)return;
+
+
+
+const {error}=await db
+.from("grades")
+.insert({
+
+student_username:student.toUpperCase(),
+
+grade:grade
+
+});
+
+
+
+if(error){
+
+alert("خطا");
 
 return;
 
@@ -1991,7 +955,51 @@ return;
 
 
 
+alert("نمره ثبت شد");
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   LOAD GRADES
+========================= */
+
+
+async function loadGrades(){
+
+
+
+const {data,error}=await db
+.from("grades")
+.select("*")
+.eq(
+"student_username",
+currentUser.username
+);
+
+
+
 let html="";
+
+
+
+if(!data || data.length===0){
+
+
+html="نمره‌ای ثبت نشده";
+
+
+}
+
+else{
 
 
 data.forEach(g=>{
@@ -2001,24 +1009,13 @@ html+=`
 
 <div class="card">
 
-
 📊 نمره:
+
 <b>
-${g.score}
+${g.grade}
 </b>
 
-
-<br>
-
-تاریخ:
-${g.date}
-
-
 </div>
-
-
-<br>
-
 
 `;
 
@@ -2027,9 +1024,152 @@ ${g.date}
 });
 
 
+}
+
+
 
 document
-.getElementById("activity")
+.getElementById("content")
+.innerHTML=html;
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+
+async function sendMessage(){
+
+
+
+let receiver =
+prompt("نام کاربری گیرنده");
+
+
+
+let text =
+prompt("متن پیام");
+
+
+
+if(!receiver || !text)return;
+
+
+
+const {error}=await db
+.from("messages")
+.insert({
+
+sender:
+currentUser.username,
+
+
+receiver:
+receiver.toUpperCase(),
+
+
+text:text
+
+
+});
+
+
+
+if(error){
+
+alert("خطا در ارسال پیام");
+
+return;
+
+}
+
+
+
+alert("پیام ارسال شد");
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
+
+
+async function loadMessages(){
+
+
+
+const {data}=await db
+.from("messages")
+.select("*")
+.or(
+`receiver.eq.${currentUser.username},sender.eq.${currentUser.username}`
+);
+
+
+
+let html="";
+
+
+
+if(!data || data.length===0)
+-Ꮧ: {
+
+
+html="پیامی ندارید";
+
+
+}
+
+else{
+
+
+data.forEach(m=>{
+
+
+html+=`
+
+<div class="card">
+
+<b>
+${m.sender}
+</b>
+
+<br>
+
+${m.text}
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+}
+
+
+
+document
+.getElementById("content")
 .innerHTML=html;
 
 
@@ -2040,75 +1180,33 @@ document
 
 
 
-// ساخت سوال ساده توسط مدیر
+
+/* =========================
+   AUTO LOGIN
+========================= */
 
 
-function createQuestionExam(){
+window.onload=function(){
 
 
-
-let title =
-prompt(
-"نام آزمون"
+let saved=
+localStorage.getItem(
+"currentUser"
 );
 
 
 
-let question =
-prompt(
-"سوال را وارد کنید"
-);
+if(saved){
 
 
-
-let answer =
-prompt(
-"پاسخ صحیح"
-);
+currentUser=
+JSON.parse(saved);
 
 
-
-if(!title || !question)return;
-
-
-
-exams.push({
-
-id:Date.now(),
-
-title:title,
-
-type:"تستی",
-
-questions:[{
-
-q:question,
-
-answer:answer
-
-}]
-
-
-});
-
-
-
-localStorage.setItem(
-"exams",
-JSON.stringify(exams)
-);
-
-
-
-alert(
-"آزمون تستی ساخته شد"
-);
-
+openApp();
 
 
 }
 
 
-
-
-</script>
+}
