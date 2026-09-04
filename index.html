@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0f0c29">
 <title>سامانه هوشمند آموزشی</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -11,7 +11,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{font-family:'Vazirmatn',sans-serif;margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
@@ -21,13 +21,12 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .glass-input{background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
 .glass-input:focus{border-color:#a78bfa;box-shadow:0 0 0 4px rgba(167,139,250,0.2);background:rgba(0,0,0,0.4)}
 .glass-input::placeholder{color:rgba(255,255,255,0.3)}
-.btn-primary{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(102,126,234,0.4);position:relative;overflow:hidden}
-.btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
-.btn-primary:hover::before{left:100%}
-.btn-primary:active{transform:scale(0.97)}
-.btn-danger{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
-.btn-success{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
-.btn-warning{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
+.btn-glass{background:linear-gradient(135deg,rgba(102,126,234,0.3) 0%,rgba(118,75,162,0.3) 100%);backdrop-filter:blur(20px);border:1px solid rgba(102,126,234,0.5);color:#fff;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(102,126,234,0.3);position:relative;overflow:hidden}
+.btn-glass::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
+.btn-glass:hover::before{left:100%}
+.btn-glass:active{transform:scale(0.97);box-shadow:0 2px 10px rgba(102,126,234,0.2)}
+.btn-glass-success{background:linear-gradient(135deg,rgba(79,172,254,0.3) 0%,rgba(0,242,254,0.3) 100%);border:1px solid rgba(79,172,254,0.5);box-shadow:0 4px 20px rgba(79,172,254,0.3)}
+.btn-glass-danger{background:linear-gradient(135deg,rgba(240,147,251,0.3) 0%,rgba(245,87,108,0.3) 100%);border:1px solid rgba(245,87,108,0.5);box-shadow:0 4px 20px rgba(245,87,108,0.3)}
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-flex;align-items:center;gap:6px}
 .btn-glow{animation:glow 2s ease-in-out infinite}
 @keyframes glow{0%,100%{box-shadow:0 0 20px rgba(250,112,154,0.5),0 0 40px rgba(250,112,154,0.3)}50%{box-shadow:0 0 30px rgba(250,112,154,0.8),0 0 60px rgba(250,112,154,0.5)}}
@@ -60,11 +59,11 @@ select.glass-input{appearance:none}
 .question-card:hover{border-color:#667eea;box-shadow:0 4px 25px rgba(102,126,234,0.3);transform:translateY(-2px)}
 .option-input{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px;color:#fff;font-size:13px;width:100%;outline:none;transition:all 0.3s}
 .option-input:focus{border-color:#a78bfa;background:rgba(167,139,250,0.1)}
-.timer-circle{position:relative;width:120px;height:120px}
-.timer-circle svg{transform:rotate(-90deg)}
-.timer-circle circle{fill:none;stroke-width:8}
+.timer-circle{position:relative;width:140px;height:140px}
+.timer-circle svg{transform:rotate(-90deg);filter:drop-shadow(0 0 10px rgba(102,126,234,0.5))}
+.timer-circle circle{fill:none;stroke-width:10}
 .timer-circle .bg{stroke:rgba(255,255,255,0.1)}
-.timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.3s}
+.timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear,stroke 0.5s}
 .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 .calc-btn{background:rgba(255,255,255,0.1);border:none;color:white;padding:16px;border-radius:14px;font-size:18px;cursor:pointer;transition:all 0.2s;font-weight:600}
 .calc-btn:active{background:rgba(167,139,250,0.3);transform:scale(0.95)}
@@ -87,6 +86,12 @@ select.glass-input{appearance:none}
 .shimmer{position:relative;overflow:hidden}
 .shimmer::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation:shimmer 2s infinite}
 @keyframes shimmer{0%{left:-100%}100%{left:100%}}
+.login-bg{position:fixed;top:0;left:0;right:0;bottom:0;overflow:hidden;z-index:0}
+.login-bg .bubble{position:absolute;border-radius:50%;opacity:0.3;animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(180deg)}}
+.exam-option{background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;padding:16px;margin-bottom:12px;cursor:pointer;transition:all 0.3s}
+.exam-option:hover{background:rgba(102,126,234,0.1);border-color:rgba(102,126,234,0.5);transform:translateX(-5px)}
+.exam-option.selected{background:rgba(102,126,234,0.2);border-color:#667eea;box-shadow:0 4px 20px rgba(102,126,234,0.3)}
 </style>
 </head>
 <body>
@@ -115,7 +120,9 @@ const Icons={
   bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
   award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12",
-  alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01"
+  alert:"M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z M12 9v4 M12 17h.01",
+  edit:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+  eye:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
 };
 
 function App(){
@@ -147,25 +154,31 @@ function Login({onLogin}){
   };
   return(
     <div className="min-h-screen flex items-center justify-center p-6 fade-in relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-20 left-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-pink-500 rounded-full blur-3xl opacity-30 animate-pulse" style={{animationDelay:'1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay:'2s'}}></div>
+      <div className="login-bg">
+        <div className="bubble" style={{width:'200px',height:'200px',background:'linear-gradient(135deg,#667eea,#764ba2)',top:'10%',left:'10%',animationDelay:'0s'}}></div>
+        <div className="bubble" style={{width:'150px',height:'150px',background:'linear-gradient(135deg,#f093fb,#f5576c)',top:'60%',right:'10%',animationDelay:'2s'}}></div>
+        <div className="bubble" style={{width:'180px',height:'180px',background:'linear-gradient(135deg,#4facfe,#00f2fe)',bottom:'10%',left:'30%',animationDelay:'4s'}}></div>
       </div>
       <div className="w-full max-w-sm relative z-10">
         <div className="text-center mb-8 slide-up">
-          <div className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/50 rotate-3 hover:rotate-0 transition-all duration-500">
-            <Icon d={Icons.book} size={50} color="white" className="icon-glow"/>
+          <div className="w-32 h-32 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 flex items-center justify-center shadow-2xl shadow-purple-500/50 rotate-3 hover:rotate-0 transition-all duration-500">
+            <Icon d={Icons.book} size={56} color="white" className="icon-glow"/>
           </div>
-          <h1 className="text-4xl font-black mb-3 gradient-text">سامانه آموزشی</h1>
+          <h1 className="text-5xl font-black mb-3 gradient-text">سامانه آموزشی</h1>
           <p className="text-white/50 text-sm">ورود به پنل کاربری</p>
         </div>
-        <div className="glass-strong p-6 slide-up">
-          <form onSubmit={submit} className="space-y-4">
+        <div className="glass-strong p-8 slide-up">
+          <form onSubmit={submit} className="space-y-5">
             {err&&<div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3 text-red-300 text-sm text-center fade-in">{err}</div>}
-            <input className="glass-input" placeholder="نام کاربری" value={un} onChange={e=>setUn(e.target.value)} required/>
-            <input className="glass-input" type="password" placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required/>
-            <button type="submit" className="btn-primary" disabled={ld}>
+            <div>
+              <label className="text-sm text-white/60 mb-2 block font-medium">نام کاربری</label>
+              <input className="glass-input" placeholder="مثال: ARMIN" value={un} onChange={e=>setUn(e.target.value)} required/>
+            </div>
+            <div>
+              <label className="text-sm text-white/60 mb-2 block font-medium">رمز عبور</label>
+              <input className="glass-input" type="password" placeholder="••••" value={pw} onChange={e=>setPw(e.target.value)} required/>
+            </div>
+            <button type="submit" className="btn-glass shimmer" disabled={ld}>
               {ld?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ورود...</span>:'ورود به سامانه'}
             </button>
           </form>
@@ -176,24 +189,25 @@ function Login({onLogin}){
 }
 
 function CircularTimer({timeLeft,totalTime}){
-  const radius=50;
+  const radius=55;
   const circumference=2*Math.PI*radius;
   const progress=(timeLeft/totalTime)*circumference;
   const minutes=Math.floor(timeLeft/60);
   const seconds=timeLeft%60;
   const isWarning=timeLeft<300;
-  const color=isWarning?'#f5576c':timeLeft<600?'#fee140':'#4facfe';
+  const isCritical=timeLeft<60;
+  const color=isCritical?'#f5576c':isWarning?'#fee140':'#4facfe';
   return(
     <div className="timer-circle">
-      <svg width="120" height="120">
-        <circle className="bg" cx="60" cy="60" r={radius}/>
-        <circle className="progress" cx="60" cy="60" r={radius} stroke={color} strokeDasharray={circumference} strokeDashoffset={circumference-progress} style={isWarning?{animation:'pulse-glow 1s infinite'}:{}}/>
+      <svg width="140" height="140">
+        <circle className="bg" cx="70" cy="70" r={radius}/>
+        <circle className="progress" cx="70" cy="70" r={radius} stroke={color} strokeDasharray={circumference} strokeDashoffset={circumference-progress} style={isWarning?{animation:'pulse-glow 1s infinite'}:{}}/>
       </svg>
       <div className="timer-text">
-        <div className={`text-2xl font-bold font-mono ${isWarning?'text-red-400 animate-pulse':'text-white'}`}>
+        <div className={`text-3xl font-black font-mono ${isCritical?'text-red-400 animate-pulse':isWarning?'text-yellow-400':'text-white'}`}>
           {minutes}:{seconds<10?'0':''}{seconds}
         </div>
-        <div className="text-xs text-white/50">باقی‌مانده</div>
+        <div className="text-xs text-white/50 mt-1">باقی‌مانده</div>
       </div>
     </div>
   );
@@ -210,6 +224,8 @@ function Admin({user,tab,setTab,onLogout}){
   const [loading,setLoading]=useState(false);
   const [errorMsg,setErrorMsg]=useState('');
   const [subTab,setSubTab]=useState('list');
+  const [selectedExam,setSelectedExam]=useState(null);
+  const [examDetails,setExamDetails]=useState(null);
 
   useEffect(()=>{loadAll();},[]);
 
@@ -251,6 +267,12 @@ function Admin({user,tab,setTab,onLogout}){
   const changePassword=async(studentId)=>{const newPw=prompt("رمز جدید:");if(newPw){await SB.from('users').update({password:newPw}).eq('id',studentId);alert("تغییر کرد");loadAll();}};
   const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();alert('نمره ثبت شد');};
 
+  const viewExamDetails=(exam)=>{
+    const examAnswers=answers.filter(a=>a.exam_id===exam.id);
+    setExamDetails({exam,answers:examAnswers});
+    setSelectedExam(exam.id);
+  };
+
   return(
     <div className="min-h-screen pb-24">
       <div className="header">
@@ -286,7 +308,7 @@ function Admin({user,tab,setTab,onLogout}){
               </div>
             </div>
 
-            <button onClick={()=>{setModal('exam');setFormData({});setQuestions([]);setStep(1);setErrorMsg('');}} className="btn-primary flex items-center justify-center gap-2 mb-6 shimmer">
+            <button onClick={()=>{setModal('exam');setFormData({});setQuestions([]);setStep(1);setErrorMsg('');}} className="btn-glass flex items-center justify-center gap-2 mb-6 shimmer">
               <Icon d={Icons.plus} size={20}/>ساخت آزمون جدید
             </button>
 
@@ -294,7 +316,7 @@ function Admin({user,tab,setTab,onLogout}){
             {exams.length===0?<div className="card text-center py-12 text-white/40"><Icon d={Icons.exam} size={64} className="mx-auto mb-3 opacity-30"/><p>هنوز آزمونی نیست</p></div>:
             exams.map(ex=>(
               <div key={ex.id} className="card slide-up shimmer">
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
                     <h4 className="font-bold text-lg mb-1">{ex.title}</h4>
                     <p className="text-sm text-white/50 mb-3">{ex.description||'بدون توضیحات'}</p>
@@ -303,7 +325,10 @@ function Admin({user,tab,setTab,onLogout}){
                       <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
                     </div>
                   </div>
-                  <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/20 text-red-400 rounded-xl"><Icon d={Icons.trash} size={18}/></button>
+                  <div className="flex gap-2">
+                    <button onClick={()=>viewExamDetails(ex)} className="p-2 bg-blue-500/20 text-blue-400 rounded-xl"><Icon d={Icons.eye} size={18}/></button>
+                    <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/20 text-red-400 rounded-xl"><Icon d={Icons.trash} size={18}/></button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -313,8 +338,8 @@ function Admin({user,tab,setTab,onLogout}){
         {tab==='students'&&(
           <>
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              <button onClick={()=>setSubTab('list')} className={`btn-sm ${subTab==='list'?'btn-primary':'bg-white/10'}`}>لیست دانش‌آموزان</button>
-              <button onClick={()=>setSubTab('objections')} className={`btn-sm ${subTab==='objections'?'btn-primary':'bg-white/10'}`}>اعتراض‌ها ({answers.filter(a=>a.objection&&a.status!=='graded').length})</button>
+              <button onClick={()=>setSubTab('list')} className={`btn-sm ${subTab==='list'?'btn-glass':'bg-white/10'}`}>لیست دانش‌آموزان</button>
+              <button onClick={()=>setSubTab('objections')} className={`btn-sm ${subTab==='objections'?'btn-glass':'bg-white/10'}`}>اعتراض‌ها ({answers.filter(a=>a.objection&&a.status!=='graded').length})</button>
             </div>
 
             {subTab==='list'&&(
@@ -362,7 +387,7 @@ function Admin({user,tab,setTab,onLogout}){
                     </div>
                     <div className="flex gap-2">
                       <input type="number" className="glass-input flex-1" placeholder="نمره جدید" id={`grade-${a.id}`} defaultValue={a.score||0}/>
-                      <button onClick={()=>{const v=document.getElementById(`grade-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت نمره جدید</button>
+                      <button onClick={()=>{const v=document.getElementById(`grade-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-glass btn-glass-success btn-sm">ثبت نمره جدید</button>
                     </div>
                   </div>
                 ))}
@@ -382,7 +407,7 @@ function Admin({user,tab,setTab,onLogout}){
                 <p className="text-sm text-purple-300 mt-2 bg-white/5 p-2 rounded">پاسخ: {a.student_answer||'بدون پاسخ'}</p>
                 <div className="flex gap-2 mt-3">
                   <input type="number" className="glass-input flex-1" placeholder="نمره" id={`score-${a.id}`}/>
-                  <button onClick={()=>{const v=document.getElementById(`score-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-success btn-sm">ثبت</button>
+                  <button onClick={()=>{const v=document.getElementById(`score-${a.id}`).value;gradeAnswer(a.id,v);}} className="btn-glass btn-glass-success btn-sm">ثبت</button>
                 </div>
               </div>
             ))}
@@ -413,15 +438,15 @@ function Admin({user,tab,setTab,onLogout}){
             {step===1&&(
               <div className="space-y-4 fade-in">
                 <div>
-                  <label className="text-sm text-white/60 mb-2 block">عنوان آزمون *</label>
+                  <label className="text-sm text-white/60 mb-2 block font-medium">عنوان آزمون *</label>
                   <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل 1" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
                 </div>
                 <div>
-                  <label className="text-sm text-white/60 mb-2 block">توضیحات</label>
+                  <label className="text-sm text-white/60 mb-2 block font-medium">توضیحات</label>
                   <textarea className="glass-input" placeholder="توضیحات آزمون..." value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})} rows="3"/>
                 </div>
                 <div>
-                  <label className="text-sm text-white/60 mb-2 block">مدت زمان آزمون *</label>
+                  <label className="text-sm text-white/60 mb-2 block font-medium">مدت زمان آزمون *</label>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs text-white/40 mb-1 block">ساعت</label>
@@ -434,13 +459,13 @@ function Admin({user,tab,setTab,onLogout}){
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm text-white/60 mb-2 block">اختصاص به</label>
+                  <label className="text-sm text-white/60 mb-2 block font-medium">اختصاص به</label>
                   <select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
                     <option value="all">همه دانش‌آموزان</option>
                     {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
                   </select>
                 </div>
-                <button onClick={()=>{const total=(parseInt(formData.hours)||0)*60+(parseInt(formData.minutes)||60);setFormData({...formData,duration:total});setStep(2);}} className="btn-primary">مرحله بعد: سوالات</button>
+                <button onClick={()=>{const total=(parseInt(formData.hours)||0)*60+(parseInt(formData.minutes)||60);setFormData({...formData,duration:total});setStep(2);}} className="btn-glass">مرحله بعد: سوالات</button>
               </div>
             )}
 
@@ -450,7 +475,7 @@ function Admin({user,tab,setTab,onLogout}){
                   <h4 className="font-bold">سوالات ({questions.length})</h4>
                   <button onClick={addQuestion} className="btn-sm bg-purple-600"><Icon d={Icons.plus} size={16}/>افزودن سوال</button>
                 </div>
-                {questions.length===0?<div className="text-center py-8 text-white/40"><p>هنوز سوالی اضافه نشده</p><button onClick={addQuestion} className="btn-primary mt-4">افزودن اولین سوال</button></div>:
+                {questions.length===0?<div className="text-center py-8 text-white/40"><p>هنوز سوالی اضافه نشده</p><button onClick={addQuestion} className="btn-glass mt-4">افزودن اولین سوال</button></div>:
                 questions.map((q,i)=>(
                   <div key={i} className="question-card slide-up">
                     <div className="flex justify-between items-center mb-3">
@@ -494,8 +519,8 @@ function Admin({user,tab,setTab,onLogout}){
                   </div>
                 ))}
                 <div className="flex gap-2 mt-4">
-                  <button onClick={()=>setStep(1)} className="btn-primary bg-white/10 flex-1">قبلی</button>
-                  <button onClick={()=>setStep(3)} className="btn-primary flex-1">بررسی نهایی</button>
+                  <button onClick={()=>setStep(1)} className="btn-glass bg-white/10 flex-1">قبلی</button>
+                  <button onClick={()=>setStep(3)} className="btn-glass flex-1">بررسی نهایی</button>
                 </div>
               </div>
             )}
@@ -512,13 +537,48 @@ function Admin({user,tab,setTab,onLogout}){
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button onClick={()=>setStep(2)} className="btn-primary bg-white/10 flex-1">ویرایش</button>
-                  <button onClick={createExam} className="btn-success flex-1" disabled={loading}>
+                  <button onClick={()=>setStep(2)} className="btn-glass bg-white/10 flex-1">ویرایش</button>
+                  <button onClick={createExam} className="btn-glass btn-glass-success flex-1" disabled={loading}>
                     {loading?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ذخیره...</span>:'✓ ذخیره آزمون'}
                   </button>
                 </div>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {examDetails&&(
+        <div className="modal-overlay" onClick={()=>{setExamDetails(null);setSelectedExam(null);}}>
+          <div className="glass-strong w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold gradient-text">جزئیات آزمون</h3>
+              <button onClick={()=>{setExamDetails(null);setSelectedExam(null);}} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
+            </div>
+            <div className="mb-4">
+              <h4 className="font-bold text-lg mb-2">{examDetails.exam.title}</h4>
+              <p className="text-sm text-white/50">{examDetails.exam.description||'بدون توضیحات'}</p>
+              <div className="flex gap-2 mt-2">
+                <span className="badge badge-new">{examDetails.exam.duration_minutes} دقیقه</span>
+                <span className="badge badge-approved">{examDetails.exam.questions?.length||0} سوال</span>
+              </div>
+            </div>
+            <h4 className="font-bold mb-3">پاسخ‌های دانش‌آموزان ({examDetails.answers.length})</h4>
+            {examDetails.answers.length===0?<p className="text-center text-white/40 py-4">هنوز کسی شرکت نکرده</p>:
+            examDetails.answers.map(a=>(
+              <div key={a.id} className="card mb-3">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h5 className="font-bold">{a.users?.full_name}</h5>
+                    <p className="text-xs text-white/40">@{a.users?.username}</p>
+                  </div>
+                  <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'تصحیح شده':'در انتظار'}</span>
+                </div>
+                <p className="text-sm text-white/50 mb-2">{a.questions?.q_text}</p>
+                <p className="text-sm text-purple-300 bg-white/5 p-2 rounded">پاسخ: {a.student_answer||'بدون پاسخ'}</p>
+                {a.status==='graded'&&<p className="text-lg font-bold mt-2 gradient-text">نمره: {a.score}</p>}
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -668,7 +728,7 @@ function Student({user,tab,setTab,onLogout}){
             {q?.q_type==='test'?(
               <div className="space-y-3">
                 {['A','B','C','D'].map(opt=>(
-                  <div key={opt} className={`p-4 rounded-xl cursor-pointer border-2 transition-all ${studentAnswers[q.id]===opt?'bg-purple-600/30 border-purple-500 shadow-lg shadow-purple-500/20':'bg-white/5 border-white/10 hover:border-purple-500/50'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
+                  <div key={opt} className={`exam-option ${studentAnswers[q.id]===opt?'selected':''}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold transition-all ${studentAnswers[q.id]===opt?'bg-purple-600 border-purple-600 scale-110':'border-white/30'}`}>{opt}</div>
                       <span className="flex-1">{q[`opt_${opt.toLowerCase()}`]}</span>
@@ -682,11 +742,11 @@ function Student({user,tab,setTab,onLogout}){
             )}
           </div>
           <div className="flex gap-2 mt-4">
-            {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-primary bg-white/10 flex-1">قبلی</button>}
-            {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-primary flex-1">بعدی</button>:
-            <button onClick={()=>{if(confirm('ثبت نهایی آزمون؟'))submitExam();}} className="btn-success flex-1">ثبت نهایی</button>}
+            {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-glass bg-white/10 flex-1">قبلی</button>}
+            {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-glass flex-1">بعدی</button>:
+            <button onClick={()=>{if(confirm('ثبت نهایی آزمون؟'))submitExam();}} className="btn-glass btn-glass-success flex-1">ثبت نهایی</button>}
           </div>
-          <button onClick={()=>setShowCalc(true)} className="btn-primary bg-white/10 mt-3 w-full flex items-center justify-center gap-2"><Icon d={Icons.calc} size={18}/>ماشین‌حساب</button>
+          <button onClick={()=>setShowCalc(true)} className="btn-glass bg-white/10 mt-3 w-full flex items-center justify-center gap-2"><Icon d={Icons.calc} size={18}/>ماشین‌حساب</button>
         </div>
         {showCalc&&(
           <div className="modal-overlay" onClick={()=>setShowCalc(false)}>
@@ -740,7 +800,7 @@ function Student({user,tab,setTab,onLogout}){
                   {taken?(
                     <div className="text-center py-2 text-white/40 text-sm">شما قبلاً در این آزمون شرکت کرده‌اید</div>
                   ):(
-                    <button onClick={()=>startExam(ex)} className="btn-primary btn-sm shimmer">شروع آزمون</button>
+                    <button onClick={()=>startExam(ex)} className="btn-glass btn-sm shimmer">شروع آزمون</button>
                   )}
                 </div>
               );
@@ -792,7 +852,7 @@ function Student({user,tab,setTab,onLogout}){
               <h3 className="font-bold mb-4 text-center">نمودار پیشرفت تحصیلی</h3>
               {answers.filter(a=>a.status==='graded').length===0?<p className="text-center text-white/40 py-8">هنوز نمره‌ای ثبت نشده</p>:<canvas id="gradeChart"></canvas>}
             </div>
-            {!chartReady&&answers.filter(a=>a.status==='graded').length>0&&<button onClick={()=>setChartReady(true)} className="btn-primary">نمایش نمودار</button>}
+            {!chartReady&&answers.filter(a=>a.status==='graded').length>0&&<button onClick={()=>setChartReady(true)} className="btn-glass">نمایش نمودار</button>}
             <div className="glass p-4 mt-4">
               <h4 className="font-bold mb-3">آمار کلی</h4>
               <div className="grid grid-cols-2 gap-3">
@@ -812,7 +872,7 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='tools'&&(
           <>
             <h3 className="font-bold mb-4">ابزارهای کاربردی</h3>
-            <button onClick={()=>setShowCalc(true)} className="btn-primary w-full flex items-center justify-center gap-2 mb-3 shimmer">
+            <button onClick={()=>setShowCalc(true)} className="btn-glass w-full flex items-center justify-center gap-2 mb-3 shimmer">
               <Icon d={Icons.calc} size={20}/>ماشین‌حساب
             </button>
             <div className="glass p-4 text-center">
@@ -853,7 +913,7 @@ function Student({user,tab,setTab,onLogout}){
               <h3 className="text-xl font-bold gradient-text">درخواست بررسی مجدد</h3>
               <button onClick={()=>setShowObjection(null)} className="p-2 bg-white/10 rounded-xl"><Icon d={Icons.x} size={20}/></button>
             </div>
-            <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mb-4 text-sm text-pink-300">⚠️ فقط یکبار می‌توانید اعتراض بزنید</div>
+            <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-3 mb-4 text-sm text-pink-300">️ فقط یکبار می‌توانید اعتراض بزنید</div>
             <textarea className="glass-input mb-4" placeholder="دلیل اعتراض خود را بنویسید..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
             <button onClick={submitObjection} className="objection-btn btn-glow flex items-center justify-center gap-2"><Icon d={Icons.send} size={18}/>ارسال اعتراض به مدیر</button>
           </div>
