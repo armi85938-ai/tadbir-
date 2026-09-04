@@ -17,32 +17,25 @@
 body{background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);min-height:100vh;color:#fff;overflow-x:hidden}
 body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(120,119,198,0.2) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(255,119,198,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
 
-/* Glassmorphism پیشرفته */
 .glass{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2)}
-.glass-strong{background:rgba(20,15,50,0.7);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.15)}
+.glass-strong{background:rgba(20,15,50,0.8);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
 .glass-input{background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
 .glass-input:focus{border-color:#a78bfa;box-shadow:0 0 0 4px rgba(167,139,250,0.15);background:rgba(0,0,0,0.4)}
 .glass-input::placeholder{color:rgba(255,255,255,0.4)}
 
-/* دکمه‌های شیشه‌ای حرفه‌ای */
-.btn-glass{background:linear-gradient(135deg,rgba(102,126,234,0.25) 0%,rgba(118,75,162,0.25) 100%);backdrop-filter:blur(15px);border:1px solid rgba(167,139,250,0.4);color:#fff;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:0 4px 20px rgba(102,126,234,0.2),inset 0 1px 0 rgba(255,255,255,0.2);position:relative;overflow:hidden}
-.btn-glass::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.6s}
-.btn-glass:hover::before{left:100%}
+.btn-glass{background:linear-gradient(135deg,rgba(102,126,234,0.25) 0%,rgba(118,75,162,0.25) 100%);backdrop-filter:blur(15px);border:1px solid rgba(167,139,250,0.4);color:#fff;border-radius:16px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;box-shadow:0 4px 20px rgba(102,126,234,0.2)}
 .btn-glass:active{transform:scale(0.97)}
-.btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.3) 0%,rgba(5,150,105,0.3) 100%);border-color:rgba(16,185,129,0.5);box-shadow:0 4px 20px rgba(16,185,129,0.2)}
+.btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.3) 0%,rgba(5,150,105,0.3) 100%);border-color:rgba(16,185,129,0.5)}
 .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.3) 0%,rgba(220,38,38,0.3) 100%);border-color:rgba(239,68,68,0.5)}
 .btn-sm{padding:8px 14px;font-size:12px;width:auto;display:inline-flex;align-items:center;gap:6px}
 
-/* انیمیشن‌ها */
 .fade-in{animation:fadeIn 0.4s ease-out}
 .slide-up{animation:slideUp 0.5s cubic-bezier(0.16,1,0.3,1)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* کارت‌ها و المان‌ها */
-.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s}
 .card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.3);border-color:rgba(167,139,250,0.3)}
-.card.disabled{opacity:0.6;filter:grayscale(0.5)}
 
 .header{position:sticky;top:0;z-index:40;background:rgba(15,12,41,0.85);backdrop-filter:blur(25px);border-bottom:1px solid rgba(255,255,255,0.1);padding:16px 20px}
 .content{padding:16px;padding-bottom:100px;max-width:600px;margin:0 auto;position:relative;z-index:1}
@@ -55,7 +48,6 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#a78bfa 0%,#f472b6 50%,#38bdf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* تایمر زیبا */
 .timer-circle{position:relative;width:100px;height:100px}
 .timer-circle svg{transform:rotate(-90deg);filter:drop-shadow(0 0 8px rgba(167,139,250,0.4))}
 .timer-circle circle{fill:none;stroke-width:8}
@@ -63,15 +55,14 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear}
 .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 
-/* بازی */
-#gameCanvas{background:rgba(0,0,0,0.3);border-radius:16px;border:1px solid rgba(255,255,255,0.1);width:100%;max-width:400px;height:300px;margin:0 auto;display:block}
+#gameCanvas{background:rgba(0,0,0,0.3);border-radius:16px;border:1px solid rgba(255,255,255,0.1);width:100%;max-width:400px;height:300px;margin:0 auto;display:block;touch-action:none}
 
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,12,41,0.9);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 0 calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:16px;color:rgba(255,255,255,0.4);font-size:10px;cursor:pointer;transition:all 0.3s}
 .nav-item.active{color:#a78bfa;background:rgba(167,139,250,0.15)}
 .nav-item svg{width:22px;height:22px}
 
-.chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.5}
+.chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.5;word-break:break-word}
 .chat-bubble.me{background:linear-gradient(135deg,#667eea,#764ba2);color:white;border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.1);color:white;border-bottom-right-radius:4px;margin-left:auto}
 </style>
@@ -103,7 +94,8 @@ const Icons={
   message:"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
   game:"M12 2a10 10 0 1 0 10 10H12V2z M12 2a10 10 0 0 1 10 10",
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
-  image:"M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21"
+  image:"M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21",
+  calendar:"M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z M16 2v4 M8 2v4 M3 10h18"
 };
 
 function App(){
@@ -212,8 +204,8 @@ function Admin({user,tab,setTab,onLogout}){
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:s}=await SB.from('users').select('*').eq('role','student');
-    // دریافت اعتراض‌ها و پاسخ‌ها با جزئیات کامل
-    const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt)');
+    // FIX: Explicitly select 'objection' column
+    const {data:a}=await SB.from('answers').select('id, exam_id, student_id, question_id, student_answer, score, status, objection, users(full_name,username), exams(title), questions(q_text,q_type,correct_opt)');
     if(e) setExams(e); if(s) setStudents(s); if(a) setAnswers(a);
     loadMessages();
   };
@@ -242,6 +234,23 @@ function Admin({user,tab,setTab,onLogout}){
       });
     }
     setLoading(false);setModal(null);setFormData({});setQuestions([]);setStep(1);loadAll();
+  };
+
+  // Image Upload Handler
+  const handleImageUpload = async (file, qIndex) => {
+    if (!file) return;
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+    const filePath = `${fileName}`;
+    
+    const { error: uploadError } = await SB.storage.from('exam-images').upload(filePath, file);
+    if (uploadError) {
+      alert('خطا در آپلود عکس: ' + uploadError.message);
+      return;
+    }
+    
+    const { data: { publicUrl } } = SB.storage.from('exam-images').getPublicUrl(filePath);
+    updateQuestion(qIndex, 'image_url', publicUrl);
   };
 
   const addQuestion=()=>{setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test',image_url:''}]);};
@@ -332,17 +341,17 @@ function Admin({user,tab,setTab,onLogout}){
             )}
 
             {subTab==='objections'&&(
-              answers.filter(a=>a.objection&&a.status!=='graded').length===0?<div className="card text-center py-12 text-white/40">اعتراضی ثبت نشده</div>:
+              answers.filter(a=>a.objection&&a.status!=='graded').length===0?<div className="card text-center py-12 text-white/40">اعتراضی ثبت نشده است</div>:
               answers.filter(a=>a.objection&&a.status!=='graded').map(a=>(
-                <div key={a.id} className="card">
+                <div key={a.id} className="card border-amber-500/30">
                   <div className="flex justify-between items-start mb-3">
-                    <div><h4 className="font-bold">{a.users?.full_name}</h4><p className="text-xs text-white/40">{a.exams?.title}</p></div>
+                    <div><h4 className="font-bold text-amber-300">{a.users?.full_name}</h4><p className="text-xs text-white/40">{a.exams?.title}</p></div>
                     <span className="badge badge-pending">اعتراض</span>
                   </div>
                   <div className="bg-white/5 rounded-xl p-3 my-3 text-sm">
                     <p className="text-white/60 mb-1">پاسخ دانش‌آموز:</p>
                     <p className="text-purple-300 bg-white/5 p-2 rounded mb-3">{a.student_answer||'بدون پاسخ'}</p>
-                    <p className="text-amber-300 mb-1">متن اعتراض:</p>
+                    <p className="text-amber-300 mb-1 font-bold">متن اعتراض:</p>
                     <p className="text-white">{a.objection}</p>
                   </div>
                   <div className="flex gap-2">
@@ -446,7 +455,14 @@ function Admin({user,tab,setTab,onLogout}){
                     <button onClick={()=>removeQuestion(i)} className="absolute top-2 left-2 text-red-400"><Icon d={Icons.x} size={18}/></button>
                     <span className="text-xs font-bold text-purple-300 mb-2 block">سوال {i+1}</span>
                     <textarea className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>
-                    <input className="glass-input mb-2 text-sm" placeholder="لینک عکس سوال (اختیاری)" value={q.image_url||''} onChange={e=>updateQuestion(i,'image_url',e.target.value)}/>
+                    
+                    {/* Direct Image Upload */}
+                    <div className="mb-2">
+                      <label className="text-xs text-white/50 mb-1 block">آپلود عکس سوال (اختیاری)</label>
+                      <input type="file" accept="image/*" className="glass-input text-sm py-2" onChange={(e)=>handleImageUpload(e.target.files[0], i)}/>
+                      {q.image_url && <p className="text-xs text-emerald-400 mt-1">✓ عکس آپلود شد</p>}
+                    </div>
+
                     <div className="flex gap-2 mb-2">
                       <button className={`flex-1 py-2 rounded-lg text-sm ${q.q_type==='test'?'bg-purple-600':'bg-white/10'}`} onClick={()=>updateQuestion(i,'q_type','test')}>تستی</button>
                       <button className={`flex-1 py-2 rounded-lg text-sm ${q.q_type==='descriptive'?'bg-purple-600':'bg-white/10'}`} onClick={()=>updateQuestion(i,'q_type','descriptive')}>تشریحی</button>
@@ -507,10 +523,13 @@ function Student({user,tab,setTab,onLogout}){
   const [objectionText,setObjectionText]=useState('');
   const [checklist,setChecklist]=useState([]);
   const [newTask,setNewTask]=useState('');
+  const [studyPlans,setStudyPlans]=useState([]);
+  const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
   const [messages,setMessages]=useState([]);
   const [chatText,setChatText]=useState('');
   const [gameScore,setGameScore]=useState(0);
   const [isPlaying,setIsPlaying]=useState(false);
+  const [toolsTab, setToolsTab] = useState('calc'); // Default to calc
   const canvasRef=useRef(null);
   const chartRef=useRef(null);
   const [chartReady,setChartReady]=useState(false);
@@ -521,14 +540,15 @@ function Student({user,tab,setTab,onLogout}){
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt)').eq('student_id',user.id);
     const {data:c}=await SB.from('checklists').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
+    const {data:p}=await SB.from('study_plans').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
     if(e) setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===user.id));
     if(a) setAnswers(a);
     if(c) setChecklist(c);
+    if(p) setStudyPlans(p);
     loadMessages();
   };
 
   const loadMessages=async()=>{
-    // پیدا کردن ادمین (فرض بر این است که فقط یک ادمین وجود دارد یا اولین کاربر با نقش admin)
     const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
     if(!admins||admins.length===0) return;
     const adminId=admins[0].id;
@@ -575,8 +595,14 @@ function Student({user,tab,setTab,onLogout}){
 
   const submitObjection=async()=>{
     if(!objectionText.trim()||!showObjection) return;
-    await SB.from('answers').update({objection:objectionText,objection_count:1}).eq('id',showObjection.id);
-    alert('اعتراض شما ثبت و برای مدیر ارسال شد');setShowObjection(null);setObjectionText('');loadAll();
+    // FIX: Ensure update is successful and visible
+    const {error} = await SB.from('answers').update({objection:objectionText, objection_count:1}).eq('id',showObjection.id);
+    if(error) {
+        alert('خطا در ثبت اعتراض: ' + error.message);
+    } else {
+        alert('اعتراض شما با موفقیت ثبت و برای مدیر ارسال شد');
+        setShowObjection(null);setObjectionText('');loadAll();
+    }
   };
 
   const changeMyPassword=async()=>{
@@ -606,6 +632,17 @@ function Student({user,tab,setTab,onLogout}){
     setChecklist(checklist.filter(t=>t.id!==id));
   };
 
+  const addPlan=async()=>{
+    if(!newPlan.subject.trim()||!newPlan.time.trim()) return;
+    const {data}=await SB.from('study_plans').insert({user_id:user.id, day_of_week:newPlan.day, subject:newPlan.subject, time_range:newPlan.time}).select().single();
+    setStudyPlans([data,...studyPlans]);
+    setNewPlan({day:'شنبه',subject:'',time:''});
+  };
+  const deletePlan=async(id)=>{
+    await SB.from('study_plans').delete().eq('id',id);
+    setStudyPlans(studyPlans.filter(p=>p.id!==id));
+  };
+
   const sendChat=async()=>{
     if(!chatText.trim()) return;
     const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
@@ -616,7 +653,7 @@ function Student({user,tab,setTab,onLogout}){
 
   // Game Logic
   useEffect(()=>{
-    if(tab!=='tools'||!isPlaying) return;
+    if(tab!=='tools'||toolsTab!=='game'||!isPlaying) return;
     const canvas=canvasRef.current;
     if(!canvas) return;
     const ctx=canvas.getContext('2d');
@@ -651,13 +688,14 @@ function Student({user,tab,setTab,onLogout}){
     
     const mouseMove=(e)=>{
       const rect=canvas.getBoundingClientRect();
-      const relativeX=e.clientX-rect.left;
+      const relativeX=(e.clientX || e.touches[0].clientX)-rect.left;
       if(relativeX>0&&relativeX<canvas.width) paddleX=relativeX-37.5;
     };
     canvas.addEventListener('mousemove',mouseMove);
+    canvas.addEventListener('touchmove',mouseMove,{passive:false});
     draw();
-    return ()=>{cancelAnimationFrame(animationId);canvas.removeEventListener('mousemove',mouseMove);};
-  },[isPlaying,tab]);
+    return ()=>{cancelAnimationFrame(animationId);canvas.removeEventListener('mousemove',mouseMove);canvas.removeEventListener('touchmove',mouseMove);};
+  },[isPlaying,tab,toolsTab]);
 
   const getAverage=()=>{
     const graded=answers.filter(a=>a.status==='graded');
@@ -672,25 +710,36 @@ function Student({user,tab,setTab,onLogout}){
       if(ctx){
         if(window.myChart) window.myChart.destroy();
         const graded=answers.filter(a=>a.status==='graded');
+        
+        // Create gradient
+        const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(167, 139, 250, 0.5)');
+        gradient.addColorStop(1, 'rgba(167, 139, 250, 0.0)');
+
         window.myChart=new Chart(ctx,{
           type:'line',
           data:{
-            labels:graded.map((a,i)=>a.exams?.title?.substring(0,10)||`آزمون ${i+1}`),
+            labels:graded.map((a,i)=>a.exams?.title?.substring(0,15)||`آزمون ${i+1}`),
             datasets:[{
               label:'نمره',
               data:graded.map(a=>parseFloat(a.score||0)),
               borderColor:'#a78bfa',
-              backgroundColor:'rgba(167,139,250,0.2)',
+              backgroundColor:gradient,
+              borderWidth:3,
               tension:0.4,fill:true,
-              pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5
+              pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,
+              pointHoverRadius:8
             }]
           },
           options:{
             responsive:true,
-            plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},
+            plugins:{
+              legend:{labels:{color:'white',font:{family:'Vazirmatn',size:14}}},
+              tooltip:{backgroundColor:'rgba(0,0,0,0.8)',titleFont:{family:'Vazirmatn'},bodyFont:{family:'Vazirmatn'}}
+            },
             scales:{
               y:{ticks:{color:'white',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.1)'},beginAtZero:true,max:1},
-              x:{ticks:{color:'white',font:{family:'Vazirmatn'},maxRotation:45},grid:{color:'rgba(255,255,255,0.1)'}}
+              x:{ticks:{color:'white',font:{family:'Vazirmatn'},maxRotation:45},grid:{color:'rgba(255,255,255,0.05)'}}
             }
           }
         });
@@ -721,7 +770,7 @@ function Student({user,tab,setTab,onLogout}){
             <div className="flex items-center gap-2 mb-4">
               <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'سوال تستی':'سوال تشریحی'}</span>
             </div>
-            {q?.image_url&&<img src={q.image_url} alt="سوال" className="w-full rounded-xl mb-4 max-h-60 object-contain bg-black/20"/>}
+            {q?.image_url&&<img src={q.image_url} alt="سوال" className="w-full rounded-xl mb-4 max-h-60 object-contain bg-black/20 border border-white/10"/>}
             <p className="mb-6 font-bold text-lg leading-relaxed">{q?.q_text}</p>
             {q?.q_type==='test'?(
               <div className="space-y-3">
@@ -848,18 +897,28 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='tools'&&(
           <>
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              <button onClick={()=>setSubTab('checklist')} className={`btn-sm ${subTab==='checklist'?'btn-glass':'bg-white/10'}`}>چک‌لیست</button>
-              <button onClick={()=>setSubTab('chat')} className={`btn-sm ${subTab==='chat'?'btn-glass':'bg-white/10'}`}>پیام به مدیر</button>
-              <button onClick={()=>setSubTab('game')} className={`btn-sm ${subTab==='game'?'btn-glass':'bg-white/10'}`}>بازی</button>
-              <button onClick={()=>setSubTab('settings')} className={`btn-sm ${subTab==='settings'?'btn-glass':'bg-white/10'}`}>تنظیمات</button>
+              <button onClick={()=>setToolsTab('calc')} className={`btn-sm ${toolsTab==='calc'?'btn-glass':'bg-white/10'}`}>ماشین‌حساب</button>
+              <button onClick={()=>setToolsTab('checklist')} className={`btn-sm ${toolsTab==='checklist'?'btn-glass':'bg-white/10'}`}>چک‌لیست</button>
+              <button onClick={()=>setToolsTab('planner')} className={`btn-sm ${toolsTab==='planner'?'btn-glass':'bg-white/10'}`}>برنامه‌ریزی</button>
+              <button onClick={()=>setToolsTab('game')} className={`btn-sm ${toolsTab==='game'?'btn-glass':'bg-white/10'}`}>بازی</button>
             </div>
 
-            {(!subTab||subTab==='checklist')&&(
-              <div className="space-y-3">
+            {toolsTab==='calc'&&(
+              <div className="glass-strong p-4 w-full max-w-sm mx-auto slide-up">
+                <div className="bg-black/40 p-4 rounded-xl text-3xl text-left mb-4 font-mono h-20 flex items-center justify-end overflow-x-auto border border-white/10">{calcDisplay||'0'}</div>
+                <div className="grid grid-cols-4 gap-3">
+                  {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`btn-glass h-14 text-xl ${['/','*','-','+'].includes(b)?'bg-purple-600/40':''} ${b==='='?'btn-glass-success':''}`}>{b}</button>)}
+                </div>
+              </div>
+            )}
+
+            {toolsTab==='checklist'&&(
+              <div className="space-y-3 slide-up">
                 <div className="flex gap-2">
                   <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
                   <button onClick={addTask} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.plus} size={18}/></button>
                 </div>
+                {checklist.length===0&&<p className="text-center text-white/40 py-8">لیست شما خالی است</p>}
                 {checklist.map(t=>(
                   <div key={t.id} className="glass p-3 flex items-center gap-3">
                     <button onClick={()=>toggleTask(t.id,t.is_done)} className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${t.is_done?'bg-emerald-500 border-emerald-500':'border-white/30'}`}>
@@ -872,26 +931,33 @@ function Student({user,tab,setTab,onLogout}){
               </div>
             )}
 
-            {subTab==='chat'&&(
-              <div className="glass-strong p-4 h-[60vh] flex flex-col">
-                <div className="flex-1 overflow-y-auto mb-4 space-y-2">
-                  {messages.length===0&&<p className="text-center text-white/40 mt-10">هنوز پیامی نداده‌اید</p>}
-                  {messages.map(m=>(
-                    <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'}`}>
-                      {m.content}
+            {toolsTab==='planner'&&(
+              <div className="space-y-3 slide-up">
+                <div className="glass p-4 space-y-3">
+                  <select className="glass-input" value={newPlan.day} onChange={e=>setNewPlan({...newPlan,day:e.target.value})}>
+                    {['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'].map(d=><option key={d} value={d}>{d}</option>)}
+                  </select>
+                  <input className="glass-input" placeholder="ماده درسی (مثال: ریاضی)" value={newPlan.subject} onChange={e=>setNewPlan({...newPlan,subject:e.target.value})}/>
+                  <input className="glass-input" placeholder="ساعت (مثال: 16 تا 18)" value={newPlan.time} onChange={e=>setNewPlan({...newPlan,time:e.target.value})}/>
+                  <button onClick={addPlan} className="btn-glass btn-glass-success">افزودن به برنامه</button>
+                </div>
+                {studyPlans.length===0&&<p className="text-center text-white/40 py-4">برنامه‌ای ثبت نشده</p>}
+                {studyPlans.map(p=>(
+                  <div key={p.id} className="glass p-3 flex items-center justify-between">
+                    <div>
+                      <span className="badge badge-new mb-1">{p.day_of_week}</span>
+                      <p className="font-bold">{p.subject}</p>
+                      <p className="text-xs text-white/50">{p.time_range}</p>
                     </div>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  <input className="glass-input flex-1" placeholder="پیام خود را بنویسید..." value={chatText} onChange={e=>setChatText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendChat()}/>
-                  <button onClick={sendChat} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.send} size={18}/></button>
-                </div>
+                    <button onClick={()=>deletePlan(p.id)} className="text-red-400 p-2"><Icon d={Icons.trash} size={18}/></button>
+                  </div>
+                ))}
               </div>
             )}
 
-            {subTab==='game'&&(
-              <div className="text-center">
-                <div className="glass p-4 mb-4">
+            {toolsTab==='game'&&(
+              <div className="text-center slide-up">
+                <div className="glass p-4 mb-4 inline-block min-w-[150px]">
                   <p className="text-sm text-white/60 mb-1">رکورد فعلی</p>
                   <p className="text-3xl font-black text-purple-400">{gameScore}</p>
                 </div>
@@ -903,15 +969,11 @@ function Student({user,tab,setTab,onLogout}){
                 <canvas ref={canvasRef} width="400" height="300" id="gameCanvas"></canvas>
               </div>
             )}
-
-            {subTab==='settings'&&(
-              <div className="glass p-6 text-center">
-                <Icon d={Icons.key} size={40} className="mx-auto mb-4 text-blue-400"/>
-                <h3 className="font-bold text-lg mb-2">تغییر رمز عبور</h3>
-                <p className="text-sm text-white/50 mb-4">با تغییر رمز، مدیر نیز می‌تواند رمز جدید شما را در پنل خود مشاهده کند.</p>
-                <button onClick={changeMyPassword} className="btn-glass">تغییر رمز عبور من</button>
-              </div>
-            )}
+            
+            <div className="mt-6 glass p-4 text-center">
+               <button onClick={changeMyPassword} className="btn-glass flex items-center justify-center gap-2"><Icon d={Icons.key} size={18}/>تغییر رمز عبور من</button>
+               <p className="text-xs text-white/40 mt-2">با تغییر رمز، مدیر نیز می‌تواند رمز جدید شما را در پنل خود مشاهده کند.</p>
+            </div>
           </>
         )}
       </div>
@@ -920,7 +982,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setSubTab('checklist');}}><Icon d={Icons.list}/><span>ابزارها</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
 
       {showCalc&&(
