@@ -93,6 +93,49 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word}
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
+
+/* ===== Professional School UI Upgrade ===== */
+:root{--school-purple:#7c3aed;--school-blue:#2563eb;--school-pink:#ec4899;--school-red:#ef4444}
+body{background:
+ radial-gradient(circle at 10% 0%,rgba(124,58,237,.20),transparent 30%),
+ radial-gradient(circle at 90% 10%,rgba(37,99,235,.16),transparent 28%),
+ linear-gradient(145deg,#070817 0%,#0b1024 48%,#10091d 100%) !important;}
+.glass,.glass-strong,.card{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-color:rgba(255,255,255,.09)!important;box-shadow:0 18px 55px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.04)}
+.card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.card:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.28)!important;box-shadow:0 22px 65px rgba(0,0,0,.28)}
+.btn-glass{transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+.btn-glass:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 10px 28px rgba(99,102,241,.18)}
+.school-calendar{position:relative;overflow:hidden;border-radius:28px;padding:20px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.10);box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.school-calendar:before{content:"";position:absolute;inset:-60px auto auto -60px;width:160px;height:160px;background:rgba(236,72,153,.16);filter:blur(40px);border-radius:50%}
+.cal-head{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.cal-month{font-size:1.35rem;font-weight:900}
+.cal-today{font-size:.72rem;color:rgba(255,255,255,.48);margin-top:3px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:18px;position:relative;z-index:1}
+.cal-week{font-size:.62rem;color:rgba(255,255,255,.38);text-align:center;padding:5px 0;font-weight:700}
+.cal-day{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:14px;font-size:.82rem;color:rgba(255,255,255,.82)}
+.cal-day.muted{color:rgba(255,255,255,.15)}
+.cal-day.today{font-weight:900;color:#fff}
+.cal-day.today:before{content:"";position:absolute;width:80%;height:72%;border:3px solid #ef4444;border-radius:48% 55% 45% 52%;transform:rotate(-8deg);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));animation:pencilCircle .7s ease-out}
+.cal-day.today:after{content:"";position:absolute;width:72%;height:67%;border:1.5px solid rgba(239,68,68,.55);border-radius:52% 47% 55% 45%;transform:rotate(7deg);animation:pencilCircle .9s ease-out}
+@keyframes pencilCircle{from{transform:scale(.5) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(-8deg);opacity:1}}
+.tool-btn{min-height:145px!important;border-radius:26px!important;position:relative;overflow:hidden!important;box-shadow:0 16px 45px rgba(0,0,0,.22)!important}
+.tool-btn:after{content:"";position:absolute;inset:auto -30px -55px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(4px)}
+.tool-icon{width:64px!important;height:64px!important;border-radius:20px!important;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.10);box-shadow:inset 0 1px rgba(255,255,255,.12);margin:auto!important}
+.tool-label{font-size:1rem!important;font-weight:900!important;margin-top:12px}
+.school-games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.game-choice{padding:18px;border-radius:22px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);text-align:right;cursor:pointer;transition:.25s}
+.game-choice:hover,.game-choice.active{transform:translateY(-3px);background:rgba(99,102,241,.15);border-color:rgba(129,140,248,.35)}
+.game-emoji{font-size:2rem}.game-title{font-weight:900;margin-top:8px}.game-desc{font-size:.68rem;color:rgba(255,255,255,.38);margin-top:3px}
+.calc-shell{border-radius:30px!important;padding:18px!important;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035))!important}
+.calc-display{min-height:92px!important;border-radius:22px!important;background:rgba(0,0,0,.32)!important;font-size:2rem!important}
+.calc-key{height:58px!important;border-radius:18px!important;font-weight:900!important;font-size:1.08rem!important}
+.exam-shell{border-radius:30px!important;background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025))!important}
+.timer-circle{filter:drop-shadow(0 8px 20px rgba(99,102,241,.18))}
+#schoolToast{position:fixed;top:20px;right:20px;z-index:99999;max-width:min(380px,calc(100vw - 40px));padding:14px 18px;border-radius:18px;background:rgba(19,24,48,.94);border:1px solid rgba(129,140,248,.28);box-shadow:0 20px 55px rgba(0,0,0,.35);backdrop-filter:blur(16px);transform:translateY(-18px);opacity:0;pointer-events:none;transition:.3s;font-size:.85rem}
+#schoolToast.show{transform:translateY(0);opacity:1}
+#schoolToast .toast-title{font-weight:900;margin-bottom:3px}
+@media(max-width:520px){.school-games{grid-template-columns:1fr 1fr}.cal-grid{gap:4px}.cal-day{font-size:.72rem}}
+
 </style>
 </head>
 <body>
@@ -125,6 +168,61 @@ const Icons={
   game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2",
   award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
 };
+
+
+function notify(message,title='سامانه آموزشی'){
+  let box=document.getElementById('schoolToast');
+  if(!box){box=document.createElement('div');box.id='schoolToast';document.body.appendChild(box);}
+  box.innerHTML='<div class="toast-title">'+title+'</div><div>'+String(message)+'</div>';
+  box.classList.add('show'); clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>box.classList.remove('show'),3200);
+}
+function PersianCalendar(){
+  const now=new Date();
+  const fmt=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{year:'numeric',month:'long',day:'numeric'});
+  const parts=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(now);
+  const y=Number(parts.find(x=>x.type==='year')?.value.replace(/[^\d]/g,''))||1400;
+  const m=Number(parts.find(x=>x.type==='month')?.value.replace(/[^\d]/g,''))||1;
+  const d=Number(parts.find(x=>x.type==='day')?.value.replace(/[^\d]/g,''))||1;
+  const monthName=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{month:'long'}).format(now);
+  const daysInMonth=m<=6?31:(m<=11?30:30);
+  const first=new Date(y+'/'+m+'/1');
+  const jsDay=new Date(now.getFullYear(),now.getMonth(),1).getDay();
+  // Approximate Persian weekday offset using today's Persian weekday and day number.
+  const todayWeekday=new Date().getDay();
+  const offset=(todayWeekday-(d-1)%7+7)%7;
+  const cells=[];
+  for(let i=0;i<offset;i++)cells.push(<div key={'e'+i} className="cal-day muted"></div>);
+  for(let n=1;n<=daysInMonth;n++)cells.push(<div key={n} className={'cal-day '+(n===d?'today':'')}>{n.toLocaleString('fa-IR')}</div>);
+  return <div className="school-calendar slide-up">
+    <div className="cal-head">
+      <div><div className="cal-month">{monthName} {y.toLocaleString('fa-IR')}</div><div className="cal-today">امروز • {fmt.format(now)}</div></div>
+      <div className="text-2xl">📅</div>
+    </div>
+    <div className="cal-grid">
+      {['ش','ی','د','س','چ','پ','ج'].map(x=><div key={x} className="cal-week">{x}</div>)}
+      {cells}
+    </div>
+  </div>
+}
+function GameHub({onSelect}){
+  const games=[
+    ['xo','⭕❌','ایکس‌او','تمرکز و سرعت تصمیم‌گیری'],
+    ['tower','🏗️','ساخت برج','برجت را تا جای ممکن بلند کن'],
+    ['bridge','🌉','ساخت پل','یک پل خلاقانه و محکم بساز'],
+    ['stars','🚀','جنگ ستارگان','سفینه‌ات را هدایت کن'],
+    ['ball','🏓','توپ و راکت','توپ را از دست نده']
+  ];
+  return <div className="slide-up">
+    <div className="glass p-5 mb-4 text-center">
+      <div className="text-4xl mb-2">🎮</div><h3 className="font-black text-lg">باشگاه بازی دانش‌آموزی</h3>
+      <p className="text-xs text-white/40 mt-1">یک بازی انتخاب کن و چند دقیقه استراحت کن!</p>
+    </div>
+    <div className="school-games">{games.map(g=><div key={g[0]} className="game-choice" onClick={()=>onSelect(g[0])}>
+      <div className="game-emoji">{g[1]}</div><div className="game-title">{g[2]}</div><div className="game-desc">{g[3]}</div>
+    </div>)}</div>
+  </div>
+}
 
 function App(){
   const [user,setUser]=useState(null);
@@ -210,9 +308,9 @@ function Admin({user,tab,setTab,onLogout}){
   };
 
   const createExam=async()=>{
-    if(!formData.title||questions.length===0){alert('عنوان و حداقل یک سوال الزامی است');return;}
+    if(!formData.title||!formData.duration||Number(formData.duration)<=0||questions.length===0){notify('عنوان، مدت آزمون و حداقل یک سوال الزامی است','تکمیل اطلاعات');return;}
     setLoading(true);
-    const {data:exam}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:parseInt(formData.duration)||60,assigned_to:formData.assigned||'all',created_by:user.id}).select().single();
+    const {data:exam}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:parseInt(formData.duration,10),assigned_to:formData.assigned||'all',created_by:user.id}).select().single();
     for(const q of questions) await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)});
     setLoading(false);setModal(null);setFormData({});setQuestions([]);setStep(1);loadAll();
   };
@@ -222,7 +320,7 @@ function Admin({user,tab,setTab,onLogout}){
     const ext=file.name.split('.').pop();
     const path=`${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const {error}=await SB.storage.from('exam-images').upload(path,file);
-    if(error){alert('خطا: '+error.message);return;}
+    if(error){notify('خطا: '+error.message);return;}
     const {data:{publicUrl}}=SB.storage.from('exam-images').getPublicUrl(path);
     const nq=[...questions];nq[i].image_url=publicUrl;setQuestions(nq);
   };
@@ -231,9 +329,17 @@ function Admin({user,tab,setTab,onLogout}){
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف؟')){await SB.from('exams').delete().eq('id',id);loadAll();}};
-  const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);alert("تغییر کرد");loadAll();}};
-  const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();alert('نمره ثبت شد');};
+  const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);notify("تغییر کرد");loadAll();}};
+  const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();notify('نمره ثبت شد');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText});setReplyText('');loadAll();};
+  const deleteChatHistory=async()=>{
+    if(!selectedChat)return;
+    if(!confirm('کل تاریخچه این گفتگو حذف شود؟'))return;
+    const sid=selectedChat.sender_id;
+    const {error}=await SB.from('messages').delete().or(`and(sender_id.eq.${user.id},receiver_id.eq.${sid}),and(sender_id.eq.${sid},receiver_id.eq.${user.id})`);
+    if(error){notify('حذف تاریخچه انجام نشد: '+error.message,'خطا');return;}
+    setSelectedChat(null);loadAll();notify('تاریخچه گفتگو پاک شد','گفتگو');
+  };
 
   const objections=answers.filter(a=>a.objection&&a.objection.trim()!==''&&a.status!=='graded');
 
@@ -476,7 +582,7 @@ function Student({user,tab,setTab,onLogout}){
 
   const startExam=(exam)=>{
     if(hasTakenExam(exam.id)){
-      alert('⚠️ شما قبلاً در این آزمون شرکت کرده‌اید و امکان شرکت مجدد وجود ندارد!');
+      notify('⚠️ شما قبلاً در این آزمون شرکت کرده‌اید و امکان شرکت مجدد وجود ندارد!');
       return;
     }
     setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);setTotalTime(exam.duration_minutes*60);
@@ -489,12 +595,16 @@ function Student({user,tab,setTab,onLogout}){
     for(const q of activeExam.questions){
       const ans=studentAnswers[q.id]||'';let score=0;
       if(q.q_type==='test'&&q.correct_opt&&ans===q.correct_opt)score=parseFloat(q.score)||1;
-      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status:q.q_type==='test'?'graded':'pending'});
+      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status:(q.q_type==='test'&&q.correct_opt)?'graded':'pending'});
     }
-    alert('پاسخ‌ها ثبت شد!');setActiveExam(null);loadAll();
+    notify('پاسخ‌ها ثبت شد!');setActiveExam(null);loadAll();
   };
 
-  const calcPress=(v)=>{if(v==='C')setCalcDisplay('');else if(v==='='){try{setCalcDisplay(String(new Function('return '+calcDisplay)()));}catch{setCalcDisplay('Error');}}else setCalcDisplay(calcDisplay+v);};
+  const calcPress=(v)=>{
+      if(v==='C')setCalcDisplay('');
+      else if(v==='='){try{setCalcDisplay(String(new Function('return '+calcDisplay.replaceAll('÷','/').replaceAll('×','*').replaceAll('−','-'))()));}catch{setCalcDisplay('خطا');}}
+      else setCalcDisplay(calcDisplay+v);
+    };
 
   const submitObjection=async()=>{
     if(!objectionText.trim()||!selectedExamForObjection)return;
@@ -502,10 +612,10 @@ function Student({user,tab,setTab,onLogout}){
     for(const a of examAnswers){
       await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
     }
-    alert('اعتراض شما ثبت و برای مدیر ارسال شد!');setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');loadAll();
+    notify('اعتراض شما ثبت و برای مدیر ارسال شد!');setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');loadAll();
   };
 
-  const changeMyPassword=async()=>{const p=prompt("رمز جدید (حداقل ۴ کاراکتر):");if(p&&p.length>=4){await SB.from('users').update({password:p}).eq('id',user.id);const u={...user,password:p};setUser(u);sessionStorage.setItem('edu_user',JSON.stringify(u));alert("رمز تغییر کرد");}else if(p)alert("حداقل ۴ کاراکتر");};
+  const changeMyPassword=async()=>{const p=prompt("رمز جدید (حداقل ۴ کاراکتر):");if(p&&p.length>=4){await SB.from('users').update({password:p}).eq('id',user.id);const u={...user,password:p};setUser(u);sessionStorage.setItem('edu_user',JSON.stringify(u));notify("رمز تغییر کرد");}else if(p)notify("حداقل ۴ کاراکتر");};
 
   const addTask=async()=>{if(!newTask.trim())return;const {data,error}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();if(error){console.error(error);return;}if(data)setChecklist([data,...checklist]);setNewTask('');};
   const toggleTask=async(id,done)=>{await SB.from('checklists').update({is_done:!done}).eq('id',id);setChecklist(checklist.map(t=>t.id===id?{...t,is_done:!done}:t));};
@@ -584,7 +694,7 @@ function Student({user,tab,setTab,onLogout}){
     const gameOver=()=>{
       running=false;
       saveScore(score);
-      alert(`💥 بازی تمام شد!\n\nامتیاز: ${score}\nمرحله: ${level}\nبهترین رکورد: ${Math.max(bestScore,score)}`);
+      notify(`💥 بازی تمام شد!\n\nامتیاز: ${score}\nمرحله: ${level}\nبهترین رکورد: ${Math.max(bestScore,score)}`);
       score=0;level=1;lives=3;enemies=[];bullets=[];particles=[];
       running=true;
       loop();
@@ -820,6 +930,8 @@ function Student({user,tab,setTab,onLogout}){
       <div className="content">
         {tab==='home'&&(
           <>
+            <PersianCalendar/>
+            <div className="h-4"></div>
             <div className="glass p-6 text-center mb-6 slide-up">
               <Icon d={Icons.award} size={32} className="mx-auto mb-2 text-amber-400"/>
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
@@ -908,11 +1020,11 @@ function Student({user,tab,setTab,onLogout}){
             </div>
 
             {toolsTab==='calc'&&(
-              <div className="glass-strong p-5 max-w-xs mx-auto slide-up">
-                <div className="bg-black/40 p-4 rounded-xl text-3xl text-left mb-4 font-mono h-20 flex items-center justify-end border border-white/5 overflow-x-auto">{calcDisplay||'0'}</div>
+              <div className="glass-strong calc-shell max-w-xs mx-auto slide-up">
+                <div className="calc-display bg-black/40 p-4 text-3xl text-left mb-4 font-mono flex items-center justify-end border border-white/5 overflow-x-auto">{calcDisplay||'0'}</div>
                 <div className="grid grid-cols-4 gap-2">
-                  {['7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'].map(b=>(
-                    <button key={b} onClick={()=>calcPress(b)} className={`btn-glass h-14 text-lg font-bold ${['/','*','-','+'].includes(b)?'bg-indigo-600/30 border-indigo-500/30':''} ${b==='='?'btn-glass-success':''} ${b==='C'?'btn-glass-danger':''}`}>{b}</button>
+                  {['7','8','9','÷','4','5','6','×','1','2','3','−','C','0','=','+'].map(b=>(
+                    <button key={b} onClick={()=>calcPress(b)} className={`btn-glass calc-key h-14 text-lg font-bold ${['÷','×','−','+'].includes(b)?'bg-indigo-600/30 border-indigo-500/30':''} ${b==='='?'btn-glass-success':''} ${b==='C'?'btn-glass-danger':''}`}>{b}</button>
                   ))}
                 </div>
               </div>
@@ -954,12 +1066,17 @@ function Student({user,tab,setTab,onLogout}){
             )}
 
             {toolsTab==='game'&&(
-              <div className="text-center slide-up">
-                <div className="flex gap-3 justify-center mb-4">
-                  <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-xl font-black text-pink-400">{bestScore}</p></div>
+              <div className="slide-up">
+                <GameHub onSelect={(g)=>{
+                  if(g==='stars'){notify('بازی جنگ ستارگان آماده است؛ بخش بازی فعلی را برای شروع لمس کن.','🎮 جنگ ستارگان');}
+                  else if(g==='ball'){notify('توپ و راکت به‌زودی قابل اجراست؛ فعلاً بازی فضایی فعال است.','🎮 توپ و راکت');}
+                  else {notify('این بازی در نسخه بعدی فعال می‌شود.','🎮 '+({xo:'ایکس‌او',tower:'ساخت برج',bridge:'ساخت پل'}[g]||'بازی'));}
+                }}/>
+                <div className="glass p-4 text-center">
+                  <div className="flex gap-3 justify-center mb-3"><div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد بازی فضایی</p><p className="text-xl font-black text-pink-400">{bestScore}</p></div></div>
+                  <p className="text-xs text-white/30 mb-3">بازی فضایی فعلی: حرکت با لمس/ماوس و شلیک با کلیک</p>
+                  <canvas ref={canvasRef} id="gameCanvas"></canvas>
                 </div>
-                <p className="text-xs text-white/30 mb-3">برای شلیک کلیک/لمس کنید | حرکت: ماوس/انگشت</p>
-                <canvas ref={canvasRef} id="gameCanvas"></canvas>
               </div>
             )}
 
