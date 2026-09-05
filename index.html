@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0a0a1a">
-<title>سامانه هوشمند آموزشی</title>
+<title>سامانه هوشمند آموزشی تدبیر</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -87,15 +87,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-item.active svg{filter:drop-shadow(0 0 8px rgba(129,140,248,0.6))}
 .nav-item svg{width:22px;height:22px}
 
-.chat-bubble{padding:10px 14px;border-radius:16px;max-width:80%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word}
+.chat-bubble{padding:10px 14px;border-radius:16px;max-width:85%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word;position:relative}
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
 .chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
+.chat-bubble.edited::after{content:'ویرایش شده';font-size:9px;opacity:0.5;margin-right:6px}
 
 .toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{background:rgba(15,15,35,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:14px 20px;min-width:280px;box-shadow:0 10px 40px rgba(0,0,0,0.5);animation:toastIn 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;gap:12px;pointer-events:auto}
-.toast.success{border-color:rgba(52,211,153,0.4);box-shadow:0 10px 40px rgba(16,185,129,0.2)}
-.toast.error{border-color:rgba(248,113,113,0.4);box-shadow:0 10px 40px rgba(239,68,68,0.2)}
-.toast.warning{border-color:rgba(251,191,36,0.4);box-shadow:0 10px 40px rgba(245,158,11,0.2)}
+.toast.success{border-color:rgba(52,211,153,0.4)}
+.toast.error{border-color:rgba(248,113,113,0.4)}
+.toast.warning{border-color:rgba(251,191,36,0.4)}
 .toast-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .toast.success .toast-icon{background:linear-gradient(135deg,#10b981,#34d399)}
 .toast.error .toast-icon{background:linear-gradient(135deg,#ef4444,#f87171)}
@@ -104,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
 
 .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.calendar-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:13px;font-weight:600;position:relative;cursor:default;transition:all 0.3s}
+.calendar-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:13px;font-weight:600;position:relative;transition:all 0.3s}
 .calendar-day.today{background:rgba(239,68,68,0.15);color:#fca5a5;font-weight:800}
 .calendar-day.today::before{content:'';position:absolute;inset:-4px;border:3px solid #ef4444;border-radius:50%;animation:drawCircle 1.5s ease-out forwards;opacity:0.8}
 @keyframes drawCircle{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(70% at 50% 50%)}}
@@ -112,14 +113,29 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .calendar-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
 .calendar-header div{text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);padding:8px 0}
 
-.game-card{background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:20px;padding:20px;text-align:center;cursor:pointer;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.game-card{background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:20px;padding:20px;text-align:center;cursor:pointer;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)}
 .game-card:hover{transform:translateY(-6px) scale(1.03);border-color:rgba(129,140,248,0.4);box-shadow:0 12px 40px rgba(99,102,241,0.3)}
 .game-card-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:32px}
 
 .xo-cell{aspect-ratio:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:900;cursor:pointer;transition:all 0.3s}
-.xo-cell:hover{background:rgba(129,140,248,0.1);border-color:rgba(129,140,248,0.3)}
+.xo-cell:hover:not(.filled){background:rgba(129,140,248,0.1);border-color:rgba(129,140,248,0.3)}
+.xo-cell.filled{cursor:not-allowed}
 .xo-cell.x{color:#818cf8;text-shadow:0 0 20px rgba(129,140,248,0.6)}
 .xo-cell.o{color:#f472b6;text-shadow:0 0 20px rgba(244,114,182,0.6)}
+.xo-cell.winning{animation:winPulse 1s infinite;background:rgba(52,211,153,0.2);border-color:#34d399}
+@keyframes winPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+.emoji-picker{position:absolute;bottom:100%;left:0;background:rgba(15,15,35,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px;z-index:10}
+.emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
+.emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.15)}
+
+.reaction-bar{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.reaction-chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:2px 8px;font-size:12px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:4px}
+.reaction-chip:hover{background:rgba(129,140,248,0.2)}
+.reaction-chip.active{background:rgba(129,140,248,0.3);border-color:#818cf8}
+
+.request-notification{position:fixed;top:80px;right:20px;background:rgba(15,15,35,0.95);backdrop-filter:blur(20px);border:1px solid rgba(236,72,153,0.4);border-radius:20px;padding:16px;box-shadow:0 10px 40px rgba(236,72,153,0.3);z-index:90;animation:slideInRight 0.5s;max-width:300px}
+@keyframes slideInRight{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
 </style>
 </head>
 <body>
@@ -128,6 +144,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
+// ===== ایموجی‌های اختصاصی تدبیر =====
+const TADBIR_EMOJIS=['🎓','📚','✨','🌟','💡','🏆','🎯','🚀','💪','👏','🔥','💎','🌈','⭐','🎨','📖','✏️','🧠'];
+const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
+
+// ===== Toast System =====
 const ToastContext=createContext();
 function ToastProvider({children}){
   const [toasts,setToasts]=useState([]);
@@ -145,7 +166,7 @@ function ToastProvider({children}){
             <div className="toast-icon">
               {t.type==='success'&&<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>}
               {t.type==='error'&&<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12"/></svg>}
-              {t.type==='warning'&&<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>}
+              {t.type==='warning'&&<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M12 9v4M12 17h.01"/></svg>}
             </div>
             <div className="toast-content">{t.message}</div>
           </div>
@@ -156,6 +177,7 @@ function ToastProvider({children}){
 }
 const useToast=()=>useContext(ToastContext);
 
+// ===== Jalali Calendar =====
 function toJalali(gy,gm,gd){
   const g_d_m=[0,31,59,90,120,151,181,212,243,273,304,334];
   let gy2=(gm>2)?(gy+1):gy;
@@ -201,7 +223,9 @@ const Icons={
   list:"M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01",
   calendar:"M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z M16 2v4 M8 2v4 M3 10h18",
   game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2",
-  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12"
+  award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12",
+  edit:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
+  smile:"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M8 14s1.5 2 4 2 4-2 4-2 M9 9h.01 M15 9h.01"
 };
 
 function PersianCalendar(){
@@ -282,12 +306,12 @@ function Login({onLogin}){
               <Icon d={Icons.book} size={52}/>
             </div>
           </div>
-          <h1 className="text-5xl font-black mb-3 gradient-text leading-tight">سامانه آموزشی</h1>
+          <h1 className="text-5xl font-black mb-3 gradient-text leading-tight">سامانه تدبیر</h1>
           <p className="text-white/50 text-sm font-medium">ورود به پنل کاربری هوشمند</p>
         </div>
         <div className="glass-strong p-8 slide-up" style={{animationDelay:'0.1s'}}>
           <form onSubmit={submit} className="space-y-5">
-            {err&&<div className="bg-red-500/15 border border-red-500/25 rounded-xl p-3 text-red-300 text-sm text-center fade-in">{err}</div>}
+            {err&&<div className="bg-red-500/15 border border-red-500/25 rounded-xl p-3 text-red-300 text-sm text-center">{err}</div>}
             <div>
               <label className="text-xs text-white/60 mb-2 block font-semibold">نام کاربری</label>
               <input className="glass-input" placeholder="مثال: ARMIN" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required/>
@@ -301,12 +325,12 @@ function Login({onLogin}){
             </button>
           </form>
         </div>
-        <p className="text-center text-white/20 text-xs mt-6">نسخه ۲.۰ - طراحی شده با ❤️</p>
       </div>
     </div>
   );
 }
 
+// ===== Admin Panel =====
 function Admin({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);const [students,setStudents]=useState([]);const [answers,setAnswers]=useState([]);
   const [modal,setModal]=useState(null);const [step,setStep]=useState(1);const [formData,setFormData]=useState({hours:'',minutes:''});
@@ -356,16 +380,22 @@ function Admin({user,tab,setTab,onLogout}){
   const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
-  const duplicateQuestion=(i)=>{const q={...questions[i]};setQuestions([...questions.slice(0,i+1),q,...questions.slice(i+1)]);toast('سوال کپی شد','success');};
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
   const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);loadAll();toast('رمز تغییر کرد','success');}};
   const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();toast('نمره ثبت شد','success');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText});setReplyText('');loadAll();};
+  
+  // ✅ رفع باگ پاک کردن چت - با دو DELETE جداگانه
   const clearChat=async(studentId)=>{
     if(!confirm('تمام پیام‌های این دانش‌آموز حذف شود؟'))return;
-    await SB.from('messages').delete().or(`and(sender_id.eq.${user.id},receiver_id.eq.${studentId})`, `and(sender_id.eq.${studentId},receiver_id.eq.${user.id})`);
-    loadAll();setSelectedChat(null);
-    toast('تاریخچه چت پاک شد','success');
+    // حذف پیام‌های ارسالی از مدیر به دانش‌آموز
+    const {error:e1}=await SB.from('messages').delete().eq('sender_id',user.id).eq('receiver_id',studentId);
+    // حذف پیام‌های ارسالی از دانش‌آموز به مدیر
+    const {error:e2}=await SB.from('messages').delete().eq('sender_id',studentId).eq('receiver_id',user.id);
+    if(e1||e2){toast('خطا در حذف: '+(e1?.message||e2?.message),'error');return;}
+    setSelectedChat(null);
+    loadAll();
+    toast('✅ تاریخچه چت پاک شد','success');
   };
 
   const objections=answers.filter(a=>a.objection&&a.objection.trim()!==''&&a.status!=='graded');
@@ -468,7 +498,7 @@ function Admin({user,tab,setTab,onLogout}){
                     </div>
                     <div className="flex-1 overflow-y-auto mb-3 space-y-1">
                       {messages.filter(m=>(m.sender_id===selectedChat.sender_id&&m.receiver_id===user.id)||(m.sender_id===user.id&&m.receiver_id===selectedChat.sender_id)).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).map(m=>(
-                        <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}</div>
+                        <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'} ${m.edited?'edited':''}`}>{m.content}</div>
                       ))}
                     </div>
                     <div className="flex gap-2">
@@ -559,10 +589,7 @@ function Admin({user,tab,setTab,onLogout}){
                   <div key={i} className="glass p-4 mb-3 relative">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-xs font-bold text-indigo-300">سوال {i+1}</span>
-                      <div className="flex gap-1">
-                        <button onClick={()=>duplicateQuestion(i)} className="p-1.5 bg-blue-500/15 text-blue-400 rounded-lg" title="کپی"><Icon d="M8 6h13M8 12h13M8 18h13" size={14}/></button>
-                        <button onClick={()=>removeQuestion(i)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg"><Icon d={Icons.x} size={14}/></button>
-                      </div>
+                      <button onClick={()=>removeQuestion(i)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg"><Icon d={Icons.x} size={14}/></button>
                     </div>
                     <textarea className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>
                     <div className="grid grid-cols-2 gap-2 mb-2">
@@ -598,45 +625,657 @@ function Admin({user,tab,setTab,onLogout}){
   );
 }
 
-function Student({user,tab,setTab,onLogout}){
-  const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
-  const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
-  const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
-  const [calcDisplay,setCalcDisplay]=useState('');
-  const [showObjection,setShowObjection]=useState(null);const [objectionText,setObjectionText]=useState('');
-  const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
-  const [checklist,setChecklist]=useState([]);const [newTask,setNewTask]=useState('');
-  const [studyPlans,setStudyPlans]=useState([]);const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
-  const [messages,setMessages]=useState([]);const [chatText,setChatText]=useState('');
-  const [bestScores,setBestScores]=useState({});
-  const [toolsTab,setToolsTab]=useState('calc');
-  const [chartReady,setChartReady]=useState(false);
-  const [showExamResults,setShowExamResults]=useState(null);
-  const [showChat,setShowChat]=useState(false);
-  const [showPasswordModal,setShowPasswordModal]=useState(false);
-  const [activeGame,setActiveGame]=useState(null);
+// ===== ربات هوشمند XO =====
+function getXOMove(board,botMark){
+  const humanMark=botMark==='X'?'O':'X';
+  const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  
+  // 1. آیا می‌تواند برنده شود؟
+  for(const [a,b,c] of lines){
+    if(board[a]===botMark&&board[b]===botMark&&board[c]==='-')return c;
+    if(board[a]===botMark&&board[c]===botMark&&board[b]==='-')return b;
+    if(board[b]===botMark&&board[c]===botMark&&board[a]==='-')return a;
+  }
+  
+  // 2. آیا باید بلاک کند؟
+  for(const [a,b,c] of lines){
+    if(board[a]===humanMark&&board[b]===humanMark&&board[c]==='-')return c;
+    if(board[a]===humanMark&&board[c]===humanMark&&board[b]==='-')return b;
+    if(board[b]===humanMark&&board[c]===humanMark&&board[a]==='-')return a;
+  }
+  
+  // 3. مرکز
+  if(board[4]==='-')return 4;
+  
+  // 4. گوشه‌ها
+  const corners=[0,2,6,8].filter(i=>board[i]==='-');
+  if(corners.length>0)return corners[Math.floor(Math.random()*corners.length)];
+  
+  // 5. هر خانه خالی
+  const empty=board.split('').map((c,i)=>c==='-'?i:-1).filter(i=>i>=0);
+  return empty[Math.floor(Math.random()*empty.length)];
+}
+
+function checkXOWinner(board){
+  const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  for(const [a,b,c] of lines){
+    if(board[a]&&board[a]===board[b]&&board[a]===board[c])return{winner:board[a],line:[a,b,c]};
+  }
+  if(!board.includes('-'))return{winner:'draw',line:null};
+  return null;
+}
+
+// ===== XO Game Component =====
+function XOGameHub({user}){
+  const [mode,setMode]=useState(null); // null, 'bot', 'friends'
+  const [botGame,setBotGame]=useState(null);
+  const [friendsGame,setFriendsGame]=useState(null);
+  const [friendsList,setFriendsList]=useState([]);
+  const [pendingRequests,setPendingRequests]=useState([]);
+  const [myRequests,setMyRequests]=useState([]);
+  const toast=useToast();
+
+  useEffect(()=>{
+    loadFriends();
+    loadPendingRequests();
+    // Subscribe to new requests
+    const sub=SB.channel('game-requests-'+user.id)
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},(payload)=>{
+        loadPendingRequests();
+        toast('🎮 درخواست بازی جدید!','success');
+      })
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_requests',filter:`from_user=eq.${user.id}`},(payload)=>{
+        if(payload.new.status==='accepted'){
+          setFriendsGame(payload.new.room_id);
+          setMode('playing-online');
+          toast('✅ درخواست شما پذیرفته شد!','success');
+        }else if(payload.new.status==='rejected'){
+          toast('❌ درخواست شما رد شد','error');
+        }
+        loadMyRequests();
+      })
+      .subscribe();
+    return()=>{SB.removeChannel(sub);};
+  },[]);
+
+  const loadFriends=async()=>{
+    const {data}=await SB.from('users').select('id,full_name,username').eq('role','student').neq('id',user.id);
+    if(data)setFriendsList(data);
+  };
+
+  const loadPendingRequests=async()=>{
+    const {data}=await SB.from('game_requests').select('*,from_user_data:users!game_requests_from_user_fkey(full_name,username)').eq('to_user',user.id).eq('status','pending');
+    if(data)setPendingRequests(data);
+  };
+
+  const loadMyRequests=async()=>{
+    const {data}=await SB.from('game_requests').select('*,to_user_data:users!game_requests_to_user_fkey(full_name,username)').eq('from_user',user.id).eq('status','pending');
+    if(data)setMyRequests(data);
+  };
+
+  const sendRequest=async(toUserId)=>{
+    // Create room
+    const {data:room,error:rErr}=await SB.from('xo_rooms').insert({player_x:user.id,status:'waiting'}).select().single();
+    if(rErr){toast('خطا در ساخت اتاق','error');return;}
+    // Send request
+    const {error}=await SB.from('game_requests').insert({from_user:user.id,to_user:toUserId,room_id:room.id});
+    if(error){toast('خطا: '+error.message,'error');return;}
+    toast('✅ درخواست بازی ارسال شد','success');
+    loadMyRequests();
+  };
+
+  const acceptRequest=async(request)=>{
+    // Update room with player_o
+    await SB.from('xo_rooms').update({player_o:user.id,status:'playing'}).eq('id',request.room_id);
+    // Update request status
+    await SB.from('game_requests').update({status:'accepted'}).eq('id',request.id);
+    setFriendsGame(request.room_id);
+    setMode('playing-online');
+    toast('✅ بازی شروع شد!','success');
+  };
+
+  const rejectRequest=async(request)=>{
+    await SB.from('game_requests').update({status:'rejected'}).eq('id',request.id);
+    await SB.from('xo_rooms').delete().eq('id',request.room_id);
+    loadPendingRequests();
+    toast('درخواست رد شد','warning');
+  };
+
+  const cancelRequest=async(request)=>{
+    await SB.from('game_requests').update({status:'rejected'}).eq('id',request.id);
+    await SB.from('xo_rooms').delete().eq('id',request.room_id);
+    loadMyRequests();
+  };
+
+  const endOnlineGame=async()=>{
+    if(friendsGame){
+      await SB.from('xo_rooms').delete().eq('id',friendsGame);
+      setFriendsGame(null);
+    }
+    setMode(null);
+    toast('بازی پایان یافت','warning');
+  };
+
+  if(mode==='bot')return <XOBotGame user={user} onBack={()=>setMode(null)}/>;
+  if(mode==='playing-online')return <XOOnlineGame user={user} roomId={friendsGame} onEnd={endOnlineGame}/>;
+  if(mode==='friends')return(
+    <div className="slide-up">
+      <div className="flex justify-between items-center mb-4">
+        <button onClick={()=>setMode(null)} className="btn-glass btn-sm">← بازگشت</button>
+        <h3 className="font-bold gradient-text">بازی با دوستان</h3>
+        <div className="w-16"></div>
+      </div>
+
+      {/* درخواست‌های دریافتی */}
+      {pendingRequests.length>0&&(
+        <div className="glass p-4 mb-4">
+          <h4 className="font-bold text-sm mb-3 text-pink-400">🔔 درخواست‌های دریافتی</h4>
+          {pendingRequests.map(r=>(
+            <div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
+                <p className="text-[11px] text-white/40">درخواست بازی داده</p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={()=>acceptRequest(r)} className="btn-sm btn-glass btn-glass-success">✓ قبول</button>
+                <button onClick={()=>rejectRequest(r)} className="btn-sm btn-glass btn-glass-danger">✗ رد</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* درخواست‌های ارسالی */}
+      {myRequests.length>0&&(
+        <div className="glass p-4 mb-4">
+          <h4 className="font-bold text-sm mb-3 text-amber-400">⏳ درخواست‌های ارسالی</h4>
+          {myRequests.map(r=>(
+            <div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-sm">{r.to_user_data?.full_name}</p>
+                <p className="text-[11px] text-white/40">در انتظار پاسخ...</p>
+              </div>
+              <button onClick={()=>cancelRequest(r)} className="btn-sm btn-glass btn-glass-danger">لغو</button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* لیست دانش‌آموزان */}
+      <div className="glass p-4">
+        <h4 className="font-bold text-sm mb-3 text-indigo-400">👥 ارسال درخواست به دوستان</h4>
+        {friendsList.length===0?<p className="text-center text-white/30 py-4">دانش‌آموز دیگری نیست</p>:
+        friendsList.map(f=>(
+          <div key={f.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold">{f.full_name[0]}</div>
+              <div>
+                <p className="font-bold text-sm">{f.full_name}</p>
+                <p className="text-[11px] text-white/40">@{f.username}</p>
+              </div>
+            </div>
+            <button onClick={()=>sendRequest(f.id)} className="btn-sm btn-glass">ارسال درخواست 🎮</button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  return(
+    <div className="slide-up">
+      <h3 className="font-black text-lg gradient-text text-center mb-6">بازی دوز (XO)</h3>
+      <div className="space-y-3">
+        <button onClick={()=>setMode('bot')} className="btn-glass flex items-center justify-center gap-3 py-5">
+          <span className="text-3xl">🤖</span>
+          <div className="text-right flex-1">
+            <p className="font-black">بازی با ربات</p>
+            <p className="text-xs text-white/50">بازی آفلاین با هوش مصنوعی</p>
+          </div>
+        </button>
+        <button onClick={()=>setMode('friends')} className="btn-glass flex items-center justify-center gap-3 py-5">
+          <span className="text-3xl">👥</span>
+          <div className="text-right flex-1">
+            <p className="font-black">بازی با دوستان</p>
+            <p className="text-xs text-white/50">بازی آنلاین با دانش‌آموزان دیگر</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ===== XO Bot Game =====
+function XOBotGame({user,onBack}){
+  const [board,setBoard]=useState('---------');
+  const [playerMark,setPlayerMark]=useState('X');
+  const [currentTurn,setCurrentTurn]=useState('X');
+  const [winner,setWinner]=useState(null);
+  const [winLine,setWinLine]=useState(null);
+  const [scores,setScores]=useState({player:0,bot:0,draw:0});
+  const toast=useToast();
+
+  const botMark=playerMark==='X'?'O':'X';
+
+  useEffect(()=>{
+    if(currentTurn===botMark&&!winner){
+      const timer=setTimeout(()=>{
+        const move=getXOMove(board,botMark);
+        if(move!==undefined&&move!==null){
+          const newBoard=board.substring(0,move)+botMark+board.substring(move+1);
+          setBoard(newBoard);
+          const result=checkXOWinner(newBoard);
+          if(result){
+            setWinner(result.winner);
+            setWinLine(result.line);
+            if(result.winner==='draw'){setScores(s=>({...s,draw:s.draw+1}));toast('🤝 مساوی!','warning');}
+            else if(result.winner===botMark){setScores(s=>({...s,bot:s.bot+1}));toast('🤖 ربات برد!','error');}
+          }else{
+            setCurrentTurn(playerMark);
+          }
+        }
+      },600);
+      return()=>clearTimeout(timer);
+    }
+  },[currentTurn,board,winner]);
+
+  const handleCellClick=(i)=>{
+    if(board[i]!=='-'||winner||currentTurn!==playerMark)return;
+    const newBoard=board.substring(0,i)+playerMark+board.substring(i+1);
+    setBoard(newBoard);
+    const result=checkXOWinner(newBoard);
+    if(result){
+      setWinner(result.winner);
+      setWinLine(result.line);
+      if(result.winner==='draw'){setScores(s=>({...s,draw:s.draw+1}));toast('🤝 مساوی!','warning');}
+      else if(result.winner===playerMark){setScores(s=>({...s,player:s.player+1}));toast('🎉 شما بردید!','success');}
+    }else{
+      setCurrentTurn(botMark);
+    }
+  };
+
+  const resetGame=()=>{
+    setBoard('---------');
+    setWinner(null);
+    setWinLine(null);
+    setCurrentTurn('X');
+  };
+
+  return(
+    <div className="slide-up">
+      <div className="flex justify-between items-center mb-4">
+        <button onClick={onBack} className="btn-glass btn-sm">← بازگشت</button>
+        <h3 className="font-bold gradient-text">🤖 بازی با ربات</h3>
+        <div className="w-16"></div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 mb-4">
+        <div className="glass p-3 text-center">
+          <p className="text-[11px] text-white/40">شما ({playerMark})</p>
+          <p className="text-2xl font-black text-indigo-400">{scores.player}</p>
+        </div>
+        <div className="glass p-3 text-center">
+          <p className="text-[11px] text-white/40">مساوی</p>
+          <p className="text-2xl font-black text-amber-400">{scores.draw}</p>
+        </div>
+        <div className="glass p-3 text-center">
+          <p className="text-[11px] text-white/40">ربات ({botMark})</p>
+          <p className="text-2xl font-black text-pink-400">{scores.bot}</p>
+        </div>
+      </div>
+
+      <div className="glass p-4 mb-4 text-center">
+        {!winner?(
+          <p className={`font-bold ${currentTurn===playerMark?'text-indigo-400':'text-pink-400'}`}>
+            {currentTurn===playerMark?'🎯 نوبت شماست':'🤖 ربات در حال فکر...'}
+          </p>
+        ):(
+          <p className="font-bold gradient-text text-lg">
+            {winner==='draw'?'🤝 مساوی!':winner===playerMark?'🎉 شما بردید!':'🤖 ربات برد!'}
+          </p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 max-w-[300px] mx-auto mb-4">
+        {board.split('').map((cell,i)=>(
+          <div key={i} className={`xo-cell ${cell==='X'?'x':''} ${cell==='O'?'o':''} ${cell!=='-'?'filled':''} ${winLine&&winLine.includes(i)?'winning':''}`} onClick={()=>handleCellClick(i)}>
+            {cell==='-'?'':cell}
+          </div>
+        ))}
+      </div>
+
+      {winner&&(
+        <button onClick={resetGame} className="btn-glass btn-glass-success">🔄 دور جدید</button>
+      )}
+    </div>
+  );
+}
+
+// ===== XO Online Game =====
+function XOOnlineGame({user,roomId,onEnd}){
+  const [room,setRoom]=useState(null);
+  const [myMark,setMyMark]=useState(null);
+  const [opponentName,setOpponentName]=useState('');
+  const [winner,setWinner]=useState(null);
+  const [winLine,setWinLine]=useState(null);
+  const toast=useToast();
+
+  useEffect(()=>{
+    loadRoom();
+    const channel=SB.channel('xo-room-'+roomId)
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'xo_rooms',filter:`id=eq.${roomId}`},(payload)=>{
+        setRoom(payload.new);
+        const result=checkXOWinner(payload.new.board);
+        if(result&&!payload.new.winner){
+          SB.from('xo_rooms').update({winner:result.winner,status:'finished'}).eq('id',roomId);
+        }
+      })
+      .subscribe();
+    return()=>{SB.removeChannel(channel);};
+  },[roomId]);
+
+  const loadRoom=async()=>{
+    const {data}=await SB.from('xo_rooms').select('*,player_x_data:users!xo_rooms_player_x_fkey(full_name),player_o_data:users!xo_rooms_player_o_fkey(full_name)').eq('id',roomId).single();
+    if(data){
+      setRoom(data);
+      if(data.player_x===user.id){setMyMark('X');setOpponentName(data.player_o_data?.full_name||'در انتظار...');}
+      else{setMyMark('O');setOpponentName(data.player_x_data?.full_name||'در انتظار...');}
+      if(data.winner)setWinner(data.winner);
+    }
+  };
+
+  const handleCellClick=async(i)=>{
+    if(!room||room.board[i]!=='-'||room.current_turn!==myMark||winner)return;
+    const newBoard=room.board.substring(0,i)+myMark+room.board.substring(i+1);
+    const nextTurn=myMark==='X'?'O':'X';
+    const result=checkXOWinner(newBoard);
+    const updates={board:newBoard,current_turn:nextTurn,updated_at:new Date().toISOString()};
+    if(result){
+      updates.winner=result.winner;
+      updates.status='finished';
+      if(result.winner==='X')updates.score_x=room.score_x+1;
+      else if(result.winner==='O')updates.score_o=room.score_o+1;
+    }
+    await SB.from('xo_rooms').update(updates).eq('id',roomId);
+  };
+
+  const handleEndGame=async()=>{
+    await SB.from('xo_rooms').delete().eq('id',roomId);
+    onEnd();
+  };
+
+  if(!room)return <div className="text-center py-10 text-white/40">در حال بارگذاری...</div>;
+  if(room.status==='waiting')return <div className="text-center py-10"><p className="text-white/60 mb-3">⏳ در انتظار پاسخ حریف...</p></div>;
+
+  const botMark=myMark==='X'?'O':'X';
+
+  return(
+    <div className="slide-up">
+      <div className="flex justify-between items-center mb-4">
+        <button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">🏁 اتمام بازی</button>
+        <h3 className="font-bold gradient-text">🎮 بازی آنلاین</h3>
+        <div className="w-20"></div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 mb-4">
+        <div className={`glass p-3 text-center ${myMark==='X'?'border-indigo-500/40':''}`}>
+          <p className="text-[11px] text-white/40">شما ({myMark})</p>
+          <p className="text-2xl font-black text-indigo-400">{myMark==='X'?room.score_x:room.score_o}</p>
+        </div>
+        <div className="glass p-3 text-center">
+          <p className="text-[11px] text-white/40">مساوی</p>
+          <p className="text-2xl font-black text-amber-400">-</p>
+        </div>
+        <div className={`glass p-3 text-center ${myMark==='O'?'border-pink-500/40':''}`}>
+          <p className="text-[11px] text-white/40">حریف ({botMark})</p>
+          <p className="text-2xl font-black text-pink-400">{myMark==='X'?room.score_o:room.score_x}</p>
+        </div>
+      </div>
+
+      <div className="glass p-3 mb-4 text-center">
+        <p className="text-xs text-white/40 mb-1">حریف: <span className="font-bold text-white">{opponentName}</span></p>
+        {!winner?(
+          <p className={`font-bold ${room.current_turn===myMark?'text-emerald-400':'text-white/50'}`}>
+            {room.current_turn===myMark?'🎯 نوبت شماست':'⏳ نوبت حریف...'}
+          </p>
+        ):(
+          <p className="font-bold gradient-text text-lg">
+            {winner==='draw'?'🤝 مساوی!':(winner===myMark?'🎉 شما بردید!':'😔 حریف برد!')}
+          </p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 max-w-[300px] mx-auto mb-4">
+        {room.board.split('').map((cell,i)=>(
+          <div key={i} className={`xo-cell ${cell==='X'?'x':''} ${cell==='O'?'o':''} ${cell!=='-'?'filled':''} ${winLine&&winLine.includes(i)?'winning':''}`} onClick={()=>handleCellClick(i)}>
+            {cell==='-'?'':cell}
+          </div>
+        ))}
+      </div>
+
+      {winner&&(
+        <button onClick={async()=>{
+          await SB.from('xo_rooms').update({board:'---------',current_turn:'X',winner:null,status:'playing'}).eq('id',roomId);
+          setWinner(null);
+        }} className="btn-glass btn-glass-success">🔄 دور جدید</button>
+      )}
+    </div>
+  );
+}
+
+// ===== Breakout Game =====
+function BreakoutGame({user}){
+  const [score,setScore]=useState(0);
+  const [level,setLevel]=useState(1);
+  const [gameOver,setGameOver]=useState(false);
+  const [bestScore,setBestScore]=useState(0);
   const canvasRef=useRef(null);
   const gameRef=useRef(null);
   const toast=useToast();
 
-  useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{
+    loadBest();
+  },[]);
 
-  const loadAll=async()=>{
-    const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
-    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt,score,opt_a,opt_b,opt_c,opt_d)');
-    const {data:c}=await SB.from('checklists').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
-    const {data:p}=await SB.from('study_plans').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
-    const {data:g}=await SB.from('game_scores').select('game_name,score').eq('user_id',user.id);
-    if(e)setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===String(user.id)));
-    if(a)setAnswers(a.filter(ans=>ans.student_id===user.id));
-    if(c)setChecklist(c);if(p)setStudyPlans(p);
-    if(g){
-      const scores={};
-      g.forEach(s=>{if(!scores[s.game_name]||s.score>scores[s.game_name])scores[s.game_name]=s.score;});
-      setBestScores(scores);
-    }
-    loadMessages();
+  const loadBest=async()=>{
+    const {data}=await SB.from('game_scores').select('score').eq('user_id',user.id).eq('game_name','breakout').order('score',{ascending:false}).limit(1);
+    if(data&&data.length>0)setBestScore(data[0].score);
   };
+
+  useEffect(()=>{
+    if(gameOver)return;
+    const canvas=canvasRef.current;
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    const W=380,H=500;
+    canvas.width=W;canvas.height=H;
+    
+    let localScore=0,localLevel=1,running=true;
+    let ballX=W/2,ballY=H-50,ballDX=0,ballDY=0,ballR=7;
+    let padX=W/2-40,padW=80,padH=12;
+    const colors=['#818cf8','#c084fc','#f472b6','#fb923c','#34d399','#fbbf24','#f87171'];
+    let bricks=[],particles=[],trail=[];
+
+    const buildBricks=(lvl)=>{
+      bricks=[];
+      const rows=Math.min(3+lvl,7);
+      const cols=7;
+      const brickW=Math.floor((W-28-(cols-1)*5)/cols);
+      for(let r=0;r<rows;r++){
+        bricks[r]=[];
+        for(let c=0;c<cols;c++){
+          bricks[r][c]={x:c*(brickW+5)+14,y:r*25+45,alive:true,color:colors[r%colors.length]};
+        }
+      }
+      return {rows,cols,brickW};
+    };
+
+    let brickInfo=buildBricks(1);
+
+    const resetBall=()=>{
+      ballX=W/2;ballY=H-50;
+      const speed=5+(localLevel-1)*0.6;
+      const angle=Math.random()*0.5+0.4;
+      ballDX=Math.cos(angle*Math.PI)*speed*(Math.random()>0.5?1:-1);
+      ballDY=-Math.abs(Math.sin(angle*Math.PI)*speed);
+    };
+
+    const moveHandler=(e)=>{
+      e.preventDefault();
+      const rect=canvas.getBoundingClientRect();
+      const cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
+      padX=Math.max(0,Math.min(W-padW,cx*(W/rect.width)-padW/2));
+    };
+    canvas.addEventListener('mousemove',moveHandler);
+    canvas.addEventListener('touchmove',moveHandler,{passive:false});
+
+    const spawnParticles=(x,y,color)=>{
+      for(let i=0;i<10;i++){
+        const a=Math.random()*Math.PI*2;
+        particles.push({x,y,dx:Math.cos(a)*3,dy:Math.sin(a)*3,life:25,color});
+      }
+    };
+
+    const loop=()=>{
+      if(!running)return;
+      ctx.clearRect(0,0,W,H);
+      const bg=ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,'rgba(15,15,35,0.95)');bg.addColorStop(1,'rgba(10,10,26,0.98)');
+      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+      // Bricks with glow
+      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
+        const b=bricks[r][c];if(!b.alive)continue;
+        ctx.fillStyle=b.color;ctx.shadowColor=b.color;ctx.shadowBlur=10;
+        ctx.beginPath();ctx.roundRect(b.x,b.y,brickInfo.brickW,20,4);ctx.fill();
+        ctx.shadowBlur=0;
+      }
+
+      // Paddle with gradient
+      const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
+      padGrad.addColorStop(0,'#818cf8');padGrad.addColorStop(1,'#c084fc');
+      ctx.fillStyle=padGrad;ctx.shadowColor='#818cf8';ctx.shadowBlur=15;
+      ctx.beginPath();ctx.roundRect(padX,H-25,padW,padH,6);ctx.fill();
+      ctx.shadowBlur=0;
+
+      // Ball trail
+      trail.push({x:ballX,y:ballY,life:12});
+      trail=trail.filter(t=>{
+        t.life--;
+        ctx.globalAlpha=t.life/12*0.4;
+        ctx.fillStyle='#818cf8';
+        ctx.beginPath();ctx.arc(t.x,t.y,ballR*(t.life/12),0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=1;
+        return t.life>0;
+      });
+
+      // Ball
+      ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
+      ctx.fillStyle='#fff';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;ctx.fill();ctx.shadowBlur=0;
+
+      // Particles
+      particles=particles.filter(p=>{
+        p.x+=p.dx;p.y+=p.dy;p.life--;
+        ctx.globalAlpha=p.life/25;ctx.fillStyle=p.color;
+        ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;
+        return p.life>0;
+      });
+
+      // Collisions
+      if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
+      if(ballY+ballDY<ballR)ballDY=-ballDY;
+      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
+        ballDY=-Math.abs(ballDY);
+        ballDX+=((ballX-padX)/padW-0.5)*8;
+        spawnParticles(ballX,ballY,'#818cf8');
+      }
+
+      if(ballY>H+ballR){
+        running=false;setGameOver(true);
+        const finalScore=localScore;
+        if(finalScore>bestScore){
+          setBestScore(finalScore);
+          SB.from('game_scores').insert({user_id:user.id,game_name:'breakout',score:finalScore}).catch(()=>{});
+        }
+        toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
+        return;
+      }
+
+      let allDestroyed=true;
+      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
+        const b=bricks[r][c];if(!b.alive)continue;
+        allDestroyed=false;
+        if(ballX+ballR>b.x&&ballX-ballR<b.x+brickInfo.brickW&&ballY+ballR>b.y&&ballY-ballR<b.y+20){
+          b.alive=false;localScore++;setScore(localScore);
+          const ox=Math.min(ballX+ballR-b.x,b.x+brickInfo.brickW-(ballX-ballR));
+          const oy=Math.min(ballY+ballR-b.y,b.y+20-(ballY-ballR));
+          if(ox<oy)ballDX=-ballDX;else ballDY=-ballDY;
+          spawnParticles(b.x+brickInfo.brickW/2,b.y+10,b.color);
+          break;
+        }
+      }
+
+      if(allDestroyed){
+        localLevel++;setLevel(localLevel);localScore+=50;setScore(localScore);
+        padW=Math.max(45,80-localLevel*4);
+        brickInfo=buildBricks(localLevel);
+        resetBall();
+        toast(`🎉 مرحله ${localLevel}!`,'success');
+      }
+
+      ballX+=ballDX;ballY+=ballDY;
+      ctx.fillStyle='white';ctx.font='bold 16px Vazirmatn';
+      ctx.textAlign='right';ctx.fillText(`امتیاز: ${localScore}`,W-15,25);
+      ctx.textAlign='left';ctx.fillText(`مرحله: ${localLevel}`,15,25);
+
+      gameRef.current=requestAnimationFrame(loop);
+    };
+
+    resetBall();loop();
+
+    return()=>{
+      canvas.removeEventListener('mousemove',moveHandler);
+      canvas.removeEventListener('touchmove',moveHandler);
+      if(gameRef.current)cancelAnimationFrame(gameRef.current);
+    };
+  },[gameOver]);
+
+  const restart=()=>{setScore(0);setLevel(1);setGameOver(false);};
+
+  return(
+    <div className="text-center slide-up">
+      <div className="flex justify-around mb-4">
+        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-2xl font-black text-indigo-400">{score}</p></div>
+        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-2xl font-black text-pink-400">{bestScore}</p></div>
+      </div>
+      {gameOver&&<div className="glass p-3 mb-3"><p className="font-bold text-red-400">بازی تمام شد!</p><button onClick={restart} className="btn-glass btn-sm mt-2">شروع مجدد</button></div>}
+      <p className="text-xs text-white/40 mb-2">حرکت راکت: ماوس/انگشت</p>
+      <canvas ref={canvasRef} className="game-canvas"></canvas>
+    </div>
+  );
+}
+
+// ===== Chat Component with Reactions & Edit =====
+function ChatModal({user,onClose}){
+  const [messages,setMessages]=useState([]);
+  const [chatText,setChatText]=useState('');
+  const [showEmoji,setShowEmoji]=useState(false);
+  const [editingId,setEditingId]=useState(null);
+  const [editText,setEditText]=useState('');
+  const [showReactionFor,setShowReactionFor]=useState(null);
+  const toast=useToast();
+  const messagesEndRef=useRef(null);
+
+  useEffect(()=>{
+    loadMessages();
+    const sub=SB.channel('chat-'+user.id)
+      .on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{loadMessages();})
+      .subscribe();
+    return()=>{SB.removeChannel(sub);};
+  },[]);
+
+  useEffect(()=>{
+    messagesEndRef.current?.scrollIntoView({behavior:'smooth'});
+  },[messages]);
 
   const loadMessages=async()=>{
     const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
@@ -646,7 +1285,192 @@ function Student({user,tab,setTab,onLogout}){
     if(data)setMessages(data.filter(m=>m.sender_id===aid||m.receiver_id===aid));
   };
 
-  const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId)&&String(a.student_id)===String(user.id));
+  const sendMessage=async()=>{
+    if(!chatText.trim())return;
+    const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
+    if(!admins||!admins.length)return;
+    await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim(),reactions:{}});
+    setChatText('');setShowEmoji(false);
+    toast('✅ پیام ارسال شد','success');
+  };
+
+  const addEmoji=(emoji)=>{setChatText(chatText+emoji);setShowEmoji(false);};
+
+  const startEdit=(msg)=>{setEditingId(msg.id);setEditText(msg.content);};
+  const saveEdit=async()=>{
+    if(!editText.trim())return;
+    await SB.from('messages').update({content:editText.trim(),edited:true,edited_at:new Date().toISOString()}).eq('id',editingId);
+    setEditingId(null);setEditText('');
+    loadMessages();
+    toast('✅ پیام ویرایش شد','success');
+  };
+
+  const toggleReaction=async(msgId,emoji)=>{
+    const msg=messages.find(m=>m.id===msgId);
+    if(!msg)return;
+    const reactions=msg.reactions||{};
+    if(!reactions[emoji])reactions[emoji]=[];
+    const idx=reactions[emoji].indexOf(user.id);
+    if(idx>=0)reactions[emoji].splice(idx,1);
+    else reactions[emoji].push(user.id);
+    if(reactions[emoji].length===0)delete reactions[emoji];
+    await SB.from('messages').update({reactions}).eq('id',msgId);
+    loadMessages();
+    setShowReactionFor(null);
+  };
+
+  return(
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="glass-strong w-full max-w-md h-[75vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/5">
+          <h3 className="font-bold gradient-text">💬 پیام به مدیر</h3>
+          <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+        </div>
+        <div className="flex-1 overflow-y-auto mb-3 space-y-1">
+          {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید</p>}
+          {messages.map(m=>{
+            const isMe=m.sender_id===user.id;
+            const reactions=m.reactions||{};
+            return(
+              <div key={m.id} className="relative">
+                {editingId===m.id?(
+                  <div className="flex gap-2 mb-2">
+                    <input className="glass-input flex-1 text-sm" value={editText} onChange={e=>setEditText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&saveEdit()}/>
+                    <button onClick={saveEdit} className="btn-glass btn-glass-success btn-sm">✓</button>
+                    <button onClick={()=>setEditingId(null)} className="btn-glass btn-sm bg-white/10">✗</button>
+                  </div>
+                ):(
+                  <>
+                    <div className={`chat-bubble ${isMe?'me':'other'} ${m.edited?'edited':''}`}>
+                      {m.content}
+                      {isMe&&(
+                        <div className="flex gap-1 mt-1 opacity-0 hover:opacity-100 transition">
+                          <button onClick={()=>startEdit(m)} className="text-[10px] text-white/50 hover:text-white">✏️ ویرایش</button>
+                        </div>
+                      )}
+                    </div>
+                    {Object.keys(reactions).length>0&&(
+                      <div className="reaction-bar">
+                        {Object.entries(reactions).map(([emoji,users])=>(
+                          <div key={emoji} className={`reaction-chip ${users.includes(user.id)?'active':''}`} onClick={()=>toggleReaction(m.id,emoji)}>
+                            <span>{emoji}</span><span className="text-[10px]">{users.length}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {showReactionFor===m.id&&(
+                      <div className="absolute bottom-full right-0 bg-black/90 rounded-xl p-2 flex gap-1 mb-1 z-20">
+                        {REACTION_EMOJIS.map(e=>(
+                          <button key={e} onClick={()=>toggleReaction(m.id,e)} className="text-xl hover:scale-125 transition">{e}</button>
+                        ))}
+                      </div>
+                    )}
+                    <button onClick={()=>setShowReactionFor(showReactionFor===m.id?null:m.id)} className="absolute top-2 opacity-0 hover:opacity-100 transition text-xs" style={{[isMe?'left':'right']:'4px'}}>😊</button>
+                  </>
+                )}
+              </div>
+            );
+          })}
+          <div ref={messagesEndRef}></div>
+        </div>
+        <div className="relative">
+          {showEmoji&&(
+            <div className="emoji-picker">
+              {TADBIR_EMOJIS.map(e=>(
+                <button key={e} className="emoji-btn" onClick={()=>addEmoji(e)}>{e}</button>
+              ))}
+            </div>
+          )}
+          <div className="flex gap-2">
+            <button onClick={()=>setShowEmoji(!showEmoji)} className="btn-glass btn-sm bg-white/5"><Icon d={Icons.smile} size={18}/></button>
+            <input className="glass-input flex-1 text-sm" placeholder="پیام شما..." value={chatText} onChange={e=>setChatText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendMessage()}/>
+            <button onClick={sendMessage} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.send} size={16}/></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ===== Password Modal =====
+function PasswordModal({onClose,user}){
+  const [newPw,setNewPw]=useState('');
+  const [confirmPw,setConfirmPw]=useState('');
+  const [loading,setLoading]=useState(false);
+  const toast=useToast();
+
+  const handleSubmit=async()=>{
+    if(newPw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}
+    if(newPw!==confirmPw){toast('رمز جدید و تکرار آن یکسان نیستند','error');return;}
+    setLoading(true);
+    const {error}=await SB.from('users').update({password:newPw}).eq('id',user.id);
+    setLoading(false);
+    if(error){toast('خطا: '+error.message,'error');return;}
+    const u={...user,password:newPw};
+    sessionStorage.setItem('edu_user',JSON.stringify(u));
+    toast('✅ رمز عبور تغییر کرد','success');
+    onClose();
+  };
+
+  return(
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="font-bold gradient-text">🔐 تغییر رمز عبور</h3>
+          <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+        </div>
+        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">
+          ℹ️ پس از تغییر رمز، مدیر نیز می‌تواند رمز جدید شما را مشاهده کند
+        </div>
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs text-white/60 mb-2 block font-semibold">رمز عبور جدید</label>
+            <input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/>
+          </div>
+          <div>
+            <label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز عبور</label>
+            <input className="glass-input" type="password" placeholder="تکرار رمز جدید" value={confirmPw} onChange={e=>setConfirmPw(e.target.value)}/>
+          </div>
+          <button onClick={handleSubmit} className="btn-glass btn-glass-success" disabled={loading}>
+            {loading?'در حال تغییر...':'✓ تغییر رمز عبور'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ===== Student Panel =====
+function Student({user,tab,setTab,onLogout}){
+  const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
+  const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
+  const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
+  const [calcDisplay,setCalcDisplay]=useState('');
+  const [showObjection,setShowObjection]=useState(null);const [objectionText,setObjectionText]=useState('');
+  const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
+  const [checklist,setChecklist]=useState([]);const [newTask,setNewTask]=useState('');
+  const [studyPlans,setStudyPlans]=useState([]);const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
+  const [toolsTab,setToolsTab]=useState('calc');
+  const [chartReady,setChartReady]=useState(false);
+  const [showExamResults,setShowExamResults]=useState(null);
+  const [showChat,setShowChat]=useState(false);
+  const [showPasswordModal,setShowPasswordModal]=useState(false);
+  const [activeGame,setActiveGame]=useState(null);
+  const toast=useToast();
+
+  useEffect(()=>{loadAll();},[]);
+
+  const loadAll=async()=>{
+    const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
+    const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt,score,opt_a,opt_b,opt_c,opt_d)');
+    const {data:c}=await SB.from('checklists').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
+    const {data:p}=await SB.from('study_plans').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
+    if(e)setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===String(user.id)));
+    if(a)setAnswers(a.filter(ans=>ans.student_id===user.id));
+    if(c)setChecklist(c);if(p)setStudyPlans(p);
+  };
+
+  const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId));
 
   const startExam=(exam)=>{
     if(hasTakenExam(exam.id)){toast('⚠️ شما قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
@@ -663,8 +1487,6 @@ function Student({user,tab,setTab,onLogout}){
         if(q.correct_opt){
           if(ans===q.correct_opt)score=parseFloat(q.score)||1;
           status='graded';
-        }else{
-          status='pending';
         }
       }
       await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status});
@@ -690,16 +1512,8 @@ function Student({user,tab,setTab,onLogout}){
     for(const a of examAnswers){
       await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
     }
-    toast('✅ اعتراض شما ثبت و برای مدیر ارسال شد!','success');
+    toast('✅ اعتراض شما ثبت شد!','success');
     setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');loadAll();
-  };
-
-  const changeMyPassword=async(newPw)=>{
-    if(!newPw||newPw.length<4){toast('رمز باید حداقل ۴ کاراکتر باشد','error');return false;}
-    await SB.from('users').update({password:newPw}).eq('id',user.id);
-    const u={...user,password:newPw};setUser(u);sessionStorage.setItem('edu_user',JSON.stringify(u));
-    toast('✅ رمز عبور با موفقیت تغییر کرد','success');
-    return true;
   };
 
   const addTask=async()=>{
@@ -720,15 +1534,6 @@ function Student({user,tab,setTab,onLogout}){
     toast('✅ برنامه اضافه شد','success');
   };
   const deletePlan=async(id)=>{await SB.from('study_plans').delete().eq('id',id);setStudyPlans(studyPlans.filter(p=>p.id!==id));};
-
-  const sendChat=async()=>{
-    if(!chatText.trim())return;
-    const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
-    if(!admins||!admins.length)return;
-    await SB.from('messages').insert({sender_id:user.id,receiver_id:admins[0].id,content:chatText.trim()});
-    setChatText('');loadMessages();
-    toast('✅ پیام ارسال شد','success');
-  };
 
   const getExamScore=(examId)=>{
     const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
@@ -754,7 +1559,7 @@ function Student({user,tab,setTab,onLogout}){
       if(examData.length===0)return;
       const gradient=ctx.getContext('2d').createLinearGradient(0,0,0,300);
       gradient.addColorStop(0,'rgba(129,140,248,0.4)');gradient.addColorStop(1,'rgba(129,140,248,0)');
-      window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map(d=>d.title),datasets:[{label:'نمره از 20',data:examData.map(d=>d.score),borderColor:'#818cf8',backgroundColor:gradient,borderWidth:3,tension:0.4,fill:true,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9}]},options:{responsive:true,plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},scales:{y:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},x:{ticks:{color:'rgba(255,255,255,0.5)',font:{family:'Vazirmatn'}},grid:{color:'rgba(255,255,255,0.03)'}}}}});
+      window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map(d=>d.title),datasets:[{label:'نمره از 20',data:examData.map(d=>d.score),borderColor:'#818cf8',backgroundColor:gradient,borderWidth:3,tension:0.4,fill:true,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9}]},options:{responsive:true,plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},scales:{y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},x:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.03)'}}}}});
     }
   },[tab,chartReady,answers,exams]);
 
@@ -771,9 +1576,7 @@ function Student({user,tab,setTab,onLogout}){
             <CircularTimer timeLeft={timeLeft} totalTime={totalTime}/>
           </div>
           <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500 relative" style={{width:`${progress}%`}}>
-              <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-            </div>
+            <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500" style={{width:`${progress}%`}}></div>
           </div>
         </div>
         {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/15 text-red-300 p-3 text-center text-sm font-bold animate-pulse border-b border-red-500/20">⚠️ کمتر از ۵ دقیقه!</div>}
@@ -978,20 +1781,17 @@ function Student({user,tab,setTab,onLogout}){
                 {toolsTab==='games'&&(
                   <div className="slide-up">
                     <h3 className="font-bold mb-3 text-white/70 text-sm">بازی‌های موجود</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        {id:'xo',name:'دوز',icon:'⭕',color:'from-indigo-500 to-purple-500'},
-                        {id:'stack',name:'ساخت برج',icon:'🏗️',color:'from-pink-500 to-rose-500'},
-                        {id:'bridge',name:'ساخت پل',icon:'🌉',color:'from-amber-500 to-orange-500'},
-                        {id:'space',name:'جنگ ستارگان',icon:'🚀',color:'from-blue-500 to-cyan-500'},
-                        {id:'breakout',name:'توپ و راکت',icon:'🎯',color:'from-emerald-500 to-teal-500'}
-                      ].map(g=>(
-                        <div key={g.id} className="game-card" onClick={()=>setActiveGame(g.id)}>
-                          <div className={`game-card-icon bg-gradient-to-br ${g.color}`}>{g.icon}</div>
-                          <h4 className="font-bold text-sm">{g.name}</h4>
-                          {bestScores[g.id]!==undefined&&<p className="text-[10px] text-pink-400 mt-1 font-bold">رکورد: {bestScores[g.id]}</p>}
-                        </div>
-                      ))}
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="game-card" onClick={()=>setActiveGame('xo')}>
+                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500">⭕</div>
+                        <h4 className="font-bold text-sm">بازی دوز (XO)</h4>
+                        <p className="text-[10px] text-white/40 mt-1">بازی با ربات یا دوستان (آنلاین)</p>
+                      </div>
+                      <div className="game-card" onClick={()=>setActiveGame('breakout')}>
+                        <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-teal-500">🎯</div>
+                        <h4 className="font-bold text-sm">توپ و راکت</h4>
+                        <p className="text-[10px] text-white/40 mt-1">آجرها را بشکن و امتیاز بگیر</p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1001,19 +1801,13 @@ function Student({user,tab,setTab,onLogout}){
                 <div className="flex justify-between items-center mb-4">
                   <button onClick={()=>setActiveGame(null)} className="btn-glass btn-sm">← بازگشت</button>
                   <h3 className="font-bold gradient-text">
-                    {activeGame==='xo'&&'دوز'}
-                    {activeGame==='stack'&&'ساخت برج'}
-                    {activeGame==='bridge'&&'ساخت پل'}
-                    {activeGame==='space'&&'جنگ ستارگان'}
+                    {activeGame==='xo'&&'بازی دوز'}
                     {activeGame==='breakout'&&'توپ و راکت'}
                   </h3>
                   <div className="w-16"></div>
                 </div>
-                {activeGame==='xo'&&<XOGame/>}
-                {activeGame==='stack'&&<StackGame canvasRef={canvasRef} bestScores={bestScores} setBestScores={setBestScores} user={user} toast={toast}/>}
-                {activeGame==='bridge'&&<BridgeGame canvasRef={canvasRef} bestScores={bestScores} setBestScores={setBestScores} user={user} toast={toast}/>}
-                {activeGame==='space'&&<SpaceGame canvasRef={canvasRef} bestScores={bestScores} setBestScores={setBestScores} user={user} toast={toast}/>}
-                {activeGame==='breakout'&&<BreakoutGame canvasRef={canvasRef} bestScores={bestScores} setBestScores={setBestScores} user={user} toast={toast}/>}
+                {activeGame==='xo'&&<XOGameHub user={user}/>}
+                {activeGame==='breakout'&&<BreakoutGame user={user}/>}
               </div>
             )}
           </>
@@ -1028,31 +1822,10 @@ function Student({user,tab,setTab,onLogout}){
 
       <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
         <Icon d={Icons.message} size={24}/>
-        {messages.filter(m=>m.sender_id!==user.id).length>0&&<span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-[10px] font-bold flex items-center justify-center">!</span>}
       </button>
 
-      {showChat&&(
-        <div className="modal-overlay" onClick={()=>setShowChat(false)}>
-          <div className="glass-strong w-full max-w-md h-[70vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
-            <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/5">
-              <h3 className="font-bold gradient-text">💬 پیام به مدیر</h3>
-              <button onClick={()=>setShowChat(false)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
-            </div>
-            <div className="flex-1 overflow-y-auto mb-3 space-y-1">
-              {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید</p>}
-              {messages.map(m=>(
-                <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}</div>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <input className="glass-input flex-1 text-sm" placeholder="پیام شما..." value={chatText} onChange={e=>setChatText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendChat()}/>
-              <button onClick={sendChat} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.send} size={16}/></button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showPasswordModal&&<PasswordModal onClose={()=>setShowPasswordModal(false)} onChange={changeMyPassword}/>}
+      {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
+      {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
 
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
@@ -1130,618 +1903,7 @@ function Student({user,tab,setTab,onLogout}){
   );
 }
 
-function XOGame(){
-  const [board,setBoard]=useState(Array(9).fill(''));
-  const [isXNext,setIsXNext]=useState(true);
-  const [winner,setWinner]=useState(null);
-  const [scores,setScores]=useState({x:0,o:0});
-
-  const checkWinner=(b)=>{
-    const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-    for(const [a,b2,c] of lines){
-      if(b[a]&&b[a]===b[b2]&&b[a]===b[c])return b[a];
-    }
-    return b.every(c=>c)?'draw':null;
-  };
-
-  const handleClick=(i)=>{
-    if(board[i]||winner)return;
-    const newBoard=[...board];
-    newBoard[i]=isXNext?'X':'O';
-    setBoard(newBoard);
-    const w=checkWinner(newBoard);
-    if(w){
-      setWinner(w);
-      if(w==='X')setScores(s=>({...s,x:s.x+1}));
-      else if(w==='O')setScores(s=>({...s,o:s.o+1}));
-    }else{
-      setIsXNext(!isXNext);
-    }
-  };
-
-  const reset=()=>{setBoard(Array(9).fill(''));setIsXNext(true);setWinner(null);};
-
-  return(
-    <div className="text-center">
-      <div className="flex justify-around mb-4">
-        <div className="glass p-3 min-w-[80px]"><p className="text-[11px] text-white/40">X (شما)</p><p className="text-2xl font-black text-indigo-400">{scores.x}</p></div>
-        <div className="glass p-3 min-w-[80px]"><p className="text-[11px] text-white/40">O (دوست)</p><p className="text-2xl font-black text-pink-400">{scores.o}</p></div>
-      </div>
-      <div className="grid grid-cols-3 gap-2 max-w-[280px] mx-auto mb-4">
-        {board.map((cell,i)=>(
-          <div key={i} className={`xo-cell ${cell==='X'?'x':''} ${cell==='O'?'o':''}`} onClick={()=>handleClick(i)}>{cell}</div>
-        ))}
-      </div>
-      {winner&&<div className="glass p-3 mb-3"><p className="font-bold text-lg gradient-text">{winner==='draw'?'مساوی!':`برنده: ${winner}`}</p></div>}
-      <button onClick={reset} className="btn-glass btn-sm">دور جدید</button>
-    </div>
-  );
-}
-
-function StackGame({canvasRef,bestScores,setBestScores,user,toast}){
-  const [score,setScore]=useState(0);
-  const [gameOver,setGameOver]=useState(false);
-  
-  useEffect(()=>{
-    const canvas=canvasRef.current;
-    if(!canvas)return;
-    const ctx=canvas.getContext('2d');
-    const W=380,H=500;
-    canvas.width=W;canvas.height=H;
-    
-    let blocks=[{x:W/2-60,y:H-40,w:120,h:30,color:'#818cf8'}];
-    let current={x:0,y:H-70,w:120,h:30,dx:3,color:'#c084fc'};
-    let running=true;
-    let localScore=0;
-
-    const placeBlock=()=>{
-      const prev=blocks[blocks.length-1];
-      const overlapStart=Math.max(current.x,prev.x);
-      const overlapEnd=Math.min(current.x+current.w,prev.x+prev.w);
-      const overlap=overlapEnd-overlapStart;
-      if(overlap<=0){
-        running=false;setGameOver(true);
-        const finalScore=localScore;
-        setBestScores(s=>{const n={...s,stack:Math.max(s.stack||0,finalScore)};return n;});
-        SB.from('game_scores').insert({user_id:user.id,game_name:'stack',score:finalScore}).catch(()=>{});
-        toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
-        return;
-      }
-      const newBlock={x:overlapStart,y:current.y,w:overlap,h:30,color:`hsl(${(localScore*20)%360},70%,60%)`};
-      blocks.push(newBlock);
-      localScore++;setScore(localScore);
-      current={x:0,y:current.y-30,w:overlap,h:30,dx:3+localScore*0.2,color:`hsl(${(localScore*20+40)%360},70%,60%)`};
-    };
-
-    const clickHandler=()=>{if(running)placeBlock();};
-    canvas.addEventListener('click',clickHandler);
-    canvas.addEventListener('touchstart',clickHandler);
-
-    const loop=()=>{
-      if(!running)return;
-      ctx.clearRect(0,0,W,H);
-      
-      const bg=ctx.createLinearGradient(0,0,0,H);
-      bg.addColorStop(0,'#0a0a1a');bg.addColorStop(1,'#1a1a3a');
-      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-      blocks.forEach(b=>{
-        ctx.fillStyle=b.color;
-        ctx.shadowColor=b.color;ctx.shadowBlur=10;
-        ctx.fillRect(b.x,b.y,b.w,b.h);
-        ctx.shadowBlur=0;
-      });
-
-      current.x+=current.dx;
-      if(current.x+current.w>W||current.x<0)current.dx*=-1;
-      ctx.fillStyle=current.color;
-      ctx.shadowColor=current.color;ctx.shadowBlur=15;
-      ctx.fillRect(current.x,current.y,current.w,current.h);
-      ctx.shadowBlur=0;
-
-      ctx.fillStyle='white';ctx.font='bold 24px Vazirmatn';ctx.textAlign='center';
-      ctx.fillText(localScore,W/2,60);
-
-      requestAnimationFrame(loop);
-    };
-    loop();
-
-    return()=>{
-      canvas.removeEventListener('click',clickHandler);
-      canvas.removeEventListener('touchstart',clickHandler);
-    };
-  },[]);
-
-  const restart=()=>{setScore(0);setGameOver(false);};
-
-  return(
-    <div className="text-center">
-      <div className="flex justify-around mb-4">
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-2xl font-black text-indigo-400">{score}</p></div>
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-2xl font-black text-pink-400">{bestScores.stack||0}</p></div>
-      </div>
-      {gameOver&&<div className="glass p-3 mb-3"><p className="font-bold text-red-400">بازی تمام شد!</p><button onClick={restart} className="btn-glass btn-sm mt-2">شروع مجدد</button></div>}
-      <p className="text-xs text-white/40 mb-2">برای قرار دادن بلوک کلیک کنید</p>
-      <canvas ref={canvasRef} className="game-canvas"></canvas>
-    </div>
-  );
-}
-
-function BridgeGame({canvasRef,bestScores,setBestScores,user,toast}){
-  const [score,setScore]=useState(0);
-  const [gameOver,setGameOver]=useState(false);
-  
-  useEffect(()=>{
-    const canvas=canvasRef.current;
-    if(!canvas)return;
-    const ctx=canvas.getContext('2d');
-    const W=380,H=500;
-    canvas.width=W;canvas.height=H;
-    
-    let playerX=50,playerY=H-100;
-    let platforms=[{x:20,y:H-80,w:80}];
-    let bridges=[];
-    let currentBridge=null;
-    let growing=false;
-    let falling=false;
-    let localScore=0;
-    let running=true;
-
-    const addPlatform=()=>{
-      const last=platforms[platforms.length-1];
-      const gap=80+Math.random()*80;
-      const w=60+Math.random()*40;
-      platforms.push({x:last.x+last.w+gap,y:H-80,w});
-    };
-
-    const startGrow=()=>{if(!currentBridge&&!falling&&running){currentBridge={x:playerX,y:playerY,h:0};growing=true;}};
-    const stopGrow=()=>{
-      if(!growing||!currentBridge)return;
-      growing=false;
-      bridges.push(currentBridge);
-      const next=platforms[platforms.length-1];
-      const last=platforms[platforms.length-2];
-      const need=next.x-(last.x+last.w);
-      const diff=Math.abs(currentBridge.h-need);
-      if(diff<15){
-        localScore++;setScore(localScore);
-        playerX=next.x+next.w/2;
-        addPlatform();
-      }else{
-        falling=true;
-      }
-      currentBridge=null;
-    };
-
-    canvas.addEventListener('mousedown',startGrow);
-    canvas.addEventListener('mouseup',stopGrow);
-    canvas.addEventListener('touchstart',startGrow);
-    canvas.addEventListener('touchend',stopGrow);
-
-    const loop=()=>{
-      if(!running)return;
-      ctx.clearRect(0,0,W,H);
-      
-      const bg=ctx.createLinearGradient(0,0,0,H);
-      bg.addColorStop(0,'#0a0a1a');bg.addColorStop(1,'#1a1a3a');
-      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-      platforms.forEach(p=>{
-        ctx.fillStyle='#818cf8';
-        ctx.shadowColor='#818cf8';ctx.shadowBlur=10;
-        ctx.fillRect(p.x,p.y,p.w,20);
-        ctx.shadowBlur=0;
-      });
-
-      bridges.forEach(b=>{
-        ctx.fillStyle='#f472b6';
-        ctx.fillRect(b.x-2,b.y,4,b.h);
-      });
-
-      if(currentBridge){
-        if(growing)currentBridge.h+=3;
-        ctx.fillStyle='#f472b6';
-        ctx.fillRect(currentBridge.x-2,currentBridge.y,4,currentBridge.h);
-      }
-
-      if(falling){
-        playerY+=5;
-        if(playerY>H){
-          running=false;setGameOver(true);
-          const finalScore=localScore;
-          setBestScores(s=>{const n={...s,bridge:Math.max(s.bridge||0,finalScore)};return n;});
-          SB.from('game_scores').insert({user_id:user.id,game_name:'bridge',score:finalScore}).catch(()=>{});
-          toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
-        }
-      }
-      ctx.fillStyle='#fbbf24';
-      ctx.shadowColor='#fbbf24';ctx.shadowBlur=15;
-      ctx.beginPath();ctx.arc(playerX,playerY-15,12,0,Math.PI*2);ctx.fill();
-      ctx.shadowBlur=0;
-
-      ctx.fillStyle='white';ctx.font='bold 24px Vazirmatn';ctx.textAlign='center';
-      ctx.fillText(localScore,W/2,60);
-
-      requestAnimationFrame(loop);
-    };
-    loop();
-
-    return()=>{
-      canvas.removeEventListener('mousedown',startGrow);
-      canvas.removeEventListener('mouseup',stopGrow);
-      canvas.removeEventListener('touchstart',startGrow);
-      canvas.removeEventListener('touchend',stopGrow);
-    };
-  },[]);
-
-  const restart=()=>{setScore(0);setGameOver(false);};
-
-  return(
-    <div className="text-center">
-      <div className="flex justify-around mb-4">
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-2xl font-black text-indigo-400">{score}</p></div>
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-2xl font-black text-pink-400">{bestScores.bridge||0}</p></div>
-      </div>
-      {gameOver&&<div className="glass p-3 mb-3"><p className="font-bold text-red-400">بازی تمام شد!</p><button onClick={restart} className="btn-glass btn-sm mt-2">شروع مجدد</button></div>}
-      <p className="text-xs text-white/40 mb-2">نگه دارید تا پل ساخته شود، رها کنید تا قرار بگیرد</p>
-      <canvas ref={canvasRef} className="game-canvas"></canvas>
-    </div>
-  );
-}
-
-function SpaceGame({canvasRef,bestScores,setBestScores,user,toast}){
-  const [score,setScore]=useState(0);
-  const [lives,setLives]=useState(3);
-  const [gameOver,setGameOver]=useState(false);
-  
-  useEffect(()=>{
-    const canvas=canvasRef.current;
-    if(!canvas)return;
-    const ctx=canvas.getContext('2d');
-    const W=380,H=500;
-    canvas.width=W;canvas.height=H;
-    
-    let localScore=0,level=1,livesLocal=3,running=true;
-    let playerX=W/2,playerW=50;
-    let bullets=[],enemies=[],particles=[];
-    let lastShot=0,enemySpawnTime=0,invincibleUntil=0;
-
-    const moveHandler=(e)=>{
-      e.preventDefault();
-      const rect=canvas.getBoundingClientRect();
-      const cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-      playerX=Math.max(playerW/2,Math.min(W-playerW/2,cx*(W/rect.width)));
-    };
-    const shoot=()=>{
-      const now=Date.now();
-      if(now-lastShot<300)return;
-      lastShot=now;
-      bullets.push({x:playerX,y:H-70,speed:7});
-    };
-
-    canvas.addEventListener('mousemove',moveHandler);
-    canvas.addEventListener('touchmove',moveHandler,{passive:false});
-    canvas.addEventListener('click',shoot);
-    canvas.addEventListener('touchstart',shoot);
-
-    const spawnParticles=(x,y,color)=>{
-      for(let i=0;i<8;i++){
-        const a=Math.random()*Math.PI*2;
-        particles.push({x,y,dx:Math.cos(a)*3,dy:Math.sin(a)*3,life:20,color});
-      }
-    };
-
-    const takeDamage=()=>{
-      const now=Date.now();
-      if(now<invincibleUntil)return;
-      livesLocal--;setLives(livesLocal);
-      invincibleUntil=now+2000;
-      spawnParticles(playerX,H-45,'#ef4444');
-      if(livesLocal<=0){
-        running=false;setGameOver(true);
-        const finalScore=localScore;
-        setBestScores(s=>{const n={...s,space:Math.max(s.space||0,finalScore)};return n;});
-        SB.from('game_scores').insert({user_id:user.id,game_name:'space',score:finalScore}).catch(()=>{});
-        toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
-      }
-    };
-
-    const loop=()=>{
-      if(!running)return;
-      ctx.clearRect(0,0,W,H);
-      const bg=ctx.createLinearGradient(0,0,0,H);
-      bg.addColorStop(0,'rgba(15,15,35,0.95)');bg.addColorStop(1,'rgba(10,10,26,0.98)');
-      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-      ctx.fillStyle='rgba(255,255,255,0.3)';
-      for(let i=0;i<20;i++){
-        const x=(i*37+Date.now()*0.02)%W;
-        const y=(i*53+Date.now()*0.05)%H;
-        ctx.fillRect(x,y,2,2);
-      }
-
-      const now=Date.now();
-      const isInv=now<invincibleUntil;
-      if(!isInv||Math.floor(now/100)%2===0){
-        ctx.fillStyle='#818cf8';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;
-        ctx.beginPath();ctx.moveTo(playerX,H-45);ctx.lineTo(playerX-playerW/2,H-20);ctx.lineTo(playerX+playerW/2,H-20);ctx.closePath();ctx.fill();
-        ctx.shadowBlur=0;
-      }
-
-      bullets=bullets.filter(b=>{
-        b.y-=b.speed;if(b.y<0)return false;
-        ctx.fillStyle='#fbbf24';ctx.shadowColor='#fbbf24';ctx.shadowBlur=10;
-        ctx.fillRect(b.x-2,b.y,4,10);ctx.shadowBlur=0;
-        return true;
-      });
-
-      enemySpawnTime++;
-      if(enemySpawnTime>Math.max(80,120-level*8)){
-        const size=25+Math.random()*15;
-        enemies.push({x:Math.random()*(W-size),y:-size,w:size,h:size,speed:0.8+level*0.15+Math.random()*0.5,color:`hsl(${Math.random()*360},70%,60%)`});
-        enemySpawnTime=0;
-      }
-
-      enemies=enemies.filter(e=>{
-        e.y+=e.speed;
-        if(e.y>H){takeDamage();return false;}
-        ctx.fillStyle=e.color;ctx.shadowColor=e.color;ctx.shadowBlur=15;
-        ctx.fillRect(e.x,e.y,e.w,e.h);ctx.shadowBlur=0;
-        for(let i=bullets.length-1;i>=0;i--){
-          const b=bullets[i];
-          if(b.x>e.x&&b.x<e.x+e.w&&b.y>e.y&&b.y<e.y+e.h){
-            bullets.splice(i,1);localScore++;setScore(localScore);
-            spawnParticles(e.x+e.w/2,e.y+e.h/2,e.color);
-            if(localScore>level*15)level++;
-            return false;
-          }
-        }
-        if(!isInv&&e.x<playerX+playerW/2&&e.x+e.w>playerX-playerW/2&&e.y+e.h>H-50&&e.y<H-20){
-          takeDamage();spawnParticles(e.x+e.w/2,e.y+e.h/2,e.color);return false;
-        }
-        return true;
-      });
-
-      particles=particles.filter(p=>{
-        p.x+=p.dx;p.y+=p.dy;p.life--;
-        ctx.globalAlpha=p.life/20;ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;
-        return p.life>0;
-      });
-
-      ctx.fillStyle='white';ctx.font='bold 16px Vazirmatn';
-      ctx.textAlign='right';ctx.fillText(`امتیاز: ${localScore}`,W-15,25);
-      ctx.textAlign='left';ctx.fillText(`مرحله: ${level}`,15,25);
-      ctx.textAlign='center';ctx.font='20px Arial';
-      ctx.fillText('❤️'.repeat(livesLocal),W/2,25);
-
-      requestAnimationFrame(loop);
-    };
-    loop();
-
-    return()=>{
-      canvas.removeEventListener('mousemove',moveHandler);
-      canvas.removeEventListener('touchmove',moveHandler);
-      canvas.removeEventListener('click',shoot);
-      canvas.removeEventListener('touchstart',shoot);
-    };
-  },[]);
-
-  const restart=()=>{setScore(0);setLives(3);setGameOver(false);};
-
-  return(
-    <div className="text-center">
-      <div className="flex justify-around mb-4">
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-2xl font-black text-indigo-400">{score}</p></div>
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-2xl font-black text-pink-400">{bestScores.space||0}</p></div>
-      </div>
-      {gameOver&&<div className="glass p-3 mb-3"><p className="font-bold text-red-400">بازی تمام شد!</p><button onClick={restart} className="btn-glass btn-sm mt-2">شروع مجدد</button></div>}
-      <p className="text-xs text-white/40 mb-2">برای شلیک کلیک کنید | حرکت: ماوس/انگشت</p>
-      <canvas ref={canvasRef} className="game-canvas"></canvas>
-    </div>
-  );
-}
-
-function BreakoutGame({canvasRef,bestScores,setBestScores,user,toast}){
-  const [score,setScore]=useState(0);
-  const [level,setLevel]=useState(1);
-  const [gameOver,setGameOver]=useState(false);
-  
-  useEffect(()=>{
-    const canvas=canvasRef.current;
-    if(!canvas)return;
-    const ctx=canvas.getContext('2d');
-    const W=380,H=500;
-    canvas.width=W;canvas.height=H;
-    
-    let localScore=0,localLevel=1,running=true;
-    let ballX=W/2,ballY=H-50,ballDX=0,ballDY=0,ballR=7;
-    let padX=W/2-40,padW=80,padH=12;
-    const colors=['#818cf8','#c084fc','#f472b6','#fb923c','#34d399','#fbbf24','#f87171'];
-    let bricks=[],particles=[];
-
-    const buildBricks=(lvl)=>{
-      bricks=[];
-      const rows=Math.min(3+lvl,7);
-      const cols=7;
-      const brickW=Math.floor((W-28-(cols-1)*5)/cols);
-      for(let r=0;r<rows;r++){
-        bricks[r]=[];
-        for(let c=0;c<cols;c++){
-          bricks[r][c]={x:c*(brickW+5)+14,y:r*25+45,alive:true,color:colors[r%colors.length]};
-        }
-      }
-      return {rows,cols,brickW};
-    };
-
-    let brickInfo=buildBricks(1);
-
-    const resetBall=()=>{
-      ballX=W/2;ballY=H-50;
-      const speed=5+(localLevel-1)*0.6;
-      const angle=Math.random()*0.5+0.4;
-      ballDX=Math.cos(angle*Math.PI)*speed*(Math.random()>0.5?1:-1);
-      ballDY=-Math.abs(Math.sin(angle*Math.PI)*speed);
-    };
-
-    const moveHandler=(e)=>{
-      e.preventDefault();
-      const rect=canvas.getBoundingClientRect();
-      const cx=(e.touches?e.touches[0].clientX:e.clientX)-rect.left;
-      padX=Math.max(0,Math.min(W-padW,cx*(W/rect.width)-padW/2));
-    };
-    canvas.addEventListener('mousemove',moveHandler);
-    canvas.addEventListener('touchmove',moveHandler,{passive:false});
-
-    const spawnParticles=(x,y,color)=>{
-      for(let i=0;i<10;i++){
-        const a=Math.random()*Math.PI*2;
-        particles.push({x,y,dx:Math.cos(a)*3,dy:Math.sin(a)*3,life:25,color});
-      }
-    };
-
-    const loop=()=>{
-      if(!running)return;
-      ctx.clearRect(0,0,W,H);
-      const bg=ctx.createLinearGradient(0,0,0,H);
-      bg.addColorStop(0,'rgba(15,15,35,0.95)');bg.addColorStop(1,'rgba(10,10,26,0.98)');
-      ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
-      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
-        const b=bricks[r][c];if(!b.alive)continue;
-        ctx.fillStyle=b.color;ctx.shadowColor=b.color;ctx.shadowBlur=10;
-        ctx.beginPath();ctx.roundRect(b.x,b.y,brickInfo.brickW,20,4);ctx.fill();
-        ctx.shadowBlur=0;
-      }
-
-      const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
-      padGrad.addColorStop(0,'#818cf8');padGrad.addColorStop(1,'#c084fc');
-      ctx.fillStyle=padGrad;ctx.shadowColor='#818cf8';ctx.shadowBlur=15;
-      ctx.beginPath();ctx.roundRect(padX,H-25,padW,padH,6);ctx.fill();
-      ctx.shadowBlur=0;
-
-      ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
-      ctx.fillStyle='#fff';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;ctx.fill();ctx.shadowBlur=0;
-
-      particles=particles.filter(p=>{
-        p.x+=p.dx;p.y+=p.dy;p.life--;
-        ctx.globalAlpha=p.life/25;ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;
-        return p.life>0;
-      });
-
-      if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
-      if(ballY+ballDY<ballR)ballDY=-ballDY;
-      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
-        ballDY=-Math.abs(ballDY);
-        ballDX+=((ballX-padX)/padW-0.5)*8;
-        spawnParticles(ballX,ballY,'#818cf8');
-      }
-
-      if(ballY>H+ballR){
-        running=false;setGameOver(true);
-        const finalScore=localScore;
-        setBestScores(s=>{const n={...s,breakout:Math.max(s.breakout||0,finalScore)};return n;});
-        SB.from('game_scores').insert({user_id:user.id,game_name:'breakout',score:finalScore}).catch(()=>{});
-        toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
-        return;
-      }
-
-      let allDestroyed=true;
-      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
-        const b=bricks[r][c];if(!b.alive)continue;
-        allDestroyed=false;
-        if(ballX+ballR>b.x&&ballX-ballR<b.x+brickInfo.brickW&&ballY+ballR>b.y&&ballY-ballR<b.y+20){
-          b.alive=false;localScore++;setScore(localScore);
-          const ox=Math.min(ballX+ballR-b.x,b.x+brickInfo.brickW-(ballX-ballR));
-          const oy=Math.min(ballY+ballR-b.y,b.y+20-(ballY-ballR));
-          if(ox<oy)ballDX=-ballDX;else ballDY=-ballDY;
-          spawnParticles(b.x+brickInfo.brickW/2,b.y+10,b.color);
-          break;
-        }
-      }
-
-      if(allDestroyed){
-        localLevel++;setLevel(localLevel);localScore+=50;setScore(localScore);
-        padW=Math.max(45,80-localLevel*4);
-        brickInfo=buildBricks(localLevel);
-        resetBall();
-      }
-
-      ballX+=ballDX;ballY+=ballDY;
-      ctx.fillStyle='white';ctx.font='bold 16px Vazirmatn';
-      ctx.textAlign='right';ctx.fillText(`امتیاز: ${localScore}`,W-15,25);
-      ctx.textAlign='left';ctx.fillText(`مرحله: ${localLevel}`,15,25);
-
-      requestAnimationFrame(loop);
-    };
-
-    resetBall();loop();
-
-    return()=>{
-      canvas.removeEventListener('mousemove',moveHandler);
-      canvas.removeEventListener('touchmove',moveHandler);
-    };
-  },[]);
-
-  const restart=()=>{setScore(0);setLevel(1);setGameOver(false);};
-
-  return(
-    <div className="text-center">
-      <div className="flex justify-around mb-4">
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">امتیاز</p><p className="text-2xl font-black text-indigo-400">{score}</p></div>
-        <div className="glass p-3 min-w-[100px]"><p className="text-[11px] text-white/40">رکورد</p><p className="text-2xl font-black text-pink-400">{bestScores.breakout||0}</p></div>
-      </div>
-      {gameOver&&<div className="glass p-3 mb-3"><p className="font-bold text-red-400">بازی تمام شد!</p><button onClick={restart} className="btn-glass btn-sm mt-2">شروع مجدد</button></div>}
-      <p className="text-xs text-white/40 mb-2">حرکت راکت: ماوس/انگشت</p>
-      <canvas ref={canvasRef} className="game-canvas"></canvas>
-    </div>
-  );
-}
-
-function PasswordModal({onClose,onChange}){
-  const [newPw,setNewPw]=useState('');
-  const [confirmPw,setConfirmPw]=useState('');
-  const [loading,setLoading]=useState(false);
-  const toast=useToast();
-
-  const handleSubmit=async()=>{
-    if(newPw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}
-    if(newPw!==confirmPw){toast('رمز جدید و تکرار آن یکسان نیستند','error');return;}
-    setLoading(true);
-    const success=await onChange(newPw);
-    setLoading(false);
-    if(success)onClose();
-  };
-
-  return(
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold gradient-text">🔐 تغییر رمز عبور</h3>
-          <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
-        </div>
-        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">
-          ℹ️ پس از تغییر رمز، مدیر نیز می‌تواند رمز جدید شما را مشاهده کند
-        </div>
-        <div className="space-y-3">
-          <div>
-            <label className="text-xs text-white/60 mb-2 block font-semibold">رمز عبور جدید</label>
-            <input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/>
-          </div>
-          <div>
-            <label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز عبور</label>
-            <input className="glass-input" type="password" placeholder="تکرار رمز جدید" value={confirmPw} onChange={e=>setConfirmPw(e.target.value)}/>
-          </div>
-          <button onClick={handleSubmit} className="btn-glass btn-glass-success" disabled={loading}>
-            {loading?'در حال تغییر...':'✓ تغییر رمز عبور'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
+// ===== Main App =====
 function App(){
   const [user,setUser]=useState(null);
   const [view,setView]=useState('login');
