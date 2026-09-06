@@ -116,7 +116,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
 .emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.15)}
 
-/* ===== XO Game Advanced Styles ===== */
 .xo-game-container{background:linear-gradient(135deg,rgba(15,15,35,0.95),rgba(25,25,55,0.95));border:2px solid rgba(129,140,248,0.2);border-radius:32px;padding:24px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1)}
 .xo-game-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(129,140,248,0.1) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite;pointer-events:none}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.1);opacity:0.8}}
@@ -161,33 +160,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .score-card-pro.active{border-color:rgba(129,140,248,0.5);box-shadow:0 0 25px rgba(129,140,248,0.3);transform:scale(1.05)}
 .score-card-pro .score-value{font-size:32px;font-weight:900;background:linear-gradient(135deg,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 20px rgba(129,140,248,0.3)}
 
-/* Robot Animation */
-.robot-container{position:relative;width:100%;height:120px;margin-bottom:10px;display:flex;align-items:center;justify-content:center}
-.robot-body{position:relative;animation:robotFloat 3s ease-in-out infinite}
-@keyframes robotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.robot-head{width:50px;height:45px;background:linear-gradient(135deg,#818cf8,#c084fc);border-radius:12px;position:relative;margin:0 auto;box-shadow:0 4px 15px rgba(129,140,248,0.5)}
-.robot-eye{width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:15px;animation:robotBlink 3s infinite}
-.robot-eye.left{left:10px}
-.robot-eye.right{right:10px}
-@keyframes robotBlink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(0.1)}}
-.robot-antenna{width:4px;height:15px;background:linear-gradient(to top,#818cf8,#f472b6);position:absolute;top:-15px;left:50%;transform:translateX(-50%);border-radius:2px}
-.robot-antenna::after{content:'';width:10px;height:10px;background:#f472b6;border-radius:50%;position:absolute;top:-8px;left:-3px;animation:antennaPulse 1.5s infinite}
-@keyframes antennaPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,114,182,0.7)}50%{box-shadow:0 0 0 8px rgba(244,114,182,0)}}
-.robot-mouth{width:20px;height:6px;background:#1e1b4b;border-radius:3px;position:absolute;bottom:10px;left:15px}
-
-.thinking-marks{position:absolute;top:-30px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.thinking-mark{font-size:24px;font-weight:900;color:#fbbf24;animation:thinkingFloat 1.5s ease-in-out infinite}
-.thinking-mark:nth-child(2){animation-delay:0.3s;font-size:20px}
-.thinking-mark:nth-child(3){animation-delay:0.6s;font-size:16px}
-@keyframes thinkingFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.5}50%{transform:translateY(-10px) rotate(15deg);opacity:1}}
-
-.robot-arm{position:absolute;width:8px;height:40px;background:linear-gradient(to bottom,#818cf8,#c084fc);border-radius:4px;transform-origin:top center;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1)}
-.robot-arm.left{left:-15px;top:20px;transform:rotate(-20deg)}
-.robot-arm.right{right:-15px;top:20px;transform:rotate(20deg)}
-.robot-arm.pointing{transform:rotate(180deg) translateY(60px) !important}
-.robot-arm.pointing::after{content:'👆';position:absolute;bottom:-20px;left:-10px;font-size:20px}
-
-/* Game Request Notification with Countdown */
 .game-request-notification{position:fixed;top:100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(15,15,35,0.98),rgba(25,25,55,0.98));backdrop-filter:blur(20px);border:2px solid rgba(236,72,153,0.4);border-radius:24px;padding:20px;box-shadow:0 20px 60px rgba(236,72,153,0.3),0 0 40px rgba(236,72,153,0.2);z-index:90;animation:slideInBounce 0.6s cubic-bezier(0.34,1.56,0.64,1);max-width:360px;width:90%}
 @keyframes slideInBounce{0%{opacity:0;transform:translate(-50%,-100px) scale(0.8)}60%{transform:translate(-50%,10px) scale(1.05)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
 .game-request-notification::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));border-radius:24px;z-index:-1}
@@ -228,7 +200,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .victory-text{font-size:56px;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;animation:victoryBounce 0.8s cubic-bezier(0.34,1.56,0.64,1);filter:drop-shadow(0 0 20px rgba(129,140,248,0.5))}
 @keyframes victoryBounce{0%{transform:scale(0) rotate(-180deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0deg)}}
 
-/* XO Mode Selection - زیبا و حرفه‌ای */
 .xo-mode-selection{background:linear-gradient(135deg,rgba(15,15,35,0.95),rgba(25,25,55,0.95));border:2px solid rgba(129,140,248,0.2);border-radius:32px;padding:32px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
 .xo-mode-selection::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(129,140,248,0.15),transparent 50%),radial-gradient(circle at 70% 70%,rgba(236,72,153,0.15),transparent 50%);pointer-events:none}
 .xo-mode-title{font-size:32px;font-weight:900;text-align:center;margin-bottom:8px;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -241,13 +212,42 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .xo-mode-name{font-size:18px;font-weight:800;margin-bottom:4px}
 .xo-mode-desc{font-size:12px;color:rgba(255,255,255,0.5)}
 
-/* دکمه ارسال درخواست زیبا */
 .send-request-btn{background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(168,85,247,0.3));border:1px solid rgba(129,140,248,0.4);color:#fff;border-radius:12px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;white-space:nowrap}
 .send-request-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:left 0.5s}
 .send-request-btn:hover::before{left:100%}
 .send-request-btn:hover{border-color:rgba(129,140,248,0.7);box-shadow:0 0 20px rgba(129,140,248,0.4);transform:scale(1.05)}
 .send-request-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
 .send-request-btn.cooldown{background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(245,158,11,0.2));border-color:rgba(251,191,36,0.4)}
+
+/* Star Rating Styles */
+.star-rating-container{display:flex;gap:4px;justify-content:center;margin:8px 0}
+.star-item{width:28px;height:28px;transition:all 0.3s;filter:grayscale(100%) brightness(0.3)}
+.star-item.active{filter:grayscale(0%) brightness(1);animation:starPulse 1.5s infinite}
+.star-item.active path{fill:#fbbf24;stroke:#f59e0b;stroke-width:2}
+.star-item path{fill:rgba(251,191,36,0.2);stroke:rgba(251,191,36,0.4);stroke-width:2;transition:all 0.3s}
+@keyframes starPulse{0%,100%{transform:scale(1);filter:grayscale(0%) brightness(1) drop-shadow(0 0 5px rgba(251,191,36,0.5))}50%{transform:scale(1.15);filter:grayscale(0%) brightness(1.2) drop-shadow(0 0 15px rgba(251,191,36,0.8))}}
+
+/* Chart Container */
+.chart-container{background:rgba(255,255,255,0.03);border:1px solid rgba(129,140,248,0.2);border-radius:20px;padding:20px;margin-top:16px;position:relative;overflow:hidden}
+.chart-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.5),transparent);animation:chartScan 3s linear infinite}
+@keyframes chartScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* Exam Card Enhanced */
+.exam-card-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.exam-card-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6);opacity:0;transition:opacity 0.3s}
+.exam-card-enhanced:hover::before{opacity:1}
+.exam-card-enhanced:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(129,140,248,0.2);border-color:rgba(129,140,248,0.3)}
+
+/* Timer Circle Glow */
+.timer-circle-glow{position:relative;width:80px;height:80px}
+.timer-circle-glow svg{transform:rotate(-90deg);filter:drop-shadow(0 0 10px rgba(129,140,248,0.5))}
+.timer-circle-glow circle{fill:none;stroke-width:6;stroke-linecap:round}
+.timer-circle-glow .bg{stroke:rgba(255,255,255,0.05)}
+.timer-circle-glow .progress{stroke:url(#timerGradient);transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 8px currentColor)}
+.timer-text-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+
+/* Icon Enhanced */
+.icon-enhanced{width:24px;height:24px;filter:drop-shadow(0 0 8px currentColor)}
 </style>
 </head>
 <body>
@@ -256,8 +256,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-const TADBIR_EMOJIS=['🎓','📚','✨','🌟','💡','🏆','🎯','🚀','💪','','🔥','💎','','⭐','🎨','📖','✏️','🧠'];
-const REACTION_EMOJIS=['❤️','','😂','😮','😢','','🎉','💯'];
+const TADBIR_EMOJIS=['🎓','','✨','🌟','','🏆','🎯','','💪','👏','','💎','🌈','⭐','','📖','✏️',''];
+const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','','💯'];
 
 const ToastContext=createContext();
 function ToastProvider({children}){
@@ -287,7 +287,6 @@ function ToastProvider({children}){
 }
 const useToast=()=>useContext(ToastContext);
 
-// ===== تبدیل تاریخ میلادی به شمسی (الگوریتم دقیق) =====
 function gregorianToJalali(gy,gm,gd){
   var g_d_m=[0,31,59,90,120,151,181,212,243,273,304,334];
   var jy=(gy<=1600)?0:979;
@@ -344,8 +343,33 @@ const Icons={
   edit:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
   smile:"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M8 14s1.5 2 4 2 4-2 4-2 M9 9h.01 M15 9h.01",
   bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0",
-  arrowLeft:"M15 18l-6-6 6-6"
+  arrowLeft:"M15 18l-6-6 6-6",
+  eye:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
 };
+
+// Star Rating Component
+function StarRating({score}){
+  const getStars=()=>{
+    if(score>=20)return 5;
+    if(score>=18)return 4;
+    if(score>=16)return 3;
+    if(score>=14)return 2;
+    if(score>=10)return 1;
+    return 0;
+  };
+  
+  const starCount=getStars();
+  
+  return(
+    <div className="star-rating-container">
+      {[1,2,3,4,5].map(i=>(
+        <svg key={i} className={`star-item ${i<=starCount?'active':''}`} viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      ))}
+    </div>
+  );
+}
 
 function PersianCalendar(){
   const today=new Date();
@@ -458,7 +482,6 @@ function Login({onLogin}){
   );
 }
 
-// ===== XO Game Logic =====
 function checkXOWinner(board){
   const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   for(const [a,b,c] of lines){
@@ -470,19 +493,16 @@ function checkXOWinner(board){
 
 function getSmartBotMove(board,botMark){
   const humanMark=botMark==='X'?'O':'X';
-  
   if(Math.random()<0.25){
     const empty=[];
     for(let i=0;i<9;i++)if(board[i]===''||board[i]==='-')empty.push(i);
     if(board[4]===''&&Math.random()>0.5)return 4;
     return empty[Math.floor(Math.random()*empty.length)];
   }
-  
   let bestScore=-Infinity;
   let bestMove=-1;
   const empty=[];
   for(let i=0;i<9;i++)if(board[i]===''||board[i]==='-')empty.push(i);
-  
   for(const i of empty){
     const newBoard=[...board];
     newBoard[i]=botMark;
@@ -500,7 +520,6 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
     return 0;
   }
   if(depth>=maxDepth)return 0;
-  
   if(isMaximizing){
     let best=-Infinity;
     for(let i=0;i<9;i++){
@@ -524,17 +543,14 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
   }
 }
 
-// ===== XO Cell Component =====
 function XOCellPro({value,onClick,isWinning,isDisabled,cellIndex}){
   const [isAnimating,setIsAnimating]=useState(false);
-  
   const handleClick=()=>{
     if(isDisabled||(value!==''&&value!=='-'))return;
     setIsAnimating(true);
     setTimeout(()=>setIsAnimating(false),500);
     onClick();
   };
-  
   return(
     <div className={`xo-cell-pro ${value!==''&&value!=='-'?'filled':''} ${isWinning?'winning':''} ${isAnimating?'xo-board-shake':''}`} onClick={handleClick}>
       {value==='X'&&(
@@ -564,10 +580,8 @@ function XOCellPro({value,onClick,isWinning,isDisabled,cellIndex}){
   );
 }
 
-// ===== Robot Component =====
 function RobotThinking({isThinking,targetCell,onMoveComplete}){
   const [armPosition,setArmPosition]=useState('idle');
-  
   useEffect(()=>{
     if(isThinking&&targetCell!==null){
       const timer=setTimeout(()=>{
@@ -580,7 +594,6 @@ function RobotThinking({isThinking,targetCell,onMoveComplete}){
       return()=>clearTimeout(timer);
     }
   },[isThinking,targetCell]);
-  
   return(
     <div className="robot-container">
       <div className="robot-body">
@@ -604,7 +617,6 @@ function RobotThinking({isThinking,targetCell,onMoveComplete}){
   );
 }
 
-// ===== XO Game Hub =====
 function XOGameHub({user}){
   const [mode,setMode]=useState(null);
   const [friendsGame,setFriendsGame]=useState(null);
@@ -621,7 +633,6 @@ function XOGameHub({user}){
     loadFriends();
     loadPendingRequests();
     loadMyRequests();
-    
     const sub=SB.channel('game-requests-'+user.id)
       .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},(payload)=>{
         loadPendingRequests();
@@ -660,10 +671,8 @@ function XOGameHub({user}){
         clearInterval(interval);
         return;
       }
-      
       const elapsed=Math.floor((Date.now()-new Date(req.created_at).getTime())/1000);
       const remaining=duration-elapsed;
-      
       if(remaining<=0){
         await SB.from('game_requests').update({status:'expired'}).eq('id',requestId);
         clearInterval(interval);
@@ -707,28 +716,23 @@ function XOGameHub({user}){
     const lastTime=lastRequestTime[toUserId]||0;
     if(now-lastTime<10000){
       const remaining=Math.ceil((10000-(now-lastTime))/1000);
-      toast(` ${remaining} ثانیه دیگر می‌توانی درخواست بفرستی`,'warning');
+      toast(`⏳ ${remaining} ثانیه دیگر می‌توانی درخواست بفرستی`,'warning');
       return;
     }
-    
     if(blockedUsers[toUserId]&&blockedUsers[toUserId]>Date.now()){
       const remaining=Math.ceil((blockedUsers[toUserId]-Date.now())/1000);
-      toast(` این کاربر تا ${remaining} ثانیه دیگر نمی‌تواند درخواست بفرستد`,'warning');
+      toast(`⏳ این کاربر تا ${remaining} ثانیه دیگر نمی‌تواند درخواست بفرستد`,'warning');
       return;
     }
-    
     const {data:existingReq}=await SB.from('game_requests').select('id').eq('from_user',user.id).eq('to_user',toUserId).eq('status','pending').maybeSingle();
-    if(existingReq){toast('⚠️ قبلاً درخواست فرستادی','warning');return;}
-    
+    if(existingReq){toast('️ قبلاً درخواست فرستادی','warning');return;}
     const {data:room,error:rErr}=await SB.from('xo_rooms').insert({player_x:user.id,player_o:null,board:'---------',current_turn:'X',status:'waiting',score_x:0,score_o:0}).select().single();
     if(rErr){toast('خطا در ساخت اتاق: '+rErr.message,'error');return;}
-    
     const {error:reqErr}=await SB.from('game_requests').insert({from_user:user.id,to_user:toUserId,room_id:room.id,status:'pending'});
     if(reqErr){
       await SB.from('xo_rooms').delete().eq('id',room.id);
       toast('خطا: '+reqErr.message,'error');return;
     }
-    
     setLastRequestTime(t=>({...t,[toUserId]:now}));
     toast('✅ درخواست بازی ارسال شد','success');
     loadMyRequests();
@@ -783,7 +787,6 @@ function XOGameHub({user}){
           <h3 className="font-bold gradient-text text-lg">👥 بازی با دوستان</h3>
           <div className="w-20"></div>
         </div>
-
         {pendingRequests.length>0&&(
           <div className="glass p-4 mb-4">
             <h4 className="font-bold text-sm mb-3 text-pink-400">🔔 درخواست‌های دریافتی</h4>
@@ -794,7 +797,7 @@ function XOGameHub({user}){
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-bold">{r.from_user_data?.full_name?.[0]}</div>
                     <div>
                       <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
-                      <p className="text-[11px] text-white/40">دعوتت کرده به بازی 🎮</p>
+                      <p className="text-[11px] text-white/40">دعوتت کرده به بازی </p>
                     </div>
                   </div>
                 </div>
@@ -806,7 +809,6 @@ function XOGameHub({user}){
             ))}
           </div>
         )}
-
         {myRequests.length>0&&(
           <div className="glass p-4 mb-4">
             <h4 className="font-bold text-sm mb-3 text-amber-400">⏳ در انتظار پاسخ</h4>
@@ -821,7 +823,6 @@ function XOGameHub({user}){
             ))}
           </div>
         )}
-
         <div className="glass p-4">
           <h4 className="font-bold text-sm mb-3 text-indigo-400">👥 ارسال درخواست</h4>
           {friendsList.length===0?<p className="text-center text-white/30 py-4">دانش‌آموز دیگری نیست</p>:
@@ -855,7 +856,7 @@ function XOGameHub({user}){
   return(
     <div className="slide-up">
       <div className="xo-mode-selection">
-        <h3 className="xo-mode-title">🎮 بازی دوز</h3>
+        <h3 className="xo-mode-title"> بازی دوز</h3>
         <p className="xo-mode-subtitle">یک حالت بازی انتخاب کن</p>
         <div className="space-y-3 relative z-10">
           <div className="xo-mode-card" onClick={()=>setMode('bot')}>
@@ -874,7 +875,6 @@ function XOGameHub({user}){
           </div>
         </div>
       </div>
-      
       {showNotification&&(
         <div className="game-request-notification">
           <div className="flex items-center gap-3 mb-3">
@@ -884,7 +884,6 @@ function XOGameHub({user}){
               <p className="text-[11px] text-white/50">یه دوست می‌خواد باهات بازی کنه</p>
             </div>
           </div>
-          
           <div className="countdown-ring">
             <svg width="80" height="80">
               <defs>
@@ -898,9 +897,7 @@ function XOGameHub({user}){
             </svg>
             <div className="countdown-text">{requestTimers[showNotification.id]||0}</div>
           </div>
-          
           <p className="text-center text-xs text-white/40 mb-3">ثانیه فرصت داری</p>
-          
           <div className="flex gap-2">
             <button onClick={()=>{
               const req=pendingRequests.find(r=>r.id===showNotification.id);
@@ -917,7 +914,6 @@ function XOGameHub({user}){
   );
 }
 
-// ===== XO Bot Game =====
 function XOBotGame({user,onBack}){
   const [board,setBoard]=useState(['','','','','','','','','']);
   const [playerMark,setPlayerMark]=useState('X');
@@ -930,7 +926,6 @@ function XOBotGame({user,onBack}){
   const [boardShake,setBoardShake]=useState(false);
   const [botTargetCell,setBotTargetCell]=useState(null);
   const toast=useToast();
-
   const botMark=playerMark==='X'?'O':'X';
 
   useEffect(()=>{
@@ -951,7 +946,6 @@ function XOBotGame({user,onBack}){
     setTimeout(()=>setBoardShake(false),400);
     setBotThinking(false);
     setBotTargetCell(null);
-    
     const result=checkXOWinner(newBoard);
     if(result){
       setWinner(result.winner);
@@ -970,7 +964,6 @@ function XOBotGame({user,onBack}){
     setBoard(newBoard);
     setBoardShake(true);
     setTimeout(()=>setBoardShake(false),400);
-    
     const result=checkXOWinner(newBoard);
     if(result){
       setWinner(result.winner);
@@ -1007,9 +1000,9 @@ function XOBotGame({user,onBack}){
 
   const getStatusText=()=>{
     if(winner){
-      if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
+      if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
       if(winner===playerMark)return{emoji:'🎉',text:'آفرین! تو بردی!',color:'text-emerald-400'};
-      return{emoji:'🤖',text:'ربات این بار برد!',color:'text-pink-400'};
+      return{emoji:'',text:'ربات این بار برد!',color:'text-pink-400'};
     }
     if(botThinking)return{emoji:'',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
     if(currentTurn===playerMark)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
@@ -1028,7 +1021,6 @@ function XOBotGame({user,onBack}){
           <h3 className="font-bold gradient-text text-lg">🤖 بازی با ربات</h3>
           <button onClick={changeSide} className="btn-glass btn-sm">🔄 تغییر طرف</button>
         </div>
-
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className={`score-card-pro ${!winner&&currentTurn===playerMark?'active':''}`}>
             <p className="text-[11px] text-white/40 mb-1">شما ({playerMark})</p>
@@ -1043,20 +1035,13 @@ function XOBotGame({user,onBack}){
             <p className="score-value">{scores.bot}</p>
           </div>
         </div>
-
         <div className={`xo-status-pro ${!winner&&currentTurn===playerMark?'my-turn':!winner?'waiting':''}`}>
           <p className={`font-bold text-lg ${status.color}`}>
             <span className="text-2xl ml-2">{status.emoji}</span>
             {status.text}
           </p>
         </div>
-
-        <RobotThinking 
-          isThinking={botThinking} 
-          targetCell={botTargetCell}
-          onMoveComplete={handleBotMove}
-        />
-
+        <RobotThinking isThinking={botThinking} targetCell={botTargetCell} onMoveComplete={handleBotMove}/>
         <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
           <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
             {board.map((cell,i)=>(
@@ -1076,7 +1061,6 @@ function XOBotGame({user,onBack}){
   );
 }
 
-// ===== XO Online Game =====
 function XOOnlineGame({user,roomId,onEnd}){
   const [room,setRoom]=useState(null);
   const [myMark,setMyMark]=useState(null);
@@ -1158,12 +1142,12 @@ function XOOnlineGame({user,roomId,onEnd}){
 
   const getStatusText=()=>{
     if(winner){
-      if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
+      if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
       if(winner===myMark)return{emoji:'🎉',text:'تبریک! تو بردی!',color:'text-emerald-400'};
       return{emoji:'😔',text:'حریف این دور رو برد',color:'text-pink-400'};
     }
     if(isMyTurn)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
-    return{emoji:'⏳',text:'نوبت حریف...',color:'text-white/50'};
+    return{emoji:'',text:'نوبت حریف...',color:'text-white/50'};
   };
   const status=getStatusText();
 
@@ -1172,10 +1156,9 @@ function XOOnlineGame({user,roomId,onEnd}){
       <div className="xo-mode-selection mb-4">
         <div className="flex justify-between items-center mb-4">
           <button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">🏁 پایان</button>
-          <h3 className="font-bold gradient-text text-lg">🎮 بازی آنلاین</h3>
+          <h3 className="font-bold gradient-text text-lg"> بازی آنلاین</h3>
           <div className="w-20"></div>
         </div>
-
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className={`score-card-pro ${!winner&&isMyTurn?'active':''}`}>
             <p className="text-[11px] text-white/40 mb-1">شما ({myMark})</p>
@@ -1190,18 +1173,15 @@ function XOOnlineGame({user,roomId,onEnd}){
             <p className="score-value">{myMark==='X'?room.score_o:room.score_x}</p>
           </div>
         </div>
-
         <div className="glass p-3 mb-3 text-center">
           <p className="text-xs text-white/40 mb-1">حریف: <span className="font-bold text-white">{opponentName}</span></p>
         </div>
-
         <div className={`xo-status-pro ${!winner&&isMyTurn?'my-turn':!winner?'waiting':''}`}>
           <p className={`font-bold text-lg ${status.color}`}>
             <span className="text-2xl ml-2">{status.emoji}</span>
             {status.text}
           </p>
         </div>
-
         <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
           <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
             {room.board.split('').map((cell,i)=>(
@@ -1221,7 +1201,6 @@ function XOOnlineGame({user,roomId,onEnd}){
   );
 }
 
-// ===== Breakout Game =====
 function BreakoutGame({user}){
   const [score,setScore]=useState(0);
   const [level,setLevel]=useState(1);
@@ -1244,7 +1223,6 @@ function BreakoutGame({user}){
     const ctx=canvas.getContext('2d');
     const W=380,H=500;
     canvas.width=W;canvas.height=H;
-    
     let localScore=0,localLevel=1,running=true;
     let ballX=W/2,ballY=H-50,ballDX=0,ballDY=0,ballR=7;
     let padX=W/2-40,padW=80,padH=12;
@@ -1297,20 +1275,17 @@ function BreakoutGame({user}){
       const bg=ctx.createLinearGradient(0,0,0,H);
       bg.addColorStop(0,'rgba(15,15,35,0.95)');bg.addColorStop(1,'rgba(10,10,26,0.98)');
       ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-
       for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
         const b=bricks[r][c];if(!b.alive)continue;
         ctx.fillStyle=b.color;ctx.shadowColor=b.color;ctx.shadowBlur=10;
         ctx.beginPath();ctx.roundRect(b.x,b.y,brickInfo.brickW,20,4);ctx.fill();
         ctx.shadowBlur=0;
       }
-
       const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
       padGrad.addColorStop(0,'#818cf8');padGrad.addColorStop(1,'#c084fc');
       ctx.fillStyle=padGrad;ctx.shadowColor='#818cf8';ctx.shadowBlur=15;
       ctx.beginPath();ctx.roundRect(padX,H-25,padW,padH,6);ctx.fill();
       ctx.shadowBlur=0;
-
       trail.push({x:ballX,y:ballY,life:12});
       trail=trail.filter(t=>{
         t.life--;
@@ -1320,17 +1295,14 @@ function BreakoutGame({user}){
         ctx.globalAlpha=1;
         return t.life>0;
       });
-
       ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
       ctx.fillStyle='#fff';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;ctx.fill();ctx.shadowBlur=0;
-
       particles=particles.filter(p=>{
         p.x+=p.dx;p.y+=p.dy;p.life--;
         ctx.globalAlpha=p.life/25;ctx.fillStyle=p.color;
         ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;
         return p.life>0;
       });
-
       if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
       if(ballY+ballDY<ballR)ballDY=-ballDY;
       if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
@@ -1338,7 +1310,6 @@ function BreakoutGame({user}){
         ballDX+=((ballX-padX)/padW-0.5)*8;
         spawnParticles(ballX,ballY,'#818cf8');
       }
-
       if(ballY>H+ballR){
         running=false;setGameOver(true);
         const finalScore=localScore;
@@ -1349,7 +1320,6 @@ function BreakoutGame({user}){
         toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
         return;
       }
-
       let allDestroyed=true;
       for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
         const b=bricks[r][c];if(!b.alive)continue;
@@ -1363,7 +1333,6 @@ function BreakoutGame({user}){
           break;
         }
       }
-
       if(allDestroyed){
         localLevel++;setLevel(localLevel);localScore+=50;setScore(localScore);
         padW=Math.max(45,80-localLevel*4);
@@ -1371,17 +1340,13 @@ function BreakoutGame({user}){
         resetBall();
         toast(` مرحله ${localLevel}!`,'success');
       }
-
       ballX+=ballDX;ballY+=ballDY;
       ctx.fillStyle='white';ctx.font='bold 16px Vazirmatn';
       ctx.textAlign='right';ctx.fillText(`امتیاز: ${localScore}`,W-15,25);
       ctx.textAlign='left';ctx.fillText(`مرحله: ${localLevel}`,15,25);
-
       gameRef.current=requestAnimationFrame(loop);
     };
-
     resetBall();loop();
-
     return()=>{
       canvas.removeEventListener('mousemove',moveHandler);
       canvas.removeEventListener('touchmove',moveHandler);
@@ -1404,7 +1369,6 @@ function BreakoutGame({user}){
   );
 }
 
-// ===== Chat Modal =====
 function ChatModal({user,onClose}){
   const [messages,setMessages]=useState([]);
   const [chatText,setChatText]=useState('');
@@ -1445,7 +1409,6 @@ function ChatModal({user,onClose}){
   };
 
   const addEmoji=(emoji)=>{setChatText(chatText+emoji);setShowEmoji(false);};
-
   const startEdit=(msg)=>{setEditingId(msg.id);setEditText(msg.content);};
   const saveEdit=async()=>{
     if(!editText.trim())return;
@@ -1483,7 +1446,7 @@ function ChatModal({user,onClose}){
     <div className="modal-overlay" onClick={onClose}>
       <div className="glass-strong w-full max-w-md h-[75vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
         <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/5">
-          <h3 className="font-bold gradient-text"> گفتگو با مدیر</h3>
+          <h3 className="font-bold gradient-text">💬 گفتگو با مدیر</h3>
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
         <div className="flex-1 overflow-y-auto mb-3 space-y-2">
@@ -1508,7 +1471,7 @@ function ChatModal({user,onClose}){
                         {isMe&&(
                           <>
                             <button onClick={()=>startEdit(m)} className="chat-action-btn">✏️ ویرایش</button>
-                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">🗑️ حذف</button>
+                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">️ حذف</button>
                           </>
                         )}
                         {!isMe&&(
@@ -1558,7 +1521,6 @@ function ChatModal({user,onClose}){
   );
 }
 
-// ===== Password Modal =====
 function PasswordModal({onClose,user}){
   const [newPw,setNewPw]=useState('');
   const [confirmPw,setConfirmPw]=useState('');
@@ -1591,7 +1553,7 @@ function PasswordModal({onClose,user}){
         <div className="space-y-3">
           <div>
             <label className="text-xs text-white/60 mb-2 block font-semibold">رمز جدید</label>
-            <input className="glass-input" type="password" placeholder="حداقل  کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/>
+            <input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/>
           </div>
           <div>
             <label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز</label>
@@ -1606,13 +1568,20 @@ function PasswordModal({onClose,user}){
   );
 }
 
-// ===== Admin Panel =====
 function Admin({user,tab,setTab,onLogout}){
-  const [exams,setExams]=useState([]);const [students,setStudents]=useState([]);const [answers,setAnswers]=useState([]);
-  const [modal,setModal]=useState(null);const [step,setStep]=useState(1);const [formData,setFormData]=useState({hours:'',minutes:''});
-  const [questions,setQuestions]=useState([]);const [loading,setLoading]=useState(false);
-  const [subTab,setSubTab]=useState('list');const [messages,setMessages]=useState([]);
-  const [replyText,setReplyText]=useState('');const [selectedChat,setSelectedChat]=useState(null);
+  const [exams,setExams]=useState([]);
+  const [students,setStudents]=useState([]);
+  const [answers,setAnswers]=useState([]);
+  const [modal,setModal]=useState(null);
+  const [step,setStep]=useState(1);
+  const [formData,setFormData]=useState({hours:'',minutes:''});
+  const [questions,setQuestions]=useState([]);
+  const [loading,setLoading]=useState(false);
+  const [subTab,setSubTab]=useState('list');
+  const [messages,setMessages]=useState([]);
+  const [replyText,setReplyText]=useState('');
+  const [selectedChat,setSelectedChat]=useState(null);
+  const [showExamResults,setShowExamResults]=useState(null);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
@@ -1673,6 +1642,11 @@ function Admin({user,tab,setTab,onLogout}){
 
   const objections=answers.filter(a=>a.objection&&a.objection.trim()!==''&&a.status!=='graded');
 
+  const viewStudentResults=(examId)=>{
+    const examAnswers=answers.filter(a=>a.exam_id===examId);
+    setShowExamResults({examId,answers:examAnswers});
+  };
+
   return(
     <div className="min-h-screen pb-24">
       <div className="header flex justify-between items-center">
@@ -1694,12 +1668,20 @@ function Admin({user,tab,setTab,onLogout}){
             <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌ها</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>(
-              <div key={ex.id} className="card slide-up">
+              <div key={ex.id} className="exam-card-enhanced slide-up">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h4 className="font-bold">{ex.title}</h4>
                     <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
-                    <div className="flex gap-2 flex-wrap"><span className="badge badge-new">{ex.duration_minutes} دقیقه</span><span className="badge badge-approved">{ex.questions?.length||0} سوال</span><span className="badge badge-new">{ex.assigned_to==='all'?'همه':'تخصصی'}</span></div>
+                    <div className="flex gap-2 flex-wrap mb-2">
+                      <span className="badge badge-new">{ex.duration_minutes} دقیقه</span>
+                      <span className="badge badge-approved">{ex.questions?.length||0} سوال</span>
+                      <span className="badge badge-new">{ex.assigned_to==='all'?'همه':'تخصصی'}</span>
+                    </div>
+                    <button onClick={()=>viewStudentResults(ex.id)} className="btn-glass btn-sm flex items-center gap-2">
+                      <Icon d={Icons.eye} size={14}/>
+                      مشاهده نتایج
+                    </button>
                   </div>
                   <button onClick={()=>deleteExam(ex.id)} className="p-2 bg-red-500/15 text-red-400 rounded-xl"><Icon d={Icons.trash} size={16}/></button>
                 </div>
@@ -1894,26 +1876,62 @@ function Admin({user,tab,setTab,onLogout}){
           </div>
         </div>
       )}
+      {showExamResults&&(
+        <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
+          <div className="glass-strong w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-bold gradient-text text-lg">📊 نتایج آزمون</h3>
+              <button onClick={()=>setShowExamResults(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
+            </div>
+            {showExamResults.answers.map((a,idx)=>{
+              const exam=exams.find(e=>e.id===a.exam_id);
+              if(!exam)return null;
+              const score=getExamScore(a.exam_id,a.student_id);
+              return(
+                <div key={a.id} className="exam-card-enhanced mb-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <div>
+                      <p className="font-bold text-sm">{a.users?.full_name}</p>
+                      <p className="text-xs text-white/40">{exam?.title}</p>
+                    </div>
+                    <div className="text-left">
+                      <StarRating score={score?parseFloat(score.percentage):0}/>
+                      <p className="text-xs text-white/40 mt-1">{score?`${score.percentage}/20`:'-'}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-// ===== Student Panel =====
 function Student({user,tab,setTab,onLogout}){
-  const [exams,setExams]=useState([]);const [answers,setAnswers]=useState([]);
-  const [activeExam,setActiveExam]=useState(null);const [currentQ,setCurrentQ]=useState(0);
-  const [studentAnswers,setStudentAnswers]=useState({});const [timeLeft,setTimeLeft]=useState(0);const [totalTime,setTotalTime]=useState(0);
+  const [exams,setExams]=useState([]);
+  const [answers,setAnswers]=useState([]);
+  const [activeExam,setActiveExam]=useState(null);
+  const [currentQ,setCurrentQ]=useState(0);
+  const [studentAnswers,setStudentAnswers]=useState({});
+  const [timeLeft,setTimeLeft]=useState(0);
+  const [totalTime,setTotalTime]=useState(0);
   const [calcDisplay,setCalcDisplay]=useState('');
-  const [showObjection,setShowObjection]=useState(null);const [objectionText,setObjectionText]=useState('');
+  const [showObjection,setShowObjection]=useState(null);
+  const [objectionText,setObjectionText]=useState('');
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
-  const [checklist,setChecklist]=useState([]);const [newTask,setNewTask]=useState('');
-  const [studyPlans,setStudyPlans]=useState([]);const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
+  const [checklist,setChecklist]=useState([]);
+  const [newTask,setNewTask]=useState('');
+  const [studyPlans,setStudyPlans]=useState([]);
+  const [newPlan,setNewPlan]=useState({day:'شنبه',subject:'',time:''});
   const [toolsTab,setToolsTab]=useState('calc');
   const [chartReady,setChartReady]=useState(false);
   const [showExamResults,setShowExamResults]=useState(null);
   const [showChat,setShowChat]=useState(false);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [activeGame,setActiveGame]=useState(null);
+  const [hasSubmitted,setHasSubmitted]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
@@ -1931,16 +1949,29 @@ function Student({user,tab,setTab,onLogout}){
   const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId));
 
   const startExam=(exam)=>{
-    if(hasTakenExam(exam.id)){toast('⚠️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
-    setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);setTotalTime(exam.duration_minutes*60);
+    if(hasTakenExam(exam.id)){toast('️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
+    setActiveExam(exam);
+    setCurrentQ(0);
+    setStudentAnswers({});
+    setTimeLeft(exam.duration_minutes*60);
+    setTotalTime(exam.duration_minutes*60);
+    setHasSubmitted(false);
   };
 
-  useEffect(()=>{if(activeExam&&timeLeft>0){const t=setInterval(()=>setTimeLeft(tl=>tl-1),1000);return()=>clearInterval(t);}else if(activeExam&&timeLeft===0)submitExam();},[activeExam,timeLeft]);
+  useEffect(()=>{
+    if(activeExam&&timeLeft>0){
+      const t=setInterval(()=>setTimeLeft(tl=>tl-1),1000);
+      return()=>clearInterval(t);
+    }else if(activeExam&&timeLeft===0)submitExam();
+  },[activeExam,timeLeft]);
 
   const submitExam=async()=>{
-    if(!activeExam)return;
+    if(!activeExam||hasSubmitted)return;
+    setHasSubmitted(true);
     for(const q of activeExam.questions){
-      const ans=studentAnswers[q.id]||'';let score=0;let status='pending';
+      const ans=studentAnswers[q.id]||'';
+      let score=0;
+      let status='pending';
       if(q.q_type==='test'){
         if(q.correct_opt){
           if(ans===q.correct_opt)score=parseFloat(q.score)||1;
@@ -1950,7 +1981,8 @@ function Student({user,tab,setTab,onLogout}){
       await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status});
     }
     toast('✅ پاسخ‌ها ثبت شد!','success');
-    setActiveExam(null);loadAll();
+    setActiveExam(null);
+    loadAll();
   };
 
   const calcPress=(v)=>{
@@ -1971,30 +2003,47 @@ function Student({user,tab,setTab,onLogout}){
       await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
     }
     toast('✅ اعتراض ثبت شد!','success');
-    setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');loadAll();
+    setShowObjection(null);
+    setSelectedExamForObjection(null);
+    setObjectionText('');
+    loadAll();
   };
 
   const addTask=async()=>{
     if(!newTask.trim())return;
     const {data,error}=await SB.from('checklists').insert({user_id:user.id,title:newTask.trim()}).select().single();
     if(error){toast('خطا: '+error.message,'error');return;}
-    if(data)setChecklist([data,...checklist]);setNewTask('');
+    if(data)setChecklist([data,...checklist]);
+    setNewTask('');
     toast('✅ کار اضافه شد','success');
   };
-  const toggleTask=async(id,done)=>{await SB.from('checklists').update({is_done:!done}).eq('id',id);setChecklist(checklist.map(t=>t.id===id?{...t,is_done:!done}:t));};
-  const deleteTask=async(id)=>{await SB.from('checklists').delete().eq('id',id);setChecklist(checklist.filter(t=>t.id!==id));};
+
+  const toggleTask=async(id,done)=>{
+    await SB.from('checklists').update({is_done:!done}).eq('id',id);
+    setChecklist(checklist.map(t=>t.id===id?{...t,is_done:!done}:t));
+  };
+
+  const deleteTask=async(id)=>{
+    await SB.from('checklists').delete().eq('id',id);
+    setChecklist(checklist.filter(t=>t.id!==id));
+  };
 
   const addPlan=async()=>{
     if(!newPlan.subject.trim()||!newPlan.time.trim()){toast('همه فیلدها را پر کنید','error');return;}
     const {data,error}=await SB.from('study_plans').insert({user_id:user.id,day_of_week:newPlan.day,subject:newPlan.subject.trim(),time_range:newPlan.time.trim()}).select().single();
     if(error){toast('خطا: '+error.message,'error');return;}
-    if(data)setStudyPlans([data,...studyPlans]);setNewPlan({day:'شنبه',subject:'',time:''});
+    if(data)setStudyPlans([data,...studyPlans]);
+    setNewPlan({day:'شنبه',subject:'',time:''});
     toast('✅ برنامه اضافه شد','success');
   };
-  const deletePlan=async(id)=>{await SB.from('study_plans').delete().eq('id',id);setStudyPlans(studyPlans.filter(p=>p.id!==id));};
 
-  const getExamScore=(examId)=>{
-    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
+  const deletePlan=async(id)=>{
+    await SB.from('study_plans').delete().eq('id',id);
+    setStudyPlans(studyPlans.filter(p=>p.id!==id));
+  };
+
+  const getExamScore=(examId,studentId=user.id)=>{
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId)&&String(a.student_id)===String(studentId));
     if(examAnswers.length===0)return null;
     const totalScore=examAnswers.reduce((s,a)=>s+parseFloat(a.score||0),0);
     const maxScore=examAnswers.reduce((s,a)=>s+parseFloat(a.max_score||0),0);
@@ -2010,19 +2059,76 @@ function Student({user,tab,setTab,onLogout}){
   };
 
   useEffect(()=>{
-    if(tab==='chart'&&chartReady){
-      const ctx=document.getElementById('gradeChart');if(!ctx)return;
+    if(tab==='chart'){
+      const ctx=document.getElementById('gradeChart');
+      if(!ctx)return;
       if(window.myChart)window.myChart.destroy();
-      const examData=exams.map(ex=>{const s=getExamScore(ex.id);return s?{title:ex.title.substring(0,15),score:parseFloat(s.percentage)}:null;}).filter(d=>d!==null);
+      const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{
+        const s=getExamScore(ex.id);
+        return {title:ex.title,score:parseFloat(s.percentage),date:ex.created_at};
+      }).sort((a,b)=>new Date(a.date)-new Date(b.date));
       if(examData.length===0)return;
-      const gradient=ctx.getContext('2d').createLinearGradient(0,0,0,300);
-      gradient.addColorStop(0,'rgba(129,140,248,0.4)');gradient.addColorStop(1,'rgba(129,140,248,0)');
-      window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map(d=>d.title),datasets:[{label:'نمره از 20',data:examData.map(d=>d.score),borderColor:'#818cf8',backgroundColor:gradient,borderWidth:3,tension:0.4,fill:true,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6,pointHoverRadius:9}]},options:{responsive:true,plugins:{legend:{labels:{color:'white',font:{family:'Vazirmatn'}}}},scales:{y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},x:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.03)'}}}}});
+      const gradient=ctx.getContext('2d').createLinearGradient(0,0,400,0);
+      gradient.addColorStop(0,'rgba(129,140,248,0.8)');
+      gradient.addColorStop(0.5,'rgba(192,132,252,0.8)');
+      gradient.addColorStop(1,'rgba(244,114,182,0.8)');
+      window.myChart=new Chart(ctx,{
+        type:'line',
+        data:{
+          labels:examData.map((_,i)=>i+1),
+          datasets:[{
+            label:'نمره',
+            data:examData.map(d=>d.score),
+            borderColor:gradient,
+            backgroundColor:'rgba(129,140,248,0.1)',
+            borderWidth:3,
+            tension:0.4,
+            fill:true,
+            pointBackgroundColor:'#f472b6',
+            pointBorderColor:'#fff',
+            pointBorderWidth:2,
+            pointRadius:6,
+            pointHoverRadius:9
+          }]
+        },
+        options:{
+          responsive:true,
+          animation:{
+            duration:2000,
+            easing:'easeInOutQuart'
+          },
+          plugins:{
+            legend:{display:false},
+            tooltip:{
+              callbacks:{
+                label:(context)=>{
+                  const idx=context.dataIndex;
+                  return `${examData[idx].title}: ${examData[idx].score}/20`;
+                }
+              }
+            }
+          },
+          scales:{
+            y:{
+              ticks:{color:'rgba(255,255,255,0.5)'},
+              grid:{color:'rgba(255,255,255,0.05)'},
+              beginAtZero:true,
+              max:20
+            },
+            x:{
+              ticks:{color:'rgba(255,255,255,0.5)'},
+              grid:{color:'rgba(255,255,255,0.03)'},
+              display:false
+            }
+          }
+        }
+      });
     }
-  },[tab,chartReady,answers,exams]);
+  },[tab,answers,exams]);
 
   if(activeExam){
-    const q=activeExam.questions[currentQ];const progress=((currentQ+1)/activeExam.questions.length)*100;
+    const q=activeExam.questions[currentQ];
+    const progress=((currentQ+1)/activeExam.questions.length)*100;
     return(
       <div className="min-h-screen">
         <div className="header">
@@ -2041,7 +2147,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className="content">
           <div className="glass p-5 fade-in">
             <div className="flex justify-between items-center mb-3">
-              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':'✍️ تشریحی'}</span>
+              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':'️ تشریحی'}</span>
               <span className="badge badge-new">⭐ {q?.score||1} نمره</span>
             </div>
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
@@ -2074,7 +2180,7 @@ function Student({user,tab,setTab,onLogout}){
       <div className="header flex justify-between items-center">
         <div>
           <h1 className="text-lg font-black gradient-text">پنل دانش‌آموز</h1>
-          <p className="text-xs text-white/40 mt-1">سلام {user.full_name} 👋</p>
+          <p className="text-xs text-white/40 mt-1">سلام {user.full_name} </p>
         </div>
         <div className="flex gap-2">
           <button onClick={()=>setShowPasswordModal(true)} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="تغییر رمز">
@@ -2100,16 +2206,14 @@ function Student({user,tab,setTab,onLogout}){
                 <p className="text-[11px] text-white/40">آزمون‌ها</p>
               </div>
             </div>
-
             <PersianCalendar/>
-
             <h3 className="font-bold mt-6 mb-3 text-white/70 text-sm">آزمون‌های موجود</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>{
               const taken=hasTakenExam(ex.id);
               const score=getExamScore(ex.id);
               return(
-                <div key={ex.id} className={`card slide-up ${taken?'disabled':''}`}>
+                <div key={ex.id} className={`exam-card-enhanced slide-up ${taken?'opacity-60':''}`}>
                   <h4 className="font-bold">{ex.title}</h4>
                   <p className="text-xs text-white/40 mt-1 mb-2">{ex.description||'بدون توضیحات'}</p>
                   <div className="flex gap-2 mb-3 flex-wrap">
@@ -2120,13 +2224,11 @@ function Student({user,tab,setTab,onLogout}){
                   </div>
                   {taken?(
                     <div className="space-y-2">
-                      <div className="text-center py-2 text-gray-400 text-xs font-bold bg-gray-500/10 rounded-xl border border-gray-500/20">
-                        ⚠️ قبلاً شرکت کرده‌اید
-                      </div>
+                      <StarRating score={parseFloat(score.percentage)}/>
                       <button onClick={()=>setShowExamResults(ex.id)} className="btn-glass text-sm">📊 مشاهده نتایج</button>
                     </div>
                   ):(
-                    <button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون </button>
+                    <button onClick={()=>startExam(ex)} className="btn-glass text-sm">شروع آزمون 🚀</button>
                   )}
                 </div>
               );
@@ -2138,13 +2240,20 @@ function Student({user,tab,setTab,onLogout}){
             <h3 className="font-bold mb-3 text-white/70 text-sm">نمرات من</h3>
             {exams.filter(ex=>getExamScore(ex.id)).length===0&&<div className="card text-center py-10 text-white/30">نمره‌ای نیست</div>}
             {exams.map(ex=>{
-              const score=getExamScore(ex.id);if(!score)return null;
+              const score=getExamScore(ex.id);
+              if(!score)return null;
               const hasObjection=answers.some(a=>a.exam_id===ex.id&&a.objection);
               return(
-                <div key={ex.id} className="card">
+                <div key={ex.id} className="exam-card-enhanced">
                   <div className="flex justify-between items-start mb-2">
-                    <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
-                    <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-sm">{ex.title}</h4>
+                      <p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p>
+                    </div>
+                    <div className="text-left shrink-0 mr-3">
+                      <StarRating score={parseFloat(score.percentage)}/>
+                      <p className="text-xs text-white/40 mt-1">{score.percentage}/20</p>
+                    </div>
                   </div>
                   {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
                   {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض</button>)}
@@ -2160,11 +2269,10 @@ function Student({user,tab,setTab,onLogout}){
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
-            <div className="glass-strong p-4 mb-4">
+            <div className="chart-container">
               <h3 className="font-bold mb-3 text-center text-sm">نمودار پیشرفت</h3>
               {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}
             </div>
-            {!chartReady&&exams.filter(ex=>getExamScore(ex.id)).length>0&&<button onClick={()=>setChartReady(true)} className="btn-glass">نمایش نمودار</button>}
           </>
         )}
         {tab==='tools'&&(
@@ -2189,7 +2297,6 @@ function Student({user,tab,setTab,onLogout}){
                     <div className="tool-label">بازی‌ها</div>
                   </div>
                 </div>
-
                 {toolsTab==='calc'&&(
                   <div className="glass-strong p-5 max-w-xs mx-auto slide-up">
                     <div className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 p-4 rounded-2xl text-3xl text-left mb-4 font-mono h-20 flex items-center justify-end border border-white/10 overflow-x-auto shadow-inner">{calcDisplay||'0'}</div>
@@ -2200,7 +2307,6 @@ function Student({user,tab,setTab,onLogout}){
                     </div>
                   </div>
                 )}
-
                 {toolsTab==='checklist'&&(
                   <div className="space-y-3 slide-up">
                     <div className="flex gap-2">
@@ -2217,7 +2323,6 @@ function Student({user,tab,setTab,onLogout}){
                     ))}
                   </div>
                 )}
-
                 {toolsTab==='planner'&&(
                   <div className="space-y-3 slide-up">
                     <div className="glass p-4 space-y-3">
@@ -2235,13 +2340,12 @@ function Student({user,tab,setTab,onLogout}){
                     ))}
                   </div>
                 )}
-
                 {toolsTab==='games'&&(
                   <div className="slide-up">
                     <h3 className="font-bold mb-3 text-white/70 text-sm">بازی‌های موجود</h3>
                     <div className="grid grid-cols-1 gap-3">
                       <div className="game-card" onClick={()=>setActiveGame('xo')}>
-                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500">⭕</div>
+                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500"></div>
                         <h4 className="font-bold text-sm">بازی دوز (XO)</h4>
                         <p className="text-[10px] text-white/40 mt-1">با ربات یا دوستان آنلاین</p>
                       </div>
@@ -2280,25 +2384,21 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-
       <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
         <Icon d={Icons.message} size={24}/>
       </button>
-
       {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
-
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
           <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض به آزمون</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">⚠️ فقط یکبار می‌توانید اعتراض بزنید</div>
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">️ فقط یکبار می‌توانید اعتراض بزنید</div>
             <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
             <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
           </div>
         </div>
       )}
-
       {showExamResults&&(
         <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
           <div className="glass-strong w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
@@ -2315,7 +2415,8 @@ function Student({user,tab,setTab,onLogout}){
                 <>
                   <div className="glass p-4 mb-4 text-center bg-gradient-to-br from-indigo-500/10 to-pink-500/10">
                     <h4 className="font-bold mb-2">{exam.title}</h4>
-                    <p className="text-4xl font-black gradient-text">{score.percentage}/20</p>
+                    <StarRating score={parseFloat(score.percentage)}/>
+                    <p className="text-4xl font-black gradient-text mt-2">{score.percentage}/20</p>
                     <p className="text-xs text-white/40 mt-1">{score.totalScore} از {score.maxScore}</p>
                   </div>
                   <h4 className="font-bold text-sm mb-3 text-white/70">جزئیات سوالات:</h4>
@@ -2328,7 +2429,7 @@ function Student({user,tab,setTab,onLogout}){
                       <div key={a.id} className={`glass p-3 mb-2 ${isWrong?'border-red-500/30':isCorrect?'border-emerald-500/30':''}`}>
                         <div className="flex justify-between items-start mb-2">
                           <span className="text-xs text-white/40">سوال {idx+1}</span>
-                          <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'✓ تصحیح شده':'⏳ در انتظار تصحیح مدیر'}</span>
+                          <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'✓ تصحیح شده':' در انتظار تصحیح مدیر'}</span>
                         </div>
                         <p className="text-sm mb-2">{q.q_text}</p>
                         {q.q_type==='test'&&q.correct_opt?(
@@ -2389,5 +2490,25 @@ function AppWrapper(){
 
 ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 </script>
+<svg className="xo-gradients">
+  <defs>
+    <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#818cf8"/>
+      <stop offset="100%" stopColor="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="oGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#f472b6"/>
+      <stop offset="100%" stopColor="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#10b981"/>
+      <stop offset="100%" stopColor="#ef4444"/>
+    </linearGradient>
+    <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#818cf8"/>
+      <stop offset="100%" stopColor="#c084fc"/>
+    </linearGradient>
+  </defs>
+</svg>
 </body>
 </html>
