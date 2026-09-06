@@ -17,21 +17,23 @@
 body{background:#0a0a1a;min-height:100vh;color:#fff;overflow-x:hidden;font-weight:400}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(99,102,241,0.15),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(236,72,153,0.1),transparent 60%),radial-gradient(ellipse at 50% 50%,rgba(14,165,233,0.08),transparent 60%);pointer-events:none;z-index:0}
 
-.glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
-.glass-strong{background:rgba(15,15,35,0.85);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.12);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05)}
+.glass-strong{background:rgba(15,15,35,0.85);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.08)}
 .glass-input{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;transition:all 0.3s}
 .glass-input:focus{border-color:#818cf8;box-shadow:0 0 0 3px rgba(129,140,248,0.15)}
 .glass-input::placeholder{color:rgba(255,255,255,0.3)}
 
-.btn-glass{background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(168,85,247,0.2));backdrop-filter:blur(12px);border:1px solid rgba(129,140,248,0.3);color:#fff;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s}
-.btn-glass:hover{border-color:rgba(129,140,248,0.6);box-shadow:0 0 20px rgba(99,102,241,0.2)}
+.btn-glass{background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(168,85,247,0.25));backdrop-filter:blur(12px);border:1px solid rgba(129,140,248,0.35);color:#fff;border-radius:14px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;position:relative;overflow:hidden}
+.btn-glass::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left 0.5s}
+.btn-glass:hover::before{left:100%}
+.btn-glass:hover{border-color:rgba(129,140,248,0.6);box-shadow:0 0 25px rgba(99,102,241,0.3)}
 .btn-glass:active{transform:scale(0.97)}
 .btn-glass:disabled{opacity:0.5;cursor:not-allowed}
-.btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(5,150,105,0.25));border-color:rgba(52,211,153,0.4)}
-.btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(220,38,38,0.25));border-color:rgba(248,113,113,0.4)}
+.btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.3),rgba(5,150,105,0.3));border-color:rgba(52,211,153,0.4)}
+.btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.3));border-color:rgba(248,113,113,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
 
-.tool-btn{background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.tool-btn{background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
 .tool-btn::before{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity 0.5s}
 .tool-btn:hover::before,.tool-btn.active::before{opacity:1}
 .tool-btn.active{transform:translateY(-8px) scale(1.05);border-color:transparent}
@@ -69,7 +71,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .badge-new{background:rgba(129,140,248,0.15);color:#818cf8;border:1px solid rgba(129,140,248,0.25)}
 .badge-taken{background:rgba(107,114,128,0.2);color:#9ca3af;border:1px solid rgba(107,114,128,0.3)}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 .timer-circle{position:relative;width:100px;height:100px}
@@ -88,41 +90,41 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nav-item svg{width:22px;height:22px}
 
 /* ===== Chat Styles ===== */
-.chat-bubble{padding:10px 14px;border-radius:16px;max-width:85%;margin-bottom:8px;font-size:13px;line-height:1.6;word-break:break-word;position:relative;animation:chatIn 0.3s ease-out}
+.chat-bubble{padding:12px 16px;border-radius:18px;max-width:82%;margin-bottom:10px;font-size:13px;line-height:1.7;word-break:break-word;position:relative;animation:chatIn 0.35s cubic-bezier(0.16,1,0.3,1);box-shadow:0 4px 15px rgba(0,0,0,0.2)}
 .chat-bubble.me{background:linear-gradient(135deg,#6366f1,#8b5cf6);border-bottom-left-radius:4px;margin-right:auto}
-.chat-bubble.other{background:rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
+.chat-bubble.other{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-bottom-right-radius:4px;margin-left:auto}
 .chat-bubble.edited::after{content:' ✏️';font-size:9px;opacity:0.5}
 .chat-bubble.deleting{animation:chatOut 0.3s ease-out forwards}
-@keyframes chatIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes chatIn{from{opacity:0;transform:translateY(10px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes chatOut{to{opacity:0;transform:scale(0.8)}}
 
-.chat-actions{display:flex;gap:4px;margin-top:4px;opacity:0;transition:opacity 0.2s}
+.chat-actions{display:flex;gap:4px;margin-top:6px;opacity:0;transition:opacity 0.2s}
 .chat-bubble:hover .chat-actions{opacity:1}
 .chat-action-btn{background:rgba(0,0,0,0.3);border:none;color:white;padding:4px 8px;border-radius:8px;font-size:10px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:3px}
 .chat-action-btn:hover{background:rgba(0,0,0,0.5);transform:scale(1.05)}
 
 .reaction-bar{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
-.reaction-chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:2px 8px;font-size:12px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:4px}
+.reaction-chip{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:3px 8px;font-size:12px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:4px}
 .reaction-chip:hover{background:rgba(129,140,248,0.2);transform:scale(1.05)}
 .reaction-chip.active{background:rgba(129,140,248,0.3);border-color:#818cf8}
 
-.reaction-picker{position:absolute;bottom:100%;background:rgba(15,15,35,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:8px;display:flex;gap:4px;margin-bottom:8px;z-index:20;animation:popIn 0.2s ease-out}
-@keyframes popIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+.reaction-picker{position:absolute;bottom:100%;background:rgba(15,15,35,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:8px;display:flex;gap:4px;margin-bottom:8px;z-index:20;animation:popIn 0.25s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+@keyframes popIn{from{opacity:0;transform:scale(0.5) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .reaction-emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
 .reaction-emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.2)}
 
-.emoji-picker{position:absolute;bottom:100%;left:0;background:rgba(15,15,35,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px;z-index:10;animation:popIn 0.2s ease-out}
+.emoji-picker{position:absolute;bottom:100%;left:0;background:rgba(15,15,35,0.98);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:12px;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px;z-index:10;animation:popIn 0.25s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
 .emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
 .emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.15)}
 
 /* ===== XO Game Styles ===== */
-.xo-board-container{background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(236,72,153,0.1));border-radius:24px;padding:20px;position:relative;overflow:hidden}
+.xo-board-container{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:24px;padding:20px;position:relative;overflow:hidden}
 .xo-board-container::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(129,140,248,0.1),transparent 70%);pointer-events:none}
 
 .xo-cell-new{aspect-ratio:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
 .xo-cell-new::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,0.1),transparent);opacity:0;transition:opacity 0.3s}
 .xo-cell-new:hover:not(.filled)::before{opacity:1}
-.xo-cell-new:hover:not(.filled){transform:scale(1.03);border-color:rgba(129,140,248,0.4)}
+.xo-cell-new:hover:not(.filled){transform:scale(1.03);border-color:rgba(129,140,248,0.4);box-shadow:0 0 20px rgba(129,140,248,0.2)}
 .xo-cell-new.filled{cursor:not-allowed}
 .xo-cell-new.winning{animation:winPulse 1.2s infinite;background:rgba(52,211,153,0.15);border-color:#34d399}
 @keyframes winPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(52,211,153,0.4)}50%{transform:scale(1.05);box-shadow:0 0 30px 10px rgba(52,211,153,0.2)}}
@@ -174,9 +176,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .game-card-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:32px}
 
 /* Victory overlay */
-.victory-overlay{position:absolute;inset:0;background:rgba(10,10,26,0.9);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;animation:fadeIn 0.5s;border-radius:24px}
+.victory-overlay{position:absolute;inset:0;background:rgba(10,10,26,0.92);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;animation:fadeIn 0.5s;border-radius:24px}
 .victory-text{font-size:48px;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;animation:victoryBounce 0.6s ease-out}
 @keyframes victoryBounce{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+/* Game Request Notification */
+.game-request-notification{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:rgba(15,15,35,0.95);backdrop-filter:blur(20px);border:1px solid rgba(236,72,153,0.4);border-radius:20px;padding:16px;box-shadow:0 10px 40px rgba(236,72,153,0.3);z-index:90;animation:slideInTop 0.5s cubic-bezier(0.34,1.56,0.64,1);max-width:320px;width:90%}
+@keyframes slideInTop{from{opacity:0;transform:translate(-50%,-100%)}to{opacity:1;transform:translate(-50%,0)}}
+.game-request-notification::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));border-radius:20px;z-index:-1}
 </style>
 </head>
 <body>
@@ -185,8 +192,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-const TADBIR_EMOJIS=['🎓','📚','✨','🌟','💡','🏆','🎯','🚀','💪','👏','🔥','💎','🌈','⭐','🎨','📖','✏️','🧠'];
-const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
+const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
+const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉',''];
 
 const ToastContext=createContext();
 function ToastProvider({children}){
@@ -264,7 +271,8 @@ const Icons={
   game:"M6 12h4m-2-2v4m5-1h.01M17 10h.01M15 6h2a2 2 0 0 1 2 2v2M9 6H7a2 2 0 0 0-2 2v2M9 18H7a2 2 0 0 1-2-2v-2M15 18h2a2 2 0 0 0 2-2v-2",
   award:"M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M8.21 13.89L7 23l5-3 5 3-1.21-9.12",
   edit:"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z",
-  smile:"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M8 14s1.5 2 4 2 4-2 4-2 M9 9h.01 M15 9h.01"
+  smile:"M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M8 14s1.5 2 4 2 4-2 4-2 M9 9h.01 M15 9h.01",
+  bell:"M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9 M13.73 21a2 2 0 0 1-3.46 0"
 };
 
 function PersianCalendar(){
@@ -272,6 +280,18 @@ function PersianCalendar(){
   const jToday=toJalali(today.getFullYear(),today.getMonth()+1,today.getDate());
   const [viewMonth,setViewMonth]=useState(jToday.jm);
   const [viewYear,setViewYear]=useState(jToday.jy);
+  const [currentDate,setCurrentDate]=useState(jToday);
+  
+  // آپدیت هر دقیقه برای تغییر روز
+  useEffect(()=>{
+    const interval=setInterval(()=>{
+      const now=new Date();
+      const newJToday=toJalali(now.getFullYear(),now.getMonth()+1,now.getDate());
+      setCurrentDate(newJToday);
+    },60000); // هر دقیقه چک کن
+    return()=>clearInterval(interval);
+  },[]);
+  
   const daysInMonth=getJalaliDaysInMonth(viewYear,viewMonth);
   const firstDay=getFirstDayOfMonth(viewYear,viewMonth);
   const days=[];
@@ -279,15 +299,16 @@ function PersianCalendar(){
   for(let i=1;i<=daysInMonth;i++)days.push(i);
   const prevMonth=()=>{if(viewMonth===1){setViewMonth(12);setViewYear(viewYear-1);}else setViewMonth(viewMonth-1);};
   const nextMonth=()=>{if(viewMonth===12){setViewMonth(1);setViewYear(viewYear+1);}else setViewMonth(viewMonth+1);};
-  const goToday=()=>{setViewMonth(jToday.jm);setViewYear(jToday.jy);};
-  const isToday=(d)=>d===jToday.jd&&viewMonth===jToday.jm&&viewYear===jToday.jy;
+  const goToday=()=>{setViewMonth(currentDate.jm);setViewYear(currentDate.jy);};
+  const isToday=(d)=>d===currentDate.jd&&viewMonth===currentDate.jm&&viewYear===currentDate.jy;
+  
   return(
     <div className="glass-strong p-5 slide-up">
       <div className="flex justify-between items-center mb-4">
         <button onClick={prevMonth} className="p-2 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d="M9 18l6-6-6-6" size={18}/></button>
         <div className="text-center">
           <h3 className="font-black text-lg gradient-text">{getJalaliMonthName(viewMonth)} {viewYear}</h3>
-          {!(viewMonth===jToday.jm&&viewYear===jToday.jy)&&(<button onClick={goToday} className="text-[10px] text-indigo-400 mt-1 hover:underline">برو به امروز</button>)}
+          {!(viewMonth===currentDate.jm&&viewYear===currentDate.jy)&&(<button onClick={goToday} className="text-[10px] text-indigo-400 mt-1 hover:underline">برو به امروز</button>)}
         </div>
         <button onClick={nextMonth} className="p-2 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d="M15 18l-6-6 6-6" size={18}/></button>
       </div>
@@ -297,7 +318,7 @@ function PersianCalendar(){
       </div>
       <div className="mt-4 pt-4 border-t border-white/5 text-center">
         <p className="text-xs text-white/40">امروز</p>
-        <p className="text-lg font-black gradient-text">{jToday.jd} {getJalaliMonthName(jToday.jm)} {jToday.jy}</p>
+        <p className="text-lg font-black gradient-text">{currentDate.jd} {getJalaliMonthName(currentDate.jm)} {currentDate.jy}</p>
       </div>
     </div>
   );
@@ -376,14 +397,14 @@ function checkXOWinner(board){
   return null;
 }
 
-// ربات هوشمند با سطح دشمنی متعادل
+// ربات هوشمند - فقط یک حرکت در هر نوبت
 function getSmartBotMove(board,botMark){
   const humanMark=botMark==='X'?'O':'X';
   
-  // 35% احتمال حرکت تصادفی برای اینکه بازیکن شانس برد داشته باشه
-  if(Math.random()<0.35){
-    const empty=board.split('').map((c,i)=>c==='-'?i:-1).filter(i=>i>=0);
-    // ولی حرکت کاملاً تصادفی هم نه - گاهی مرکز و گوشه رو ترجیح بده
+  // 30% احتمال حرکت تصادفی
+  if(Math.random()<0.3){
+    const empty=[];
+    for(let i=0;i<9;i++)if(board[i]==='-')empty.push(i);
     if(board[4]==='-'&&Math.random()>0.5)return 4;
     return empty[Math.floor(Math.random()*empty.length)];
   }
@@ -396,7 +417,7 @@ function getSmartBotMove(board,botMark){
   
   for(const i of empty){
     const newBoard=board.substring(0,i)+botMark+board.substring(i+1);
-    const score=minimax(newBoard,0,false,botMark,humanMark,5);
+    const score=minimax(newBoard,0,false,botMark,humanMark,4);
     if(score>bestScore){bestScore=score;bestMove=i;}
   }
   return bestMove;
@@ -432,7 +453,7 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
   }
 }
 
-// ===== XO Cell Component with SVG Animation =====
+// ===== XO Cell Component =====
 function XOCell({value,onClick,isWinning,isDisabled}){
   return(
     <div className={`xo-cell-new ${value!=='-'?'filled':''} ${isWinning?'winning':''}`} onClick={!isDisabled?onClick:undefined}>
@@ -458,15 +479,24 @@ function XOGameHub({user}){
   const [friendsList,setFriendsList]=useState([]);
   const [pendingRequests,setPendingRequests]=useState([]);
   const [myRequests,setMyRequests]=useState([]);
+  const [showNotification,setShowNotification]=useState(null);
   const toast=useToast();
 
   useEffect(()=>{
     loadFriends();
     loadPendingRequests();
     loadMyRequests();
+    
+    // Subscribe به درخواست‌های جدید
     const sub=SB.channel('game-requests-'+user.id)
-      .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},()=>{
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},(payload)=>{
         loadPendingRequests();
+        // نمایش اعلان
+        setShowNotification({
+          id:payload.new.id,
+          fromUserId:payload.new.from_user,
+          roomId:payload.new.room_id
+        });
         toast('🎮 درخواست بازی جدید!','success');
       })
       .on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_requests',filter:`from_user=eq.${user.id}`},(payload)=>{
@@ -497,12 +527,15 @@ function XOGameHub({user}){
   };
 
   const sendRequest=async(toUserId)=>{
+    // بررسی درخواست قبلی
     const {data:existingReq}=await SB.from('game_requests').select('id').eq('from_user',user.id).eq('to_user',toUserId).eq('status','pending').maybeSingle();
-    if(existingReq){toast('⚠️ قبلاً درخواست فرستادی','warning');return;}
+    if(existingReq){toast('️ قبلاً درخواست فرستادی','warning');return;}
     
+    // ساخت اتاق
     const {data:room,error:rErr}=await SB.from('xo_rooms').insert({player_x:user.id,player_o:null,board:'---------',current_turn:'X',status:'waiting',score_x:0,score_o:0}).select().single();
     if(rErr){toast('خطا در ساخت اتاق: '+rErr.message,'error');return;}
     
+    // ارسال درخواست
     const {error:reqErr}=await SB.from('game_requests').insert({from_user:user.id,to_user:toUserId,room_id:room.id,status:'pending'});
     if(reqErr){
       await SB.from('xo_rooms').delete().eq('id',room.id);
@@ -517,13 +550,15 @@ function XOGameHub({user}){
     await SB.from('game_requests').update({status:'accepted'}).eq('id',request.id);
     setFriendsGame(request.room_id);
     setMode('playing-online');
-    toast('🎮 بازی شروع شد!','success');
+    setShowNotification(null);
+    toast(' بازی شروع شد!','success');
   };
 
   const rejectRequest=async(request)=>{
     await SB.from('game_requests').update({status:'rejected'}).eq('id',request.id);
     await SB.from('xo_rooms').delete().eq('id',request.room_id);
     loadPendingRequests();
+    setShowNotification(null);
     toast('درخواست رد شد','warning');
   };
 
@@ -560,7 +595,7 @@ function XOGameHub({user}){
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-bold">{r.from_user_data?.full_name?.[0]}</div>
                 <div>
                   <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
-                  <p className="text-[11px] text-white/40">دعوتت کرده به بازی 🎮</p>
+                  <p className="text-[11px] text-white/40">دعوتت کرده به بازی </p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -608,7 +643,7 @@ function XOGameHub({user}){
 
   return(
     <div className="slide-up">
-      <h3 className="font-black text-2xl gradient-text text-center mb-6">🎮 بازی دوز</h3>
+      <h3 className="font-black text-2xl gradient-text text-center mb-6"> بازی دوز</h3>
       <p className="text-center text-white/50 text-sm mb-6">یک حالت بازی انتخاب کن</p>
       <div className="space-y-3">
         <button onClick={()=>setMode('bot')} className="btn-glass flex items-center justify-center gap-4 py-5">
@@ -626,6 +661,29 @@ function XOGameHub({user}){
           </div>
         </button>
       </div>
+      
+      {/* اعلان درخواست بازی */}
+      {showNotification&&(
+        <div className="game-request-notification">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl">🎮</div>
+            <div className="flex-1">
+              <p className="font-bold text-sm">درخواست بازی جدید!</p>
+              <p className="text-[11px] text-white/50">یه دوست می‌خواد باهات بازی کنه</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button onClick={()=>{
+              const req=pendingRequests.find(r=>r.id===showNotification.id);
+              if(req)acceptRequest(req);
+            }} className="btn-glass btn-glass-success btn-sm flex-1">✓ قبول</button>
+            <button onClick={()=>{
+              const req=pendingRequests.find(r=>r.id===showNotification.id);
+              if(req)rejectRequest(req);
+            }} className="btn-glass btn-glass-danger btn-sm flex-1">✗ رد</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -644,8 +702,9 @@ function XOBotGame({user,onBack}){
 
   const botMark=playerMark==='X'?'O':'X';
 
+  // فقط یک حرکت ربات در هر نوبت
   useEffect(()=>{
-    if(currentTurn===botMark&&!winner){
+    if(currentTurn===botMark&&!winner&&!botThinking){
       setBotThinking(true);
       const timer=setTimeout(()=>{
         const move=getSmartBotMove(board,botMark);
@@ -662,11 +721,13 @@ function XOBotGame({user,onBack}){
           }else{
             setCurrentTurn(playerMark);
           }
+        }else{
+          setBotThinking(false);
         }
-      },700);
+      },800);
       return()=>clearTimeout(timer);
     }
-  },[currentTurn,board,winner,gameCount]);
+  },[currentTurn,board,winner,botThinking,gameCount]);
 
   const handleCellClick=(i)=>{
     if(board[i]!=='-'||winner||currentTurn!==playerMark||botThinking)return;
@@ -688,7 +749,6 @@ function XOBotGame({user,onBack}){
     setWinner(null);
     setWinLine(null);
     setGameCount(c=>c+1);
-    // نوبت اول رو بین بازیکن و ربات عوض کن
     if(gameCount%2===0)setCurrentTurn(botMark);
     else setCurrentTurn(playerMark);
   };
@@ -705,8 +765,8 @@ function XOBotGame({user,onBack}){
 
   const getStatusText=()=>{
     if(winner){
-      if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
-      if(winner===playerMark)return{emoji:'🎉',text:'آفرین! تو بردی!',color:'text-emerald-400'};
+      if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
+      if(winner===playerMark)return{emoji:'',text:'آفرین! تو بردی!',color:'text-emerald-400'};
       return{emoji:'🤖',text:'ربات این بار برد!',color:'text-pink-400'};
     }
     if(botThinking)return{emoji:'🤔',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
@@ -842,12 +902,12 @@ function XOOnlineGame({user,roomId,onEnd}){
 
   const getStatusText=()=>{
     if(winner){
-      if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
-      if(winner===myMark)return{emoji:'🎉',text:'تبریک! تو بردی!',color:'text-emerald-400'};
+      if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
+      if(winner===myMark)return{emoji:'',text:'تبریک! تو بردی!',color:'text-emerald-400'};
       return{emoji:'😔',text:'حریف این دور رو برد',color:'text-pink-400'};
     }
     if(isMyTurn)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
-    return{emoji:'⏳',text:'نوبت حریف...',color:'text-white/50'};
+    return{emoji:'',text:'نوبت حریف...',color:'text-white/50'};
   };
   const status=getStatusText();
 
@@ -1169,7 +1229,7 @@ function ChatModal({user,onClose}){
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
         <div className="flex-1 overflow-y-auto mb-3 space-y-2">
-          {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید 💬</p>}
+          {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید </p>}
           {messages.map(m=>{
             const isMe=m.sender_id===user.id;
             const reactions=m.reactions||{};
@@ -1500,7 +1560,7 @@ function Admin({user,tab,setTab,onLogout}){
               <div className="space-y-4 fade-in">
                 <div>
                   <label className="text-xs text-white/50 mb-2 block font-semibold">عنوان آزمون *</label>
-                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل ۱" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
+                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل " value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
                 </div>
                 <div>
                   <label className="text-xs text-white/50 mb-2 block font-semibold">توضیحات</label>
@@ -1803,7 +1863,7 @@ function Student({user,tab,setTab,onLogout}){
                   {taken?(
                     <div className="space-y-2">
                       <div className="text-center py-2 text-gray-400 text-xs font-bold bg-gray-500/10 rounded-xl border border-gray-500/20">
-                        ⚠️ قبلاً شرکت کرده‌اید
+                        ️ قبلاً شرکت کرده‌اید
                       </div>
                       <button onClick={()=>setShowExamResults(ex.id)} className="btn-glass text-sm">📊 مشاهده نتایج</button>
                     </div>
@@ -1828,7 +1888,7 @@ function Student({user,tab,setTab,onLogout}){
                     <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
                     <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
                   </div>
-                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
+                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2"> اعتراض در حال بررسی</div>}
                   {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض</button>)}
                 </div>
               );
@@ -1982,7 +2042,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
           <div className="glass-strong w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold gradient-text">📊 نتایج آزمون</h3>
+              <h3 className="font-bold gradient-text"> نتایج آزمون</h3>
               <button onClick={()=>setShowExamResults(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
             </div>
             {(()=>{
