@@ -117,36 +117,62 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
 .emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.15)}
 
-/* ===== XO Game Styles ===== */
-.xo-board-container{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:24px;padding:20px;position:relative;overflow:hidden}
-.xo-board-container::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(129,140,248,0.1),transparent 70%);pointer-events:none}
+/* ===== XO Game Advanced Styles ===== */
+.xo-game-container{background:linear-gradient(135deg,rgba(15,15,35,0.95),rgba(25,25,55,0.95));border:2px solid rgba(129,140,248,0.2);border-radius:32px;padding:24px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1)}
+.xo-game-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(129,140,248,0.1) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.1);opacity:0.8}}
 
-.xo-cell-new{aspect-ratio:1;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
-.xo-cell-new::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,0.1),transparent);opacity:0;transition:opacity 0.3s}
-.xo-cell-new:hover:not(.filled)::before{opacity:1}
-.xo-cell-new:hover:not(.filled){transform:scale(1.03);border-color:rgba(129,140,248,0.4);box-shadow:0 0 20px rgba(129,140,248,0.2)}
-.xo-cell-new.filled{cursor:not-allowed}
-.xo-cell-new.winning{animation:winPulse 1.2s infinite;background:rgba(52,211,153,0.15);border-color:#34d399}
-@keyframes winPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(52,211,153,0.4)}50%{transform:scale(1.05);box-shadow:0 0 30px 10px rgba(52,211,153,0.2)}}
+.xo-board-shake{animation:shakeBoard 0.4s cubic-bezier(0.36,0.07,0.19,0.97)}
+@keyframes shakeBoard{
+  0%,100%{transform:translateX(0)}
+  10%,30%,50%,70%,90%{transform:translateX(-2px)}
+  20%,40%,60%,80%{transform:translateX(2px)}
+}
 
-.xo-svg{width:70%;height:70%}
-.xo-line{stroke-width:8;stroke-linecap:round;fill:none;stroke-dasharray:100;stroke-dashoffset:100}
-.x-line{stroke:#818cf8;filter:drop-shadow(0 0 8px rgba(129,140,248,0.6))}
-.o-line{stroke:#f472b6;filter:drop-shadow(0 0 8px rgba(244,114,182,0.6))}
-.animate-draw{animation:drawLine 0.4s ease-out forwards}
-.animate-draw-delay{animation:drawLine 0.4s ease-out 0.15s forwards}
-@keyframes drawLine{to{stroke-dashoffset:0}}
+.xo-cell-pro{aspect-ratio:1;background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:2px solid rgba(255,255,255,0.1);border-radius:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.xo-cell-pro::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(129,140,248,0.15),transparent 70%);opacity:0;transition:opacity 0.3s}
+.xo-cell-pro:hover:not(.filled)::before{opacity:1}
+.xo-cell-pro:hover:not(.filled){transform:translateY(-2px) scale(1.02);border-color:rgba(129,140,248,0.5);box-shadow:0 8px 25px rgba(129,140,248,0.3)}
+.xo-cell-pro.filled{cursor:not-allowed}
+.xo-cell-pro.winning{animation:winGlow 1.5s infinite;background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(16,185,129,0.15));border-color:#34d399;box-shadow:0 0 30px rgba(52,211,153,0.5)}
+@keyframes winGlow{0%,100%{box-shadow:0 0 20px rgba(52,211,153,0.4)}50%{box-shadow:0 0 40px rgba(52,211,153,0.7)}}
 
-.xo-circle{stroke:#f472b6;stroke-width:8;fill:none;stroke-linecap:round;filter:drop-shadow(0 0 8px rgba(244,114,182,0.6));stroke-dasharray:188;stroke-dashoffset:188;animation:drawCircleAnim 0.5s ease-out forwards}
-@keyframes drawCircleAnim{to{stroke-dashoffset:0}}
+.xo-symbol-drop{animation:symbolDrop 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes symbolDrop{
+  0%{transform:translateY(-100px) scale(0) rotate(-180deg);opacity:0}
+  50%{transform:translateY(10px) scale(1.2) rotate(10deg);opacity:1}
+  70%{transform:translateY(-5px) scale(0.9) rotate(-5deg)}
+  100%{transform:translateY(0) scale(1) rotate(0deg)}
+}
 
-.xo-status{background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(236,72,153,0.15));border:1px solid rgba(129,140,248,0.2);border-radius:16px;padding:12px;text-align:center;margin-bottom:16px;transition:all 0.3s}
-.xo-status.my-turn{border-color:rgba(52,211,153,0.4);box-shadow:0 0 20px rgba(52,211,153,0.1)}
-.xo-status.waiting{border-color:rgba(251,191,36,0.4);box-shadow:0 0 20px rgba(251,191,36,0.1)}
+.xo-svg-pro{width:75%;height:75%;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.x-line-pro{stroke-width:10;stroke-linecap:round;fill:none;stroke-dasharray:120;stroke-dashoffset:120;animation:drawXLine 0.5s ease-out forwards}
+.x-line-pro-1{stroke:url(#xGradient);filter:drop-shadow(0 0 10px rgba(129,140,248,0.8))}
+.x-line-pro-2{stroke:url(#xGradient);filter:drop-shadow(0 0 10px rgba(129,140,248,0.8));animation-delay:0.15s}
+@keyframes drawXLine{to{stroke-dashoffset:0}}
 
-.score-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:12px;text-align:center;transition:all 0.3s}
-.score-card.active{border-color:rgba(129,140,248,0.4);box-shadow:0 0 20px rgba(129,140,248,0.2)}
-.score-card .score-value{font-size:28px;font-weight:900;background:linear-gradient(135deg,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.xo-circle-pro{stroke:url(#oGradient);stroke-width:10;fill:none;stroke-linecap:round;stroke-dasharray:200;stroke-dashoffset:200;animation:drawCirclePro 0.6s ease-out forwards;filter:drop-shadow(0 0 10px rgba(244,114,182,0.8))}
+@keyframes drawCirclePro{to{stroke-dashoffset:0}}
+
+.xo-status-pro{background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));border:1px solid rgba(129,140,248,0.3);border-radius:20px;padding:16px;text-align:center;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,0.3)}
+.xo-status-pro.my-turn{border-color:rgba(52,211,153,0.5);box-shadow:0 0 30px rgba(52,211,153,0.2);animation:glowTurn 2s infinite}
+@keyframes glowTurn{0%,100%{box-shadow:0 0 20px rgba(52,211,153,0.2)}50%{box-shadow:0 0 40px rgba(52,211,153,0.4)}}
+
+.score-card-pro{background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:14px;text-align:center;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+.score-card-pro.active{border-color:rgba(129,140,248,0.5);box-shadow:0 0 25px rgba(129,140,248,0.3);transform:scale(1.05)}
+.score-card-pro .score-value{font-size:32px;font-weight:900;background:linear-gradient(135deg,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 20px rgba(129,140,248,0.3)}
+
+/* Game Request Notification with Countdown */
+.game-request-notification{position:fixed;top:100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(15,15,35,0.98),rgba(25,25,55,0.98));backdrop-filter:blur(20px);border:2px solid rgba(236,72,153,0.4);border-radius:24px;padding:20px;box-shadow:0 20px 60px rgba(236,72,153,0.3),0 0 40px rgba(236,72,153,0.2);z-index:90;animation:slideInBounce 0.6s cubic-bezier(0.34,1.56,0.64,1);max-width:360px;width:90%}
+@keyframes slideInBounce{0%{opacity:0;transform:translate(-50%,-100px) scale(0.8)}60%{transform:translate(-50%,10px) scale(1.05)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+.game-request-notification::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));border-radius:24px;z-index:-1}
+
+.countdown-ring{position:relative;width:80px;height:80px;margin:0 auto 12px}
+.countdown-ring svg{transform:rotate(-90deg)}
+.countdown-ring circle{fill:none;stroke-width:8}
+.countdown-ring .bg{stroke:rgba(255,255,255,0.1)}
+.countdown-ring .progress{stroke:url(#countdownGradient);stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 8px currentColor)}
+.countdown-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;font-weight:900}
 
 /* Toast */
 .toast-container{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
@@ -176,14 +202,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .game-card-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:32px}
 
 /* Victory overlay */
-.victory-overlay{position:absolute;inset:0;background:rgba(10,10,26,0.92);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;animation:fadeIn 0.5s;border-radius:24px}
-.victory-text{font-size:48px;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;animation:victoryBounce 0.6s ease-out}
-@keyframes victoryBounce{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.victory-overlay{position:absolute;inset:0;background:rgba(10,10,26,0.95);backdrop-filter:blur(15px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;animation:fadeIn 0.5s;border-radius:32px}
+.victory-text{font-size:56px;font-weight:900;background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;animation:victoryBounce 0.8s cubic-bezier(0.34,1.56,0.64,1);filter:drop-shadow(0 0 20px rgba(129,140,248,0.5))}
+@keyframes victoryBounce{0%{transform:scale(0) rotate(-180deg)}50%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0deg)}}
 
-/* Game Request Notification */
-.game-request-notification{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:rgba(15,15,35,0.95);backdrop-filter:blur(20px);border:1px solid rgba(236,72,153,0.4);border-radius:20px;padding:16px;box-shadow:0 10px 40px rgba(236,72,153,0.3);z-index:90;animation:slideInTop 0.5s cubic-bezier(0.34,1.56,0.64,1);max-width:320px;width:90%}
-@keyframes slideInTop{from{opacity:0;transform:translate(-50%,-100%)}to{opacity:1;transform:translate(-50%,0)}}
-.game-request-notification::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(139,92,246,0.1));border-radius:20px;z-index:-1}
+/* SVG Gradients */
+.xo-gradients{position:absolute;width:0;height:0;overflow:hidden}
 </style>
 </head>
 <body>
@@ -192,7 +216,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
+const TADBIR_EMOJIS=['🎓','','✨','','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','','✏️',''];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉',''];
 
 const ToastContext=createContext();
@@ -282,13 +306,12 @@ function PersianCalendar(){
   const [viewYear,setViewYear]=useState(jToday.jy);
   const [currentDate,setCurrentDate]=useState(jToday);
   
-  // آپدیت هر دقیقه برای تغییر روز
   useEffect(()=>{
     const interval=setInterval(()=>{
       const now=new Date();
       const newJToday=toJalali(now.getFullYear(),now.getMonth()+1,now.getDate());
       setCurrentDate(newJToday);
-    },60000); // هر دقیقه چک کن
+    },60000);
     return()=>clearInterval(interval);
   },[]);
   
@@ -391,29 +414,27 @@ function Login({onLogin}){
 function checkXOWinner(board){
   const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
   for(const [a,b,c] of lines){
-    if(board[a]&&board[a]===board[b]&&board[a]===board[c])return{winner:board[a],line:[a,b,c]};
+    if(board[a]&&board[a]!==''&&board[a]===board[b]&&board[a]===board[c])return{winner:board[a],line:[a,b,c]};
   }
-  if(!board.includes('-'))return{winner:'draw',line:null};
+  if(board.every(cell=>cell!==''&&cell!=='-'))return{winner:'draw',line:null};
   return null;
 }
 
-// ربات هوشمند - فقط یک حرکت در هر نوبت
+// ربات هوشمند
 function getSmartBotMove(board,botMark){
   const humanMark=botMark==='X'?'O':'X';
   
-  // 30% احتمال حرکت تصادفی
-  if(Math.random()<0.3){
+  if(Math.random()<0.25){
     const empty=[];
-    for(let i=0;i<9;i++)if(board[i]==='-')empty.push(i);
-    if(board[4]==='-'&&Math.random()>0.5)return 4;
+    for(let i=0;i<9;i++)if(board[i]===''||board[i]==='-')empty.push(i);
+    if(board[4]===''&&Math.random()>0.5)return 4;
     return empty[Math.floor(Math.random()*empty.length)];
   }
   
-  // Minimax با عمق محدود
   let bestScore=-Infinity;
   let bestMove=-1;
   const empty=[];
-  for(let i=0;i<9;i++)if(board[i]==='-')empty.push(i);
+  for(let i=0;i<9;i++)if(board[i]===''||board[i]==='-')empty.push(i);
   
   for(const i of empty){
     const newBoard=board.substring(0,i)+botMark+board.substring(i+1);
@@ -435,7 +456,7 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
   if(isMaximizing){
     let best=-Infinity;
     for(let i=0;i<9;i++){
-      if(board[i]==='-'){
+      if(board[i]===''||board[i]==='-'){
         const newBoard=board.substring(0,i)+botMark+board.substring(i+1);
         best=Math.max(best,minimax(newBoard,depth+1,false,botMark,humanMark,maxDepth));
       }
@@ -444,7 +465,7 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
   }else{
     let best=Infinity;
     for(let i=0;i<9;i++){
-      if(board[i]==='-'){
+      if(board[i]===''||board[i]==='-'){
         const newBoard=board.substring(0,i)+humanMark+board.substring(i+1);
         best=Math.min(best,minimax(newBoard,depth+1,true,botMark,humanMark,maxDepth));
       }
@@ -453,26 +474,47 @@ function minimax(board,depth,isMaximizing,botMark,humanMark,maxDepth){
   }
 }
 
-// ===== XO Cell Component =====
-function XOCell({value,onClick,isWinning,isDisabled}){
+// ===== XO Cell Component با انیمیشن حرفه‌ای =====
+function XOCellPro({value,onClick,isWinning,isDisabled,cellIndex}){
+  const [isAnimating,setIsAnimating]=useState(false);
+  
+  const handleClick=()=>{
+    if(isDisabled||value!==''&&value!=='-')return;
+    setIsAnimating(true);
+    setTimeout(()=>setIsAnimating(false),500);
+    onClick();
+  };
+  
   return(
-    <div className={`xo-cell-new ${value!=='-'?'filled':''} ${isWinning?'winning':''}`} onClick={!isDisabled?onClick:undefined}>
+    <div className={`xo-cell-pro ${value!==''&&value!=='-'?'filled':''} ${isWinning?'winning':''} ${isAnimating?'xo-board-shake':''}`} onClick={handleClick}>
       {value==='X'&&(
-        <svg viewBox="0 0 100 100" className="xo-svg">
-          <line x1="20" y1="20" x2="80" y2="80" className="xo-line x-line animate-draw"/>
-          <line x1="80" y1="20" x2="20" y2="80" className="xo-line x-line animate-draw-delay"/>
+        <svg viewBox="0 0 100 100" className="xo-svg-pro xo-symbol-drop">
+          <defs>
+            <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#818cf8"/>
+              <stop offset="100%" stopColor="#c084fc"/>
+            </linearGradient>
+          </defs>
+          <line x1="20" y1="20" x2="80" y2="80" className="xo-line-pro x-line-pro-1"/>
+          <line x1="80" y1="20" x2="20" y2="80" className="xo-line-pro x-line-pro-2"/>
         </svg>
       )}
       {value==='O'&&(
-        <svg viewBox="0 0 100 100" className="xo-svg">
-          <circle cx="50" cy="50" r="30" className="xo-circle"/>
+        <svg viewBox="0 0 100 100" className="xo-svg-pro xo-symbol-drop">
+          <defs>
+            <linearGradient id="oGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#f472b6"/>
+              <stop offset="100%" stopColor="#fb923c"/>
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="32" className="xo-circle-pro"/>
         </svg>
       )}
     </div>
   );
 }
 
-// ===== XO Game Hub =====
+// ===== XO Game Hub با تمام ویژگی‌ها =====
 function XOGameHub({user}){
   const [mode,setMode]=useState(null);
   const [friendsGame,setFriendsGame]=useState(null);
@@ -480,6 +522,8 @@ function XOGameHub({user}){
   const [pendingRequests,setPendingRequests]=useState([]);
   const [myRequests,setMyRequests]=useState([]);
   const [showNotification,setShowNotification]=useState(null);
+  const [requestTimers,setRequestTimers]=useState({});
+  const [blockedUsers,setBlockedUsers]=useState({});
   const toast=useToast();
 
   useEffect(()=>{
@@ -487,15 +531,19 @@ function XOGameHub({user}){
     loadPendingRequests();
     loadMyRequests();
     
-    // Subscribe به درخواست‌های جدید
     const sub=SB.channel('game-requests-'+user.id)
       .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},(payload)=>{
         loadPendingRequests();
-        // نمایش اعلان
+        const newReq=payload.new;
+        
+        // شروع شمارش معکوس ۱ دقیقه‌ای
+        startRequestCountdown(newReq.id,60);
+        
         setShowNotification({
-          id:payload.new.id,
-          fromUserId:payload.new.from_user,
-          roomId:payload.new.room_id
+          id:newReq.id,
+          fromUserId:newReq.from_user,
+          roomId:newReq.room_id,
+          createdAt:new Date(newReq.created_at).getTime()
         });
         toast('🎮 درخواست بازی جدید!','success');
       })
@@ -504,8 +552,15 @@ function XOGameHub({user}){
           setFriendsGame(payload.new.room_id);
           setMode('playing-online');
           toast('✅ درخواست پذیرفته شد! بازی شروع شد','success');
-        }else if(payload.new.status==='rejected'){
-          toast('❌ درخواست رد شد','warning');
+        }else if(payload.new.status==='rejected'||payload.new.status==='expired'){
+          if(payload.new.status==='rejected'){
+            // بلاک کردن کاربر به مدت ۲ دقیقه
+            const req=pendingRequests.find(r=>r.id===payload.new.id);
+            if(req){
+              blockUser(req.from_user,120);
+            }
+          }
+          toast(payload.new.status==='expired'?' زمان درخواست تمام شد':'❌ درخواست رد شد','warning');
         }
         loadMyRequests();
       })
@@ -513,13 +568,49 @@ function XOGameHub({user}){
     return()=>{SB.removeChannel(sub);};
   },[]);
 
+  const startRequestCountdown=(requestId,duration)=>{
+    const interval=setInterval(async()=>{
+      const {data:req}=await SB.from('game_requests').select('*').eq('id',requestId).single();
+      if(!req||req.status!=='pending'){
+        clearInterval(interval);
+        return;
+      }
+      
+      const elapsed=Math.floor((Date.now()-new Date(req.created_at).getTime())/1000);
+      const remaining=duration-elapsed;
+      
+      if(remaining<=0){
+        await SB.from('game_requests').update({status:'expired'}).eq('id',requestId);
+        clearInterval(interval);
+        setRequestTimers(t=>{const n={...t};delete n[requestId];return n;});
+        toast('⏰ زمان درخواست تمام شد','warning');
+      }else{
+        setRequestTimers(t=>({...t,[requestId]:remaining}));
+      }
+    },1000);
+  };
+
+  const blockUser=(userId,duration)=>{
+    setBlockedUsers(b=>({...b,[userId]:Date.now()+duration*1000}));
+    setTimeout(()=>{
+      setBlockedUsers(b=>{const n={...b};delete n[userId];return n;});
+    },duration*1000);
+  };
+
   const loadFriends=async()=>{
     const {data}=await SB.from('users').select('id,full_name,username').eq('role','student').neq('id',user.id);
     if(data)setFriendsList(data);
   };
   const loadPendingRequests=async()=>{
     const {data}=await SB.from('game_requests').select('*,from_user_data:users!game_requests_from_user_fkey(full_name,username)').eq('to_user',user.id).eq('status','pending');
-    if(data)setPendingRequests(data);
+    if(data){
+      setPendingRequests(data);
+      data.forEach(req=>{
+        const elapsed=Math.floor((Date.now()-new Date(req.created_at).getTime())/1000);
+        const remaining=Math.max(0,60-elapsed);
+        if(remaining>0)setRequestTimers(t=>({...t,[req.id]:remaining}));
+      });
+    }
   };
   const loadMyRequests=async()=>{
     const {data}=await SB.from('game_requests').select('*,to_user_data:users!game_requests_to_user_fkey(full_name,username)').eq('from_user',user.id).eq('status','pending');
@@ -527,15 +618,19 @@ function XOGameHub({user}){
   };
 
   const sendRequest=async(toUserId)=>{
-    // بررسی درخواست قبلی
-    const {data:existingReq}=await SB.from('game_requests').select('id').eq('from_user',user.id).eq('to_user',toUserId).eq('status','pending').maybeSingle();
-    if(existingReq){toast('️ قبلاً درخواست فرستادی','warning');return;}
+    // بررسی بلاک بودن
+    if(blockedUsers[toUserId]&&blockedUsers[toUserId]>Date.now()){
+      const remaining=Math.ceil((blockedUsers[toUserId]-Date.now())/1000);
+      toast(`⏳ این کاربر تا ${remaining} ثانیه دیگر نمی‌تواند درخواست بفرستد`,'warning');
+      return;
+    }
     
-    // ساخت اتاق
+    const {data:existingReq}=await SB.from('game_requests').select('id').eq('from_user',user.id).eq('to_user',toUserId).eq('status','pending').maybeSingle();
+    if(existingReq){toast('⚠️ قبلاً درخواست فرستادی','warning');return;}
+    
     const {data:room,error:rErr}=await SB.from('xo_rooms').insert({player_x:user.id,player_o:null,board:'---------',current_turn:'X',status:'waiting',score_x:0,score_o:0}).select().single();
     if(rErr){toast('خطا در ساخت اتاق: '+rErr.message,'error');return;}
     
-    // ارسال درخواست
     const {error:reqErr}=await SB.from('game_requests').insert({from_user:user.id,to_user:toUserId,room_id:room.id,status:'pending'});
     if(reqErr){
       await SB.from('xo_rooms').delete().eq('id',room.id);
@@ -551,6 +646,7 @@ function XOGameHub({user}){
     setFriendsGame(request.room_id);
     setMode('playing-online');
     setShowNotification(null);
+    setRequestTimers(t=>{const n={...t};delete n[request.id];return n;});
     toast(' بازی شروع شد!','success');
   };
 
@@ -559,6 +655,9 @@ function XOGameHub({user}){
     await SB.from('xo_rooms').delete().eq('id',request.room_id);
     loadPendingRequests();
     setShowNotification(null);
+    setRequestTimers(t=>{const n={...t};delete n[request.id];return n;});
+    // بلاک کردن فرستنده به مدت  دقیقه
+    blockUser(request.from_user,120);
     toast('درخواست رد شد','warning');
   };
 
@@ -566,6 +665,7 @@ function XOGameHub({user}){
     await SB.from('game_requests').update({status:'rejected'}).eq('id',request.id);
     await SB.from('xo_rooms').delete().eq('id',request.room_id);
     loadMyRequests();
+    toast('درخواست لغو شد','warning');
   };
 
   const endOnlineGame=async()=>{
@@ -588,19 +688,21 @@ function XOGameHub({user}){
 
       {pendingRequests.length>0&&(
         <div className="glass p-4 mb-4">
-          <h4 className="font-bold text-sm mb-3 text-pink-400">🔔 درخواست‌های دریافتی</h4>
+          <h4 className="font-bold text-sm mb-3 text-pink-400"> درخواست‌های دریافتی</h4>
           {pendingRequests.map(r=>(
-            <div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-bold">{r.from_user_data?.full_name?.[0]}</div>
-                <div>
-                  <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
-                  <p className="text-[11px] text-white/40">دعوتت کرده به بازی </p>
+            <div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-bold">{r.from_user_data?.full_name?.[0]}</div>
+                  <div>
+                    <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
+                    <p className="text-[11px] text-white/40">دعوتت کرده به بازی 🎮</p>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <button onClick={()=>acceptRequest(r)} className="btn-sm btn-glass btn-glass-success">✓ قبول</button>
-                <button onClick={()=>rejectRequest(r)} className="btn-sm btn-glass btn-glass-danger">✗ رد</button>
+                <button onClick={()=>acceptRequest(r)} className="btn-glass btn-glass-success btn-sm flex-1">✓ قبول</button>
+                <button onClick={()=>rejectRequest(r)} className="btn-glass btn-glass-danger btn-sm flex-1">✗ رد</button>
               </div>
             </div>
           ))}
@@ -616,7 +718,7 @@ function XOGameHub({user}){
                 <p className="font-bold text-sm">{r.to_user_data?.full_name}</p>
                 <p className="text-[11px] text-white/40">در انتظار پاسخ...</p>
               </div>
-              <button onClick={()=>cancelRequest(r)} className="btn-sm btn-glass btn-glass-danger">لغو</button>
+              <button onClick={()=>cancelRequest(r)} className="btn-glass btn-glass-danger btn-sm">لغو</button>
             </div>
           ))}
         </div>
@@ -625,25 +727,31 @@ function XOGameHub({user}){
       <div className="glass p-4">
         <h4 className="font-bold text-sm mb-3 text-indigo-400">👥 ارسال درخواست</h4>
         {friendsList.length===0?<p className="text-center text-white/30 py-4">دانش‌آموز دیگری نیست</p>:
-        friendsList.map(f=>(
-          <div key={f.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold">{f.full_name[0]}</div>
-              <div>
-                <p className="font-bold text-sm">{f.full_name}</p>
-                <p className="text-[11px] text-white/40">@{f.username}</p>
+        friendsList.map(f=>{
+          const isBlocked=blockedUsers[f.id]&&blockedUsers[f.id]>Date.now();
+          const blockTime=isBlocked?Math.ceil((blockedUsers[f.id]-Date.now())/1000):0;
+          return(
+            <div key={f.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold">{f.full_name[0]}</div>
+                <div>
+                  <p className="font-bold text-sm">{f.full_name}</p>
+                  <p className="text-[11px] text-white/40">@{f.username}</p>
+                </div>
               </div>
+              <button onClick={()=>sendRequest(f.id)} disabled={isBlocked} className={`btn-sm ${isBlocked?'bg-gray-500/20 cursor-not-allowed':'btn-glass'}`}>
+                {isBlocked?`⏳ ${blockTime}s`:''}
+              </button>
             </div>
-            <button onClick={()=>sendRequest(f.id)} className="btn-sm btn-glass">🎮 دعوت</button>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
 
   return(
     <div className="slide-up">
-      <h3 className="font-black text-2xl gradient-text text-center mb-6"> بازی دوز</h3>
+      <h3 className="font-black text-2xl gradient-text text-center mb-6">🎮 بازی دوز</h3>
       <p className="text-center text-white/50 text-sm mb-6">یک حالت بازی انتخاب کن</p>
       <div className="space-y-3">
         <button onClick={()=>setMode('bot')} className="btn-glass flex items-center justify-center gap-4 py-5">
@@ -662,16 +770,33 @@ function XOGameHub({user}){
         </button>
       </div>
       
-      {/* اعلان درخواست بازی */}
+      {/* اعلان درخواست با شمارش معکوس */}
       {showNotification&&(
         <div className="game-request-notification">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl">🎮</div>
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl"></div>
             <div className="flex-1">
               <p className="font-bold text-sm">درخواست بازی جدید!</p>
               <p className="text-[11px] text-white/50">یه دوست می‌خواد باهات بازی کنه</p>
             </div>
           </div>
+          
+          <div className="countdown-ring">
+            <svg width="80" height="80">
+              <defs>
+                <linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#10b981"/>
+                  <stop offset="100%" stopColor="#ef4444"/>
+                </linearGradient>
+              </defs>
+              <circle className="bg" cx="40" cy="40" r="36"/>
+              <circle className="progress" cx="40" cy="40" r="36" stroke="url(#countdownGradient)" strokeDasharray={226} strokeDashoffset={226-(requestTimers[showNotification.id]||0)/60*226}/>
+            </svg>
+            <div className="countdown-text">{requestTimers[showNotification.id]||0}</div>
+          </div>
+          
+          <p className="text-center text-xs text-white/40 mb-3">ثانیه فرصت داری</p>
+          
           <div className="flex gap-2">
             <button onClick={()=>{
               const req=pendingRequests.find(r=>r.id===showNotification.id);
@@ -690,7 +815,7 @@ function XOGameHub({user}){
 
 // ===== XO Bot Game =====
 function XOBotGame({user,onBack}){
-  const [board,setBoard]=useState('---------');
+  const [board,setBoard]=useState(['','','','','','','','','']);
   const [playerMark,setPlayerMark]=useState('X');
   const [currentTurn,setCurrentTurn]=useState('X');
   const [winner,setWinner]=useState(null);
@@ -698,18 +823,19 @@ function XOBotGame({user,onBack}){
   const [scores,setScores]=useState({player:0,bot:0,draw:0});
   const [botThinking,setBotThinking]=useState(false);
   const [gameCount,setGameCount]=useState(0);
+  const [boardShake,setBoardShake]=useState(false);
   const toast=useToast();
 
   const botMark=playerMark==='X'?'O':'X';
 
-  // فقط یک حرکت ربات در هر نوبت
   useEffect(()=>{
     if(currentTurn===botMark&&!winner&&!botThinking){
       setBotThinking(true);
       const timer=setTimeout(()=>{
         const move=getSmartBotMove(board,botMark);
-        if(move!==undefined&&move!==null&&board[move]==='-'){
-          const newBoard=board.substring(0,move)+botMark+board.substring(move+1);
+        if(move!==undefined&&move!==null&&(board[move]===''||board[move]==='-')){
+          const newBoard=[...board];
+          newBoard[move]=botMark;
           setBoard(newBoard);
           setBotThinking(false);
           const result=checkXOWinner(newBoard);
@@ -730,9 +856,13 @@ function XOBotGame({user,onBack}){
   },[currentTurn,board,winner,botThinking,gameCount]);
 
   const handleCellClick=(i)=>{
-    if(board[i]!=='-'||winner||currentTurn!==playerMark||botThinking)return;
-    const newBoard=board.substring(0,i)+playerMark+board.substring(i+1);
+    if((board[i]!==''&&board[i]!=='-')||winner||currentTurn!==playerMark||botThinking)return;
+    const newBoard=[...board];
+    newBoard[i]=playerMark;
     setBoard(newBoard);
+    setBoardShake(true);
+    setTimeout(()=>setBoardShake(false),400);
+    
     const result=checkXOWinner(newBoard);
     if(result){
       setWinner(result.winner);
@@ -745,7 +875,7 @@ function XOBotGame({user,onBack}){
   };
 
   const resetGame=()=>{
-    setBoard('---------');
+    setBoard(['','','','','','','','','']);
     setWinner(null);
     setWinLine(null);
     setGameCount(c=>c+1);
@@ -756,7 +886,7 @@ function XOBotGame({user,onBack}){
   const changeSide=()=>{
     setPlayerMark(playerMark==='X'?'O':'X');
     setScores({player:0,bot:0,draw:0});
-    setBoard('---------');
+    setBoard(['','','','','','','','','']);
     setWinner(null);
     setWinLine(null);
     setCurrentTurn('X');
@@ -767,11 +897,11 @@ function XOBotGame({user,onBack}){
     if(winner){
       if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
       if(winner===playerMark)return{emoji:'',text:'آفرین! تو بردی!',color:'text-emerald-400'};
-      return{emoji:'🤖',text:'ربات این بار برد!',color:'text-pink-400'};
+      return{emoji:'',text:'ربات این بار برد!',color:'text-pink-400'};
     }
-    if(botThinking)return{emoji:'🤔',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
-    if(currentTurn===playerMark)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
-    return{emoji:'⏳',text:'نوبت ربات',color:'text-white/50'};
+    if(botThinking)return{emoji:'',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
+    if(currentTurn===playerMark)return{emoji:'',text:'نوبت توئه!',color:'text-indigo-400'};
+    return{emoji:'',text:'نوبت ربات',color:'text-white/50'};
   };
   const status=getStatusText();
 
@@ -784,31 +914,31 @@ function XOBotGame({user,onBack}){
       </div>
 
       <div className="grid grid-cols-3 gap-2 mb-4">
-        <div className={`score-card ${!winner&&currentTurn===playerMark?'active':''}`}>
+        <div className={`score-card-pro ${!winner&&currentTurn===playerMark?'active':''}`}>
           <p className="text-[11px] text-white/40 mb-1">شما ({playerMark})</p>
           <p className="score-value">{scores.player}</p>
         </div>
-        <div className="score-card">
+        <div className="score-card-pro">
           <p className="text-[11px] text-white/40 mb-1">مساوی</p>
           <p className="score-value">{scores.draw}</p>
         </div>
-        <div className={`score-card ${!winner&&currentTurn===botMark?'active':''}`}>
+        <div className={`score-card-pro ${!winner&&currentTurn===botMark?'active':''}`}>
           <p className="text-[11px] text-white/40 mb-1">ربات ({botMark})</p>
           <p className="score-value">{scores.bot}</p>
         </div>
       </div>
 
-      <div className={`xo-status ${!winner&&currentTurn===playerMark?'my-turn':!winner?'waiting':''}`}>
+      <div className={`xo-status-pro ${!winner&&currentTurn===playerMark?'my-turn':!winner?'waiting':''}`}>
         <p className={`font-bold text-lg ${status.color}`}>
           <span className="text-2xl ml-2">{status.emoji}</span>
           {status.text}
         </p>
       </div>
 
-      <div className="xo-board-container">
-        <div className="grid grid-cols-3 gap-2 max-w-[320px] mx-auto">
-          {board.split('').map((cell,i)=>(
-            <XOCell key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||currentTurn!==playerMark||botThinking}/>
+      <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
+        <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
+          {board.map((cell,i)=>(
+            <XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||currentTurn!==playerMark||botThinking} cellIndex={i}/>
           ))}
         </div>
         {winner&&(
@@ -830,6 +960,7 @@ function XOOnlineGame({user,roomId,onEnd}){
   const [opponentName,setOpponentName]=useState('');
   const [winner,setWinner]=useState(null);
   const [winLine,setWinLine]=useState(null);
+  const [boardShake,setBoardShake]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{
@@ -839,7 +970,7 @@ function XOOnlineGame({user,roomId,onEnd}){
         setRoom(payload.new);
         if(payload.new.winner&&!winner){
           setWinner(payload.new.winner);
-          const result=checkXOWinner(payload.new.board);
+          const result=checkXOWinner(payload.new.board.split(''));
           if(result)setWinLine(result.line);
         }
       })
@@ -855,24 +986,26 @@ function XOOnlineGame({user,roomId,onEnd}){
       else{setMyMark('O');setOpponentName(data.player_x_data?.full_name||'در انتظار...');}
       if(data.winner){
         setWinner(data.winner);
-        const result=checkXOWinner(data.board);
+        const result=checkXOWinner(data.board.split(''));
         if(result)setWinLine(result.line);
       }
     }
   };
 
   const handleCellClick=async(i)=>{
-    if(!room||room.board[i]!=='-'||room.current_turn!==myMark||winner)return;
+    if(!room||(room.board[i]!==''&&room.board[i]!=='-')||room.current_turn!==myMark||winner)return;
     const newBoard=room.board.substring(0,i)+myMark+room.board.substring(i+1);
     const nextTurn=myMark==='X'?'O':'X';
     const updates={board:newBoard,current_turn:nextTurn,updated_at:new Date().toISOString()};
-    const result=checkXOWinner(newBoard);
+    const result=checkXOWinner(newBoard.split(''));
     if(result){
       updates.winner=result.winner;
       updates.status='finished';
       if(result.winner==='X')updates.score_x=(room.score_x||0)+1;
       else if(result.winner==='O')updates.score_o=(room.score_o||0)+1;
     }
+    setBoardShake(true);
+    setTimeout(()=>setBoardShake(false),400);
     await SB.from('xo_rooms').update(updates).eq('id',roomId);
   };
 
@@ -904,9 +1037,9 @@ function XOOnlineGame({user,roomId,onEnd}){
     if(winner){
       if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
       if(winner===myMark)return{emoji:'',text:'تبریک! تو بردی!',color:'text-emerald-400'};
-      return{emoji:'😔',text:'حریف این دور رو برد',color:'text-pink-400'};
+      return{emoji:'',text:'حریف این دور رو برد',color:'text-pink-400'};
     }
-    if(isMyTurn)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
+    if(isMyTurn)return{emoji:'',text:'نوبت توئه!',color:'text-indigo-400'};
     return{emoji:'',text:'نوبت حریف...',color:'text-white/50'};
   };
   const status=getStatusText();
@@ -915,20 +1048,20 @@ function XOOnlineGame({user,roomId,onEnd}){
     <div className="slide-up">
       <div className="flex justify-between items-center mb-4">
         <button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">🏁 پایان</button>
-        <h3 className="font-bold gradient-text">🎮 بازی آنلاین</h3>
+        <h3 className="font-bold gradient-text"> بازی آنلاین</h3>
         <div className="w-16"></div>
       </div>
 
       <div className="grid grid-cols-3 gap-2 mb-4">
-        <div className={`score-card ${!winner&&isMyTurn?'active':''}`}>
+        <div className={`score-card-pro ${!winner&&isMyTurn?'active':''}`}>
           <p className="text-[11px] text-white/40 mb-1">شما ({myMark})</p>
           <p className="score-value">{myMark==='X'?room.score_x:room.score_o}</p>
         </div>
-        <div className="score-card">
+        <div className="score-card-pro">
           <p className="text-[11px] text-white/40 mb-1">دور</p>
           <p className="score-value">{(room.score_x||0)+(room.score_o||0)+1}</p>
         </div>
-        <div className={`score-card ${!winner&&!isMyTurn?'active':''}`}>
+        <div className={`score-card-pro ${!winner&&!isMyTurn?'active':''}`}>
           <p className="text-[11px] text-white/40 mb-1">حریف ({opponentMark})</p>
           <p className="score-value">{myMark==='X'?room.score_o:room.score_x}</p>
         </div>
@@ -938,17 +1071,17 @@ function XOOnlineGame({user,roomId,onEnd}){
         <p className="text-xs text-white/40 mb-1">حریف: <span className="font-bold text-white">{opponentName}</span></p>
       </div>
 
-      <div className={`xo-status ${!winner&&isMyTurn?'my-turn':!winner?'waiting':''}`}>
+      <div className={`xo-status-pro ${!winner&&isMyTurn?'my-turn':!winner?'waiting':''}`}>
         <p className={`font-bold text-lg ${status.color}`}>
           <span className="text-2xl ml-2">{status.emoji}</span>
           {status.text}
         </p>
       </div>
 
-      <div className="xo-board-container">
-        <div className="grid grid-cols-3 gap-2 max-w-[320px] mx-auto">
+      <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
+        <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
           {room.board.split('').map((cell,i)=>(
-            <XOCell key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||!isMyTurn}/>
+            <XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||!isMyTurn} cellIndex={i}/>
           ))}
         </div>
         {winner&&(
@@ -1229,7 +1362,7 @@ function ChatModal({user,onClose}){
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
         <div className="flex-1 overflow-y-auto mb-3 space-y-2">
-          {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید </p>}
+          {messages.length===0&&<p className="text-center text-white/30 mt-10">هنوز پیامی نداده‌اید 💬</p>}
           {messages.map(m=>{
             const isMe=m.sender_id===user.id;
             const reactions=m.reactions||{};
@@ -1250,7 +1383,7 @@ function ChatModal({user,onClose}){
                         {isMe&&(
                           <>
                             <button onClick={()=>startEdit(m)} className="chat-action-btn">✏️ ویرایش</button>
-                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">🗑️ حذف</button>
+                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">️ حذف</button>
                           </>
                         )}
                         {!isMe&&(
@@ -1560,7 +1693,7 @@ function Admin({user,tab,setTab,onLogout}){
               <div className="space-y-4 fade-in">
                 <div>
                   <label className="text-xs text-white/50 mb-2 block font-semibold">عنوان آزمون *</label>
-                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل " value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
+                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل ۱" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
                 </div>
                 <div>
                   <label className="text-xs text-white/50 mb-2 block font-semibold">توضیحات</label>
@@ -1673,7 +1806,7 @@ function Student({user,tab,setTab,onLogout}){
   const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId));
 
   const startExam=(exam)=>{
-    if(hasTakenExam(exam.id)){toast('⚠️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
+    if(hasTakenExam(exam.id)){toast('️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
     setActiveExam(exam);setCurrentQ(0);setStudentAnswers({});setTimeLeft(exam.duration_minutes*60);setTotalTime(exam.duration_minutes*60);
   };
 
@@ -1888,7 +2021,7 @@ function Student({user,tab,setTab,onLogout}){
                     <div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{ex.title}</h4><p className="text-[11px] text-white/30 mt-1">{ex.questions?.length||0} سوال</p></div>
                     <div className="text-left shrink-0 mr-3"><p className="text-2xl font-black gradient-text">{score.percentage}/20</p><p className="text-[11px] text-white/40">{score.totalScore}/{score.maxScore}</p></div>
                   </div>
-                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2"> اعتراض در حال بررسی</div>}
+                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
                   {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض</button>)}
                 </div>
               );
