@@ -31,6 +31,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-glass:disabled{opacity:0.5;cursor:not-allowed}
 .btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,0.3),rgba(5,150,105,0.3));border-color:rgba(52,211,153,0.4)}
 .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,0.3),rgba(220,38,38,0.3));border-color:rgba(248,113,113,0.4)}
+.btn-glass-warning{background:linear-gradient(135deg,rgba(245,158,11,0.3),rgba(217,119,6,0.3));border-color:rgba(251,191,36,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
 
 .tool-btn{background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
@@ -74,12 +75,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
 .gradient-text{background:linear-gradient(135deg,#818cf8,#c084fc,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-.timer-circle{position:relative;width:100px;height:100px}
-.timer-circle svg{transform:rotate(-90deg)}
-.timer-circle circle{fill:none;stroke-width:8}
-.timer-circle .bg{stroke:rgba(255,255,255,0.08)}
-.timer-circle .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 8px currentColor)}
-.timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+/* Timer Circle with Glow */
+.timer-circle-glow{position:relative;width:90px;height:90px}
+.timer-circle-glow svg{transform:rotate(-90deg);filter:drop-shadow(0 0 12px rgba(129,140,248,0.6))}
+.timer-circle-glow circle{fill:none;stroke-width:7}
+.timer-circle-glow .bg{stroke:rgba(255,255,255,0.08)}
+.timer-circle-glow .progress{stroke-linecap:round;transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 8px currentColor)}
+.timer-text-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 
 .game-canvas{border-radius:20px;border:2px solid rgba(129,140,248,0.2);width:100%;max-width:380px;margin:0 auto;display:block;touch-action:none;background:linear-gradient(180deg,rgba(15,15,35,0.95),rgba(10,10,26,0.98));box-shadow:0 8px 40px rgba(99,102,241,0.2)}
 
@@ -116,16 +118,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .emoji-btn{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all 0.2s;border:none}
 .emoji-btn:hover{background:rgba(129,140,248,0.2);transform:scale(1.15)}
 
+/* Star Rating - Enhanced */
+.star-rating-container{display:flex;gap:3px;justify-content:center;margin:8px 0}
+.star-item{width:32px;height:32px;transition:all 0.3s;filter:grayscale(100%) brightness(0.3)}
+.star-item.active{filter:grayscale(0%) brightness(1);animation:starPulse 2s infinite}
+.star-item.active svg{filter:drop-shadow(0 0 8px rgba(251,191,36,0.8))}
+@keyframes starPulse{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.1) rotate(-5deg)}75%{transform:scale(1.1) rotate(5deg)}}
+
+/* Chart Container - Enhanced */
+.chart-container-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:2px solid rgba(129,140,248,0.2);border-radius:24px;padding:24px;margin-top:16px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.chart-container-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6,#818cf8);background-size:200% 100%;animation:chartGlow 3s linear infinite}
+@keyframes chartGlow{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+
+/* Exam Card Enhanced */
+.exam-card-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
+.exam-card-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6);opacity:0;transition:opacity 0.3s}
+.exam-card-enhanced:hover::before{opacity:1}
+.exam-card-enhanced:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(129,140,248,0.2);border-color:rgba(129,140,248,0.3)}
+
+/* Timer Glow Animation */
+@keyframes timerGlow{0%,100%{filter:drop-shadow(0 0 10px rgba(129,140,248,0.5))}50%{filter:drop-shadow(0 0 20px rgba(129,140,248,0.8))}}
+
+/* XO Game Styles */
 .xo-game-container{background:linear-gradient(135deg,rgba(15,15,35,0.95),rgba(25,25,55,0.95));border:2px solid rgba(129,140,248,0.2);border-radius:32px;padding:24px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1)}
 .xo-game-container::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(129,140,248,0.1) 0%,transparent 70%);animation:pulse 4s ease-in-out infinite;pointer-events:none}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.1);opacity:0.8}}
 
 .xo-board-shake{animation:shakeBoard 0.4s cubic-bezier(0.36,0.07,0.19,0.97)}
-@keyframes shakeBoard{
-  0%,100%{transform:translateX(0)}
-  10%,30%,50%,70%,90%{transform:translateX(-2px)}
-  20%,40%,60%,80%{transform:translateX(2px)}
-}
+@keyframes shakeBoard{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-2px)}20%,40%,60%,80%{transform:translateX(2px)}}
 
 .xo-cell-pro{aspect-ratio:1;background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:2px solid rgba(255,255,255,0.1);border-radius:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
 .xo-cell-pro::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(129,140,248,0.15),transparent 70%);opacity:0;transition:opacity 0.3s}
@@ -136,12 +156,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes winGlow{0%,100%{box-shadow:0 0 20px rgba(52,211,153,0.4)}50%{box-shadow:0 0 40px rgba(52,211,153,0.7)}}
 
 .xo-symbol-drop{animation:symbolDrop 0.5s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes symbolDrop{
-  0%{transform:translateY(-100px) scale(0) rotate(-180deg);opacity:0}
-  50%{transform:translateY(10px) scale(1.2) rotate(10deg);opacity:1}
-  70%{transform:translateY(-5px) scale(0.9) rotate(-5deg)}
-  100%{transform:translateY(0) scale(1) rotate(0deg)}
-}
+@keyframes symbolDrop{0%{transform:translateY(-100px) scale(0) rotate(-180deg);opacity:0}50%{transform:translateY(10px) scale(1.2) rotate(10deg);opacity:1}70%{transform:translateY(-5px) scale(0.9) rotate(-5deg)}100%{transform:translateY(0) scale(1) rotate(0deg)}}
 
 .xo-svg-pro{width:75%;height:75%;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
 .x-line-pro{stroke-width:10;stroke-linecap:round;fill:none;stroke-dasharray:120;stroke-dashoffset:120;animation:drawXLine 0.5s ease-out forwards}
@@ -219,35 +234,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .send-request-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
 .send-request-btn.cooldown{background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(245,158,11,0.2));border-color:rgba(251,191,36,0.4)}
 
-/* Star Rating Styles */
-.star-rating-container{display:flex;gap:4px;justify-content:center;margin:8px 0}
-.star-item{width:28px;height:28px;transition:all 0.3s;filter:grayscale(100%) brightness(0.3)}
-.star-item.active{filter:grayscale(0%) brightness(1);animation:starPulse 1.5s infinite}
-.star-item.active path{fill:#fbbf24;stroke:#f59e0b;stroke-width:2}
-.star-item path{fill:rgba(251,191,36,0.2);stroke:rgba(251,191,36,0.4);stroke-width:2;transition:all 0.3s}
-@keyframes starPulse{0%,100%{transform:scale(1);filter:grayscale(0%) brightness(1) drop-shadow(0 0 5px rgba(251,191,36,0.5))}50%{transform:scale(1.15);filter:grayscale(0%) brightness(1.2) drop-shadow(0 0 15px rgba(251,191,36,0.8))}}
+/* Robot Animation */
+.robot-container{position:relative;width:100%;height:120px;margin-bottom:10px;display:flex;align-items:center;justify-content:center}
+.robot-body{position:relative;animation:robotFloat 3s ease-in-out infinite}
+@keyframes robotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.robot-head{width:50px;height:45px;background:linear-gradient(135deg,#818cf8,#c084fc);border-radius:12px;position:relative;margin:0 auto;box-shadow:0 4px 15px rgba(129,140,248,0.5)}
+.robot-eye{width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:15px;animation:robotBlink 3s infinite}
+.robot-eye.left{left:10px}
+.robot-eye.right{right:10px}
+@keyframes robotBlink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(0.1)}}
+.robot-antenna{width:4px;height:15px;background:linear-gradient(to top,#818cf8,#f472b6);position:absolute;top:-15px;left:50%;transform:translateX(-50%);border-radius:2px}
+.robot-antenna::after{content:'';width:10px;height:10px;background:#f472b6;border-radius:50%;position:absolute;top:-8px;left:-3px;animation:antennaPulse 1.5s infinite}
+@keyframes antennaPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,114,182,0.7)}50%{box-shadow:0 0 0 8px rgba(244,114,182,0)}}
+.robot-mouth{width:20px;height:6px;background:#1e1b4b;border-radius:3px;position:absolute;bottom:10px;left:15px}
+.thinking-marks{position:absolute;top:-30px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.thinking-mark{font-size:24px;font-weight:900;color:#fbbf24;animation:thinkingFloat 1.5s ease-in-out infinite}
+.thinking-mark:nth-child(2){animation-delay:0.3s;font-size:20px}
+.thinking-mark:nth-child(3){animation-delay:0.6s;font-size:16px}
+@keyframes thinkingFloat{0%,100%{transform:translateY(0) rotate(0deg);opacity:0.5}50%{transform:translateY(-10px) rotate(15deg);opacity:1}}
+.robot-arm{position:absolute;width:8px;height:40px;background:linear-gradient(to bottom,#818cf8,#c084fc);border-radius:4px;transform-origin:top center;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+.robot-arm.left{left:-15px;top:20px;transform:rotate(-20deg)}
+.robot-arm.right{right:-15px;top:20px;transform:rotate(20deg)}
+.robot-arm.pointing{transform:rotate(180deg) translateY(60px) !important}
+.robot-arm.pointing::after{content:'👆';position:absolute;bottom:-20px;left:-10px;font-size:20px}
 
-/* Chart Container */
-.chart-container{background:rgba(255,255,255,0.03);border:1px solid rgba(129,140,248,0.2);border-radius:20px;padding:20px;margin-top:16px;position:relative;overflow:hidden}
-.chart-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.5),transparent);animation:chartScan 3s linear infinite}
-@keyframes chartScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+/* Exam List in Report Card */
+.exam-list-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
+.exam-list-item:hover{background:rgba(255,255,255,0.06);border-color:rgba(129,140,248,0.3);transform:translateX(-3px)}
+.exam-list-score{font-size:24px;font-weight:900;background:linear-gradient(135deg,#818cf8,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* Exam Card Enhanced */
-.exam-card-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
-.exam-card-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6);opacity:0;transition:opacity 0.3s}
-.exam-card-enhanced:hover::before{opacity:1}
-.exam-card-enhanced:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(129,140,248,0.2);border-color:rgba(129,140,248,0.3)}
-
-/* Timer Circle Glow */
-.timer-circle-glow{position:relative;width:80px;height:80px}
-.timer-circle-glow svg{transform:rotate(-90deg);filter:drop-shadow(0 0 10px rgba(129,140,248,0.5))}
-.timer-circle-glow circle{fill:none;stroke-width:6;stroke-linecap:round}
-.timer-circle-glow .bg{stroke:rgba(255,255,255,0.05)}
-.timer-circle-glow .progress{stroke:url(#timerGradient);transition:stroke-dashoffset 1s linear;filter:drop-shadow(0 0 8px currentColor)}
-.timer-text-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-
-/* Icon Enhanced */
-.icon-enhanced{width:24px;height:24px;filter:drop-shadow(0 0 8px currentColor)}
+/* Admin Results Panel */
+.student-result-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
+.student-result-row:hover{background:rgba(255,255,255,0.06);border-color:rgba(129,140,248,0.3)}
 </style>
 </head>
 <body>
@@ -256,8 +274,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 
-const TADBIR_EMOJIS=['🎓','','✨','🌟','','🏆','🎯','','💪','👏','','💎','🌈','⭐','','📖','✏️',''];
-const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','','💯'];
+const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
+const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
 
 const ToastContext=createContext();
 function ToastProvider({children}){
@@ -297,10 +315,7 @@ function gregorianToJalali(gy,gm,gd){
   days%=12053;
   jy+=4*~~(days/1461);
   days%=1461;
-  if(days>365){
-    jy+=~~((days-1)/365);
-    days=(days-1)%365;
-  }
+  if(days>365){jy+=~~((days-1)/365);days=(days-1)%365;}
   var jm=(days<186)?1+~~(days/31):7+~~((days-186)/30);
   var jd=1+((days<186)?(days%31):((days-186)%30));
   return[jy,jm,jd];
@@ -347,7 +362,7 @@ const Icons={
   eye:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
 };
 
-// Star Rating Component
+// Star Rating Component - Enhanced
 function StarRating({score}){
   const getStars=()=>{
     if(score>=20)return 5;
@@ -357,15 +372,15 @@ function StarRating({score}){
     if(score>=10)return 1;
     return 0;
   };
-  
   const starCount=getStars();
-  
   return(
     <div className="star-rating-container">
       {[1,2,3,4,5].map(i=>(
-        <svg key={i} className={`star-item ${i<=starCount?'active':''}`} viewBox="0 0 24 24">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-        </svg>
+        <div key={i} className={`star-item ${i<=starCount?'active':''}`} style={{animationDelay:`${i*0.1}s`}}>
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
       ))}
     </div>
   );
@@ -377,7 +392,6 @@ function PersianCalendar(){
   const [viewMonth,setViewMonth]=useState(jToday[1]);
   const [viewYear,setViewYear]=useState(jToday[0]);
   const [currentDate,setCurrentDate]=useState(jToday);
-  
   useEffect(()=>{
     const interval=setInterval(()=>{
       const now=new Date();
@@ -386,7 +400,6 @@ function PersianCalendar(){
     },60000);
     return()=>clearInterval(interval);
   },[]);
-  
   const daysInMonth=getJalaliDaysInMonth(viewYear,viewMonth);
   const firstDay=getFirstDayOfMonth(viewYear,viewMonth);
   const days=[];
@@ -396,7 +409,6 @@ function PersianCalendar(){
   const nextMonth=()=>{if(viewMonth===12){setViewMonth(1);setViewYear(viewYear+1);}else setViewMonth(viewMonth+1);};
   const goToday=()=>{setViewMonth(currentDate[1]);setViewYear(currentDate[0]);};
   const isToday=(d)=>d===currentDate[2]&&viewMonth===currentDate[1]&&viewYear===currentDate[0];
-  
   return(
     <div className="glass-strong p-5 slide-up">
       <div className="flex justify-between items-center mb-4">
@@ -419,14 +431,17 @@ function PersianCalendar(){
   );
 }
 
-function CircularTimer({timeLeft,totalTime}){
-  const r=42,c=2*Math.PI*r,p=(timeLeft/totalTime)*c;
+function CircularTimerGlow({timeLeft,totalTime}){
+  const r=38,c=2*Math.PI*r,p=(timeLeft/totalTime)*c;
   const m=Math.floor(timeLeft/60),s=timeLeft%60;
   const col=timeLeft<60?'#ef4444':timeLeft<300?'#f59e0b':'#818cf8';
   return(
-    <div className="timer-circle">
-      <svg width="100" height="100"><circle className="bg" cx="50" cy="50" r={r}/><circle className="progress" cx="50" cy="50" r={r} stroke={col} strokeDasharray={c} strokeDashoffset={c-p}/></svg>
-      <div className="timer-text">
+    <div className="timer-circle-glow">
+      <svg width="90" height="90">
+        <circle className="bg" cx="45" cy="45" r={r}/>
+        <circle className="progress" cx="45" cy="45" r={r} stroke={col} strokeDasharray={c} strokeDashoffset={c-p}/>
+      </svg>
+      <div className="timer-text-glow">
         <div className={`text-2xl font-black font-mono ${timeLeft<60?'text-red-400 animate-pulse':timeLeft<300?'text-amber-400':'text-white'}`}>{m}:{s<10?'0':''}{s}</div>
         <div className="text-[10px] text-white/40 mt-0.5">زمان باقی‌مانده</div>
       </div>
@@ -638,12 +653,7 @@ function XOGameHub({user}){
         loadPendingRequests();
         const newReq=payload.new;
         startRequestCountdown(newReq.id,60);
-        setShowNotification({
-          id:newReq.id,
-          fromUserId:newReq.from_user,
-          roomId:newReq.room_id,
-          createdAt:new Date(newReq.created_at).getTime()
-        });
+        setShowNotification({id:newReq.id,fromUserId:newReq.from_user,roomId:newReq.room_id,createdAt:new Date(newReq.created_at).getTime()});
         toast('🎮 درخواست بازی جدید!','success');
       })
       .on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_requests',filter:`from_user=eq.${user.id}`},(payload)=>{
@@ -667,10 +677,7 @@ function XOGameHub({user}){
   const startRequestCountdown=(requestId,duration)=>{
     const interval=setInterval(async()=>{
       const {data:req}=await SB.from('game_requests').select('*').eq('id',requestId).single();
-      if(!req||req.status!=='pending'){
-        clearInterval(interval);
-        return;
-      }
+      if(!req||req.status!=='pending'){clearInterval(interval);return;}
       const elapsed=Math.floor((Date.now()-new Date(req.created_at).getTime())/1000);
       const remaining=duration-elapsed;
       if(remaining<=0){
@@ -686,9 +693,7 @@ function XOGameHub({user}){
 
   const blockUser=(userId,duration)=>{
     setBlockedUsers(b=>({...b,[userId]:Date.now()+duration*1000}));
-    setTimeout(()=>{
-      setBlockedUsers(b=>{const n={...b};delete n[userId];return n;});
-    },duration*1000);
+    setTimeout(()=>{setBlockedUsers(b=>{const n={...b};delete n[userId];return n;});},duration*1000);
   };
 
   const loadFriends=async()=>{
@@ -725,14 +730,11 @@ function XOGameHub({user}){
       return;
     }
     const {data:existingReq}=await SB.from('game_requests').select('id').eq('from_user',user.id).eq('to_user',toUserId).eq('status','pending').maybeSingle();
-    if(existingReq){toast('️ قبلاً درخواست فرستادی','warning');return;}
+    if(existingReq){toast('⚠️ قبلاً درخواست فرستادی','warning');return;}
     const {data:room,error:rErr}=await SB.from('xo_rooms').insert({player_x:user.id,player_o:null,board:'---------',current_turn:'X',status:'waiting',score_x:0,score_o:0}).select().single();
     if(rErr){toast('خطا در ساخت اتاق: '+rErr.message,'error');return;}
     const {error:reqErr}=await SB.from('game_requests').insert({from_user:user.id,to_user:toUserId,room_id:room.id,status:'pending'});
-    if(reqErr){
-      await SB.from('xo_rooms').delete().eq('id',room.id);
-      toast('خطا: '+reqErr.message,'error');return;
-    }
+    if(reqErr){await SB.from('xo_rooms').delete().eq('id',room.id);toast('خطا: '+reqErr.message,'error');return;}
     setLastRequestTime(t=>({...t,[toUserId]:now}));
     toast('✅ درخواست بازی ارسال شد','success');
     loadMyRequests();
@@ -766,10 +768,7 @@ function XOGameHub({user}){
   };
 
   const endOnlineGame=async()=>{
-    if(friendsGame){
-      await SB.from('xo_rooms').delete().eq('id',friendsGame);
-      setFriendsGame(null);
-    }
+    if(friendsGame){await SB.from('xo_rooms').delete().eq('id',friendsGame);setFriendsGame(null);}
     setMode(null);
   };
 
@@ -780,10 +779,7 @@ function XOGameHub({user}){
     <div className="slide-up">
       <div className="xo-mode-selection mb-4">
         <div className="flex justify-between items-center mb-4">
-          <button onClick={()=>setMode(null)} className="btn-glass btn-sm flex items-center gap-2">
-            <Icon d={Icons.arrowLeft} size={16}/>
-            بازگشت
-          </button>
+          <button onClick={()=>setMode(null)} className="btn-glass btn-sm flex items-center gap-2"><Icon d={Icons.arrowLeft} size={16}/>بازگشت</button>
           <h3 className="font-bold gradient-text text-lg">👥 بازی با دوستان</h3>
           <div className="w-20"></div>
         </div>
@@ -795,10 +791,7 @@ function XOGameHub({user}){
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center font-bold">{r.from_user_data?.full_name?.[0]}</div>
-                    <div>
-                      <p className="font-bold text-sm">{r.from_user_data?.full_name}</p>
-                      <p className="text-[11px] text-white/40">دعوتت کرده به بازی </p>
-                    </div>
+                    <div><p className="font-bold text-sm">{r.from_user_data?.full_name}</p><p className="text-[11px] text-white/40">دعوتت کرده به بازی 🎮</p></div>
                   </div>
                 </div>
                 <div className="flex gap-2">
@@ -814,10 +807,7 @@ function XOGameHub({user}){
             <h4 className="font-bold text-sm mb-3 text-amber-400">⏳ در انتظار پاسخ</h4>
             {myRequests.map(r=>(
               <div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
-                <div>
-                  <p className="font-bold text-sm">{r.to_user_data?.full_name}</p>
-                  <p className="text-[11px] text-white/40">در انتظار پاسخ...</p>
-                </div>
+                <div><p className="font-bold text-sm">{r.to_user_data?.full_name}</p><p className="text-[11px] text-white/40">در انتظار پاسخ...</p></div>
                 <button onClick={()=>cancelRequest(r)} className="btn-glass btn-glass-danger btn-sm">لغو</button>
               </div>
             ))}
@@ -837,14 +827,9 @@ function XOGameHub({user}){
               <div key={f.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold">{f.full_name[0]}</div>
-                  <div>
-                    <p className="font-bold text-sm">{f.full_name}</p>
-                    <p className="text-[11px] text-white/40">@{f.username}</p>
-                  </div>
+                  <div><p className="font-bold text-sm">{f.full_name}</p><p className="text-[11px] text-white/40">@{f.username}</p></div>
                 </div>
-                <button onClick={()=>sendRequest(f.id)} disabled={isOnCooldown} className={`send-request-btn ${isOnCooldown?'cooldown':''}`}>
-                  {isOnCooldown?`⏳ ${cooldown}s`:'📩 ارسال درخواست'}
-                </button>
+                <button onClick={()=>sendRequest(f.id)} disabled={isOnCooldown} className={`send-request-btn ${isOnCooldown?'cooldown':''}`}>{isOnCooldown?`⏳ ${cooldown}s`:'📩 ارسال درخواست'}</button>
               </div>
             );
           })}
@@ -856,22 +841,16 @@ function XOGameHub({user}){
   return(
     <div className="slide-up">
       <div className="xo-mode-selection">
-        <h3 className="xo-mode-title"> بازی دوز</h3>
+        <h3 className="xo-mode-title">🎮 بازی دوز</h3>
         <p className="xo-mode-subtitle">یک حالت بازی انتخاب کن</p>
         <div className="space-y-3 relative z-10">
           <div className="xo-mode-card" onClick={()=>setMode('bot')}>
             <span className="xo-mode-icon">🤖</span>
-            <div className="text-right">
-              <p className="xo-mode-name">بازی با ربات</p>
-              <p className="xo-mode-desc">چالش با هوش مصنوعی تدبیر</p>
-            </div>
+            <div className="text-right"><p className="xo-mode-name">بازی با ربات</p><p className="xo-mode-desc">چالش با هوش مصنوعی تدبیر</p></div>
           </div>
           <div className="xo-mode-card" onClick={()=>setMode('friends')}>
             <span className="xo-mode-icon">👥</span>
-            <div className="text-right">
-              <p className="xo-mode-name">بازی با دوستان</p>
-              <p className="xo-mode-desc">بازی آنلاین و همزمان</p>
-            </div>
+            <div className="text-right"><p className="xo-mode-name">بازی با دوستان</p><p className="xo-mode-desc">بازی آنلاین و همزمان</p></div>
           </div>
         </div>
       </div>
@@ -879,19 +858,11 @@ function XOGameHub({user}){
         <div className="game-request-notification">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl">🎮</div>
-            <div className="flex-1">
-              <p className="font-bold text-sm">درخواست بازی جدید!</p>
-              <p className="text-[11px] text-white/50">یه دوست می‌خواد باهات بازی کنه</p>
-            </div>
+            <div className="flex-1"><p className="font-bold text-sm">درخواست بازی جدید!</p><p className="text-[11px] text-white/50">یه دوست می‌خواد باهات بازی کنه</p></div>
           </div>
           <div className="countdown-ring">
             <svg width="80" height="80">
-              <defs>
-                <linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#10b981"/>
-                  <stop offset="100%" stopColor="#ef4444"/>
-                </linearGradient>
-              </defs>
+              <defs><linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#10b981"/><stop offset="100%" stopColor="#ef4444"/></linearGradient></defs>
               <circle className="bg" cx="40" cy="40" r="36"/>
               <circle className="progress" cx="40" cy="40" r="36" stroke="url(#countdownGradient)" strokeDasharray={226} strokeDashoffset={226-(requestTimers[showNotification.id]||0)/60*226}/>
             </svg>
@@ -899,14 +870,8 @@ function XOGameHub({user}){
           </div>
           <p className="text-center text-xs text-white/40 mb-3">ثانیه فرصت داری</p>
           <div className="flex gap-2">
-            <button onClick={()=>{
-              const req=pendingRequests.find(r=>r.id===showNotification.id);
-              if(req)acceptRequest(req);
-            }} className="btn-glass btn-glass-success btn-sm flex-1">✓ قبول</button>
-            <button onClick={()=>{
-              const req=pendingRequests.find(r=>r.id===showNotification.id);
-              if(req)rejectRequest(req);
-            }} className="btn-glass btn-glass-danger btn-sm flex-1">✗ رد</button>
+            <button onClick={()=>{const req=pendingRequests.find(r=>r.id===showNotification.id);if(req)acceptRequest(req);}} className="btn-glass btn-glass-success btn-sm flex-1">✓ قبول</button>
+            <button onClick={()=>{const req=pendingRequests.find(r=>r.id===showNotification.id);if(req)rejectRequest(req);}} className="btn-glass btn-glass-danger btn-sm flex-1">✗ رد</button>
           </div>
         </div>
       )}
@@ -932,9 +897,7 @@ function XOBotGame({user,onBack}){
     if(currentTurn===botMark&&!winner&&!botThinking){
       setBotThinking(true);
       const move=getSmartBotMove(board,botMark);
-      if(move!==undefined&&move!==null&&(board[move]===''||board[move]==='-')){
-        setBotTargetCell(move);
-      }
+      if(move!==undefined&&move!==null&&(board[move]===''||board[move]==='-')){setBotTargetCell(move);}
     }
   },[currentTurn,board,winner,botThinking]);
 
@@ -952,9 +915,7 @@ function XOBotGame({user,onBack}){
       setWinLine(result.line);
       if(result.winner==='draw'){setScores(s=>({...s,draw:s.draw+1}));}
       else if(result.winner===botMark){setScores(s=>({...s,bot:s.bot+1}));}
-    }else{
-      setCurrentTurn(playerMark);
-    }
+    }else{setCurrentTurn(playerMark);}
   };
 
   const handleCellClick=(i)=>{
@@ -970,9 +931,7 @@ function XOBotGame({user,onBack}){
       setWinLine(result.line);
       if(result.winner==='draw'){setScores(s=>({...s,draw:s.draw+1}));}
       else if(result.winner===playerMark){setScores(s=>({...s,player:s.player+1}));}
-    }else{
-      setCurrentTurn(botMark);
-    }
+    }else{setCurrentTurn(botMark);}
   };
 
   const resetGame=()=>{
@@ -1000,11 +959,11 @@ function XOBotGame({user,onBack}){
 
   const getStatusText=()=>{
     if(winner){
-      if(winner==='draw')return{emoji:'',text:'مساوی شد!',color:'text-amber-400'};
+      if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
       if(winner===playerMark)return{emoji:'🎉',text:'آفرین! تو بردی!',color:'text-emerald-400'};
-      return{emoji:'',text:'ربات این بار برد!',color:'text-pink-400'};
+      return{emoji:'🤖',text:'ربات این بار برد!',color:'text-pink-400'};
     }
-    if(botThinking)return{emoji:'',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
+    if(botThinking)return{emoji:'🤔',text:'ربات داره فکر می‌کنه...',color:'text-pink-400'};
     if(currentTurn===playerMark)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
     return{emoji:'⏳',text:'نوبت ربات',color:'text-white/50'};
   };
@@ -1014,39 +973,20 @@ function XOBotGame({user,onBack}){
     <div className="slide-up">
       <div className="xo-mode-selection mb-4">
         <div className="flex justify-between items-center mb-4">
-          <button onClick={onBack} className="btn-glass btn-sm flex items-center gap-2">
-            <Icon d={Icons.arrowLeft} size={16}/>
-            بازگشت
-          </button>
+          <button onClick={onBack} className="btn-glass btn-sm flex items-center gap-2"><Icon d={Icons.arrowLeft} size={16}/>بازگشت</button>
           <h3 className="font-bold gradient-text text-lg">🤖 بازی با ربات</h3>
           <button onClick={changeSide} className="btn-glass btn-sm">🔄 تغییر طرف</button>
         </div>
         <div className="grid grid-cols-3 gap-2 mb-4">
-          <div className={`score-card-pro ${!winner&&currentTurn===playerMark?'active':''}`}>
-            <p className="text-[11px] text-white/40 mb-1">شما ({playerMark})</p>
-            <p className="score-value">{scores.player}</p>
-          </div>
-          <div className="score-card-pro">
-            <p className="text-[11px] text-white/40 mb-1">مساوی</p>
-            <p className="score-value">{scores.draw}</p>
-          </div>
-          <div className={`score-card-pro ${!winner&&currentTurn===botMark?'active':''}`}>
-            <p className="text-[11px] text-white/40 mb-1">ربات ({botMark})</p>
-            <p className="score-value">{scores.bot}</p>
-          </div>
+          <div className={`score-card-pro ${!winner&&currentTurn===playerMark?'active':''}`}><p className="text-[11px] text-white/40 mb-1">شما ({playerMark})</p><p className="score-value">{scores.player}</p></div>
+          <div className="score-card-pro"><p className="text-[11px] text-white/40 mb-1">مساوی</p><p className="score-value">{scores.draw}</p></div>
+          <div className={`score-card-pro ${!winner&&currentTurn===botMark?'active':''}`}><p className="text-[11px] text-white/40 mb-1">ربات ({botMark})</p><p className="score-value">{scores.bot}</p></div>
         </div>
-        <div className={`xo-status-pro ${!winner&&currentTurn===playerMark?'my-turn':!winner?'waiting':''}`}>
-          <p className={`font-bold text-lg ${status.color}`}>
-            <span className="text-2xl ml-2">{status.emoji}</span>
-            {status.text}
-          </p>
-        </div>
+        <div className={`xo-status-pro ${!winner&&currentTurn===playerMark?'my-turn':!winner?'waiting':''}`}><p className={`font-bold text-lg ${status.color}`}><span className="text-2xl ml-2">{status.emoji}</span>{status.text}</p></div>
         <RobotThinking isThinking={botThinking} targetCell={botTargetCell} onMoveComplete={handleBotMove}/>
         <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
           <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
-            {board.map((cell,i)=>(
-              <XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||currentTurn!==playerMark||botThinking} cellIndex={i}/>
-            ))}
+            {board.map((cell,i)=>(<XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||currentTurn!==playerMark||botThinking} cellIndex={i}/>))}
           </div>
           {winner&&(
             <div className="victory-overlay">
@@ -1091,11 +1031,7 @@ function XOOnlineGame({user,roomId,onEnd}){
       setRoom(data);
       if(data.player_x===user.id){setMyMark('X');setOpponentName(data.player_o_data?.full_name||'در انتظار...');}
       else{setMyMark('O');setOpponentName(data.player_x_data?.full_name||'در انتظار...');}
-      if(data.winner){
-        setWinner(data.winner);
-        const result=checkXOWinner(data.board.split(''));
-        if(result)setWinLine(result.line);
-      }
+      if(data.winner){setWinner(data.winner);const result=checkXOWinner(data.board.split(''));if(result)setWinLine(result.line);}
     }
   };
 
@@ -1116,30 +1052,14 @@ function XOOnlineGame({user,roomId,onEnd}){
     await SB.from('xo_rooms').update(updates).eq('id',roomId);
   };
 
-  const handleEndGame=async()=>{
-    await SB.from('xo_rooms').delete().eq('id',roomId);
-    onEnd();
-    toast('بازی پایان یافت','warning');
-  };
-
-  const handleNewRound=async()=>{
-    await SB.from('xo_rooms').update({board:'---------',current_turn:'X',winner:null,status:'playing'}).eq('id',roomId);
-    setWinner(null);
-    setWinLine(null);
-  };
+  const handleEndGame=async()=>{await SB.from('xo_rooms').delete().eq('id',roomId);onEnd();toast('بازی پایان یافت','warning');};
+  const handleNewRound=async()=>{await SB.from('xo_rooms').update({board:'---------',current_turn:'X',winner:null,status:'playing'}).eq('id',roomId);setWinner(null);setWinLine(null);};
 
   if(!room)return <div className="text-center py-10 text-white/40">در حال بارگذاری...</div>;
-  if(room.status==='waiting')return(
-    <div className="text-center py-20">
-      <div className="text-6xl mb-4 animate-pulse">⏳</div>
-      <p className="text-white/60 mb-4">در انتظار پاسخ حریف...</p>
-      <button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">لغو</button>
-    </div>
-  );
+  if(room.status==='waiting')return(<div className="text-center py-20"><div className="text-6xl mb-4 animate-pulse">⏳</div><p className="text-white/60 mb-4">در انتظار پاسخ حریف...</p><button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">لغو</button></div>);
 
   const opponentMark=myMark==='X'?'O':'X';
   const isMyTurn=room.current_turn===myMark;
-
   const getStatusText=()=>{
     if(winner){
       if(winner==='draw')return{emoji:'🤝',text:'مساوی شد!',color:'text-amber-400'};
@@ -1147,7 +1067,7 @@ function XOOnlineGame({user,roomId,onEnd}){
       return{emoji:'😔',text:'حریف این دور رو برد',color:'text-pink-400'};
     }
     if(isMyTurn)return{emoji:'🎯',text:'نوبت توئه!',color:'text-indigo-400'};
-    return{emoji:'',text:'نوبت حریف...',color:'text-white/50'};
+    return{emoji:'⏳',text:'نوبت حریف...',color:'text-white/50'};
   };
   const status=getStatusText();
 
@@ -1156,37 +1076,19 @@ function XOOnlineGame({user,roomId,onEnd}){
       <div className="xo-mode-selection mb-4">
         <div className="flex justify-between items-center mb-4">
           <button onClick={handleEndGame} className="btn-glass btn-glass-danger btn-sm">🏁 پایان</button>
-          <h3 className="font-bold gradient-text text-lg"> بازی آنلاین</h3>
+          <h3 className="font-bold gradient-text text-lg">🎮 بازی آنلاین</h3>
           <div className="w-20"></div>
         </div>
         <div className="grid grid-cols-3 gap-2 mb-4">
-          <div className={`score-card-pro ${!winner&&isMyTurn?'active':''}`}>
-            <p className="text-[11px] text-white/40 mb-1">شما ({myMark})</p>
-            <p className="score-value">{myMark==='X'?room.score_x:room.score_o}</p>
-          </div>
-          <div className="score-card-pro">
-            <p className="text-[11px] text-white/40 mb-1">دور</p>
-            <p className="score-value">{(room.score_x||0)+(room.score_o||0)+1}</p>
-          </div>
-          <div className={`score-card-pro ${!winner&&!isMyTurn?'active':''}`}>
-            <p className="text-[11px] text-white/40 mb-1">حریف ({opponentMark})</p>
-            <p className="score-value">{myMark==='X'?room.score_o:room.score_x}</p>
-          </div>
+          <div className={`score-card-pro ${!winner&&isMyTurn?'active':''}`}><p className="text-[11px] text-white/40 mb-1">شما ({myMark})</p><p className="score-value">{myMark==='X'?room.score_x:room.score_o}</p></div>
+          <div className="score-card-pro"><p className="text-[11px] text-white/40 mb-1">دور</p><p className="score-value">{(room.score_x||0)+(room.score_o||0)+1}</p></div>
+          <div className={`score-card-pro ${!winner&&!isMyTurn?'active':''}`}><p className="text-[11px] text-white/40 mb-1">حریف ({opponentMark})</p><p className="score-value">{myMark==='X'?room.score_o:room.score_x}</p></div>
         </div>
-        <div className="glass p-3 mb-3 text-center">
-          <p className="text-xs text-white/40 mb-1">حریف: <span className="font-bold text-white">{opponentName}</span></p>
-        </div>
-        <div className={`xo-status-pro ${!winner&&isMyTurn?'my-turn':!winner?'waiting':''}`}>
-          <p className={`font-bold text-lg ${status.color}`}>
-            <span className="text-2xl ml-2">{status.emoji}</span>
-            {status.text}
-          </p>
-        </div>
+        <div className="glass p-3 mb-3 text-center"><p className="text-xs text-white/40 mb-1">حریف: <span className="font-bold text-white">{opponentName}</span></p></div>
+        <div className={`xo-status-pro ${!winner&&isMyTurn?'my-turn':!winner?'waiting':''}`}><p className={`font-bold text-lg ${status.color}`}><span className="text-2xl ml-2">{status.emoji}</span>{status.text}</p></div>
         <div className={`xo-game-container ${boardShake?'xo-board-shake':''}`}>
           <div className="grid grid-cols-3 gap-3 max-w-[340px] mx-auto">
-            {room.board.split('').map((cell,i)=>(
-              <XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||!isMyTurn} cellIndex={i}/>
-            ))}
+            {room.board.split('').map((cell,i)=>(<XOCellPro key={i} value={cell} onClick={()=>handleCellClick(i)} isWinning={winLine&&winLine.includes(i)} isDisabled={!!winner||!isMyTurn} cellIndex={i}/>))}
           </div>
           {winner&&(
             <div className="victory-overlay">
@@ -1234,12 +1136,7 @@ function BreakoutGame({user}){
       const rows=Math.min(3+lvl,7);
       const cols=7;
       const brickW=Math.floor((W-28-(cols-1)*5)/cols);
-      for(let r=0;r<rows;r++){
-        bricks[r]=[];
-        for(let c=0;c<cols;c++){
-          bricks[r][c]={x:c*(brickW+5)+14,y:r*25+45,alive:true,color:colors[r%colors.length]};
-        }
-      }
+      for(let r=0;r<rows;r++){bricks[r]=[];for(let c=0;c<cols;c++){bricks[r][c]={x:c*(brickW+5)+14,y:r*25+45,alive:true,color:colors[r%colors.length]};}}
       return {rows,cols,brickW};
     };
 
@@ -1262,12 +1159,7 @@ function BreakoutGame({user}){
     canvas.addEventListener('mousemove',moveHandler);
     canvas.addEventListener('touchmove',moveHandler,{passive:false});
 
-    const spawnParticles=(x,y,color)=>{
-      for(let i=0;i<10;i++){
-        const a=Math.random()*Math.PI*2;
-        particles.push({x,y,dx:Math.cos(a)*3,dy:Math.sin(a)*3,life:25,color});
-      }
-    };
+    const spawnParticles=(x,y,color)=>{for(let i=0;i<10;i++){const a=Math.random()*Math.PI*2;particles.push({x,y,dx:Math.cos(a)*3,dy:Math.sin(a)*3,life:25,color});}};
 
     const loop=()=>{
       if(!running)return;
@@ -1275,48 +1167,23 @@ function BreakoutGame({user}){
       const bg=ctx.createLinearGradient(0,0,0,H);
       bg.addColorStop(0,'rgba(15,15,35,0.95)');bg.addColorStop(1,'rgba(10,10,26,0.98)');
       ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){
-        const b=bricks[r][c];if(!b.alive)continue;
-        ctx.fillStyle=b.color;ctx.shadowColor=b.color;ctx.shadowBlur=10;
-        ctx.beginPath();ctx.roundRect(b.x,b.y,brickInfo.brickW,20,4);ctx.fill();
-        ctx.shadowBlur=0;
-      }
+      for(let r=0;r<brickInfo.rows;r++)for(let c=0;c<brickInfo.cols;c++){const b=bricks[r][c];if(!b.alive)continue;ctx.fillStyle=b.color;ctx.shadowColor=b.color;ctx.shadowBlur=10;ctx.beginPath();ctx.roundRect(b.x,b.y,brickInfo.brickW,20,4);ctx.fill();ctx.shadowBlur=0;}
       const padGrad=ctx.createLinearGradient(padX,0,padX+padW,0);
       padGrad.addColorStop(0,'#818cf8');padGrad.addColorStop(1,'#c084fc');
       ctx.fillStyle=padGrad;ctx.shadowColor='#818cf8';ctx.shadowBlur=15;
-      ctx.beginPath();ctx.roundRect(padX,H-25,padW,padH,6);ctx.fill();
-      ctx.shadowBlur=0;
+      ctx.beginPath();ctx.roundRect(padX,H-25,padW,padH,6);ctx.fill();ctx.shadowBlur=0;
       trail.push({x:ballX,y:ballY,life:12});
-      trail=trail.filter(t=>{
-        t.life--;
-        ctx.globalAlpha=t.life/12*0.4;
-        ctx.fillStyle='#818cf8';
-        ctx.beginPath();ctx.arc(t.x,t.y,ballR*(t.life/12),0,Math.PI*2);ctx.fill();
-        ctx.globalAlpha=1;
-        return t.life>0;
-      });
+      trail=trail.filter(t=>{t.life--;ctx.globalAlpha=t.life/12*0.4;ctx.fillStyle='#818cf8';ctx.beginPath();ctx.arc(t.x,t.y,ballR*(t.life/12),0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;return t.life>0;});
       ctx.beginPath();ctx.arc(ballX,ballY,ballR,0,Math.PI*2);
       ctx.fillStyle='#fff';ctx.shadowColor='#818cf8';ctx.shadowBlur=20;ctx.fill();ctx.shadowBlur=0;
-      particles=particles.filter(p=>{
-        p.x+=p.dx;p.y+=p.dy;p.life--;
-        ctx.globalAlpha=p.life/25;ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;
-        return p.life>0;
-      });
+      particles=particles.filter(p=>{p.x+=p.dx;p.y+=p.dy;p.life--;ctx.globalAlpha=p.life/25;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,3,3);ctx.globalAlpha=1;return p.life>0;});
       if(ballX+ballDX>W-ballR||ballX+ballDX<ballR)ballDX=-ballDX;
       if(ballY+ballDY<ballR)ballDY=-ballDY;
-      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){
-        ballDY=-Math.abs(ballDY);
-        ballDX+=((ballX-padX)/padW-0.5)*8;
-        spawnParticles(ballX,ballY,'#818cf8');
-      }
+      if(ballY+ballDY>H-30&&ballX>padX&&ballX<padX+padW){ballDY=-Math.abs(ballDY);ballDX+=((ballX-padX)/padW-0.5)*8;spawnParticles(ballX,ballY,'#818cf8');}
       if(ballY>H+ballR){
         running=false;setGameOver(true);
         const finalScore=localScore;
-        if(finalScore>bestScore){
-          setBestScore(finalScore);
-          SB.from('game_scores').insert({user_id:user.id,game_name:'breakout',score:finalScore}).catch(()=>{});
-        }
+        if(finalScore>bestScore){setBestScore(finalScore);SB.from('game_scores').insert({user_id:user.id,game_name:'breakout',score:finalScore}).catch(()=>{});}
         toast(`بازی تمام شد! امتیاز: ${finalScore}`,'warning');
         return;
       }
@@ -1333,13 +1200,7 @@ function BreakoutGame({user}){
           break;
         }
       }
-      if(allDestroyed){
-        localLevel++;setLevel(localLevel);localScore+=50;setScore(localScore);
-        padW=Math.max(45,80-localLevel*4);
-        brickInfo=buildBricks(localLevel);
-        resetBall();
-        toast(` مرحله ${localLevel}!`,'success');
-      }
+      if(allDestroyed){localLevel++;setLevel(localLevel);localScore+=50;setScore(localScore);padW=Math.max(45,80-localLevel*4);brickInfo=buildBricks(localLevel);resetBall();toast(`🎉 مرحله ${localLevel}!`,'success');}
       ballX+=ballDX;ballY+=ballDY;
       ctx.fillStyle='white';ctx.font='bold 16px Vazirmatn';
       ctx.textAlign='right';ctx.fillText(`امتیاز: ${localScore}`,W-15,25);
@@ -1347,11 +1208,7 @@ function BreakoutGame({user}){
       gameRef.current=requestAnimationFrame(loop);
     };
     resetBall();loop();
-    return()=>{
-      canvas.removeEventListener('mousemove',moveHandler);
-      canvas.removeEventListener('touchmove',moveHandler);
-      if(gameRef.current)cancelAnimationFrame(gameRef.current);
-    };
+    return()=>{canvas.removeEventListener('mousemove',moveHandler);canvas.removeEventListener('touchmove',moveHandler);if(gameRef.current)cancelAnimationFrame(gameRef.current);};
   },[gameOver]);
 
   const restart=()=>{setScore(0);setLevel(1);setGameOver(false);};
@@ -1388,9 +1245,7 @@ function ChatModal({user,onClose}){
     return()=>{SB.removeChannel(sub);};
   },[]);
 
-  useEffect(()=>{
-    messagesEndRef.current?.scrollIntoView({behavior:'smooth'});
-  },[messages]);
+  useEffect(()=>{messagesEndRef.current?.scrollIntoView({behavior:'smooth'});},[messages]);
 
   const loadMessages=async()=>{
     const {data:admins}=await SB.from('users').select('id').eq('role','admin').limit(1);
@@ -1420,12 +1275,7 @@ function ChatModal({user,onClose}){
 
   const deleteMessage=async(msgId)=>{
     setDeletingId(msgId);
-    setTimeout(async()=>{
-      await SB.from('messages').delete().eq('id',msgId);
-      setDeletingId(null);
-      loadMessages();
-      toast('🗑️ پیام حذف شد','warning');
-    },300);
+    setTimeout(async()=>{await SB.from('messages').delete().eq('id',msgId);setDeletingId(null);loadMessages();toast('🗑️ پیام حذف شد','warning');},300);
   };
 
   const toggleReaction=async(msgId,emoji)=>{
@@ -1471,28 +1321,20 @@ function ChatModal({user,onClose}){
                         {isMe&&(
                           <>
                             <button onClick={()=>startEdit(m)} className="chat-action-btn">✏️ ویرایش</button>
-                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">️ حذف</button>
+                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">🗑️ حذف</button>
                           </>
                         )}
-                        {!isMe&&(
-                          <button onClick={()=>setReactionPickerFor(reactionPickerFor===m.id?null:m.id)} className="chat-action-btn">😊 واکنش</button>
-                        )}
+                        {!isMe&&(<button onClick={()=>setReactionPickerFor(reactionPickerFor===m.id?null:m.id)} className="chat-action-btn">😊 واکنش</button>)}
                       </div>
                     </div>
                     {reactionPickerFor===m.id&&(
                       <div className="reaction-picker" style={{[isMe?'right':'left']:'0'}}>
-                        {REACTION_EMOJIS.map(e=>(
-                          <button key={e} className="reaction-emoji-btn" onClick={()=>toggleReaction(m.id,e)}>{e}</button>
-                        ))}
+                        {REACTION_EMOJIS.map(e=>(<button key={e} className="reaction-emoji-btn" onClick={()=>toggleReaction(m.id,e)}>{e}</button>))}
                       </div>
                     )}
                     {Object.keys(reactions).length>0&&(
                       <div className="reaction-bar">
-                        {Object.entries(reactions).map(([emoji,users])=>(
-                          <div key={emoji} className={`reaction-chip ${users.includes(user.id)?'active':''}`} onClick={()=>toggleReaction(m.id,emoji)}>
-                            <span>{emoji}</span><span className="text-[10px]">{users.length}</span>
-                          </div>
-                        ))}
+                        {Object.entries(reactions).map(([emoji,users])=>(<div key={emoji} className={`reaction-chip ${users.includes(user.id)?'active':''}`} onClick={()=>toggleReaction(m.id,emoji)}><span>{emoji}</span><span className="text-[10px]">{users.length}</span></div>))}
                       </div>
                     )}
                   </>
@@ -1505,9 +1347,7 @@ function ChatModal({user,onClose}){
         <div className="relative">
           {showEmoji&&(
             <div className="emoji-picker">
-              {TADBIR_EMOJIS.map(e=>(
-                <button key={e} className="emoji-btn" onClick={()=>addEmoji(e)}>{e}</button>
-              ))}
+              {TADBIR_EMOJIS.map(e=>(<button key={e} className="emoji-btn" onClick={()=>addEmoji(e)}>{e}</button>))}
             </div>
           )}
           <div className="flex gap-2">
@@ -1547,21 +1387,11 @@ function PasswordModal({onClose,user}){
           <h3 className="font-bold gradient-text">🔐 تغییر رمز عبور</h3>
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
-        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">
-          ℹ️ پس از تغییر، مدیر نیز می‌تواند رمز جدید را ببیند
-        </div>
+        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">ℹ️ پس از تغییر، مدیر نیز می‌تواند رمز جدید را ببیند</div>
         <div className="space-y-3">
-          <div>
-            <label className="text-xs text-white/60 mb-2 block font-semibold">رمز جدید</label>
-            <input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/>
-          </div>
-          <div>
-            <label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز</label>
-            <input className="glass-input" type="password" placeholder="تکرار رمز جدید" value={confirmPw} onChange={e=>setConfirmPw(e.target.value)}/>
-          </div>
-          <button onClick={handleSubmit} className="btn-glass btn-glass-success" disabled={loading}>
-            {loading?'در حال تغییر...':'✓ تغییر رمز'}
-          </button>
+          <div><label className="text-xs text-white/60 mb-2 block font-semibold">رمز جدید</label><input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/></div>
+          <div><label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز</label><input className="glass-input" type="password" placeholder="تکرار رمز جدید" value={confirmPw} onChange={e=>setConfirmPw(e.target.value)}/></div>
+          <button onClick={handleSubmit} className="btn-glass btn-glass-success" disabled={loading}>{loading?'در حال تغییر...':'✓ تغییر رمز'}</button>
         </div>
       </div>
     </div>
@@ -1582,6 +1412,7 @@ function Admin({user,tab,setTab,onLogout}){
   const [replyText,setReplyText]=useState('');
   const [selectedChat,setSelectedChat]=useState(null);
   const [showExamResults,setShowExamResults]=useState(null);
+  const [showPasswordModal,setShowPasswordModal]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
@@ -1604,9 +1435,7 @@ function Admin({user,tab,setTab,onLogout}){
     const duration=hours*60+minutes;
     const {data:exam,error}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:duration,assigned_to:formData.assigned||'all',created_by:user.id}).select().single();
     if(error){toast('خطا: '+error.message,'error');setLoading(false);return;}
-    for(const q of questions){
-      await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)});
-    }
+    for(const q of questions){await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)});}
     setLoading(false);setModal(null);setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);loadAll();
     toast('✅ آزمون ساخته شد!','success');
   };
@@ -1643,15 +1472,26 @@ function Admin({user,tab,setTab,onLogout}){
   const objections=answers.filter(a=>a.objection&&a.objection.trim()!==''&&a.status!=='graded');
 
   const viewStudentResults=(examId)=>{
+    const exam=exams.find(e=>e.id===examId);
+    if(!exam)return;
     const examAnswers=answers.filter(a=>a.exam_id===examId);
-    setShowExamResults({examId,answers:examAnswers});
+    setShowExamResults({exam,answers:examAnswers});
+  };
+
+  const updateStudentScore=async(answerId,newScore)=>{
+    await SB.from('answers').update({score:parseFloat(newScore),status:'graded'}).eq('id',answerId);
+    loadAll();
+    toast('✅ نمره ویرایش شد','success');
   };
 
   return(
     <div className="min-h-screen pb-24">
       <div className="header flex justify-between items-center">
         <div><h1 className="text-lg font-black gradient-text">پنل مدیریت</h1><p className="text-xs text-white/30 mt-1">{user.full_name}</p></div>
-        <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d={Icons.logout} size={18}/></button>
+        <div className="flex gap-2">
+          <button onClick={()=>setShowPasswordModal(true)} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="تغییر رمز"><Icon d={Icons.key} size={18}/></button>
+          <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d={Icons.logout} size={18}/></button>
+        </div>
       </div>
       <div className="content">
         {tab==='home'&&(
@@ -1747,9 +1587,7 @@ function Admin({user,tab,setTab,onLogout}){
                         <button onClick={()=>setSelectedChat(null)} className="p-1.5 bg-white/5 rounded-lg"><Icon d={Icons.arrowLeft} size={16}/></button>
                         <span className="font-bold text-sm">{selectedChat.sender?.full_name}</span>
                       </div>
-                      <button onClick={()=>clearChat(selectedChat.sender_id)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg" title="پاک کردن تاریخچه">
-                        <Icon d={Icons.trash} size={16}/>
-                      </button>
+                      <button onClick={()=>clearChat(selectedChat.sender_id)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg" title="پاک کردن تاریخچه"><Icon d={Icons.trash} size={16}/></button>
                     </div>
                     <div className="flex-1 overflow-y-auto mb-3 space-y-1">
                       {messages.filter(m=>(m.sender_id===selectedChat.sender_id&&m.receiver_id===user.id)||(m.sender_id===user.id&&m.receiver_id===selectedChat.sender_id)).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).map(m=>(
@@ -1798,39 +1636,17 @@ function Admin({user,tab,setTab,onLogout}){
             </div>
             {step===1&&(
               <div className="space-y-4 fade-in">
-                <div>
-                  <label className="text-xs text-white/50 mb-2 block font-semibold">عنوان آزمون *</label>
-                  <input className="glass-input" placeholder="مثال: آزمون ریاضی فصل ۱" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/>
-                </div>
-                <div>
-                  <label className="text-xs text-white/50 mb-2 block font-semibold">توضیحات</label>
-                  <textarea className="glass-input" placeholder="توضیحات..." value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})} rows="2"/>
-                </div>
+                <div><label className="text-xs text-white/50 mb-2 block font-semibold">عنوان آزمون *</label><input className="glass-input" placeholder="مثال: آزمون ریاضی فصل ۱" value={formData.title||''} onChange={e=>setFormData({...formData,title:e.target.value})}/></div>
+                <div><label className="text-xs text-white/50 mb-2 block font-semibold">توضیحات</label><textarea className="glass-input" placeholder="توضیحات..." value={formData.desc||''} onChange={e=>setFormData({...formData,desc:e.target.value})} rows="2"/></div>
                 <div>
                   <label className="text-xs text-white/50 mb-2 block font-semibold">مدت زمان آزمون *</label>
                   <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="text-[10px] text-white/40 mb-1 block">ساعت</label>
-                      <input className="glass-input" type="number" min="0" max="10" placeholder="۰" value={formData.hours||''} onChange={e=>setFormData({...formData,hours:e.target.value})}/>
-                    </div>
-                    <div>
-                      <label className="text-[10px] text-white/40 mb-1 block">دقیقه</label>
-                      <input className="glass-input" type="number" min="0" max="59" placeholder="۰" value={formData.minutes||''} onChange={e=>setFormData({...formData,minutes:e.target.value})}/>
-                    </div>
+                    <div><label className="text-[10px] text-white/40 mb-1 block">ساعت</label><input className="glass-input" type="number" min="0" max="10" placeholder="۰" value={formData.hours||''} onChange={e=>setFormData({...formData,hours:e.target.value})}/></div>
+                    <div><label className="text-[10px] text-white/40 mb-1 block">دقیقه</label><input className="glass-input" type="number" min="0" max="59" placeholder="۰" value={formData.minutes||''} onChange={e=>setFormData({...formData,minutes:e.target.value})}/></div>
                   </div>
                 </div>
-                <div>
-                  <label className="text-xs text-white/50 mb-2 block font-semibold">اختصاص به</label>
-                  <select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}>
-                    <option value="all">همه دانش‌آموزان</option>
-                    {students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}
-                  </select>
-                </div>
-                <button onClick={()=>{
-                  const h=parseInt(formData.hours)||0;const m=parseInt(formData.minutes)||0;
-                  if(h===0&&m===0){toast('مدت زمان را مشخص کنید','error');return;}
-                  setFormData({...formData,duration:h*60+m});setStep(2);
-                }} className="btn-glass">مرحله بعد: سوالات</button>
+                <div><label className="text-xs text-white/50 mb-2 block font-semibold">اختصاص به</label><select className="glass-input" value={formData.assigned||'all'} onChange={e=>setFormData({...formData,assigned:e.target.value})}><option value="all">همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={s.id}>{s.full_name}</option>)}</select></div>
+                <button onClick={()=>{const h=parseInt(formData.hours)||0;const m=parseInt(formData.minutes)||0;if(h===0&&m===0){toast('مدت زمان را مشخص کنید','error');return;}setFormData({...formData,duration:h*60+m});setStep(2);}} className="btn-glass">مرحله بعد: سوالات</button>
               </div>
             )}
             {step===2&&(
@@ -1880,23 +1696,30 @@ function Admin({user,tab,setTab,onLogout}){
         <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
           <div className="glass-strong w-full max-w-2xl p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold gradient-text text-lg">📊 نتایج آزمون</h3>
+              <h3 className="font-bold gradient-text text-lg"> نتایج آزمون: {showExamResults.exam.title}</h3>
               <button onClick={()=>setShowExamResults(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
             </div>
-            {showExamResults.answers.map((a,idx)=>{
-              const exam=exams.find(e=>e.id===a.exam_id);
-              if(!exam)return null;
-              const score=getExamScore(a.exam_id,a.student_id);
+            {showExamResults.answers.length===0?<p className="text-center text-white/30 py-8">هنوز کسی در این آزمون شرکت نکرده</p>:
+            showExamResults.answers.map(a=>{
+              const maxScore=parseFloat(a.questions?.score||1);
+              const percentage=maxScore>0?(parseFloat(a.score||0)/maxScore)*20:0;
               return(
-                <div key={a.id} className="exam-card-enhanced mb-3">
-                  <div className="flex justify-between items-center mb-2">
+                <div key={a.id} className="student-result-row">
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold">{a.users?.full_name?.[0]||'?'}</div>
                     <div>
-                      <p className="font-bold text-sm">{a.users?.full_name}</p>
-                      <p className="text-xs text-white/40">{exam?.title}</p>
+                      <p className="font-bold text-sm">{a.users?.full_name||'نامشخص'}</p>
+                      <p className="text-[11px] text-white/40">@{a.users?.username||''}</p>
                     </div>
-                    <div className="text-left">
-                      <StarRating score={score?parseFloat(score.percentage):0}/>
-                      <p className="text-xs text-white/40 mt-1">{score?`${score.percentage}/20`:'-'}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-center">
+                      <StarRating score={percentage}/>
+                      <p className="text-xs text-white/40 mt-1">{parseFloat(a.score||0)}/{maxScore}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input type="number" step="0.25" className="glass-input text-sm w-20" defaultValue={a.score||0} id={`edit-${a.id}`}/>
+                      <button onClick={()=>{const v=document.getElementById(`edit-${a.id}`).value;updateStudentScore(a.id,v);}} className="btn-glass btn-glass-success btn-sm">✓</button>
                     </div>
                   </div>
                 </div>
@@ -1905,6 +1728,7 @@ function Admin({user,tab,setTab,onLogout}){
           </div>
         </div>
       )}
+      {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
     </div>
   );
 }
@@ -1949,7 +1773,7 @@ function Student({user,tab,setTab,onLogout}){
   const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId));
 
   const startExam=(exam)=>{
-    if(hasTakenExam(exam.id)){toast('️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
+    if(hasTakenExam(exam.id)){toast('⚠️ قبلاً در این آزمون شرکت کرده‌اید','warning');return;}
     setActiveExam(exam);
     setCurrentQ(0);
     setStudentAnswers({});
@@ -2058,6 +1882,20 @@ function Student({user,tab,setTab,onLogout}){
     return avg.toFixed(2);
   };
 
+  const canObject=(examId)=>{
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
+    if(examAnswers.length===0)return false;
+    const hasObjection=examAnswers.some(a=>a.objection);
+    if(hasObjection)return false;
+    const oldestAnswer=examAnswers.reduce((oldest,a)=>{
+      const aDate=new Date(a.created_at);
+      return !oldest||aDate<oldest?aDate:oldest;
+    },null);
+    if(!oldestAnswer)return false;
+    const hoursSince=(Date.now()-oldestAnswer.getTime())/(1000*60*60);
+    return hoursSince<=48;
+  };
+
   useEffect(()=>{
     if(tab==='chart'){
       const ctx=document.getElementById('gradeChart');
@@ -2093,10 +1931,7 @@ function Student({user,tab,setTab,onLogout}){
         },
         options:{
           responsive:true,
-          animation:{
-            duration:2000,
-            easing:'easeInOutQuart'
-          },
+          animation:{duration:2000,easing:'easeInOutQuart'},
           plugins:{
             legend:{display:false},
             tooltip:{
@@ -2109,17 +1944,8 @@ function Student({user,tab,setTab,onLogout}){
             }
           },
           scales:{
-            y:{
-              ticks:{color:'rgba(255,255,255,0.5)'},
-              grid:{color:'rgba(255,255,255,0.05)'},
-              beginAtZero:true,
-              max:20
-            },
-            x:{
-              ticks:{color:'rgba(255,255,255,0.5)'},
-              grid:{color:'rgba(255,255,255,0.03)'},
-              display:false
-            }
+            y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},
+            x:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.03)'},display:false}
           }
         }
       });
@@ -2137,7 +1963,7 @@ function Student({user,tab,setTab,onLogout}){
               <h2 className="font-black text-lg gradient-text">{activeExam.title}</h2>
               <p className="text-[11px] text-white/40 mt-1">سوال {currentQ+1} از {activeExam.questions.length}</p>
             </div>
-            <CircularTimer timeLeft={timeLeft} totalTime={totalTime}/>
+            <CircularTimerGlow timeLeft={timeLeft} totalTime={totalTime}/>
           </div>
           <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
             <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500" style={{width:`${progress}%`}}></div>
@@ -2147,7 +1973,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className="content">
           <div className="glass p-5 fade-in">
             <div className="flex justify-between items-center mb-3">
-              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':'️ تشریحی'}</span>
+              <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':'✍️ تشریحی'}</span>
               <span className="badge badge-new">⭐ {q?.score||1} نمره</span>
             </div>
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
@@ -2180,15 +2006,11 @@ function Student({user,tab,setTab,onLogout}){
       <div className="header flex justify-between items-center">
         <div>
           <h1 className="text-lg font-black gradient-text">پنل دانش‌آموز</h1>
-          <p className="text-xs text-white/40 mt-1">سلام {user.full_name} </p>
+          <p className="text-xs text-white/40 mt-1">سلام {user.full_name} 👋</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={()=>setShowPasswordModal(true)} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="تغییر رمز">
-            <Icon d={Icons.key} size={18}/>
-          </button>
-          <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition">
-            <Icon d={Icons.logout} size={18}/>
-          </button>
+          <button onClick={()=>setShowPasswordModal(true)} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="تغییر رمز"><Icon d={Icons.key} size={18}/></button>
+          <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d={Icons.logout} size={18}/></button>
         </div>
       </div>
       <div className="content">
@@ -2243,6 +2065,7 @@ function Student({user,tab,setTab,onLogout}){
               const score=getExamScore(ex.id);
               if(!score)return null;
               const hasObjection=answers.some(a=>a.exam_id===ex.id&&a.objection);
+              const canObj=canObject(ex.id);
               return(
                 <div key={ex.id} className="exam-card-enhanced">
                   <div className="flex justify-between items-start mb-2">
@@ -2256,7 +2079,16 @@ function Student({user,tab,setTab,onLogout}){
                     </div>
                   </div>
                   {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
-                  {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2"><Icon d={Icons.alert} size={16}/>اعتراض</button>)}
+                  {!hasObjection&&canObj&&(
+                    <button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2">
+                      <Icon d={Icons.alert} size={16}/>اعتراض
+                    </button>
+                  )}
+                  {!hasObjection&&!canObj&&(
+                    <div className="mt-3 text-center text-xs text-white/30 bg-white/5 rounded-xl p-2">
+                      ⏰ مهلت اعتراض (۴۸ ساعت) به پایان رسیده است
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -2269,9 +2101,25 @@ function Student({user,tab,setTab,onLogout}){
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
-            <div className="chart-container">
-              <h3 className="font-bold mb-3 text-center text-sm">نمودار پیشرفت</h3>
+            <div className="chart-container-enhanced">
+              <h3 className="font-bold mb-3 text-center text-sm gradient-text">📈 نمودار پیشرفت تحصیلی</h3>
               {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}
+            </div>
+            <div className="glass p-4 mt-4">
+              <h4 className="font-bold text-sm mb-3 gradient-text"> لیست آزمون‌ها</h4>
+              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-4">آزمونی ندارید</p>:
+              exams.filter(ex=>getExamScore(ex.id)).map(ex=>{
+                const score=getExamScore(ex.id);
+                return(
+                  <div key={ex.id} className="exam-list-item">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm truncate">{ex.title}</p>
+                      <p className="text-[11px] text-white/40">{ex.questions?.length||0} سوال</p>
+                    </div>
+                    <div className="exam-list-score">{parseFloat(score.percentage)}</div>
+                  </div>
+                );
+              })}
             </div>
           </>
         )}
@@ -2345,7 +2193,7 @@ function Student({user,tab,setTab,onLogout}){
                     <h3 className="font-bold mb-3 text-white/70 text-sm">بازی‌های موجود</h3>
                     <div className="grid grid-cols-1 gap-3">
                       <div className="game-card" onClick={()=>setActiveGame('xo')}>
-                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500"></div>
+                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500">⭕</div>
                         <h4 className="font-bold text-sm">بازی دوز (XO)</h4>
                         <p className="text-[10px] text-white/40 mt-1">با ربات یا دوستان آنلاین</p>
                       </div>
@@ -2361,14 +2209,8 @@ function Student({user,tab,setTab,onLogout}){
             ):(
               <div className="slide-up">
                 <div className="flex justify-between items-center mb-4">
-                  <button onClick={()=>setActiveGame(null)} className="btn-glass btn-sm flex items-center gap-2">
-                    <Icon d={Icons.arrowLeft} size={16}/>
-                    بازگشت
-                  </button>
-                  <h3 className="font-bold gradient-text text-lg">
-                    {activeGame==='xo'&&'بازی دوز'}
-                    {activeGame==='breakout'&&'توپ و راکت'}
-                  </h3>
+                  <button onClick={()=>setActiveGame(null)} className="btn-glass btn-sm flex items-center gap-2"><Icon d={Icons.arrowLeft} size={16}/>بازگشت</button>
+                  <h3 className="font-bold gradient-text text-lg">{activeGame==='xo'&&'بازی دوز'}{activeGame==='breakout'&&'توپ و راکت'}</h3>
                   <div className="w-20"></div>
                 </div>
                 {activeGame==='xo'&&<XOGameHub user={user}/>}
@@ -2393,7 +2235,9 @@ function Student({user,tab,setTab,onLogout}){
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
           <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض به آزمون</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">️ فقط یکبار می‌توانید اعتراض بزنید</div>
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">
+              ⚠️ دانش‌آموز گرامی، فقط یکبار می‌توانید به نمره خود اعتراض بزنید و نتیجه شما ممکن است بدون تغییر یا افزایش و یا کاهش باشد.
+            </div>
             <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
             <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
           </div>
@@ -2403,7 +2247,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className="modal-overlay" onClick={()=>setShowExamResults(null)}>
           <div className="glass-strong w-full max-w-lg p-6 max-h-[85vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold gradient-text">📊 نتایج آزمون</h3>
+              <h3 className="font-bold gradient-text"> نتایج آزمون</h3>
               <button onClick={()=>setShowExamResults(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
             </div>
             {(()=>{
@@ -2429,7 +2273,7 @@ function Student({user,tab,setTab,onLogout}){
                       <div key={a.id} className={`glass p-3 mb-2 ${isWrong?'border-red-500/30':isCorrect?'border-emerald-500/30':''}`}>
                         <div className="flex justify-between items-start mb-2">
                           <span className="text-xs text-white/40">سوال {idx+1}</span>
-                          <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'✓ تصحیح شده':' در انتظار تصحیح مدیر'}</span>
+                          <span className={`badge ${a.status==='graded'?'badge-approved':'badge-pending'}`}>{a.status==='graded'?'✓ تصحیح شده':'⏳ در انتظار تصحیح مدیر'}</span>
                         </div>
                         <p className="text-sm mb-2">{q.q_text}</p>
                         {q.q_type==='test'&&q.correct_opt?(
@@ -2490,7 +2334,7 @@ function AppWrapper(){
 
 ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 </script>
-<svg className="xo-gradients">
+<svg className="xo-gradients" style={{position:'absolute',width:0,height:0,overflow:hidden}}>
   <defs>
     <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stopColor="#818cf8"/>
