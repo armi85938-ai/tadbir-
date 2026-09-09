@@ -267,32 +267,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .student-result-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
 .student-result-row:hover{background:rgba(255,255,255,0.06);border-color:rgba(129,140,248,0.3)}
 
-/* ===== Safe visual upgrade ===== */
-.grade-chart-shell{position:relative;padding:18px 12px 10px;overflow:visible;min-height:300px;border-radius:24px;background:linear-gradient(145deg,rgba(99,102,241,.10),rgba(236,72,153,.06));border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 20px 50px rgba(0,0,0,.18)}
-.grade-chart-shell canvas{display:block!important;width:100%!important;height:290px!important;position:relative;z-index:2}
-.grade-pulse{position:absolute;inset:28px 18px 35px;border-radius:20px;pointer-events:none;opacity:.65;background:linear-gradient(90deg,transparent,rgba(129,140,248,.16),transparent);animation:gradePulse 1.15s ease-in-out infinite}
-.grade-pulse.done{animation:none;opacity:0;transition:opacity .6s}
-@keyframes gradePulse{0%,100%{transform:scaleX(.92);opacity:.2}50%{transform:scaleX(1);opacity:.75}}
-.grade-point-card{margin-top:14px;padding:13px 15px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);display:none;text-align:right;animation:slideUp .35s ease}
-.grade-point-card.show{display:block}
-.objection-panel{border:1px solid rgba(245,158,11,.22);background:linear-gradient(135deg,rgba(245,158,11,.10),rgba(236,72,153,.05));border-radius:20px;padding:14px;margin-top:12px}
-.objection-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);color:#fff;cursor:pointer}
-.objection-toggle.expired{background:rgba(148,163,184,.09);border-color:rgba(148,163,184,.15);color:rgba(255,255,255,.45);cursor:not-allowed}
-.snake-lobby{background:radial-gradient(circle at 20% 0%,rgba(16,185,129,.18),transparent 35%),radial-gradient(circle at 90% 90%,rgba(168,85,247,.18),transparent 40%),rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.10);border-radius:28px;padding:18px;box-shadow:0 25px 70px rgba(0,0,0,.3);overflow:hidden}
-.snake-hero{border-radius:24px;padding:20px;background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(59,130,246,.14),rgba(236,72,153,.12));border:1px solid rgba(255,255,255,.10);position:relative;overflow:hidden}
-.snake-hero:after{content:'🐍';position:absolute;font-size:90px;left:-4px;bottom:-28px;opacity:.16;transform:rotate(-12deg)}
-.snake-player{display:flex;align-items:center;gap:12px;padding:12px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);margin-top:8px}
-.snake-avatar{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;background:linear-gradient(135deg,#10b981,#3b82f6);box-shadow:0 8px 25px rgba(16,185,129,.25)}
-.snake-board{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;padding:8px;border-radius:22px;background:linear-gradient(145deg,#10152f,#1b1230);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 25px 60px rgba(0,0,0,.35)}
-.snake-cell{aspect-ratio:1/1;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:rgba(255,255,255,.55);background:linear-gradient(145deg,rgba(99,102,241,.15),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.05)}
-.snake-cell:nth-child(odd){background:linear-gradient(145deg,rgba(16,185,129,.12),rgba(255,255,255,.035))}.snake-cell.start{box-shadow:inset 0 0 0 2px rgba(16,185,129,.45)}
-.snake-token{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;position:absolute;z-index:4;box-shadow:0 5px 16px rgba(0,0,0,.35);animation:tokenBounce .45s ease}
-.snake-token.t1{background:linear-gradient(135deg,#60a5fa,#2563eb)}.snake-token.t2{background:linear-gradient(135deg,#f472b6,#db2777)}.snake-token.t3{background:linear-gradient(135deg,#facc15,#f97316)}
-@keyframes tokenBounce{0%{transform:scale(.4) translateY(-12px);opacity:.3}100%{transform:scale(1);opacity:1}}
-.snake-dice{width:82px;height:82px;border-radius:22px;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 18px 40px rgba(0,0,0,.3);cursor:pointer;transition:.25s;user-select:none}.snake-dice:hover{transform:translateY(-4px) rotate(2deg)}.snake-dice.rolling{animation:diceRoll .65s ease-in-out}@keyframes diceRoll{0%{transform:rotate(0) scale(1)}25%{transform:rotate(90deg) scale(1.08)}50%{transform:rotate(180deg) scale(.94)}75%{transform:rotate(270deg) scale(1.08)}100%{transform:rotate(360deg) scale(1)}}
-.snake-snake{position:absolute;pointer-events:none;font-size:26px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.35));animation:snakeWiggle 2.2s ease-in-out infinite;z-index:2}.snake-snake.s1{left:26%;top:18%;transform:rotate(18deg)}.snake-snake.s2{left:63%;top:42%;transform:rotate(-25deg);animation-delay:.5s}.snake-snake.s3{left:40%;top:69%;transform:rotate(12deg);animation-delay:1s}@keyframes snakeWiggle{0%,100%{transform:translateX(0) rotate(12deg)}50%{transform:translateX(7px) rotate(-8deg)}}
-.option-media-box{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.option-image-preview{width:54px;height:54px;border-radius:10px;object-fit:cover;border:1px solid rgba(255,255,255,.1)}
-@media(max-width:520px){.snake-board{gap:2px;padding:5px}.snake-cell{font-size:8px}.snake-token{width:20px;height:20px;font-size:10px}.grade-chart-shell canvas{height:250px!important}}
+/* Safe v6 additions */
+.grade-chart-shell{position:relative;min-height:280px;padding:8px 4px 4px;overflow:visible}.grade-chart-shell canvas{display:block;width:100%!important;height:260px!important;overflow:visible}.grade-list-card{background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(129,140,248,.06));border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:13px;margin-bottom:9px;transition:.3s}.grade-list-card:hover{transform:translateY(-2px);border-color:rgba(129,140,248,.35)}.grade-score-pill{min-width:58px;padding:8px 10px;border-radius:14px;text-align:center;font-weight:900;background:linear-gradient(135deg,rgba(99,102,241,.25),rgba(236,72,153,.2));border:1px solid rgba(129,140,248,.25)}.objection-box{border:1px solid rgba(251,191,36,.2);background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(239,68,68,.05));border-radius:18px;padding:12px}.objection-arrow{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);cursor:pointer;transition:.3s}.objection-arrow.open{transform:rotate(180deg);background:rgba(129,140,248,.18)}.objection-expired{filter:grayscale(.8);opacity:.55}.admin-tool-card{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(236,72,153,.08));border:1px solid rgba(129,140,248,.18);border-radius:22px;padding:18px;cursor:pointer;transition:.35s}.admin-tool-card:hover{transform:translateY(-4px);box-shadow:0 18px 45px rgba(99,102,241,.2)}.snake-shell{background:radial-gradient(circle at 20% 10%,rgba(16,185,129,.14),transparent 35%),radial-gradient(circle at 90% 90%,rgba(236,72,153,.14),transparent 35%),rgba(12,14,32,.94);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:16px;box-shadow:0 25px 80px rgba(0,0,0,.4)}.snake-board{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;direction:ltr;padding:7px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}.snake-cell{aspect-ratio:1;border-radius:7px;position:relative;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:rgba(255,255,255,.5);overflow:visible}.snake-cell:nth-child(odd){background:rgba(129,140,248,.12)}.snake-cell:nth-child(even){background:rgba(16,185,129,.09)}.snake-token{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.75);position:absolute;z-index:5;animation:snakeTokenFloat 1.4s ease-in-out infinite}.snake-token.two{transform:translate(9px,8px)}.snake-token.three{transform:translate(-9px,-8px)}@keyframes snakeTokenFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}.snake-ladder{position:absolute;inset:4px;pointer-events:none;opacity:.75}.snake-head{position:absolute;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#34d399,#059669);box-shadow:0 0 18px rgba(16,185,129,.55);transform:translate(-50%,-50%);z-index:3;animation:snakeSway 1.2s ease-in-out infinite}.snake-head:after{content:'👅';position:absolute;font-size:14px;left:16px;top:10px;animation:tongue 1s infinite}.snake-head:before{content:'';position:absolute;width:5px;height:5px;border-radius:50%;background:#111;left:7px;top:8px;box-shadow:10px 0 #111}@keyframes snakeSway{0%,100%{rotate:-4deg}50%{rotate:4deg}}@keyframes tongue{0%,70%{transform:scaleX(.4);transform-origin:left}85%,100%{transform:scaleX(1)}}.snake-lobby-user{display:flex;align-items:center;gap:10px;padding:11px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);margin-bottom:8px}.snake-dice{width:82px;height:82px;border-radius:22px;background:linear-gradient(135deg,#fff,#dbeafe);color:#111;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;box-shadow:0 15px 35px rgba(255,255,255,.12);animation:diceIdle 1.8s ease-in-out infinite}.snake-dice.rolling{animation:diceRoll .65s ease-in-out}@keyframes diceIdle{50%{transform:translateY(-4px) rotate(2deg)}}@keyframes diceRoll{0%{transform:rotate(0) scale(1)}35%{transform:rotate(180deg) scale(1.15)}70%{transform:rotate(360deg) scale(.95)}100%{transform:rotate(720deg) scale(1)}}.snake-alert{border:1px solid rgba(245,158,11,.25);background:rgba(245,158,11,.08);border-radius:16px;padding:12px}.option-image-box{border:1px dashed rgba(129,140,248,.35);border-radius:12px;padding:8px;background:rgba(255,255,255,.03)}.option-image-box img{max-height:90px;max-width:100%;margin:6px auto;border-radius:10px;object-fit:contain}
 </style>
 </head>
 <body>
@@ -1425,72 +1401,6 @@ function PasswordModal({onClose,user}){
   );
 }
 
-
-const SNAKE_LADDERS={10:30,24:48,38:59,51:72,63:81,73:92,30:10,47:26,56:37,62:19,79:41,88:67,96:75};
-const SNAKE_EMOJIS=['🎲','🎯','⭐','🍀','🔥','🌟'];
-function snakeLabel(opt){if(typeof opt!=='string')return {text:'',image:''};const m=opt.match(/^\[\[IMG:(.*?)\]\]\|\|(.*)$/s);return m?{image:m[1],text:m[2]}:{text:opt,image:''};}
-function SnakeBoard({room,user}){
-  const [rolling,setRolling]=useState(false),[lastRoll,setLastRoll]=useState(null),[message,setMessage]=useState(''),[moving,setMoving]=useState(false);
-  const meIndex=[room.player1_id,room.player2_id,room.player3_id].findIndex(x=>String(x)===String(user.id));
-  const positions=[room.player1_pos||0,room.player2_pos||0,room.player3_pos||0];
-  const players=[room.player1_name,room.player2_name,room.player3_name].filter(Boolean);
-  const canRoll=String(room.turn_id)===String(user.id)&&room.status==='playing'&&!rolling&&!moving;
-  const roll=async()=>{
-    if(!canRoll)return;
-    setRolling(true);setMessage('');
-    const value=1+Math.floor(Math.random()*6); setLastRoll(value);
-    setTimeout(async()=>{
-      const key=`player${meIndex+1}_pos`;
-      let pos=positions[meIndex]; let target=Math.min(100,pos+value);
-      if(target===100){setMessage('🎉 به خانه ۱۰۰ رسیدی!');}
-      const jump=SNAKE_LADDERS[target];
-      if(jump){setMessage(jump>target?'🪜 نردبان!':'🐍 مار!');setTimeout(()=>{},100);target=jump;}
-      const nextIndex=(meIndex+1)%[room.player1_id,room.player2_id,room.player3_id].filter(Boolean).length;
-      const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);
-      const nextId=ids[nextIndex];
-      const payload={[key]:target,turn_id:target===100?null:nextId,winner_id:target===100?user.id:null,status:target===100?'finished':'playing'};
-      await SB.from('snake_rooms').update(payload).eq('id',room.id);
-      setRolling(false);
-    },650);
-  };
-  const cells=[];for(let row=9;row>=0;row--){let nums=[];for(let c=0;c<10;c++){const n=row%2===1?row*10+(10-c):row*10+c+1;nums.push(n)}cells.push(...nums)}
-  return <div className="snake-lobby mt-4">
-    <div className="flex items-center justify-between mb-4"><div><h3 className="font-black text-xl gradient-text">🐍 مار و پله</h3><p className="text-xs text-white/40 mt-1">نوبت: {room.turn_id?([room.player1_id,room.player2_id,room.player3_id].map((id,i)=>String(id)===String(room.turn_id)?room[`player${i+1}_name`]:null).filter(Boolean)[0]||'بازیکن'):'پایان'}</p></div><div className="text-xs bg-white/5 rounded-xl px-3 py-2">{players.length} بازیکن</div></div>
-    <div className="relative"><div className="snake-board">{cells.map(n=><div key={n} className={`snake-cell ${n===1?'start':''}`}><span>{n}</span>{[0,1,2].map(i=>positions[i]===n&&room[`player${i+1}_id`]?<span key={i} className={`snake-token t${i+1}`}>{i===meIndex?'★':'●'}</span>:null)}</div>)}</div><span className="snake-snake s1">🐍</span><span className="snake-snake s2">🐍</span><span className="snake-snake s3">🐍</span></div>
-    <div className="flex flex-col items-center gap-3 mt-5"><div className={`snake-dice ${rolling?'rolling':''}`} onClick={roll}>{lastRoll||'🎲'}</div><p className="text-sm font-bold text-center">{room.status==='finished'?'🏆 بازی تمام شد':canRoll?'روی تاس بزن':'منتظر نوبت حریف...'}</p>{message&&<div className="text-amber-300 text-sm font-bold animate-pulse">{message}</div>}</div>
-  </div>
-}
-function SnakeLobby({user,isAdmin=false}){
-  const [users,setUsers]=useState([]),[requests,setRequests]=useState([]),[rooms,setRooms]=useState([]),[room,setRoom]=useState(null),[selected,setSelected]=useState([]),[busy,setBusy]=useState(false),[notice,setNotice]=useState('');
-  const load=async()=>{
-    const {data:u}=await SB.from('users').select('id,full_name,username,role').neq('id',user.id).order('full_name');
-    if(u)setUsers(u);
-    const {data:r}=await SB.from('snake_requests').select('*').eq('to_user',user.id).eq('status','pending').order('created_at',{ascending:false});if(r)setRequests(r);
-    const {data:out}=await SB.from('snake_requests').select('*').eq('from_user',user.id).order('created_at',{ascending:false});if(out)setRequests(prev=>[...prev,...(out||[])]);
-    const {data:rm}=await SB.from('snake_rooms').select('*').or(`player1_id.eq.${user.id},player2_id.eq.${user.id},player3_id.eq.${user.id}`).order('created_at',{ascending:false}).limit(5);if(rm)setRooms(rm); if(rm?.[0]&&['waiting','playing'].includes(rm[0].status))setRoom(rm[0]);
-  };
-  useEffect(()=>{load();const t=setInterval(load,2500);return()=>clearInterval(t)},[]);
-  const invite=async()=>{
-    if(selected.length===0)return;setBusy(true);const expires=new Date(Date.now()+120000).toISOString();
-    const {data:r,error}=await SB.from('snake_rooms').insert({player1_id:user.id,player1_name:user.full_name,player1_token:SNAKE_EMOJIS[Math.floor(Math.random()*SNAKE_EMOJIS.length)],player1_pos:1,status:'waiting'}).select().single();
-    if(error){setNotice('خطا در ساخت اتاق: '+error.message);setBusy(false);return;}
-    for(const uid of selected){await SB.from('snake_requests').insert({from_user:user.id,to_user:uid,room_id:r.id,status:'pending',created_at:new Date().toISOString(),expires_at:expires});}
-    setRoom(r);setNotice('درخواست‌ها ارسال شد؛ تا ۲ دقیقه منتظر پذیرش بمان.');setBusy(false);load();
-  };
-  const accept=async(req)=>{const {data:r}=await SB.from('snake_rooms').select('*').eq('id',req.room_id).single();if(!r)return;let payload={};if(!r.player2_id)payload={player2_id:user.id,player2_name:user.full_name,player2_token:SNAKE_EMOJIS[1],player2_pos:1};else if(!r.player3_id)payload={player3_id:user.id,player3_name:user.full_name,player3_token:SNAKE_EMOJIS[2],player3_pos:1};else return;await SB.from('snake_rooms').update(payload).eq('id',r.id);await SB.from('snake_requests').update({status:'accepted'}).eq('id',req.id);setRoom({...r,...payload});load();};
-  const start=async()=>{if(!room)return;const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);if(ids.length<2){setNotice('حداقل یک حریف باید درخواست را قبول کند.');return;}await SB.from('snake_rooms').update({status:'playing',turn_id:ids[Math.floor(Math.random()*ids.length)]}).eq('id',room.id);load();};
-  const reject=async req=>{await SB.from('snake_requests').update({status:'rejected'}).eq('id',req.id);load();};
-  const activeRoom=rooms.find(r=>['waiting','playing'].includes(r.status))||room;
-  if(activeRoom?.status==='playing')return <SnakeBoard room={activeRoom} user={user}/>;
-  return <div className="snake-lobby"><div className="snake-hero"><div className="text-4xl mb-2">🐍🎲🪜</div><h3 className="text-2xl font-black">اتاق مار و پله</h3><p className="text-xs text-white/55 mt-2 leading-6">یک تا دو نفر حریف انتخاب کن. هر دعوت فقط ۲ دقیقه فرصت پاسخ دارد؛ هرکس قبول کند وارد اتاق می‌شود.</p></div>
-    {requests.filter(r=>r.to_user===user.id&&r.status==='pending'&&new Date(r.expires_at)>new Date()).map(r=><div key={r.id} className="snake-player"><div className="snake-avatar">🎮</div><div className="flex-1"><b>درخواست بازی</b><p className="text-[11px] text-white/40 mt-1">تا ۲ دقیقه فرصت پاسخ</p></div><div className="flex gap-2"><button className="btn-glass btn-sm" onClick={()=>accept(r)}>قبول</button><button className="btn-sm bg-red-500/15 text-red-300 rounded-xl px-3" onClick={()=>reject(r)}>رد</button></div></div>)}
-    {notice&&<div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mt-3 text-xs text-indigo-200">{notice}</div>}
-    {activeRoom?.status==='waiting'&&<div className="glass p-4 mt-4"><div className="flex justify-between items-center"><div><b>اتاق شما</b><p className="text-xs text-white/40 mt-1">{[activeRoom.player1_name,activeRoom.player2_name,activeRoom.player3_name].filter(Boolean).length} نفر آماده‌اند</p></div>{String(activeRoom.player1_id)===String(user.id)&&<button className="btn-glass btn-sm" onClick={start}>شروع بازی</button>}</div><div className="mt-3">{[activeRoom.player1_name,activeRoom.player2_name,activeRoom.player3_name].filter(Boolean).map((n,i)=><div key={i} className="snake-player"><div className={`snake-avatar`}>{i===0?'👑':'🎮'}</div><div><b>{n}</b><p className="text-[10px] text-emerald-300">عضو اتاق</p></div></div>)}</div></div>}
-    <div className="mt-4"><h4 className="font-bold mb-3">انتخاب حریف</h4>{users.map(u=>{const checked=selected.includes(u.id);return <button key={u.id} onClick={()=>setSelected(v=>checked?v.filter(x=>x!==u.id):v.length<2?[...v,u.id]:v)} className={`snake-player w-full text-right ${checked?'border-indigo-400/50 bg-indigo-500/10':''}`}><div className="snake-avatar">{u.full_name?.[0]||'؟'}</div><div className="flex-1"><b>{u.full_name}</b><p className="text-[10px] text-white/40">{u.role==='admin'?'مدیر':'دانش‌آموز'} · @{u.username}</p></div><span>{checked?'✓':'+'}</span></button>})}</div>
-    <button onClick={invite} disabled={busy||selected.length===0} className="btn-glass btn-glass-success mt-4">{busy?'در حال ارسال...':`📩 ارسال درخواست به ${selected.length} نفر`}</button>
-  </div>
-}
-
 function Admin({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [students,setStudents]=useState([]);
@@ -1506,10 +1416,12 @@ function Admin({user,tab,setTab,onLogout}){
   const [selectedChat,setSelectedChat]=useState(null);
   const [showExamResults,setShowExamResults]=useState(null);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
-  const [adminTools,setAdminTools]=useState('games');
+  const [adminTool,setAdminTool]=useState('menu');
+  const [adminGame,setAdminGame]=useState(null);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{const t=setInterval(()=>setObjectionTick(Date.now()),1000);return()=>clearInterval(t);},[]);
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
@@ -1529,7 +1441,15 @@ function Admin({user,tab,setTab,onLogout}){
     const duration=hours*60+minutes;
     const {data:exam,error}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:duration,assigned_to:formData.assigned||'all',created_by:user.id}).select().single();
     if(error){toast('خطا: '+error.message,'error');setLoading(false);return;}
-    for(const q of questions){await SB.from('questions').insert({exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a_image?`[[IMG:${q.opt_a_image}]]||${q.opt_a||''}`:(q.opt_a||null),opt_b:q.opt_b_image?`[[IMG:${q.opt_b_image}]]||${q.opt_b||''}`:(q.opt_b||null),opt_c:q.opt_c_image?`[[IMG:${q.opt_c_image}]]||${q.opt_c||''}`:(q.opt_c||null),opt_d:q.opt_d_image?`[[IMG:${q.opt_d_image}]]||${q.opt_d||''}`:(q.opt_d||null),correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)});}
+    for(const q of questions){
+      const payload={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
+      let {error:qe}=await SB.from('questions').insert(payload);
+      if(qe){
+        const fallback={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
+        const {error:qe2}=await SB.from('questions').insert(fallback);
+        if(qe2){toast('خطا در ذخیره سوال: '+qe2.message,'error');setLoading(false);return;}
+      }
+    }
     setLoading(false);setModal(null);setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);loadAll();
     toast('✅ آزمون ساخته شد!','success');
   };
@@ -1545,18 +1465,12 @@ function Admin({user,tab,setTab,onLogout}){
     toast('✅ عکس آپلود شد','success');
   };
 
-  const handleOptionImageUpload=async(file,i,opt)=>{
-    if(!file)return;const ext=file.name.split('.').pop();const path=`option-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const {error}=await SB.storage.from('exam-images').upload(path,file);if(error){toast('خطا در آپلود عکس گزینه: '+error.message,'error');return;}
-    const {data:{publicUrl}}=SB.storage.from('exam-images').getPublicUrl(path);updateQuestion(i,`opt_${opt}_image`,publicUrl);toast('✓ عکس گزینه اضافه شد','success');
-  };
-
   const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
   const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);loadAll();toast('رمز تغییر کرد','success');}};
-  const gradeAnswer=async(id,score)=>{const when=new Date().toISOString();let r=await SB.from('answers').update({score:parseFloat(score),status:'graded',graded_at:when}).eq('id',id);if(r.error){r=await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);if(r.error){toast('خطا در ثبت نمره: '+r.error.message,'error');return;}toast('نمره ثبت شد؛ برای تایمر دقیق ستون graded_at را در دیتابیس اضافه کنید.','warning');}else toast('✅ نمره ثبت شد','success');loadAll();};
+  const gradeAnswer=async(id,score)=>{const value=parseFloat(score);if(Number.isNaN(value)){toast('نمره معتبر نیست','error');return;}const {error}=await SB.from('answers').update({score:value,status:'graded',graded_at:new Date().toISOString()}).eq('id',id);if(error){toast('خطا در ثبت نمره: '+error.message,'error');return;}loadAll();toast('✅ نمره ثبت شد و مهلت اعتراض شروع شد','success');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText,reactions:{}});setReplyText('');loadAll();};
   
   const clearChat=async(studentId)=>{
@@ -1579,7 +1493,9 @@ function Admin({user,tab,setTab,onLogout}){
   };
 
   const updateStudentScore=async(answerId,newScore)=>{
-    const when=new Date().toISOString();let r=await SB.from('answers').update({score:parseFloat(newScore),status:'graded',graded_at:when}).eq('id',answerId);if(r.error){r=await SB.from('answers').update({score:parseFloat(newScore),status:'graded'}).eq('id',answerId);if(r.error){toast('خطا در ویرایش نمره: '+r.error.message,'error');return;}toast('نمره ویرایش شد؛ برای تایمر دقیق graded_at را اضافه کنید.','warning');}else toast('✅ نمره ویرایش شد','success');loadAll();
+    await SB.from('answers').update({score:parseFloat(newScore),status:'graded',graded_at:new Date().toISOString()}).eq('id',answerId);
+    loadAll();
+    toast('✅ نمره ویرایش شد','success');
   };
 
   return(
@@ -1702,6 +1618,7 @@ function Admin({user,tab,setTab,onLogout}){
             )}
           </>
         )}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div></div>{adminTool==='games'&&<div className="mt-4 game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله آنلاین</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div>}</>:<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}</>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -1719,17 +1636,11 @@ function Admin({user,tab,setTab,onLogout}){
             ))}
           </>
         )}
-        {tab==='tools'&&(<div className="space-y-4">
-          <div className="glass p-5"><h3 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h3><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div>
-          <button className="game-card w-full text-right" onClick={()=>setAdminTools('games')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🎮</div><h4 className="font-bold">بازی‌ها</h4><p className="text-xs text-white/40 mt-1">ورود مستقل به مار و پله</p></button>
-          {adminTools==='games'&&<SnakeLobby user={user} isAdmin/>}
-        </div>)}
       </div>
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>{setTab('students');setSubTab('list');}}><Icon d={Icons.users}/><span>کاربران</span></div>
-        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTools('games')}}><Icon d={Icons.list}/><span>ابزار</span></div>
+        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div><div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTool('menu');setAdminGame(null);}}><Icon d={Icons.list}/><span>ابزار</span></div>
       </div>
       {modal==='exam'&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
@@ -1776,8 +1687,7 @@ function Admin({user,tab,setTab,onLogout}){
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='test'?'bg-indigo-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','test')}>تستی</button>
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='descriptive'?'bg-indigo-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','descriptive')}>تشریحی</button>
                     </div>
-                    {q.q_type==='test'&&(<div className="space-y-3">{['a','b','c','d'].map(o=>(<div key={o} className="option-media-box"><input className="glass-input text-sm" placeholder={`متن گزینه ${o.toUpperCase()} (اختیاری)`} value={q[`opt_${o}`]} onChange={e=>updateQuestion(i,`opt_${o}`,e.target.value)}/><label className="btn-sm bg-white/5 rounded-xl px-3 cursor-pointer">🖼️<input hidden type="file" accept="image/*" onChange={e=>handleOptionImageUpload(e.target.files[0],i,o)}/></label>{q[`opt_${o}_image`]&&<img src={q[`opt_${o}_image`]} className="option-image-preview"/>}</div>))}<select className="glass-input text-sm" value={q.correct_opt} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}><option value="">پاسخ صحیح (اختیاری)</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>)}
-                    <button onClick={addQuestion} className="btn-glass btn-sm mt-3 flex items-center justify-center gap-2"><Icon d={Icons.plus} size={14}/>افزودن سوال بعدی</button>
+                    {q.q_type==='test'&&(<div className="space-y-3">{['a','b','c','d'].map(o=>(<div key={o} className="option-image-box"><input className="glass-input text-sm mb-2" placeholder={`متن گزینه ${o.toUpperCase()} (اختیاری)`} value={q[`opt_${o}`]||''} onChange={e=>updateQuestion(i,`opt_${o}`,e.target.value)}/><label className="text-[10px] text-white/45 block mb-1">عکس گزینه {o.toUpperCase()}</label><input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleOptionImageUpload(e.target.files[0],i,o)}/>{q[`opt_${o}_image`]&&<img src={q[`opt_${o}_image`]} alt=""/>}</div>))}<select className="glass-input text-sm" value={q.correct_opt||''} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}><option value="">پاسخ صحیح (اختیاری)</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select><button onClick={addQuestion} className="btn-glass btn-sm">＋ افزودن سوال بعدی</button></div>)}
                   </div>
                 ))}
                 <div className="flex gap-2 mt-3"><button onClick={()=>setStep(1)} className="btn-glass bg-white/5 flex-1">قبلی</button><button onClick={()=>setStep(3)} className="btn-glass flex-1">بررسی</button></div>
@@ -1838,7 +1748,44 @@ function Admin({user,tab,setTab,onLogout}){
   );
 }
 
-function ObjectionExamCard({exam,score,hasObjection,deadline,open,onOpen}){const [expanded,setExpanded]=useState(false);const [now,setNow]=useState(Date.now());useEffect(()=>{const t=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(t)},[]);const remaining=deadline?Math.max(0,deadline-now):0;const expired=deadline&&remaining<=0;return <div className="exam-card-enhanced"><div className="flex justify-between items-start"><div className="flex-1 min-w-0"><h4 className="font-bold text-sm">{exam.title}</h4><p className="text-[11px] text-white/30 mt-1">{exam.questions?.length||0} سوال</p></div><div className="text-left shrink-0 mr-3"><StarRating score={parseFloat(score.percentage)}/><p className="text-xs text-white/40 mt-1">{score.percentage}/20</p></div></div><button className={`objection-toggle mt-3 ${expired?'expired':''}`} disabled={expired} onClick={()=>setExpanded(v=>!v)}><span>{expired?'زمان ثبت اعتراض به اتمام رسیده است':hasObjection?'اعتراض ثبت شده':'اعتراض به آزمون'}</span><span>{expired?'🔒':expanded?'⌃':'⌄'}</span></button>{expanded&&!expired&&<div className="objection-panel"><p className="text-xs text-amber-200 mb-2">مهلت اعتراض تا ۴۸ ساعت پس از ثبت نهایی نمره فعال است.</p><div className="text-2xl font-black text-center py-2">{Math.floor(remaining/3600000).toString().padStart(2,'0')}:{Math.floor((remaining%3600000)/60000).toString().padStart(2,'0')}:{Math.floor((remaining%60000)/1000).toString().padStart(2,'0')}</div>{!hasObjection&&<button onClick={onOpen} className="btn-glass btn-glass-danger mt-3">ثبت اعتراض</button>}</div>}{!deadline&&!hasObjection&&<div className="text-[11px] text-white/35 mt-2">تا زمان ثبت نهایی نمره توسط مدیر، مهلت اعتراض فعال نمی‌شود.</div>}{hasObjection&&<div className="text-xs text-emerald-300 mt-2">✓ اعتراض شما برای مدیر ارسال شده است.</div>}</div>}
+function SnakeGame({user,students=[],isAdmin=false}){
+  const [people,setPeople]=useState([]),[selected,setSelected]=useState([]),[room,setRoom]=useState(null),[requests,setRequests]=useState([]),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[rolling,setRolling]=useState(false),[dice,setDice]=useState(1),[now,setNow]=useState(Date.now());
+  const [viewMode,setViewMode]=useState('lobby');
+  const adminOnly=isAdmin;
+  const load=async()=>{
+    try{
+      const target=isAdmin?await SB.from('users').select('*').neq('id',user.id):await SB.from('users').select('*').neq('id',user.id);
+      if(target.data)setPeople(target.data);
+      const {data:r,error}=await SB.from('snake_requests').select('*').or(`from_user.eq.${user.id},to_user.eq.${user.id}`).order('created_at',{ascending:false});
+      if(error)throw error;
+      if(r)setRequests(r);
+      const ids=(r||[]).filter(x=>['accepted','pending'].includes(x.status)).map(x=>x.room_id).filter(Boolean);
+      if(ids.length){const {data:rooms,error:re}=await SB.from('snake_rooms').select('*').in('id',ids).order('created_at',{ascending:false}).limit(1);if(re)throw re;if(rooms?.[0])setRoom(rooms[0]);}
+    }catch(e){setNotice('اتصال بازی برقرار نشد: '+(e?.message||'خطای نامشخص'));}
+  };
+  useEffect(()=>{load();const t=setInterval(()=>{setNow(Date.now());load()},2500);return()=>clearInterval(t)},[]);
+  const acceptedForMe=requests.filter(r=>r.to_user===user.id&&r.status==='accepted');
+  const pendingIncoming=requests.filter(r=>r.to_user===user.id&&r.status==='pending'&&new Date(r.expires_at).getTime()>now);
+  const pendingOutgoing=requests.filter(r=>r.from_user===user.id&&r.status==='pending'&&new Date(r.expires_at).getTime()>now);
+  const sendInvites=async()=>{
+    if(!selected.length||selected.length>2){setNotice('حداکثر دو حریف انتخاب کن.');return;}setBusy(true);setNotice('');
+    try{
+      const {data:r,error}=await SB.from('snake_rooms').insert({player1_id:user.id,player1_name:user.full_name,player1_token:['🐼','🦊','🐯','🐸','🐙','🦄'][Math.floor(Math.random()*6)],status:'waiting'}).select().single();
+      if(error)throw error;
+      for(const id of selected){const p=people.find(x=>String(x.id)===String(id));const {error:e}=await SB.from('snake_requests').insert({from_user:user.id,to_user:id,room_id:r.id,status:'pending',expires_at:new Date(Date.now()+120000).toISOString()});if(e)throw e;}
+      setRoom(r);setViewMode('waiting');setNotice('درخواست‌ها ارسال شد؛ ۲ دقیقه فرصت پذیرش وجود دارد.');
+    }catch(e){setNotice('خطا در ساخت اتاق: '+(e?.message||'دسترسی دیتابیس'));}finally{setBusy(false)}
+  };
+  const accept=async(req)=>{try{const {data:r,error:re}=await SB.from('snake_rooms').select('*').eq('id',req.room_id).single();if(re)throw re;let patch={};if(!r.player2_id)patch={player2_id:user.id,player2_name:user.full_name,player2_token:['🐨','🐰','🐵','🐼','🐹'][Math.floor(Math.random()*5)]};else if(!r.player3_id)patch={player3_id:user.id,player3_name:user.full_name,player3_token:['🐱','🐧','🦁','🐨','🦋'][Math.floor(Math.random()*5)]};else throw new Error('ظرفیت اتاق تکمیل است');const {data:nr,error:e}=await SB.from('snake_rooms').update(patch).eq('id',r.id).select().single();if(e)throw e;await SB.from('snake_requests').update({status:'accepted'}).eq('id',req.id);setRoom(nr);setViewMode('waiting');load();}catch(e){setNotice('خطا در پذیرش درخواست: '+e.message)}};
+  const decline=async(req)=>{await SB.from('snake_requests').update({status:'declined'}).eq('id',req.id);load()};
+  const start=async()=>{if(!room)return;const players=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);if(players.length<2){setNotice('حداقل یک حریف باید درخواست را قبول کند.');return;}const first=players[Math.floor(Math.random()*players.length)];const {data,error}=await SB.from('snake_rooms').update({status:'playing',turn_id:first,player1_pos:1,player2_pos:1,player3_pos:1}).eq('id',room.id).select().single();if(error){setNotice('خطا در شروع بازی: '+error.message);return;}setRoom(data);setViewMode('game')};
+  const roll=async()=>{if(!room||room.status!=='playing'||room.turn_id!==user.id||rolling)return;setRolling(true);const d=1+Math.floor(Math.random()*6);setDice(d);setTimeout(async()=>{const slot=room.player1_id===user.id?1:room.player2_id===user.id?2:3;const old=Number(room[`player${slot}_pos`]||1);let next=old+d;if(next>100)next=old;const snakes={30:10,47:26,62:18,78:50,95:72};const ladders={4:25,12:40,22:58,36:67,48:85,60:80};let final=next;if(snakes[next])final=snakes[next];else if(ladders[next])final=ladders[next];const players=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);const idx=players.indexOf(user.id);const turn=players[(idx+1)%players.length];const patch={[`player${slot}_pos`]:final,turn_id:final===100?null:turn,winner_id:final===100?user.id:null,status:final===100?'finished':'playing'};const {data,error}=await SB.from('snake_rooms').update(patch).eq('id',room.id).select().single();if(error)setNotice('خطا در حرکت: '+error.message);else setRoom(data);setRolling(false)},650)};
+  const board=[];for(let row=9;row>=0;row--){const cols=row%2===0?[0,1,2,3,4,5,6,7,8,9]:[9,8,7,6,5,4,3,2,1,0];cols.forEach(col=>{const pos=row*10+col+1;board.push(pos)})}
+  const tokenAt=(pos)=>[1,2,3].map(n=>room?.[`player${n}_pos`]==pos?n:null).filter(Boolean);
+  const currentPlayers=room?[room.player1_name,room.player2_name,room.player3_name].filter(Boolean):[];
+  if(viewMode==='game'&&room)return <div className="snake-shell slide-up"><div className="flex items-center justify-between mb-3"><div><h3 className="font-black gradient-text">🐍 مار و پله</h3><p className="text-[10px] text-white/35">{currentPlayers.join(' • ')}</p></div><span className="badge badge-approved">{currentPlayers.length} نفره</span></div><div className="grid grid-cols-1 gap-3 mb-4"><div className="flex justify-center"><div className={`snake-dice ${rolling?'rolling':''}`}>{['⚀','⚁','⚂','⚃','⚄','⚅'][dice-1]}</div></div><p className="text-center text-xs text-white/50">{room.status==='finished'?'🏆 بازی تمام شد':room.turn_id===user.id?'نوبت توست؛ تاس را بزن':'نوبت حریف است'}</p><button onClick={roll} disabled={room.turn_id!==user.id||rolling||room.status!=='playing'} className="btn-glass btn-glass-success">🎲 {rolling?'در حال پرتاب...':'پرتاب تاس'}</button></div><div className="snake-board">{board.map(pos=><div key={pos} className="snake-cell"><span>{pos}</span>{[1,2,3].map(n=>room[`player${n}_pos`]===pos?<span key={n} className={`snake-token ${n===2?'two':n===3?'three':''}`} style={{background:n===1?'linear-gradient(135deg,#818cf8,#4f46e5)':n===2?'linear-gradient(135deg,#f472b6,#db2777)':'linear-gradient(135deg,#34d399,#059669)'}}>{n}</span>:null)}{[30,47,62,78,95].includes(pos)&&<span className="absolute text-lg">🐍</span>}{[4,12,22,36,48,60].includes(pos)&&<span className="absolute text-lg">🪜</span>}</div>)}</div><div className="grid grid-cols-2 gap-2 mt-3">{[1,2,3].map(n=>room[`player${n}_name`]?<div key={n} className="glass p-2 text-center text-xs">{n===1?'🔵':n===2?'🩷':'🟢'} {room[`player${n}_name`]}</div>:null)}</div></div>;
+  return <div className="snake-shell slide-up"><div className="flex items-center justify-between mb-4"><div><h3 className="text-xl font-black gradient-text">🐍 مار و پله آنلاین</h3><p className="text-xs text-white/40 mt-1">یک اتاق بساز و تا دو حریف دعوت کن.</p></div><span className="badge badge-new">۲ دقیقه</span></div>{notice&&<div className="snake-alert mb-3 text-xs">{notice}</div>}{pendingIncoming.length>0&&<div className="mb-4"><h4 className="font-bold text-sm mb-2">🔔 درخواست‌های دریافتی</h4>{pendingIncoming.map(r=><div className="snake-lobby-user" key={r.id}><div className="flex-1"><b>درخواست بازی</b><p className="text-[10px] text-white/35">تا {Math.max(0,Math.ceil((new Date(r.expires_at).getTime()-now)/1000))} ثانیه</p></div><button onClick={()=>accept(r)} className="btn-glass btn-glass-success btn-sm">قبول</button><button onClick={()=>decline(r)} className="btn-glass btn-glass-danger btn-sm">رد</button></div>)}</div>}{pendingOutgoing.length>0&&<div className="glass p-3 mb-4 text-xs">⏳ در انتظار پاسخ {pendingOutgoing.length} درخواست...</div>}{room&&room.status==='waiting'&&<div className="glass p-4 mb-4"><p className="font-bold text-sm mb-2">بازیکنان پذیرفته‌شده</p><p className="text-xs text-white/50">{[room.player1_name,room.player2_name,room.player3_name].filter(Boolean).join(' • ')}</p>{room.player1_id===user.id&&[room.player2_id,room.player3_id].filter(Boolean).length>0&&<button onClick={start} className="btn-glass btn-glass-success mt-3">🚀 شروع بازی</button>}</div>}<div className="glass p-3"><h4 className="font-bold text-sm mb-3">انتخاب حریف {selected.length}/2</h4>{people.filter(p=>p.id!==user.id).map(p=><label key={p.id} className="snake-lobby-user cursor-pointer"><input type="checkbox" checked={selected.includes(p.id)} onChange={()=>setSelected(x=>x.includes(p.id)?x.filter(i=>i!==p.id):x.length<2?[...x,p.id]:x)}/><div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center font-black">{p.full_name?.[0]||'؟'}</div><div className="flex-1"><b className="text-sm">{p.full_name}</b><p className="text-[10px] text-white/35">{p.role==='admin'?'مدیر':'دانش‌آموز'}</p></div></label>)}<button onClick={sendInvites} disabled={busy||selected.length===0} className="btn-glass btn-glass-success mt-3">{busy?'در حال ساخت اتاق...':'📩 ارسال درخواست بازی'}</button></div></div>;
+}
 
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
@@ -1850,8 +1797,9 @@ function Student({user,tab,setTab,onLogout}){
   const [totalTime,setTotalTime]=useState(0);
   const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);
+  const [objectionTick,setObjectionTick]=useState(Date.now());
+  const [openObjection,setOpenObjection]=useState(null);
   const [objectionText,setObjectionText]=useState('');
-  const [objectionType,setObjectionType]=useState('score');
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
   const [checklist,setChecklist]=useState([]);
   const [newTask,setNewTask]=useState('');
@@ -1910,7 +1858,7 @@ function Student({user,tab,setTab,onLogout}){
           status='graded';
         }
       }
-      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status});
+      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status,graded_at:status==='graded'?new Date().toISOString():null});
     }
     toast('✅ پاسخ‌ها ثبت شد!','success');
     setActiveExam(null);
@@ -1932,7 +1880,7 @@ function Student({user,tab,setTab,onLogout}){
     if(!objectionText.trim()||!selectedExamForObjection)return;
     const examAnswers=answers.filter(a=>a.exam_id===selectedExamForObjection);
     for(const a of examAnswers){
-      await SB.from('answers').update({objection:`${objectionType==='score'?'اعتراض به نمره':'اعتراض به سوالات'}: ${objectionText.trim()}`}).eq('id',a.id);
+      await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
     }
     toast('✅ اعتراض ثبت شد!','success');
     setShowObjection(null);
@@ -1990,26 +1938,32 @@ function Student({user,tab,setTab,onLogout}){
     return avg.toFixed(2);
   };
 
-  const objectionDeadline=(examId)=>{
-    const rows=answers.filter(a=>String(a.exam_id)===String(examId));
+  const getObjectionStart=(examId)=>{
+    const rows=answers.filter(a=>String(a.exam_id)===String(examId)&&a.status==='graded');
     if(!rows.length)return null;
-    const graded=rows.filter(a=>a.status==='graded');
-    const times=graded.map(a=>a.graded_at||a.updated_at||a.created_at).filter(Boolean).map(x=>new Date(x).getTime()).filter(Number.isFinite);
-    if(!times.length)return null;
-    return Math.max(...times)+48*60*60*1000;
+    const dates=rows.map(a=>a.graded_at||a.updated_at||a.created_at).filter(Boolean).map(x=>new Date(x).getTime()).filter(Number.isFinite);
+    return dates.length?Math.max(...dates):null;
   };
-  const canObject=(examId)=>{const d=objectionDeadline(examId);return !!d&&Date.now()<d&&!answers.some(a=>String(a.exam_id)===String(examId)&&a.objection);};
-  const objectionRemaining=(examId)=>{const d=objectionDeadline(examId);return d?Math.max(0,d-Date.now()):0;};
+  const getObjectionState=(examId)=>{
+    const start=getObjectionStart(examId);
+    if(!start)return {state:'waiting',remaining:0};
+    const remaining=Math.max(0,48*60*60*1000-(Date.now()-start));
+    return {state:remaining>0?'active':'expired',remaining};
+  };
+  const canObject=(examId)=>getObjectionState(examId).state==='active';
+
 
   useEffect(()=>{
     if(tab!=='chart')return;
-    const ctx=document.getElementById('gradeChart'); if(!ctx)return;
+    const ctx=document.getElementById('gradeChart');
+    if(!ctx||typeof Chart==='undefined')return;
     if(window.myChart)window.myChart.destroy();
-    const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const s=getExamScore(ex.id);return {title:ex.title,score:parseFloat(s.percentage),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(sc.percentage)||0)),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date));
     if(!examData.length)return;
-    const g=ctx.getContext('2d');const grad=g.createLinearGradient(0,0,ctx.clientWidth||500,0);grad.addColorStop(0,'#60a5fa');grad.addColorStop(.5,'#c084fc');grad.addColorStop(1,'#f472b6');
-    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>i+1),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:'rgba(129,140,248,.10)',borderWidth:4,tension:.48,fill:true,pointRadius:7,pointHoverRadius:11,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24,right:18,left:10,bottom:10}},animation:{duration:2300,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{displayColors:false,callbacks:{title:()=>'',label:c=>`${examData[c.dataIndex].title} — ${examData[c.dataIndex].score}/20`}}},scales:{y:{min:0,max:20,beginAtZero:true,ticks:{stepSize:5,color:'rgba(255,255,255,.55)',padding:8},grid:{color:'rgba(255,255,255,.06)'}},x:{display:false,grid:{display:false}}},onClick:(evt,els)=>{if(!els.length)return;const d=examData[els[0].index];const box=document.getElementById('gradePointInfo');if(box){box.innerHTML=`<b>${d.title}</b><span>${d.score}/20</span>`;box.classList.add('show');}}}});
-    const pulse=document.getElementById('gradePulse');setTimeout(()=>pulse&&pulse.classList.add('done'),2400);
+    const c=ctx.getContext('2d');
+    const grad=c.createLinearGradient(0,0,ctx.width||400,0);grad.addColorStop(0,'#60a5fa');grad.addColorStop(.45,'#a78bfa');grad.addColorStop(1,'#f472b6');
+    const fill=c.createLinearGradient(0,0,0,260);fill.addColorStop(0,'rgba(129,140,248,.30)');fill.addColorStop(1,'rgba(129,140,248,0)');
+    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:fill,borderWidth:4,tension:.48,fill:true,pointBackgroundColor:'#fff',pointBorderColor:'#c084fc',pointBorderWidth:4,pointRadius:7,pointHoverRadius:11}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22,right:22,left:14,bottom:8}},animation:{duration:1800,easing:'easeInOutQuart'},plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(12,14,32,.96)',padding:12,cornerRadius:12,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(item)=>`نمره: ${item.raw}/20`}}},scales:{y:{min:0,max:20,beginAtZero:true,ticks:{stepSize:2,color:'rgba(255,255,255,.58)'},grid:{color:'rgba(255,255,255,.07)'}},x:{display:false,grid:{display:false}}}}});
   },[tab,answers,exams]);
 
   if(activeExam){
@@ -2044,7 +1998,7 @@ function Student({user,tab,setTab,onLogout}){
                   <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
-                      <span className="flex-1 text-sm">{(()=>{const o=snakeLabel(q[`opt_${opt.toLowerCase()}`]);return <div>{o.image&&<img src={o.image} className="max-h-24 rounded-xl mb-2 object-contain"/>}{o.text}</div>})()}</span>
+                      <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
                       {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
                     </div>
                   </div>
@@ -2117,16 +2071,14 @@ function Student({user,tab,setTab,onLogout}){
             })}
           </>
         )}
-        {tab==='grades'&&(
-          <>
-            <h3 className="font-bold mb-3 text-white/70 text-sm">نمرات من</h3>
-            {exams.filter(ex=>getExamScore(ex.id)).length===0&&<div className="card text-center py-10 text-white/30">نمره‌ای نیست</div>}
-            {exams.map(ex=>{
-              const score=getExamScore(ex.id); if(!score)return null; const hasObjection=answers.some(a=>String(a.exam_id)===String(ex.id)&&a.objection); const deadline=objectionDeadline(ex.id); const open=canObj(ex.id);
-              return <ObjectionExamCard key={ex.id} exam={ex} score={score} hasObjection={hasObjection} deadline={deadline} open={open} onOpen={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}}/>;
-            })}
-          </>
-        )}
+        {tab==='grades'&&(<div className="slide-up">
+          <div className="glass p-5 mb-4"><div className="flex items-center justify-between"><div><p className="text-xs text-white/40">معدل کل</p><p className="text-4xl font-black gradient-text">{getAverage()}</p></div><div className="w-14 h-14 rounded-2xl bg-indigo-500/15 flex items-center justify-center"><Icon d={Icons.grade} size={28} className="text-indigo-300"/></div></div></div>
+          <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌های اخیر</h3>
+          {exams.filter(ex=>getExamScore(ex.id)).length===0?<div className="card text-center py-10 text-white/30">نمره‌ای ثبت نشده</div>:exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const score=getExamScore(ex.id);const st=getObjectionState(ex.id);const hasObj=answers.some(a=>String(a.exam_id)===String(ex.id)&&a.objection);const open=openObjection===ex.id;const total=Math.floor(st.remaining/1000);const hh=Math.floor(total/3600);const mm=Math.floor((total%3600)/60);const ss=total%60;return <div key={ex.id} className={`grade-list-card ${st.state==='expired'?'objection-expired':''}`}>
+            <div className="flex items-center gap-3"><div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center font-black">{ex.title?.[0]||'آ'}</div><div className="flex-1 min-w-0"><p className="font-bold text-sm truncate">{ex.title}</p><p className="text-[11px] text-white/35">{ex.questions?.length||0} سوال</p></div><div className="grade-score-pill">{score.percentage}<small className="text-[9px] text-white/45"> / ۲۰</small></div><button className={`objection-arrow ${open?'open':''}`} onClick={()=>setOpenObjection(open?null:ex.id)}>⌄</button></div>
+            {open&&<div className="objection-box mt-3">{hasObj?<p className="text-xs text-amber-300">⏳ اعتراض شما ثبت شده و در حال بررسی است.</p>:st.state==='waiting'?<p className="text-xs text-white/55">⏳ هنوز نمره این آزمون توسط مدیر ثبت نهایی نشده است.</p>:st.state==='active'?<><div className="flex items-center justify-between gap-3"><div><p className="text-xs text-white/45">مهلت باقی‌مانده اعتراض</p><p className="text-2xl font-black text-amber-300 font-mono">{String(hh).padStart(2,'0')}:{String(mm).padStart(2,'0')}:{String(ss).padStart(2,'0')}</p></div><button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger btn-sm"><Icon d={Icons.alert} size={15}/> ثبت اعتراض</button></div></>:<p className="text-xs text-white/45">⏰ زمان ثبت اعتراض به اتمام رسیده است.</p>}</div>}
+          </div>})}
+        </div>)}
         {tab==='chart'&&(
           <>
             <div className="glass p-6 text-center mb-6 slide-up">
@@ -2134,11 +2086,7 @@ function Student({user,tab,setTab,onLogout}){
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
-            <div className="chart-container-enhanced grade-chart-shell">
-              <div id="gradePulse" className="grade-pulse"></div><h3 className="font-bold mb-3 text-center text-sm gradient-text">📈 نمودار پیشرفت تحصیلی</h3>
-              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<div style={{height:'290px',position:'relative',zIndex:2}}><canvas id="gradeChart"></canvas></div>}
-              <div id="gradePointInfo" className="grade-point-card"><span></span><span></span></div>
-            </div>
+            <div className="chart-container-enhanced"><h3 className="font-bold mb-2 text-center text-sm gradient-text">📈 مسیر رشد نمرات</h3><p className="text-[10px] text-white/30 text-center mb-2">برای دیدن جزئیات، روی نقطه نمره بزن</p><div className="grade-chart-shell">{exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}</div></div>
             <div className="glass p-4 mt-4">
               <h4 className="font-bold text-sm mb-3 gradient-text"> لیست آزمون‌ها</h4>
               {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-4">آزمونی ندارید</p>:
@@ -2231,15 +2179,10 @@ function Student({user,tab,setTab,onLogout}){
                         <h4 className="font-bold text-sm">بازی دوز (XO)</h4>
                         <p className="text-[10px] text-white/40 mt-1">با ربات یا دوستان آنلاین</p>
                       </div>
-                      <div className="game-card" onClick={()=>setActiveGame('breakout')}>
+                      <div className="game-card" onClick={()=>setActiveGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold text-sm">مار و پله آنلاین</h4><p className="text-[10px] text-white/40 mt-1">بازی ۲ یا ۳ نفره با دوستان و مدیر</p></div><div className="game-card" onClick={()=>setActiveGame('breakout')}>
                         <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-teal-500">🎯</div>
                         <h4 className="font-bold text-sm">توپ و راکت</h4>
                         <p className="text-[10px] text-white/40 mt-1">آجرها را بشکن و امتیاز بگیر</p>
-                      </div>
-                      <div className="game-card" onClick={()=>setActiveGame('snake')}>
-                        <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div>
-                        <h4 className="font-bold text-sm">مار و پله</h4>
-                        <p className="text-[10px] text-white/40 mt-1">بازی آنلاین دو یا سه نفره</p>
                       </div>
                     </div>
                   </div>
@@ -2249,12 +2192,12 @@ function Student({user,tab,setTab,onLogout}){
               <div className="slide-up">
                 <div className="flex justify-between items-center mb-4">
                   <button onClick={()=>setActiveGame(null)} className="btn-glass btn-sm flex items-center gap-2"><Icon d={Icons.arrowLeft} size={16}/>بازگشت</button>
-                  <h3 className="font-bold gradient-text text-lg">{activeGame==='xo'&&'بازی دوز'}{activeGame==='breakout'&&'توپ و راکت'}{activeGame==='snake'&&'مار و پله'}</h3>
+                  <h3 className="font-bold gradient-text text-lg">{activeGame==='xo'&&'بازی دوز'}{activeGame==='snake'&&'مار و پله آنلاین'}{activeGame==='breakout'&&'توپ و راکت'}</h3>
                   <div className="w-20"></div>
                 </div>
                 {activeGame==='xo'&&<XOGameHub user={user}/>}
+                {activeGame==='snake'&&<SnakeGame user={user} students={[]} isAdmin={false}/>}
                 {activeGame==='breakout'&&<BreakoutGame user={user}/>}
-                {activeGame==='snake'&&<SnakeLobby user={user}/>}
               </div>
             )}
           </>
@@ -2278,7 +2221,7 @@ function Student({user,tab,setTab,onLogout}){
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">
               ⚠️ دانش‌آموز گرامی، فقط یکبار می‌توانید به نمره خود اعتراض بزنید و نتیجه شما ممکن است بدون تغییر یا افزایش و یا کاهش باشد.
             </div>
-            <div className="grid grid-cols-2 gap-2 mb-4"><button type="button" onClick={()=>setObjectionType('score')} className={`p-3 rounded-xl text-xs font-bold border ${objectionType==='score'?'bg-indigo-500/20 border-indigo-400':'bg-white/5 border-white/10'}`}>📊 اعتراض به نمره</button><button type="button" onClick={()=>setObjectionType('question')} className={`p-3 rounded-xl text-xs font-bold border ${objectionType==='question'?'bg-pink-500/20 border-pink-400':'bg-white/5 border-white/10'}`}>📝 اعتراض به سوالات</button></div><textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
             <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
           </div>
         </div>
@@ -2355,11 +2298,11 @@ function App(){
   const [tab,setTab]=useState('home');
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){try{const u=JSON.parse(s);if(u&&u.id&&u.role){setUser(u);setView(u.role)}}catch{sessionStorage.removeItem('edu_user')}}
+    if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
   },[]);
   const login=async(un,pw)=>{
-    const {data}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);
-    const row=Array.isArray(data)?data[0]:data;if(row){setUser(row);sessionStorage.setItem('edu_user',JSON.stringify(row));setView(row.role);return true;}
+    const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);const account=Array.isArray(data)?data[0]:data;if(error){console.error(error);return false;}
+    if(account){setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView(account.role);return true;}
     return false;
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
