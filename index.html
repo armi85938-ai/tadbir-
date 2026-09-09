@@ -267,22 +267,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .student-result-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
 .student-result-row:hover{background:rgba(255,255,255,0.06);border-color:rgba(129,140,248,0.3)}
 
-/* Premium chart */
-.chart-container-enhanced{padding:24px 20px 20px;overflow:visible!important;min-height:330px;background:radial-gradient(circle at 50% 0%,rgba(129,140,248,.18),transparent 58%),linear-gradient(145deg,rgba(16,18,45,.94),rgba(34,17,45,.94));border:1px solid rgba(255,255,255,.13);box-shadow:0 24px 70px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08);position:relative}
-.chart-container-enhanced canvas{position:relative;z-index:2;overflow:visible!important}
-.chart-pulse{position:absolute;inset:10px;border-radius:20px;pointer-events:none;opacity:0;box-shadow:0 0 0 0 rgba(244,114,182,.45);animation:chartPulse 1.05s ease-out 4}
-@keyframes chartPulse{0%{opacity:.85;box-shadow:0 0 0 0 rgba(244,114,182,.45)}70%{opacity:.25;box-shadow:0 0 0 22px rgba(244,114,182,0)}100%{opacity:0;box-shadow:0 0 0 32px rgba(244,114,182,0)}}
-.snake-shell{background:radial-gradient(circle at 15% 0%,rgba(56,189,248,.16),transparent 35%),radial-gradient(circle at 90% 100%,rgba(244,114,182,.16),transparent 38%),linear-gradient(145deg,rgba(12,18,42,.98),rgba(29,13,42,.98));border:1px solid rgba(255,255,255,.13);border-radius:28px;padding:16px;box-shadow:0 25px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden}
-.snake-board{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;width:min(100%,520px);margin:0 auto;padding:7px;border-radius:22px;background:rgba(3,7,23,.82);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 0 35px rgba(99,102,241,.18),0 20px 55px rgba(0,0,0,.35)}
-.snake-cell{aspect-ratio:1;min-width:0;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center;font-size:clamp(8px,2vw,13px);font-weight:900;color:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.08);transition:.2s;overflow:visible}
-.snake-cell:nth-child(odd){background:linear-gradient(135deg,rgba(59,130,246,.22),rgba(129,140,248,.09))}.snake-cell:nth-child(even){background:linear-gradient(135deg,rgba(236,72,153,.19),rgba(168,85,247,.09))}
-.snake-cell.start{box-shadow:inset 0 0 18px rgba(16,185,129,.22);border-color:rgba(52,211,153,.35)}.snake-cell.finish{box-shadow:inset 0 0 18px rgba(250,204,21,.22);border-color:rgba(250,204,21,.35)}.snake-cell.snake-head{background:linear-gradient(135deg,rgba(239,68,68,.42),rgba(190,24,93,.2));border-color:rgba(248,113,113,.55)}.snake-cell.ladder-start{background:linear-gradient(135deg,rgba(16,185,129,.36),rgba(14,116,144,.2));border-color:rgba(52,211,153,.5)}
-.snake-number{position:absolute;top:2px;right:3px;font-size:8px;opacity:.65}.snake-icon{font-size:clamp(15px,4vw,28px);filter:drop-shadow(0 5px 6px rgba(0,0,0,.45));z-index:1}
-.snake-token{width:clamp(18px,5vw,31px);height:clamp(18px,5vw,31px);border-radius:50%;position:absolute;bottom:2px;left:2px;border:2px solid rgba(255,255,255,.9);box-shadow:0 5px 12px rgba(0,0,0,.45);z-index:5;display:flex;align-items:center;justify-content:center;font-size:clamp(11px,3vw,18px);padding:0;background:rgba(255,255,255,.14);cursor:pointer}.snake-token.p2{left:auto;right:2px}
-.snake-lobby-card{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);border-radius:20px;padding:13px;transition:.25s}.snake-lobby-card:hover{transform:translateY(-2px);border-color:rgba(129,140,248,.35);background:rgba(129,140,248,.08)}
-.snake-dice{width:82px;height:82px;border-radius:24px;background:linear-gradient(145deg,#fff,#dbeafe);color:#111827;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;box-shadow:0 14px 35px rgba(59,130,246,.32),inset 0 2px 5px rgba(255,255,255,.9);border:3px solid rgba(255,255,255,.75);cursor:pointer;transition:.2s;user-select:none}.snake-dice:active{transform:scale(.9) rotate(-8deg)}.snake-dice.rolling{animation:diceRoll .7s ease-in-out infinite}.snake-dice.disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.4)}
-@keyframes diceRoll{0%,100%{transform:rotate(0) scale(1)}25%{transform:rotate(12deg) scale(1.06)}50%{transform:rotate(-14deg) scale(.94)}75%{transform:rotate(8deg) scale(1.04)}}
-@media(max-width:520px){.snake-shell{padding:10px;border-radius:22px}.snake-board{gap:2px;padding:5px}.snake-cell{border-radius:5px}.chart-container-enhanced{padding:18px 10px 14px}}
+/* ===== Premium grades + snakes & ladders ===== */
+.chart-container-enhanced{overflow:visible!important;padding:28px 18px 24px!important;min-height:360px;background:radial-gradient(circle at 50% 0%,rgba(129,140,248,.18),transparent 52%),linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.13);box-shadow:0 25px 70px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08)}
+.chart-stage{position:relative;height:300px;padding:8px 2px 0}
+.chart-pulse{position:absolute;inset:0;border-radius:24px;pointer-events:none;box-shadow:0 0 0 0 rgba(129,140,248,.0);animation:chartPulse 1.2s ease-in-out infinite}
+.chart-pulse.done{animation:none;box-shadow:none}
+@keyframes chartPulse{0%,100%{box-shadow:0 0 0 0 rgba(129,140,248,.0)}50%{box-shadow:0 0 38px 3px rgba(129,140,248,.12)}}
+.chart-selected{margin-top:14px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,rgba(129,140,248,.14),rgba(244,114,182,.10));border:1px solid rgba(255,255,255,.1);text-align:center;animation:fadeIn .35s ease}
+.snake-shell{background:radial-gradient(circle at 15% 10%,rgba(34,211,238,.18),transparent 28%),radial-gradient(circle at 85% 85%,rgba(236,72,153,.18),transparent 30%),linear-gradient(145deg,#11152f,#17102b);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:16px;box-shadow:0 30px 90px rgba(0,0,0,.45);overflow:hidden}
+.snake-board{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;background:rgba(255,255,255,.07);padding:5px;border-radius:20px;box-shadow:inset 0 0 30px rgba(0,0,0,.35)}
+.snake-cell{aspect-ratio:1;min-width:0;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;color:rgba(255,255,255,.72);background:linear-gradient(145deg,rgba(129,140,248,.18),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.07);overflow:visible}
+.snake-cell:nth-child(4n){background:linear-gradient(145deg,rgba(244,114,182,.18),rgba(255,255,255,.04))}.snake-cell:nth-child(4n+1){background:linear-gradient(145deg,rgba(34,211,238,.16),rgba(255,255,255,.04))}.snake-cell.start{box-shadow:inset 0 0 0 2px rgba(52,211,153,.5)}
+.snake-token{position:absolute;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid rgba(255,255,255,.85);box-shadow:0 5px 15px rgba(0,0,0,.45);z-index:4;animation:tokenFloat 1.8s ease-in-out infinite}
+.snake-token.p1{background:linear-gradient(135deg,#38bdf8,#6366f1)}.snake-token.p2{background:linear-gradient(135deg,#fb7185,#f59e0b);margin-left:12px}
+@keyframes tokenFloat{50%{transform:translateY(-3px) scale(1.04)}}
+.snake-ladder-mark{position:absolute;font-size:17px;z-index:2;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}.snake-action{border-radius:18px;padding:13px;background:linear-gradient(135deg,rgba(129,140,248,.18),rgba(192,132,252,.12));border:1px solid rgba(129,140,248,.25)}
+.snake-dice{width:74px;height:74px;border-radius:20px;background:linear-gradient(145deg,#fff,#dbe4ff);color:#111827;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:1000;box-shadow:0 15px 35px rgba(129,140,248,.28);cursor:pointer;transition:transform .2s}.snake-dice:active{transform:scale(.9) rotate(8deg)}
+.snake-dice.rolling{animation:diceRoll .6s ease-in-out}.snake-dots{font-size:24px;letter-spacing:2px;line-height:1.1}
+@keyframes diceRoll{0%{transform:rotate(0) scale(1)}25%{transform:rotate(18deg) scale(1.08)}50%{transform:rotate(-18deg) scale(.94)}75%{transform:rotate(12deg) scale(1.06)}100%{transform:rotate(0) scale(1)}}
+.snake-request-card{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:14px;box-shadow:0 12px 35px rgba(0,0,0,.2)}
 
 </style>
 </head>
@@ -1244,42 +1247,6 @@ function BreakoutGame({user}){
   );
 }
 
-
-function SnakeLaddersGame({user,onBack,roomId}){
-  const [room,setRoom]=useState(null);const [rolling,setRolling]=useState(false);const [dice,setDice]=useState(null);const [pendingMove,setPendingMove]=useState(null);const [notice,setNotice]=useState('');
-  const snakes={30:10,39:3,47:26,56:53,73:52,82:59,92:72,98:78};const ladders={4:25,13:46,27:55,42:63,50:69,62:83,74:88};
-  const load=async()=>{if(!roomId)return;const {data}=await SB.from('snake_rooms').select('*').eq('id',roomId).maybeSingle();if(data)setRoom(data)};
-  useEffect(()=>{load();const iv=setInterval(load,1200);return()=>clearInterval(iv)},[roomId]);
-  const mySlot=room&&Number(room.player1_id)===Number(user.id)?'player1':room&&Number(room.player2_id)===Number(user.id)?'player2':null;const pos=room?(mySlot==='player1'?Number(room.player1_pos||0):Number(room.player2_pos||0)):0;const myTurn=!!room&&room.status==='playing'&&Number(room.turn_id)===Number(user.id);
-  const roll=async()=>{if(!myTurn||rolling||pendingMove!==null)return;setRolling(true);setNotice('تاس در حال چرخش...');await new Promise(r=>setTimeout(r,750));const v=Math.floor(Math.random()*6)+1;setDice(v);setPendingMove(v);setNotice(`🎲 ${v} آمد! حالا روی مهره خودت بزن.`);setRolling(false)};
-  const move=async()=>{if(!myTurn||pendingMove===null)return;const v=pendingMove;const landing=Math.min(100,pos+v);let final=landing,msg=`حرکت ${v} خانه‌ای انجام شد.`;if(snakes[landing]){final=snakes[landing];msg=`🐍 دقیقاً روی ${landing} فرود آمدی و به ${final} رفتی!`}else if(ladders[landing]){final=ladders[landing];msg=`🪜 دقیقاً روی ${landing} فرود آمدی و به ${final} رسیدی!`}const otherId=mySlot==='player1'?room.player2_id:room.player1_id;const updates=mySlot==='player1'?{player1_pos:final,turn_id:otherId}:{player2_pos:final,turn_id:room.player1_id};if(final>=100){updates.status='finished';updates.winner_id=user.id;msg='🏆 برنده شدی!'}const {error}=await SB.from('snake_rooms').update(updates).eq('id',room.id);if(error){setNotice('خطا در ثبت حرکت: '+error.message);return}setPendingMove(null);setDice(null);setNotice(msg);setTimeout(load,250)};
-  const cells=[];for(let row=9;row>=0;row--){const base=row*10;const nums=row%2===0?Array.from({length:10},(_,i)=>base+i+1):Array.from({length:10},(_,i)=>base+10-i);cells.push(...nums)}
-  const token=(slot,n)=>{if(!room)return null;const p=slot==='player1'?Number(room.player1_pos||0):Number(room.player2_pos||0);if(p!==n)return null;const t=slot==='player1'?(room.player1_token||'🔵'):(room.player2_token||'🟣');return <button title="برای حرکت ضربه بزن" onClick={slot===mySlot?move:undefined} className={`snake-token ${slot==='player2'?'p2':''}`}>{t}</button>};
-  if(!room)return <div className="snake-shell text-center p-8"><div className="text-5xl animate-pulse mb-3">🐍</div><p className="text-white/60">در حال ورود به میز بازی...</p></div>;
-  return <div className="snake-shell slide-up"><div className="flex justify-between items-center mb-3"><button onClick={onBack} className="btn-glass btn-sm">← خروج</button><div className="text-center"><div className="font-black gradient-text text-lg">مار و پله</div><div className="text-[10px] text-white/40">اتاق #{room.id}</div></div><div className="w-16"/></div>
-    <div className="grid grid-cols-2 gap-2 mb-3"><div className={`snake-lobby-card text-center ${Number(room.turn_id)===Number(room.player1_id)?'border-sky-400/50':''}`}><div className="text-xs text-white/50">بازیکن ۱</div><div className="font-bold text-sky-300">{room.player1_name||'بازیکن'}</div><div className="text-xs mt-1">خانه {room.player1_pos||0}</div></div><div className={`snake-lobby-card text-center ${Number(room.turn_id)===Number(room.player2_id)?'border-pink-400/50':''}`}><div className="text-xs text-white/50">بازیکن ۲</div><div className="font-bold text-pink-300">{room.player2_name||'در انتظار...'}</div><div className="text-xs mt-1">خانه {room.player2_pos||0}</div></div></div>
-    <div className="snake-board mb-4">{cells.map(n=><div key={n} className={`snake-cell ${n===1?'start':''} ${n===100?'finish':''} ${snakes[n]?'snake-head':''} ${ladders[n]?'ladder-start':''}`}><span className="snake-number">{n}</span>{snakes[n]&&<span className="snake-icon">🐍</span>}{ladders[n]&&<span className="snake-icon">🪜</span>}{token('player1',n)}{token('player2',n)}</div>)}</div>
-    <div className="flex flex-col items-center gap-2"><div className="text-sm text-white/60 text-center">{room.status==='finished'?(Number(room.winner_id)===Number(user.id)?'🏆 تبریک! تو برنده شدی.':'🏁 بازی تمام شد.'):(pendingMove!==null?'حالا روی مهره خودت بزن.':myTurn?'نوبت توست؛ روی تاس بزن.':'نوبت حریف است؛ منتظر بمان.')}</div><div className={`snake-dice ${rolling?'rolling':''} ${!myTurn||room.status!=='playing'||pendingMove!==null?'disabled':''}`} onClick={roll}>{rolling?'🎲':(dice||'🎲')}</div>{pendingMove!==null&&myTurn&&<div className="text-xs text-emerald-300 animate-pulse">روی مهره خودت بزن تا {pendingMove} خانه حرکت کند.</div>}{notice&&<div className="text-xs text-center text-indigo-200 min-h-5">{notice}</div>}</div>
-  </div>;
-}
-
-function SnakeLaddersLobby({user,onOpen}){
-  const [users,setUsers]=useState([]);const [incoming,setIncoming]=useState([]);const [outgoing,setOutgoing]=useState([]);const [accepted,setAccepted]=useState([]);const [loading,setLoading]=useState(false);const toast=useToast();
-  const load=async()=>{const {data:u}=await SB.from('users').select('id,full_name,username,role').neq('id',user.id);if(u)setUsers(u);const {data:i}=await SB.from('snake_requests').select('*,from_user_data:users!snake_requests_from_user_fkey(full_name,username,role)').eq('to_user',user.id).eq('status','pending').order('created_at',{ascending:false});if(i)setIncoming(i);const {data:o}=await SB.from('snake_requests').select('*,to_user_data:users!snake_requests_to_user_fkey(full_name,username,role)').eq('from_user',user.id).eq('status','pending').order('created_at',{ascending:false});if(o)setOutgoing(o);const {data:a}=await SB.from('snake_requests').select('*,to_user_data:users!snake_requests_to_user_fkey(full_name,username,role)').eq('from_user',user.id).eq('status','accepted').order('created_at',{ascending:false}).limit(5);if(a)setAccepted(a)};
-  useEffect(()=>{load();const iv=setInterval(load,1500);return()=>clearInterval(iv)},[]);
-  useEffect(()=>{const iv=setInterval(async()=>{const now=Date.now();const all=[...incoming,...outgoing];for(const r of all)if(r.status==='pending'&&new Date(r.expires_at).getTime()<=now)await SB.from('snake_requests').update({status:'expired'}).eq('id',r.id)},1000);return()=>clearInterval(iv)},[incoming,outgoing]);
-  const remaining=r=>Math.max(0,Math.ceil((new Date(r.expires_at).getTime()-Date.now())/1000));
-  const send=async(to)=>{setLoading(true);const tokens=['🔵','🟣','🟢','🟠','🔴','🟡'];const token=tokens[Math.floor(Math.random()*tokens.length)];const {data:room,error}=await SB.from('snake_rooms').insert({player1_id:user.id,player1_name:user.full_name,player1_pos:0,player2_pos:0,player1_token:token,status:'waiting'}).select().single();if(error){toast('برای مار و پله ابتدا جداول مخصوص آن را در Supabase بسازید.','error');setLoading(false);return}const {error:e}=await SB.from('snake_requests').insert({from_user:user.id,to_user:to,room_id:room.id,status:'pending',expires_at:new Date(Date.now()+120000).toISOString()});if(e){await SB.from('snake_rooms').delete().eq('id',room.id);toast('خطا در ارسال درخواست: '+e.message,'error')}else toast('🎮 درخواست ارسال شد؛ ۲ دقیقه فرصت پذیرش دارد.','success');setLoading(false);load()};
-  const accept=async(r)=>{const {data:old}=await SB.from('snake_rooms').select('player1_token').eq('id',r.room_id).maybeSingle();const tokens=['🔵','🟣','🟢','🟠','🔴','🟡'];let token=tokens[Math.floor(Math.random()*tokens.length)];if(old?.player1_token===token)token=tokens[(tokens.indexOf(token)+1)%tokens.length];const {error}=await SB.from('snake_rooms').update({player2_id:user.id,player2_name:user.full_name,player2_token:token,status:'playing',turn_id:r.from_user}).eq('id',r.room_id);if(error){toast('خطا در ورود: '+error.message,'error');return}await SB.from('snake_requests').update({status:'accepted'}).eq('id',r.id);onOpen(r.room_id)};
-  const reject=async(r)=>{await SB.from('snake_requests').update({status:'rejected'}).eq('id',r.id);await SB.from('snake_rooms').delete().eq('id',r.room_id);load()};
-  return <div className="snake-shell slide-up"><div className="text-center mb-5"><div className="text-6xl mb-2">🐍🪜</div><h3 className="text-2xl font-black gradient-text">اتاق مار و پله</h3><p className="text-xs text-white/45 mt-1">به دانش‌آموز یا مدیر درخواست بده؛ هر درخواست ۲ دقیقه فرصت دارد.</p></div>
-    {incoming.length>0&&<div className="mb-4"><h4 className="font-bold text-sm text-pink-300 mb-2">🔔 درخواست‌های دریافتی</h4>{incoming.map(r=><div className="snake-lobby-card mb-2" key={r.id}><div className="flex justify-between items-center gap-2"><div><b>{r.from_user_data?.full_name||'کاربر'}</b><p className="text-[10px] text-white/40">{r.from_user_data?.role==='admin'?'👑 مدیر':'🎓 دانش‌آموز'} • {remaining(r)} ثانیه</p></div><div className="flex gap-2"><button onClick={()=>accept(r)} className="btn-glass btn-glass-success btn-sm">قبول</button><button onClick={()=>reject(r)} className="btn-glass btn-glass-danger btn-sm">رد</button></div></div></div>)}</div>}
-    {outgoing.length>0&&<div className="mb-4"><h4 className="font-bold text-sm text-sky-300 mb-2">⏳ درخواست‌های در انتظار</h4>{outgoing.map(r=><div className="snake-lobby-card mb-2" key={r.id}><div className="flex justify-between items-center"><div><b>{r.to_user_data?.full_name||'کاربر'}</b><p className="text-[10px] text-white/40">در انتظار پاسخ • {remaining(r)} ثانیه</p></div><span className="animate-pulse">🎮</span></div></div>)}</div>}
-    {accepted.length>0&&<div className="mb-4"><h4 className="font-bold text-sm text-emerald-300 mb-2">✅ بازی آماده است</h4>{accepted.map(r=><div className="snake-lobby-card mb-2" key={r.id}><div className="flex justify-between items-center gap-2"><div><b>{r.to_user_data?.full_name||'حریف'}</b><p className="text-[10px] text-white/40">حریف درخواست را پذیرفت.</p></div><button onClick={()=>onOpen(r.room_id)} className="btn-glass btn-glass-success btn-sm">شروع بازی</button></div></div>)}</div>}
-    <h4 className="font-bold text-sm text-white/70 mb-2">انتخاب حریف</h4><div className="space-y-2 max-h-[45vh] overflow-y-auto">{users.map(u=><div className="snake-lobby-card" key={u.id}><div className="flex items-center justify-between gap-3"><div className="flex items-center gap-3"><div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500 to-purple-500 flex items-center justify-center font-black">{u.full_name?.[0]||'؟'}</div><div><b className="text-sm">{u.full_name}</b><p className="text-[10px] text-white/35">{u.role==='admin'?'👑 مدیر':'🎓 دانش‌آموز'}</p></div></div><button disabled={loading} onClick={()=>send(u.id)} className="btn-glass btn-sm">درخواست بازی</button></div></div>)}{users.length===0&&<p className="text-center text-white/30 py-8">کاربر دیگری پیدا نشد.</p>}</div>
-  </div>;
-}
-
 function ChatModal({user,onClose}){
   const [messages,setMessages]=useState([]);
   const [chatText,setChatText]=useState('');
@@ -1466,11 +1433,11 @@ function Admin({user,tab,setTab,onLogout}){
   const [replyText,setReplyText]=useState('');
   const [selectedChat,setSelectedChat]=useState(null);
   const [showExamResults,setShowExamResults]=useState(null);
-  const [adminSnakeRoom,setAdminSnakeRoom]=useState(null);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{const t=setInterval(()=>setObjectionClock(Date.now()),1000);return()=>clearInterval(t);},[]);
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
@@ -1534,7 +1501,7 @@ function Admin({user,tab,setTab,onLogout}){
   };
 
   const updateStudentScore=async(answerId,newScore)=>{
-    await SB.from('answers').update({score:parseFloat(newScore),status:'graded',graded_at:new Date().toISOString()}).eq('id',answerId);
+    await SB.from('answers').update({score:parseFloat(newScore),status:'graded'}).eq('id',answerId);
     loadAll();
     toast('✅ نمره ویرایش شد','success');
   };
@@ -1587,7 +1554,7 @@ function Admin({user,tab,setTab,onLogout}){
         {tab==='students'&&(
           <>
             <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              {[['list','دانش‌آموزان'],['objections',`اعتراض‌ها (${objections.length})`],['messages','پیام‌ها']].map(([k,l])=>(
+              {[['list','دانش‌آموزان'],['objections',`اعتراض‌ها (${objections.length})`],['messages','پیام‌ها'],['snake','🐍 مار و پله']].map(([k,l])=>(
                 <button key={k} onClick={()=>setSubTab(k)} className={`btn-sm whitespace-nowrap ${subTab===k?'btn-glass':'bg-white/5'}`}>{l}</button>
               ))}
             </div>
@@ -1623,6 +1590,7 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))
             )}
+            {subTab==='snake'&&(<div className="slide-up"><SnakeGameHub user={user}/></div>)}
             {subTab==='messages'&&(
               <div className="glass-strong p-4 h-[60vh] flex flex-col">
                 {!selectedChat?(
@@ -1659,8 +1627,6 @@ function Admin({user,tab,setTab,onLogout}){
             )}
           </>
         )}
-        {tab==='games'&&(<><div className="mb-4"><h3 className="font-bold text-lg gradient-text">🐍 مدیریت مار و پله</h3><p className="text-xs text-white/40 mt-1">درخواست‌های بازی و ورود به اتاق‌های مار و پله</p></div><SnakeLaddersLobby user={user} onOpen={(room)=>{setAdminSnakeRoom(room);setTab('snake-room')}}/></>)}
-        {tab==='snake-room'&&(<SnakeLaddersGame user={user} roomId={adminSnakeRoom} onBack={()=>setTab('games')}/>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -1682,7 +1648,7 @@ function Admin({user,tab,setTab,onLogout}){
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>{setTab('students');setSubTab('list');}}><Icon d={Icons.users}/><span>کاربران</span></div>
-        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div><div className={`nav-item ${tab==='games'?'active':''}`} onClick={()=>setTab('games')}><span style={{fontSize:'22px'}}>🐍</span><span>بازی</span></div>
+        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
       </div>
       {modal==='exam'&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
@@ -1790,6 +1756,104 @@ function Admin({user,tab,setTab,onLogout}){
   );
 }
 
+function SnakeGameHub({user}){
+  const [view,setView]=useState('lobby');
+  const [users,setUsers]=useState([]);
+  const [incoming,setIncoming]=useState([]);
+  const [outgoing,setOutgoing]=useState([]);
+  const [room,setRoom]=useState(null);
+  const [selectedUser,setSelectedUser]=useState('');
+  const [rolling,setRolling]=useState(false);
+  const [dice,setDice]=useState(1);
+  const [needsRoll,setNeedsRoll]=useState(false);
+  const toast=useToast();
+  const snakes={30:10,47:26,62:18,88:68,96:76};
+  const ladders={3:22,8:30,21:42,28:56,51:72,71:92,80:99};
+  const diceFaces={1:'⚀',2:'⚁',3:'⚂',4:'⚃',5:'⚄',6:'⚅'};
+
+  const load=async()=>{
+    const {data:u}=await SB.from('users').select('id,full_name,username,role').neq('id',user.id).order('full_name');
+    if(u)setUsers(u);
+    const {data:i}=await SB.from('snake_requests').select('*,from_user_data:users!snake_requests_from_user_fkey(full_name,username,role)').eq('to_user',user.id).eq('status','pending').order('created_at',{ascending:false});
+    if(i)setIncoming(i);
+    const {data:o}=await SB.from('snake_requests').select('*,to_user_data:users!snake_requests_to_user_fkey(full_name,username,role)').eq('from_user',user.id).in('status',['pending','accepted']).order('created_at',{ascending:false});
+    if(o)setOutgoing(o);
+  };
+  useEffect(()=>{
+    load();
+    const ch=SB.channel('snake-'+user.id)
+      .on('postgres_changes',{event:'*',schema:'public',table:'snake_requests',filter:`to_user=eq.${user.id}`},()=>load())
+      .on('postgres_changes',{event:'*',schema:'public',table:'snake_requests',filter:`from_user=eq.${user.id}`},()=>load())
+      .on('postgres_changes',{event:'UPDATE',schema:'public',table:'snake_rooms'},p=>{if(room&&String(p.new.id)===String(room.id))setRoom(p.new);})
+      .subscribe();
+    return()=>SB.removeChannel(ch);
+  },[user.id,room?.id]);
+  useEffect(()=>{if(room&&room.status==='playing')setView('game');},[room?.status]);
+
+  const send=async()=>{
+    if(!selectedUser)return;
+    const target=users.find(x=>String(x.id)===String(selectedUser));
+    const expires=new Date(Date.now()+120000).toISOString();
+    const {data:r,error:re}=await SB.from('snake_rooms').insert({player1_id:user.id,player1_name:user.full_name,player1_pos:0,status:'waiting'}).select().single();
+    if(re){toast('خطا در ساخت اتاق: '+re.message,'error');return;}
+    const {error}=await SB.from('snake_requests').insert({from_user:user.id,to_user:selectedUser,room_id:r.id,status:'pending',expires_at:expires});
+    if(error){await SB.from('snake_rooms').delete().eq('id',r.id);toast('خطا در ارسال درخواست: '+error.message,'error');return;}
+    toast(`🎮 درخواست بازی برای ${target?.full_name||'کاربر'} ارسال شد`,'success');setSelectedUser('');load();
+  };
+  const accept=async(req)=>{
+    if(new Date(req.expires_at).getTime()<=Date.now()){await SB.from('snake_requests').update({status:'expired'}).eq('id',req.id);load();toast('⏰ زمان درخواست تمام شده','warning');return;}
+    const {error}=await SB.from('snake_rooms').update({player2_id:user.id,player2_name:user.full_name,player2_pos:0,status:'ready'}).eq('id',req.room_id);
+    if(error){toast('خطا: '+error.message,'error');return;}
+    await SB.from('snake_requests').update({status:'accepted'}).eq('id',req.id);
+    const {data:r}=await SB.from('snake_rooms').select('*').eq('id',req.room_id).single();setRoom(r);setView('ready');load();
+  };
+  const reject=async(req)=>{await SB.from('snake_requests').update({status:'rejected'}).eq('id',req.id);await SB.from('snake_rooms').delete().eq('id',req.room_id);load();toast('درخواست رد شد','warning');};
+  const start=async(roomId)=>{
+    const {data:r}=await SB.from('snake_rooms').select('*').eq('id',roomId).single();if(!r)return;
+    const first=Math.random()<.5?r.player1_id:r.player2_id;
+    const token1=['🦊','🐯','🐼','🦄','🚀'][Math.floor(Math.random()*5)];const token2=['🐸','🐨','🐙','🐲','⭐'][Math.floor(Math.random()*5)];
+    const {data:n}=await SB.from('snake_rooms').update({status:'playing',turn_id:first,player1_token:token1,player2_token:token2}).eq('id',roomId).select().single();
+    if(n){setRoom(n);setView('game');setNeedsRoll(first===user.id);}
+  };
+  const currentPlayer=()=>room?.turn_id===user.id?'شما':(room?.player1_id===user.id?room?.player2_name:room?.player1_name);
+  const mySlot=room?.player1_id===user.id?'player1':'player2';
+  const myPos=room?.[mySlot+'_pos']||0;
+  const doRoll=async()=>{
+    if(!room||room.status!=='playing'||room.turn_id!==user.id||rolling)return;
+    setRolling(true);let n=1;const timer=setInterval(()=>{n=1+Math.floor(Math.random()*6);setDice(n);},80);
+    setTimeout(async()=>{clearInterval(timer);setRolling(false);setDice(n);setNeedsRoll(false);toast(`🎲 عدد تاس: ${n}`,'success');},600);
+  };
+  const moveMyPiece=async()=>{
+    if(!room||room.status!=='playing'||room.turn_id!==user.id||rolling||!dice)return;
+    let next=Math.min(100,myPos+dice);let final=next;
+    if(snakes[next])final=snakes[next];else if(ladders[next])final=ladders[next];
+    const update={};update[mySlot+'_pos']=final;
+    if(final>=100){update.status='finished';update.winner_id=user.id;}
+    else update.turn_id=room.player1_id===user.id?room.player2_id:room.player1_id;
+    const {data,error}=await SB.from('snake_rooms').update(update).eq('id',room.id).select().single();
+    if(error){toast('خطا در حرکت: '+error.message,'error');return;}
+    setRoom(data);setDice(1);setNeedsRoll(false);
+    if(final!==next)toast(snakes[next]?`🐍 مار! رفتی خانه ${final}`:`🪜 نردبان! رفتی خانه ${final}`,'warning');
+  };
+  const cells=[];for(let row=9;row>=0;row--){const nums=Array.from({length:10},(_,i)=>row*10+i+1);if(row%2===1)nums.reverse();cells.push(...nums);}
+  const tokenAt=(num)=>{const arr=[];if(room?.player1_pos===num)arr.push(<span key="p1" className="snake-token p1">{room.player1_token||'🔵'}</span>);if(room?.player2_pos===num)arr.push(<span key="p2" className="snake-token p2">{room.player2_token||'🔴'}</span>);return arr;};
+  if(view==='game'||view==='ready')return <div className="snake-shell slide-up">
+    <div className="flex justify-between items-center mb-4"><div><p className="text-[10px] text-white/35">مار و پله آنلاین</p><h3 className="font-black gradient-text text-lg">{view==='ready'?'اتاق آماده است':'نبرد ۱۰۰ خانه‌ای'}</h3></div><span className="badge badge-approved">{room?.status==='finished'?'پایان بازی':'۲ نفره'}</span></div>
+    {view==='ready'&&<div className="snake-action mb-4 text-center"><p className="font-bold mb-2">🎉 حریف پذیرفت!</p><p className="text-xs text-white/45 mb-3">هر دو بازیکن آماده‌اند؛ شروع بازی را بزنید.</p><button className="btn-glass btn-glass-success" onClick={()=>start(room.id)}>🚀 شروع بازی</button></div>}
+    <div className="snake-board">{cells.map(num=><div key={num} className={`snake-cell ${num===1?'start':''}`}><span>{num}</span>{num===1&&<span className="absolute bottom-0.5 text-[8px] text-emerald-300">START</span>}{snakes[num]&&<span className="snake-ladder-mark">🐍</span>}{ladders[num]&&<span className="snake-ladder-mark">🪜</span>}{tokenAt(num)}</div>)}</div>
+    <div className="grid grid-cols-3 gap-2 mt-4"><div className="snake-action text-center"><p className="text-[10px] text-white/35">بازیکن اول</p><p className="font-bold text-xs mt-1 truncate">{room?.player1_name}</p><p className="text-lg">{room?.player1_token}</p></div><div className="snake-action flex flex-col items-center justify-center"><button className={`snake-dice ${rolling?'rolling':''}`} onClick={doRoll} disabled={room?.turn_id!==user.id||room?.status!=='playing'}>{diceFaces[dice]}</button><p className="text-[9px] text-white/40 mt-2">{room?.turn_id===user.id?'تاس را بزن':'نوبت حریف'}</p></div><div className="snake-action text-center"><p className="text-[10px] text-white/35">بازیکن دوم</p><p className="font-bold text-xs mt-1 truncate">{room?.player2_name||'...'}</p><p className="text-lg">{room?.player2_token}</p></div></div>
+    {room?.turn_id===user.id&&room.status==='playing'&&<button onClick={moveMyPiece} className="btn-glass btn-glass-success mt-3" disabled={rolling||dice===1&&false}>🎯 روی مهره من بزن تا {dice} خانه حرکت کند</button>}
+    {room?.status==='finished'&&<div className="mt-3 text-center text-emerald-300 font-black">🏆 برنده: {room.winner_id===user.id?'شما':'حریف'}</div>}
+  </div>;
+  return <div className="snake-shell slide-up">
+    <div className="text-center mb-5"><div className="text-5xl mb-2">🐍🪜</div><h3 className="font-black text-xl gradient-text">مار و پله آنلاین</h3><p className="text-xs text-white/40 mt-1">یک حریف انتخاب کن؛ درخواست فقط ۲ دقیقه اعتبار دارد.</p></div>
+    {incoming.length>0&&<div className="space-y-2 mb-4"><h4 className="font-bold text-sm">🔔 درخواست‌های دریافتی</h4>{incoming.map(r=><div key={r.id} className="snake-request-card"><div className="flex items-center justify-between gap-3"><div><p className="font-bold text-sm">{r.from_user_data?.full_name||'کاربر'}</p><p className="text-[10px] text-white/35">درخواست بازی مار و پله</p></div><div className="flex gap-2"><button className="btn-glass btn-glass-success btn-sm" onClick={()=>accept(r)}>قبول</button><button className="btn-glass btn-glass-danger btn-sm" onClick={()=>reject(r)}>رد</button></div></div><p className="text-[10px] text-amber-300 mt-2">⏳ مهلت تا {new Date(r.expires_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}</p></div>)}</div>}
+    {outgoing.filter(r=>r.status==='accepted').map(r=><div key={r.id} className="snake-request-card mb-3"><p className="font-bold text-sm">🎉 {r.to_user_data?.full_name||'حریف'} درخواست را قبول کرده</p><button className="btn-glass btn-glass-success mt-3" onClick={()=>{SB.from('snake_rooms').select('*').eq('id',r.room_id).single().then(({data})=>{setRoom(data);setView('ready');})}}>🚀 شروع بازی</button></div>)}
+    <div className="glass p-4"><label className="text-xs text-white/45 block mb-2">انتخاب حریف</label><select className="glass-input mb-3" value={selectedUser} onChange={e=>setSelectedUser(e.target.value)}><option value="">یک دانش‌آموز یا مدیر انتخاب کن...</option>{users.map(u=><option key={u.id} value={u.id}>{u.full_name} — {u.role==='admin'?'مدیر':'دانش‌آموز'}</option>)}</select><button className="btn-glass btn-glass-success" onClick={send} disabled={!selectedUser}>🎮 ارسال درخواست بازی</button></div>
+    {outgoing.filter(r=>r.status==='pending').length>0&&<div className="mt-4 space-y-2"><h4 className="font-bold text-sm">⏳ درخواست‌های من</h4>{outgoing.filter(r=>r.status==='pending').map(r=><div className="snake-request-card" key={r.id}><p className="text-xs">در انتظار پاسخ <b>{r.to_user_data?.full_name||'کاربر'}</b></p><p className="text-[10px] text-amber-300 mt-1">مهلت تا {new Date(r.expires_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}</p></div>)}</div>}
+  </div>;
+}
+
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
@@ -1801,6 +1865,9 @@ function Student({user,tab,setTab,onLogout}){
   const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);
   const [objectionText,setObjectionText]=useState('');
+  const [objectionType,setObjectionType]=useState('score');
+  const [objectionOpen,setObjectionOpen]=useState({});
+  const [objectionClock,setObjectionClock]=useState(Date.now());
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
   const [checklist,setChecklist]=useState([]);
   const [newTask,setNewTask]=useState('');
@@ -1812,11 +1879,11 @@ function Student({user,tab,setTab,onLogout}){
   const [showChat,setShowChat]=useState(false);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [activeGame,setActiveGame]=useState(null);
-  const [snakeRoomId,setSnakeRoomId]=useState(null);
   const [hasSubmitted,setHasSubmitted]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{const t=setInterval(()=>setObjectionClock(Date.now()),1000);return()=>clearInterval(t);},[]);
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
@@ -1880,16 +1947,13 @@ function Student({user,tab,setTab,onLogout}){
 
   const submitObjection=async()=>{
     if(!objectionText.trim()||!selectedExamForObjection)return;
-    if(!canObj(selectedExamForObjection)){toast('مهلت اعتراض به پایان رسیده است','warning');return;}
-    const examAnswers=answers.filter(a=>a.exam_id===selectedExamForObjection);
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(selectedExamForObjection));
+    const payload=`[${objectionType==='score'?'اعتراض به نمره':'اعتراض به سوالات'}] ${objectionText.trim()}`;
     for(const a of examAnswers){
-      await SB.from('answers').update({objection:`[${objectionType}] ${objectionText.trim()}`}).eq('id',a.id);
+      await SB.from('answers').update({objection:payload}).eq('id',a.id);
     }
     toast('✅ اعتراض ثبت شد!','success');
-    setShowObjection(null);
-    setSelectedExamForObjection(null);
-    setObjectionText('');
-    loadAll();
+    setShowObjection(null);setSelectedExamForObjection(null);setObjectionText('');setObjectionType('score');loadAll();
   };
 
   const addTask=async()=>{
@@ -1941,14 +2005,43 @@ function Student({user,tab,setTab,onLogout}){
     return avg.toFixed(2);
   };
 
-  const canObj=(examId)=>{const aa=answers.filter(a=>String(a.exam_id)===String(examId));if(!aa.length||aa.some(a=>a.objection))return false;const g=aa.find(a=>a.graded_at)?.graded_at||aa.find(a=>a.status==='graded')?.created_at;if(!g)return false;return Date.now()<new Date(g).getTime()+48*60*60*1000;};
-  const canObject=canObj;
+  const getObjectionDeadline=(examId)=>{
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
+    if(!examAnswers.length)return null;
+    const gradedTimes=examAnswers.map(a=>a.graded_at||a.updated_at||a.created_at).filter(Boolean).map(x=>new Date(x).getTime()).filter(Number.isFinite);
+    if(!gradedTimes.length)return null;
+    return Math.min(...gradedTimes)+48*60*60*1000;
+  };
+  const canObject=(examId)=>{
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
+    if(!examAnswers.length||examAnswers.some(a=>a.objection))return false;
+    const deadline=getObjectionDeadline(examId);
+    return deadline!==null&&Date.now()<deadline;
+  };
+  const objectionStatus=(examId)=>{
+    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
+    if(!examAnswers.length)return {state:'none'};
+    if(examAnswers.some(a=>a.objection))return {state:'submitted'};
+    const deadline=getObjectionDeadline(examId);
+    if(deadline===null)return {state:'unknown'};
+    const remaining=Math.max(0,deadline-objectionClock);
+    return remaining>0?{state:'active',remaining}:{state:'expired'};
+  };
 
   useEffect(()=>{
-    if(tab!=='chart')return;const ctx=document.getElementById('gradeChart');if(!ctx)return;if(window.myChart){window.myChart.destroy();window.myChart=null;}
-    const examData=exams.filter(ex=>getExamScore(ex)).map(ex=>{const sc=getExamScore(ex.id);return{title:ex.title,score:parseFloat(sc.percentage),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date));if(!examData.length)return;
-    const g=ctx.getContext('2d').createLinearGradient(0,0,ctx.clientWidth||500,0);g.addColorStop(0,'#60a5fa');g.addColorStop(.45,'#c084fc');g.addColorStop(1,'#f472b6');
-    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:g,borderWidth:5,tension:.48,fill:true,backgroundColor:'rgba(129,140,248,.10)',pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:3,pointRadius:9,pointHoverRadius:13,pointHitRadius:18}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:28,right:10,left:8,bottom:4}},animation:{duration:2600,easing:'easeOutQuart'},interaction:{mode:'nearest',intersect:true,axis:'xy'},events:['click','touchstart'],plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(10,10,26,.96)',borderColor:'rgba(244,114,182,.5)',borderWidth:1,titleColor:'#fff',bodyColor:'#ddd',padding:12,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(c)=>`نمره: ${examData[c.dataIndex].score}/20`}}}},scales:{y:{min:0,max:20,ticks:{stepSize:2,color:'rgba(255,255,255,.7)',font:{weight:'700'}},grid:{color:'rgba(255,255,255,.07)',drawBorder:false}},x:{display:false,grid:{display:false}}}}});
+    if(tab!=='chart')return;
+    const ctx=document.getElementById('gradeChart');
+    if(!ctx)return;
+    if(window.myChart){window.myChart.destroy();window.myChart=null;}
+    const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:parseFloat(sc.percentage),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(!examData.length)return;
+    const context=ctx.getContext('2d');
+    const grad=context.createLinearGradient(0,0,ctx.clientWidth||400,0);grad.addColorStop(0,'#38bdf8');grad.addColorStop(.5,'#a78bfa');grad.addColorStop(1,'#f472b6');
+    const area=context.createLinearGradient(0,0,0,300);area.addColorStop(0,'rgba(129,140,248,.30)');area.addColorStop(1,'rgba(129,140,248,0)');
+    let pulseCount=0;
+    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:area,borderWidth:5,tension:.48,fill:true,pointBackgroundColor:'#fff',pointBorderColor:'#c084fc',pointBorderWidth:4,pointRadius:8,pointHoverRadius:12,pointHitRadius:20}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18,right:12,left:12,bottom:4}},animation:{duration:1800,easing:'easeInOutQuart',onProgress:()=>{pulseCount++;}},plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(15,15,35,.96)',borderColor:'rgba(192,132,252,.5)',borderWidth:1,padding:12,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(c)=>`نمره: ${c.parsed.y}/20`}}},scales:{y:{min:0,max:20,ticks:{stepSize:5,color:'rgba(255,255,255,.62)',padding:8},grid:{color:'rgba(255,255,255,.07)'},border:{display:false}},x:{display:false,grid:{display:false},border:{display:false}}}}});
+    const pulse=document.getElementById('chartPulse');if(pulse){pulse.classList.remove('done');setTimeout(()=>pulse.classList.add('done'),1900);}
+    return()=>{if(window.myChart){window.myChart.destroy();window.myChart=null;}};
   },[tab,answers,exams]);
 
   if(activeExam){
@@ -2077,8 +2170,19 @@ function Student({user,tab,setTab,onLogout}){
                       <p className="text-xs text-white/40 mt-1">{score.percentage}/20</p>
                     </div>
                   </div>
-                  {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
-                  {!hasObjection&&(<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className={`btn-glass mt-3 text-sm flex items-center justify-center gap-2 ${canObj(ex.id)?'btn-glass-danger':'bg-white/8 border-white/10'}`}><Icon d={Icons.alert} size={16}/>{canObj(ex.id)?'اعتراض':'مشاهده وضعیت اعتراض'}</button>)}
+                  {(()=>{const os=objectionStatus(ex.id);const open=!!objectionOpen[ex.id];return (
+                    <div className="mt-3">
+                      <button onClick={()=>setObjectionOpen(o=>({...o,[ex.id]:!o[ex.id]}))} className={`w-full flex items-center justify-between rounded-2xl p-3 border transition-all ${os.state==='expired'?'bg-white/5 border-white/8 text-white/35':'bg-gradient-to-r from-rose-500/10 to-indigo-500/10 border-white/10 hover:border-rose-400/30'}`}>
+                        <span className="flex items-center gap-2 text-sm font-bold"><Icon d={Icons.alert} size={16}/> اعتراض به آزمون</span><span className="text-lg">{open?'⌃':'⌄'}</span>
+                      </button>
+                      {open&&<div className="mt-2 rounded-2xl p-4 bg-black/15 border border-white/8">
+                        {os.state==='submitted'&&<div className="text-xs text-amber-300">⏳ اعتراض شما ثبت شده و در حال بررسی است.</div>}
+                        {os.state==='unknown'&&<div className="text-xs text-white/45">🕐 زمان ثبت نمره توسط مدیر هنوز در دسترس نیست.</div>}
+                        {os.state==='expired'&&<div className="text-xs text-white/35">⏰ زمان ثبت اعتراض به اتمام رسیده است.</div>}
+                        {os.state==='active'&&<div className="space-y-3"><div className="text-center"><p className="text-[11px] text-white/40">زمان باقی‌مانده</p><p className="text-2xl font-black gradient-text">{(()=>{const x=Math.floor(os.remaining/1000);return `${String(Math.floor(x/3600)).padStart(2,'0')}:${String(Math.floor((x%3600)/60)).padStart(2,'0')}:${String(x%60).padStart(2,'0')}`})()}</p></div><button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger text-sm">ثبت اعتراض</button></div>}
+                      </div>}
+                    </div>
+                  );})()}
                 </div>
               );
             })}
@@ -2091,27 +2195,10 @@ function Student({user,tab,setTab,onLogout}){
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
-            <div className="chart-container-enhanced" style={{height:'390px'}}>
-              <div className="chart-pulse"></div>
-              <h3 className="font-bold mb-3 text-center text-sm gradient-text">📈 نمودار پیشرفت تحصیلی</h3>
-              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}
-            </div>
-            <div className="glass p-3 mt-4 text-center text-xs text-white/40">روی دایره هر نمره بزن تا نام آزمون همان نقطه نمایش داده شود.</div>
-            
-              <h4 className="font-bold text-sm mb-3 gradient-text"> لیست آزمون‌ها</h4>
-              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-4">آزمونی ندارید</p>:
-              exams.filter(ex=>getExamScore(ex.id)).map(ex=>{
-                const score=getExamScore(ex.id);
-                return(
-                  <div key={ex.id} className="exam-list-item">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-bold text-sm truncate">{ex.title}</p>
-                      <p className="text-[11px] text-white/40">{ex.questions?.length||0} سوال</p>
-                    </div>
-                    <div className="exam-list-score">{parseFloat(score.percentage)}</div>
-                  </div>
-                );
-              })}
+            <div className="chart-container-enhanced">
+              <h3 className="font-black mb-2 text-center text-sm gradient-text">✨ نمودار ضربان نمرات</h3>
+              <p className="text-[10px] text-center text-white/35 mb-3">روی هر نقطه بزن تا نام آزمون نمایش داده شود</p>
+              {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<div className="chart-stage"><div id="chartPulse" className="chart-pulse"></div><canvas id="gradeChart"></canvas></div>}
             </div>
           </>
         )}
@@ -2190,9 +2277,9 @@ function Student({user,tab,setTab,onLogout}){
                         <p className="text-[10px] text-white/40 mt-1">با ربات یا دوستان آنلاین</p>
                       </div>
                       <div className="game-card" onClick={()=>setActiveGame('snake')}>
-                        <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div>
+                        <div className="game-card-icon bg-gradient-to-br from-emerald-400 via-cyan-500 to-indigo-500">🐍</div>
                         <h4 className="font-bold text-sm">مار و پله آنلاین</h4>
-                        <p className="text-[10px] text-white/40 mt-1">بازی جداگانه با دانش‌آموز یا مدیر</p>
+                        <p className="text-[10px] text-white/40 mt-1">دعوت از دانش‌آموز یا مدیر • ۲ دقیقه فرصت</p>
                       </div>
                       <div className="game-card" onClick={()=>setActiveGame('breakout')}>
                         <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-teal-500">🎯</div>
@@ -2211,8 +2298,7 @@ function Student({user,tab,setTab,onLogout}){
                   <div className="w-20"></div>
                 </div>
                 {activeGame==='xo'&&<XOGameHub user={user}/>}
-                {activeGame==='snake'&&<SnakeLaddersLobby user={user} onOpen={(room)=>{setSnakeRoomId(room);setActiveGame('snake-room');}}/>}
-                {activeGame==='snake-room'&&<SnakeLaddersGame user={user} roomId={snakeRoomId} onBack={()=>setActiveGame('snake')}/>}
+                {activeGame==='snake'&&<SnakeGameHub user={user}/>}
                 {activeGame==='breakout'&&<BreakoutGame user={user}/>}
               </div>
             )}
@@ -2223,22 +2309,26 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);setSnakeRoomId(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
+      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
         <Icon d={Icons.message} size={24}/>
-      </button>
+      </button>}
       {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
           <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض به آزمون</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">⚠️ مهلت اعتراض از زمان ثبت نمره مدیر محاسبه می‌شود.</div>
-            {(()=>{const aa=answers.filter(a=>a.exam_id===selectedExamForObjection);const graded=aa.find(a=>a.graded_at)?.graded_at||aa.find(a=>a.status==='graded')?.created_at;const deadline=graded?new Date(new Date(graded).getTime()+48*60*60*1000):null;const left=deadline?Math.max(0,deadline.getTime()-Date.now()):0;const active=!!deadline&&left>0;return <div className={`rounded-2xl p-4 mb-4 text-center border ${active?'bg-emerald-500/10 border-emerald-400/20':'bg-white/5 border-white/10'}`}><div className="text-xs text-white/45 mb-1">وضعیت مهلت اعتراض</div>{!graded?<b className="text-amber-300">زمان ثبت نمره هنوز مشخص نشده است.</b>:active?<><div className="text-3xl font-black text-emerald-300">{String(Math.floor(left/3600000)).padStart(2,'0')}:{String(Math.floor((left%3600000)/60000)).padStart(2,'0')}:{String(Math.floor((left%60000)/1000)).padStart(2,'0')}</div><div className="text-[10px] text-white/35 mt-1">زمان باقی‌مانده برای اعتراض</div></>:<b className="text-red-300">زمان ثبت اعتراض به اتمام رسیده است.</b>}</div>})()}
-            {canObj(selectedExamForObjection)&&<div className="grid grid-cols-2 gap-2 mb-4"><button onClick={()=>setObjectionType('نمره')} className={`p-3 rounded-xl font-bold text-sm border ${objectionType==='نمره'?'bg-indigo-500/25 border-indigo-400/50':'bg-white/5 border-white/10'}`}>📊 اعتراض به نمره</button><button onClick={()=>setObjectionType('سوالات')} className={`p-3 rounded-xl font-bold text-sm border ${objectionType==='سوالات'?'bg-pink-500/25 border-pink-400/50':'bg-white/5 border-white/10'}`}>📝 اعتراض به سوالات</button></div>}
-            {canObj(selectedExamForObjection)&&<><textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/><button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button></>}
-            {!canObj(selectedExamForObjection)&&<div className="text-xs text-center text-white/35 mt-2">این مهلت در حال حاضر قابل ثبت نیست.</div>}
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">
+              ⚠️ دانش‌آموز گرامی، فقط یکبار می‌توانید به نمره خود اعتراض بزنید و نتیجه شما ممکن است بدون تغییر یا افزایش و یا کاهش باشد.
+            </div>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              <button onClick={()=>setObjectionType('score')} className={`p-3 rounded-xl border text-xs font-bold ${objectionType==='score'?'bg-indigo-500/20 border-indigo-400/50':'bg-white/5 border-white/10'}`}>📊 اعتراض به نمره</button>
+              <button onClick={()=>setObjectionType('questions')} className={`p-3 rounded-xl border text-xs font-bold ${objectionType==='questions'?'bg-pink-500/20 border-pink-400/50':'bg-white/5 border-white/10'}`}>📝 اعتراض به سوالات</button>
+            </div>
+            <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
+            <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
           </div>
         </div>
       )}
@@ -2317,9 +2407,8 @@ function App(){
     if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
   },[]);
   const login=async(un,pw)=>{
-    const {data}=await SB.from('users').select('*').eq('username',String(un).trim().toUpperCase()).eq('password',pw).limit(1);
-    const account=Array.isArray(data)?data[0]:data;
-    if(account){const normalized={...account,role:String(account.role||'student').trim().toLowerCase()};setUser(normalized);sessionStorage.setItem('edu_user',JSON.stringify(normalized));setView(normalized.role);return true;}
+    const {data}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).single();
+    if(data){setUser(data);sessionStorage.setItem('edu_user',JSON.stringify(data));setView(data.role);return true;}
     return false;
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
