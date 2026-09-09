@@ -266,6 +266,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* Admin Results Panel */
 .student-result-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
 .student-result-row:hover{background:rgba(255,255,255,0.06);border-color:rgba(129,140,248,0.3)}
+
+/* ===== Snake & Ladders / Objection upgrades ===== */
+.objection-box{border:1px solid rgba(129,140,248,.18);background:linear-gradient(135deg,rgba(129,140,248,.08),rgba(236,72,153,.06));border-radius:18px;padding:12px;transition:.3s}
+.objection-box.open{border-color:rgba(245,158,11,.45);box-shadow:0 0 30px rgba(245,158,11,.08)}
+.objection-box.expired{background:rgba(107,114,128,.08);border-color:rgba(107,114,128,.22);filter:grayscale(.65)}
+.objection-countdown{font-variant-numeric:tabular-nums;font-family:monospace;font-size:18px;font-weight:900;letter-spacing:1px}
+.snake-shell{background:linear-gradient(145deg,rgba(10,20,35,.98),rgba(31,15,55,.98));border:2px solid rgba(129,140,248,.22);border-radius:32px;padding:18px;box-shadow:0 25px 80px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.08);position:relative;overflow:hidden}
+.snake-shell:before{content:'';position:absolute;inset:-40%;background:radial-gradient(circle,rgba(52,211,153,.12),transparent 45%),radial-gradient(circle at 80% 20%,rgba(244,114,182,.12),transparent 35%);animation:snakeAura 7s ease-in-out infinite;pointer-events:none}
+@keyframes snakeAura{50%{transform:scale(1.12) rotate(3deg);opacity:.75}}
+.snake-board{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;position:relative;z-index:1;background:rgba(0,0,0,.28);padding:5px;border-radius:20px;box-shadow:0 15px 45px rgba(0,0,0,.4)}
+.snake-cell{aspect-ratio:1;min-width:0;border-radius:7px;position:relative;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px rgba(255,255,255,.08);transition:.25s}
+.snake-cell:nth-child(4n+1){background:linear-gradient(135deg,rgba(99,102,241,.28),rgba(79,70,229,.12))}.snake-cell:nth-child(4n+2){background:linear-gradient(135deg,rgba(16,185,129,.24),rgba(20,184,166,.10))}.snake-cell:nth-child(4n+3){background:linear-gradient(135deg,rgba(245,158,11,.24),rgba(234,88,12,.10))}.snake-cell:nth-child(4n){background:linear-gradient(135deg,rgba(236,72,153,.23),rgba(168,85,247,.10))}
+.snake-cell .cell-num{position:absolute;top:3px;right:4px;color:rgba(255,255,255,.45);font-size:8px}
+.snake-piece{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2px solid rgba(255,255,255,.75);box-shadow:0 4px 15px rgba(0,0,0,.45),0 0 16px rgba(255,255,255,.18);animation:pieceFloat 1.8s ease-in-out infinite;z-index:3}
+.snake-piece.p2{animation-delay:.3s}.snake-piece.p3{animation-delay:.6s}.snake-piece.p4{animation-delay:.9s}@keyframes pieceFloat{50%{transform:translateY(-3px) scale(1.05)}}
+.snake-emoji{position:absolute;font-size:27px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.55));pointer-events:none;z-index:2;animation:snakeWiggle 2.4s ease-in-out infinite}.ladder-emoji{position:absolute;font-size:27px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.55));pointer-events:none;z-index:2;animation:ladderGlow 2s ease-in-out infinite}@keyframes snakeWiggle{50%{transform:rotate(7deg) translateY(-2px)}}@keyframes ladderGlow{50%{transform:scale(1.08)}}
+.dice-button{width:92px;height:92px;border-radius:26px;border:2px solid rgba(255,255,255,.22);background:linear-gradient(145deg,#ffffff,#dbeafe);color:#111827;display:flex;align-items:center;justify-content:center;font-size:48px;box-shadow:0 14px 35px rgba(0,0,0,.35),0 0 30px rgba(129,140,248,.18);cursor:pointer;transition:.25s}.dice-button:hover{transform:translateY(-4px) rotate(3deg);box-shadow:0 20px 45px rgba(0,0,0,.4),0 0 40px rgba(129,140,248,.35)}.dice-button.rolling{animation:diceRoll .65s ease-in-out infinite}@keyframes diceRoll{25%{transform:rotate(12deg) scale(1.08)}50%{transform:rotate(-14deg) scale(.94)}75%{transform:rotate(9deg) scale(1.05)}}
+.snake-request-card{border:1px solid rgba(236,72,153,.3);background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(99,102,241,.10));border-radius:22px;padding:16px;box-shadow:0 15px 45px rgba(236,72,153,.12)}
+@media(max-width:430px){.snake-cell{border-radius:5px;font-size:8px}.snake-piece{width:25px;height:25px;font-size:14px}.snake-emoji,.ladder-emoji{font-size:21px}.dice-button{width:78px;height:78px;font-size:40px}}
 </style>
 </head>
 <body>
@@ -632,6 +651,42 @@ function RobotThinking({isThinking,targetCell,onMoveComplete}){
   );
 }
 
+
+const SNAKE_MAP={snakes:{30:10,47:26,62:18,88:54,96:72},ladders:{4:25,13:46,33:49,42:63,58:79,67:86}};
+const DICE=['⚀','⚁','⚂','⚃','⚄','⚅'];
+const snakeCellOrder=()=>{const a=[];for(let r=9;r>=0;r--){const row=[];for(let c=1;c<=10;c++)row.push(r*10+c);if((9-r)%2)row.reverse();a.push(...row)}return a};
+const SNAKE_ORDER=snakeCellOrder();
+function snakeEncode(state){return 'SNAKE::'+JSON.stringify(state)}
+function snakeDecode(board){try{return board?.startsWith('SNAKE::')?JSON.parse(board.slice(7)):null}catch{return null}}
+function SnakeGameHub({user,onBack}){
+ const [mode,setMode]=useState(null),[friends,setFriends]=useState([]),[pending,setPending]=useState([]),[mine,setMine]=useState([]),[timers,setTimers]=useState({}),[roomId,setRoomId]=useState(null),[notice,setNotice]=useState(null);const toast=useToast();
+ const load=async()=>{const {data:f}=await SB.from('users').select('id,full_name,username,role').in('role',['student','admin']).neq('id',user.id);if(f)setFriends(f);const {data:p}=await SB.from('game_requests').select('*,from_user_data:users!game_requests_from_user_fkey(full_name,username,role)').eq('to_user',user.id).eq('status','pending');if(p){setPending(p);p.forEach(r=>setTimers(t=>({...t,[r.id]:Math.max(0,120-Math.floor((Date.now()-new Date(r.created_at).getTime())/1000))})))}const {data:m}=await SB.from('game_requests').select('*,to_user_data:users!game_requests_to_user_fkey(full_name,username,role)').eq('from_user',user.id).eq('status','pending');if(m)setMine(m)};
+ useEffect(()=>{load();const ch=SB.channel('snake-hub-'+user.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},async p=>{const {data:r}=await SB.from('xo_rooms').select('board').eq('id',p.new.room_id).single();if(snakeDecode(r?.board)){setNotice(p.new);setPending(x=>[p.new,...x]);setTimers(t=>({...t,[p.new.id]:120}));toast('🐍 درخواست بازی مار و پله رسید!','success')}}).on('postgres_changes',{event:'UPDATE',schema:'public',table:'game_requests',filter:`from_user=eq.${user.id}`},p=>{if(p.new.status==='accepted'){setRoomId(p.new.room_id);setMode('play');toast('🎉 درخواستت پذیرفته شد!','success')}load()}).subscribe();return()=>SB.removeChannel(ch)},[]);
+ useEffect(()=>{const i=setInterval(()=>setTimers(t=>{const n={...t};Object.keys(n).forEach(id=>{n[id]=Math.max(0,n[id]-1);if(n[id]===0){SB.from('game_requests').update({status:'expired'}).eq('id',id)}});return n}),1000);return()=>clearInterval(i)},[]);
+ const send=async(to)=>{const state={game:'snake',positions:{X:1,O:1},names:{X:user.full_name,O:''},turn:'X',winner:null,lastRoll:0,rolling:false};const {data:room,error:e}=await SB.from('xo_rooms').insert({player_x:user.id,player_o:null,board:snakeEncode(state),current_turn:'X',status:'waiting',score_x:0,score_o:0}).select().single();if(e){toast('خطا در ساخت اتاق: '+e.message,'error');return}const {error}=await SB.from('game_requests').insert({from_user:user.id,to_user:to,room_id:room.id,status:'pending'});if(error){await SB.from('xo_rooms').delete().eq('id',room.id);toast('خطا در ارسال درخواست: '+error.message,'error');return}toast('🐍 درخواست بازی ارسال شد؛ ۲ دقیقه فرصت پاسخ وجود دارد','success');load()};
+ const accept=async r=>{if((timers[r.id]??120)<=0){toast('⏰ زمان درخواست تمام شده','warning');return}const roomRes=await SB.from('xo_rooms').select('board').eq('id',r.room_id).single();const st=snakeDecode(roomRes.data?.board)||{};st.names={...(st.names||{}),O:user.full_name};const {error}=await SB.from('xo_rooms').update({player_o:user.id,status:'playing',board:snakeEncode(st)}).eq('id',r.room_id);if(error){toast('خطا: '+error.message,'error');return}await SB.from('game_requests').update({status:'accepted'}).eq('id',r.id);setRoomId(r.room_id);setMode('play');setNotice(null);toast('🐍 بازی شروع شد!','success')};
+ const reject=async r=>{await SB.from('game_requests').update({status:'rejected'}).eq('id',r.id);await SB.from('xo_rooms').delete().eq('id',r.room_id);setNotice(null);load()};
+ if(mode==='play')return <SnakeOnlineGame user={user} roomId={roomId} onEnd={()=>{setMode(null);setRoomId(null);load()}}/>;
+ return <div className="snake-shell slide-up"><div className="relative z-10"><div className="flex items-center justify-between mb-5"><button onClick={onBack} className="btn-glass btn-sm">← بازگشت</button><div className="text-center"><div className="text-3xl">🐍🎲</div><h3 className="font-black gradient-text text-xl">مار و پله</h3><p className="text-[10px] text-white/40">نبرد آنلاین تدبیر</p></div><div className="w-20"></div></div>
+ {notice&&<div className="snake-request-card mb-4"><p className="font-black text-pink-300">🔔 دعوت به مار و پله!</p><p className="text-xs text-white/50 mt-1 mb-3">{pending.find(x=>x.id===notice.id)?.from_user_data?.full_name||'یک کاربر'} منتظر پاسخ توست.</p><div className="flex gap-2"><button onClick={()=>accept(notice)} className="btn-glass btn-glass-success btn-sm flex-1">✓ قبول</button><button onClick={()=>reject(notice)} className="btn-glass btn-glass-danger btn-sm flex-1">✕ رد</button></div><p className="text-center text-xs text-amber-300 mt-3">⏳ {Math.floor((timers[notice.id]||0)/60)}:{String((timers[notice.id]||0)%60).padStart(2,'0')}</p></div>}
+ {pending.length>0&&<div className="glass p-4 mb-4"><h4 className="font-bold text-sm text-pink-300 mb-2">درخواست‌های دریافتی</h4>{pending.map(r=><div key={r.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between"><span className="text-sm font-bold">{r.from_user_data?.full_name||'کاربر'} <span className="text-[10px] text-white/40">({r.from_user_data?.role==='admin'?'مدیر':'دانش‌آموز'})</span></span><button onClick={()=>accept(r)} className="btn-glass btn-glass-success btn-sm">قبول · {Math.floor((timers[r.id]||0)/60)}:{String((timers[r.id]||0)%60).padStart(2,'0')}</button></div>)}</div>}
+ {mine.length>0&&<div className="glass p-4 mb-4"><h4 className="font-bold text-sm text-amber-300 mb-2">در انتظار پاسخ</h4>{mine.map(r=><div key={r.id} className="bg-white/5 rounded-xl p-3 flex items-center justify-between"><span className="text-sm">{r.to_user_data?.full_name}</span><button onClick={()=>{SB.from('game_requests').update({status:'rejected'}).eq('id',r.id);SB.from('xo_rooms').delete().eq('id',r.room_id);load()}} className="btn-glass btn-glass-danger btn-sm">لغو</button></div>)}</div>}
+ <div className="grid grid-cols-1 gap-3"><button className="xo-mode-card text-right" onClick={()=>setMode('friends')}><span className="xo-mode-icon">👥</span><p className="xo-mode-name">دعوت به بازی</p><p className="xo-mode-desc">دانش‌آموزان و مدیر را برای یک نبرد آنلاین دعوت کن.</p></button></div>
+ {mode==='friends'&&<div className="glass p-4 mt-4"><div className="flex justify-between items-center mb-3"><h4 className="font-bold text-sm text-indigo-300">انتخاب حریف</h4><button onClick={()=>setMode(null)} className="text-xs text-white/40">بستن</button></div>{friends.length===0?<p className="text-center text-white/30 py-5">کاربر دیگری پیدا نشد</p>:friends.map(f=><div key={f.id} className="bg-white/5 rounded-xl p-3 mb-2 flex items-center justify-between"><div><p className="font-bold text-sm">{f.full_name}</p><p className="text-[10px] text-white/35">{f.role==='admin'?'مدیر':'دانش‌آموز'} · @{f.username}</p></div><button onClick={()=>send(f.id)} className="send-request-btn">🎲 دعوت</button></div>)}</div>}
+ </div></div>;
+}
+function SnakeOnlineGame({user,roomId,onEnd}){const [room,setRoom]=useState(null),[rolling,setRolling]=useState(false),[dice,setDice]=useState(1),[moving,setMoving]=useState(false),[pendingMove,setPendingMove]=useState(0);const toast=useToast();
+ const sync=async()=>{const {data}=await SB.from('xo_rooms').select('*,player_x_data:users!xo_rooms_player_x_fkey(full_name),player_o_data:users!xo_rooms_player_o_fkey(full_name)').eq('id',roomId).single();if(data){setRoom(data)}};
+ useEffect(()=>{sync();const ch=SB.channel('snake-room-'+roomId).on('postgres_changes',{event:'UPDATE',schema:'public',table:'xo_rooms',filter:`id=eq.${roomId}`},p=>{setRoom(p.new);if(p.new.status==='finished')toast('🏆 بازی تمام شد!','success')}).subscribe();return()=>SB.removeChannel(ch)},[roomId]);
+ const roll=async()=>{if(!room||rolling||moving||pendingMove||room.status!=='playing'||room.current_turn!==(room.player_x===user.id?'X':'O'))return;setRolling(true);let v=1;const anim=setInterval(()=>{v=1+Math.floor(Math.random()*6);setDice(v)},90);setTimeout(()=>{clearInterval(anim);setDice(v);setPendingMove(v);setRolling(false);},750)};
+ const movePiece=async()=>{if(!room||!pendingMove||moving||room.status!=='playing'||room.current_turn!==(room.player_x===user.id?'X':'O'))return;setMoving(true);const st=snakeDecode(room.board);if(!st){setMoving(false);return}const me=room.player_x===user.id?'X':'O';const pos=st.positions[me]||1;let target=pos+pendingMove;if(target>100)target=pos;st.lastRoll=pendingMove;st.positions[me]=target;await new Promise(r=>setTimeout(r,500));if(SNAKE_MAP.snakes[target]){st.positions[me]=SNAKE_MAP.snakes[target];await new Promise(r=>setTimeout(r,450))}else if(SNAKE_MAP.ladders[target]){st.positions[me]=SNAKE_MAP.ladders[target];await new Promise(r=>setTimeout(r,450))}st.rolling=false;if(st.positions[me]>=100){st.winner=me;await SB.from('xo_rooms').update({board:snakeEncode(st),winner:me,status:'finished',current_turn:me,updated_at:new Date().toISOString()}).eq('id',roomId);setPendingMove(0);setMoving(false);return}st.turn=me==='X'?'O':'X';await SB.from('xo_rooms').update({board:snakeEncode(st),current_turn:st.turn,updated_at:new Date().toISOString()}).eq('id',roomId);setPendingMove(0);setMoving(false)};
+ if(!room)return <div className="text-center py-10 text-white/40">در حال آماده‌سازی صفحه بازی...</div>;const st=snakeDecode(room.board)||{positions:{X:1,O:1},turn:'X'};const me=room.player_x===user.id?'X':'O';const opp=me==='X'?'O':'X';const myTurn=room.current_turn===me&&room.status==='playing';
+ return <div className="snake-shell slide-up"><div className="relative z-10"><div className="flex justify-between items-center mb-4"><button onClick={onEnd} className="btn-glass btn-sm">🏁 خروج</button><div className="text-center"><h3 className="font-black gradient-text text-xl">🐍 مار و پله</h3><p className="text-[10px] text-white/40">تا خانه ۱۰۰ پیش برو!</p></div><div className="text-2xl">🎲</div></div>
+ <div className="grid grid-cols-2 gap-2 mb-4"><div className={`score-card-pro ${myTurn?'active':''}`}><p className="text-[10px] text-white/40">شما · {st.names?.[me]||user.full_name}</p><p className="text-xl font-black">خانه {st.positions?.[me]||1}</p></div><div className={`score-card-pro ${!myTurn?'active':''}`}><p className="text-[10px] text-white/40">حریف · {st.names?.[opp]|| (opp==='X'?room.player_x_data?.full_name:room.player_o_data?.full_name)||'حریف'}</p><p className="text-xl font-black">خانه {st.positions?.[opp]||1}</p></div></div>
+ <div className={`xo-status-pro ${myTurn?'my-turn':''}`}><p className="font-black text-base">{room.status==='finished'?(st.winner===me?'🏆 برنده شدی!':'😄 حریف برنده شد!'):myTurn?'🎯 نوبت توست؛ تاس را بزن':'⏳ نوبت حریف است'}</p></div>
+ <div className="snake-board">{SNAKE_ORDER.map((n,i)=>{const hasX=st.positions?.X===n,hasO=st.positions?.O===n;const snake=SNAKE_MAP.snakes[n],lad=SNAKE_MAP.ladders[n];return <div key={n} className="snake-cell"><span className="cell-num">{n}</span>{snake&&<span className="snake-emoji">🐍</span>}{lad&&<span className="ladder-emoji">🪜</span>}{n===1&&<span className="absolute bottom-1 left-1 text-[7px] text-emerald-300">START</span>}{n===100&&<span className="absolute bottom-1 left-1 text-[7px] text-amber-200">🏁</span>}{hasX&&<span onClick={me==='X'&&pendingMove?movePiece:undefined} className="snake-piece" style={{cursor:me==='X'&&pendingMove?'pointer':'default'}}>{pendingMove&&me==='X'?'🟣':'🟣'}</span>}{hasO&&<span onClick={me==='O'&&pendingMove?movePiece:undefined} className="snake-piece p2" style={{cursor:me==='O'&&pendingMove?'pointer':'default'}}>🔵</span>}</div>})}</div>
+ <div className="flex flex-col items-center mt-5"><div className={`dice-button ${rolling?'rolling':''}`} onClick={roll}>{DICE[dice-1]}</div><p className="text-xs text-white/45 mt-2">{rolling?'تاس در حال چرخش...':pendingMove?`مهره خودت را بزن تا ${pendingMove} خانه حرکت کند`:myTurn?'برای انداختن تاس لمس کن':'منتظر نوبت حریف بمان'}</p><p className="text-[10px] text-white/25 mt-1">عدد تاس: {dice}</p></div></div></div>}
+
 function XOGameHub({user}){
   const [mode,setMode]=useState(null);
   const [friendsGame,setFriendsGame]=useState(null);
@@ -649,10 +704,12 @@ function XOGameHub({user}){
     loadPendingRequests();
     loadMyRequests();
     const sub=SB.channel('game-requests-'+user.id)
-      .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},(payload)=>{
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},async(payload)=>{
+        const {data:roomCheck}=await SB.from('xo_rooms').select('board').eq('id',payload.new.room_id).single();
+        if(snakeDecode(roomCheck?.board))return;
         loadPendingRequests();
         const newReq=payload.new;
-        startRequestCountdown(newReq.id,60);
+        startRequestCountdown(newReq.id,120);
         setShowNotification({id:newReq.id,fromUserId:newReq.from_user,roomId:newReq.room_id,createdAt:new Date(newReq.created_at).getTime()});
         toast('🎮 درخواست بازی جدید!','success');
       })
@@ -697,16 +754,18 @@ function XOGameHub({user}){
   };
 
   const loadFriends=async()=>{
-    const {data}=await SB.from('users').select('id,full_name,username').eq('role','student').neq('id',user.id);
+    const {data}=await SB.from('users').select('id,full_name,username').in('role',['student','admin']).neq('id',user.id);
     if(data)setFriendsList(data);
   };
   const loadPendingRequests=async()=>{
     const {data}=await SB.from('game_requests').select('*,from_user_data:users!game_requests_from_user_fkey(full_name,username)').eq('to_user',user.id).eq('status','pending');
     if(data){
-      setPendingRequests(data);
-      data.forEach(req=>{
+      const filtered=[];
+      for(const req of data){const rr=await SB.from('xo_rooms').select('board').eq('id',req.room_id).single();if(!snakeDecode(rr.data?.board))filtered.push(req)}
+      setPendingRequests(filtered);
+      filtered.forEach(req=>{
         const elapsed=Math.floor((Date.now()-new Date(req.created_at).getTime())/1000);
-        const remaining=Math.max(0,60-elapsed);
+        const remaining=Math.max(0,120-elapsed);
         if(remaining>0)setRequestTimers(t=>({...t,[req.id]:remaining}));
       });
     }
@@ -864,7 +923,7 @@ function XOGameHub({user}){
             <svg width="80" height="80">
               <defs><linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#10b981"/><stop offset="100%" stopColor="#ef4444"/></linearGradient></defs>
               <circle className="bg" cx="40" cy="40" r="36"/>
-              <circle className="progress" cx="40" cy="40" r="36" stroke="url(#countdownGradient)" strokeDasharray={226} strokeDashoffset={226-(requestTimers[showNotification.id]||0)/60*226}/>
+              <circle className="progress" cx="40" cy="40" r="36" stroke="url(#countdownGradient)" strokeDasharray={226} strokeDashoffset={226-(requestTimers[showNotification.id]||0)/120*226}/>
             </svg>
             <div className="countdown-text">{requestTimers[showNotification.id]||0}</div>
           </div>
@@ -1413,11 +1472,13 @@ function Admin({user,tab,setTab,onLogout}){
   const [selectedChat,setSelectedChat]=useState(null);
   const [showExamResults,setShowExamResults]=useState(null);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
+  const [adminSnakeRoom,setAdminSnakeRoom]=useState(null);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{if(activeGame==='snake')return;const ch=SB.channel('student-snake-'+user.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},async p=>{const {data:r}=await SB.from('xo_rooms').select('board').eq('id',p.new.room_id).single();if(snakeDecode(r?.board)){toast('🐍 درخواست مار و پله جدید!','success');const ok=confirm('🐍 درخواست مار و پله دریافت شد. قبول می‌کنی؟\n۲ دقیقه فرصت پاسخ وجود دارد.');if(ok){const rr=await SB.from('xo_rooms').select('board').eq('id',p.new.room_id).single();const st=snakeDecode(rr.data?.board)||{};st.names={...(st.names||{}),O:user.full_name};await SB.from('xo_rooms').update({player_o:user.id,status:'playing',board:snakeEncode(st)}).eq('id',p.new.room_id);await SB.from('game_requests').update({status:'accepted'}).eq('id',p.new.id);setIncomingSnakeRoom(p.new.room_id)}else{await SB.from('game_requests').update({status:'rejected'}).eq('id',p.new.id);await SB.from('xo_rooms').delete().eq('id',p.new.room_id)}}}).subscribe();return()=>SB.removeChannel(ch)},[activeGame]);
 
-  const loadAll=async()=>{
+  const loadAll=async()=>{ 
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:s}=await SB.from('users').select('*').eq('role','student');
     const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt,score)');
@@ -1456,7 +1517,7 @@ function Admin({user,tab,setTab,onLogout}){
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
   const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);loadAll();toast('رمز تغییر کرد','success');}};
-  const gradeAnswer=async(id,score)=>{await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);loadAll();toast('✅ نمره ثبت شد','success');};
+  const gradeAnswer=async(id,score)=>{const stamp=new Date().toISOString();let {error}=await SB.from('answers').update({score:parseFloat(score),status:'graded',graded_at:stamp,updated_at:stamp}).eq('id',id);if(error){const fallback=await SB.from('answers').update({score:parseFloat(score),status:'graded'}).eq('id',id);if(fallback.error){toast('خطا: '+fallback.error.message,'error');return}toast('⚠️ نمره ثبت شد؛ برای فعال شدن مهلت اعتراض، ستون graded_at را در answers داشته باشید.','warning')}loadAll();toast('✅ نمره ثبت شد','success');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText,reactions:{}});setReplyText('');loadAll();};
   
   const clearChat=async(studentId)=>{
@@ -1479,10 +1540,12 @@ function Admin({user,tab,setTab,onLogout}){
   };
 
   const updateStudentScore=async(answerId,newScore)=>{
-    await SB.from('answers').update({score:parseFloat(newScore),status:'graded'}).eq('id',answerId);
+    await SB.from('answers').update({score:parseFloat(newScore),status:'graded',graded_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq('id',answerId);
     loadAll();
     toast('✅ نمره ویرایش شد','success');
   };
+  useEffect(()=>{const ch=SB.channel('admin-snake-'+user.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'game_requests',filter:`to_user=eq.${user.id}`},async p=>{const {data:r}=await SB.from('xo_rooms').select('board').eq('id',p.new.room_id).single();if(snakeDecode(r?.board)){const remaining=Math.max(0,120-Math.floor((Date.now()-new Date(p.new.created_at).getTime())/1000));if(remaining<=0){await SB.from('game_requests').update({status:'expired'}).eq('id',p.new.id);return}toast('🐍 درخواست مار و پله جدید!','success');const ok=confirm(`🐍 درخواست بازی مار و پله دریافت شد.\nزمان باقی‌مانده: ${Math.floor(remaining/60)}:${String(remaining%60).padStart(2,'0')}\nقبول می‌کنی؟`);if(ok){await SB.from('xo_rooms').update({player_o:user.id,status:'playing'}).eq('id',p.new.room_id);await SB.from('game_requests').update({status:'accepted'}).eq('id',p.new.id);setAdminSnakeRoom(p.new.room_id)}else{await SB.from('game_requests').update({status:'rejected'}).eq('id',p.new.id);await SB.from('xo_rooms').delete().eq('id',p.new.room_id)}}}).subscribe();return()=>SB.removeChannel(ch)},[]);
+  if(adminSnakeRoom)return <SnakeOnlineGame user={user} roomId={adminSnakeRoom} onEnd={()=>setAdminSnakeRoom(null)}/>;
 
   return(
     <div className="min-h-screen pb-24">
@@ -1504,7 +1567,10 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))}
             </div>
-            <button onClick={()=>{setModal('exam');setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2 mb-6"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
+            <div className="grid grid-cols-2 gap-3 mb-5">
+              <button onClick={()=>{setModal('exam');setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
+              <button onClick={()=>toast('برای شروع، از درخواست دریافتی وارد بازی شو.','success')} className="btn-glass flex items-center justify-center gap-2">🐍 مار و پله</button>
+            </div>
             <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌ها</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>(
@@ -1744,6 +1810,9 @@ function Student({user,tab,setTab,onLogout}){
   const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);
   const [objectionText,setObjectionText]=useState('');
+  const [objectionType,setObjectionType]=useState('نمره');
+  const [openObjection,setOpenObjection]=useState(null);
+  const [nowTick,setNowTick]=useState(Date.now());
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
   const [checklist,setChecklist]=useState([]);
   const [newTask,setNewTask]=useState('');
@@ -1756,9 +1825,10 @@ function Student({user,tab,setTab,onLogout}){
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [activeGame,setActiveGame]=useState(null);
   const [hasSubmitted,setHasSubmitted]=useState(false);
+  const [incomingSnakeRoom,setIncomingSnakeRoom]=useState(null);
   const toast=useToast();
 
-  useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{loadAll();const t=setInterval(()=>setNowTick(Date.now()),1000);return()=>clearInterval(t)},[]);
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
@@ -1822,14 +1892,15 @@ function Student({user,tab,setTab,onLogout}){
 
   const submitObjection=async()=>{
     if(!objectionText.trim()||!selectedExamForObjection)return;
+    if(!canObject(selectedExamForObjection)){toast('⏰ مهلت اعتراض تمام شده است','warning');return;}
     const examAnswers=answers.filter(a=>a.exam_id===selectedExamForObjection);
     for(const a of examAnswers){
-      await SB.from('answers').update({objection:objectionText.trim()}).eq('id',a.id);
+      await SB.from('answers').update({objection:`${objectionType}: ${objectionText.trim()}`}).eq('id',a.id);
     }
     toast('✅ اعتراض ثبت شد!','success');
     setShowObjection(null);
     setSelectedExamForObjection(null);
-    setObjectionText('');
+    setObjectionText('');setObjectionType('نمره');
     loadAll();
   };
 
@@ -1882,19 +1953,10 @@ function Student({user,tab,setTab,onLogout}){
     return avg.toFixed(2);
   };
 
-  const canObject=(examId)=>{
-    const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));
-    if(examAnswers.length===0)return false;
-    const hasObjection=examAnswers.some(a=>a.objection);
-    if(hasObjection)return false;
-    const oldestAnswer=examAnswers.reduce((oldest,a)=>{
-      const aDate=new Date(a.created_at);
-      return !oldest||aDate<oldest?aDate:oldest;
-    },null);
-    if(!oldestAnswer)return false;
-    const hoursSince=(Date.now()-oldestAnswer.getTime())/(1000*60*60);
-    return hoursSince<=48;
-  };
+  const getObjectionDeadline=(examId)=>{const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));if(!examAnswers.length)return null;const graded=examAnswers.filter(a=>a.status==='graded');if(!graded.length)return null;const stamp=graded.reduce((latest,a)=>{if(!a.graded_at)return latest;const d=new Date(a.graded_at);return !latest||d>latest?d:latest},null);return stamp?stamp.getTime()+48*60*60*1000:null;};
+  const canObject=(examId)=>{const examAnswers=answers.filter(a=>String(a.exam_id)===String(examId));if(!examAnswers.length||examAnswers.some(a=>a.objection))return false;const deadline=getObjectionDeadline(examId);return !!deadline&&nowTick<deadline;};
+  const objectionRemaining=(examId)=>{const d=getObjectionDeadline(examId);return d?Math.max(0,d-nowTick):null};
+  const objectionTextTime=(ms)=>{if(ms===null)return 'پس از ثبت نهایی نمره توسط مدیر فعال می‌شود';if(ms<=0)return 'زمان ثبت اعتراض به اتمام رسیده است';const total=Math.floor(ms/1000),h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;return `${h} ساعت ${String(m).padStart(2,'0')} دقیقه ${String(s).padStart(2,'0')} ثانیه`};
 
   useEffect(()=>{
     if(tab==='chart'){
@@ -1925,7 +1987,8 @@ function Student({user,tab,setTab,onLogout}){
             pointBackgroundColor:'#f472b6',
             pointBorderColor:'#fff',
             pointBorderWidth:2,
-            pointRadius:6,
+            pointRadius:7,
+             pointHoverRadius:11,
             pointHoverRadius:9
           }]
         },
@@ -1944,7 +2007,11 @@ function Student({user,tab,setTab,onLogout}){
             }
           },
           scales:{
-            y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20},
+            y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20,
+             afterBuildTicks:axis=>{axis.ticks=[...axis.ticks,{value:20}]},
+             ticks:{color:'rgba(255,255,255,0.55)',font:{weight:'700'},stepSize:2},
+             border:{color:'rgba(255,255,255,0.12)',width:2},
+             suggestedMax:20},
             x:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.03)'},display:false}
           }
         }
@@ -1952,6 +2019,7 @@ function Student({user,tab,setTab,onLogout}){
     }
   },[tab,answers,exams]);
 
+  if(incomingSnakeRoom)return <SnakeOnlineGame user={user} roomId={incomingSnakeRoom} onEnd={()=>setIncomingSnakeRoom(null)}/>;
   if(activeExam){
     const q=activeExam.questions[currentQ];
     const progress=((currentQ+1)/activeExam.questions.length)*100;
@@ -2079,16 +2147,13 @@ function Student({user,tab,setTab,onLogout}){
                     </div>
                   </div>
                   {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
-                  {!hasObjection&&canObj&&(
-                    <button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger mt-3 text-sm flex items-center justify-center gap-2">
-                      <Icon d={Icons.alert} size={16}/>اعتراض
+                  {!hasObjection&&<div className={`objection-box mt-3 ${openObjection===ex.id?'open':''} ${(objectionRemaining(ex.id)||0)<=0?'expired':''}`}>
+                    <button disabled={(objectionRemaining(ex.id)||0)<=0} onClick={()=>setOpenObjection(openObjection===ex.id?null:ex.id)} className="w-full text-right">
+                      <div className="flex items-center justify-between"><span className="font-bold text-sm">⚠️ اعتراض به آزمون</span><span className="text-xs text-white/40">{openObjection===ex.id?'▲':'▼'}</span></div>
+                      {openObjection===ex.id&&<div className={`objection-countdown mt-2 ${(objectionRemaining(ex.id)||0)<=0?'text-white/35':'text-amber-300'}`}>{objectionTextTime(objectionRemaining(ex.id))}</div>}
                     </button>
-                  )}
-                  {!hasObjection&&!canObj&&(
-                    <div className="mt-3 text-center text-xs text-white/30 bg-white/5 rounded-xl p-2">
-                      ⏰ مهلت اعتراض (۴۸ ساعت) به پایان رسیده است
-                    </div>
-                  )}
+                    {openObjection===ex.id&&(objectionRemaining(ex.id)||0)>0&&<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true)}} className="btn-glass btn-glass-danger mt-2 text-sm w-full"><Icon d={Icons.alert} size={16}/> ثبت اعتراض</button>}
+                  </div>}
                 </div>
               );
             })}
@@ -2197,7 +2262,8 @@ function Student({user,tab,setTab,onLogout}){
                         <h4 className="font-bold text-sm">بازی دوز (XO)</h4>
                         <p className="text-[10px] text-white/40 mt-1">با ربات یا دوستان آنلاین</p>
                       </div>
-                      <div className="game-card" onClick={()=>setActiveGame('breakout')}>
+                      <div className="game-card" onClick={()=>setActiveGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold text-sm">مار و پله آنلاین</h4><p className="text-[10px] text-white/40 mt-1">بازی با دانش‌آموزان و مدیر</p></div>
+                       <div className="game-card" onClick={()=>setActiveGame('breakout')}>
                         <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-teal-500">🎯</div>
                         <h4 className="font-bold text-sm">توپ و راکت</h4>
                         <p className="text-[10px] text-white/40 mt-1">آجرها را بشکن و امتیاز بگیر</p>
@@ -2210,11 +2276,11 @@ function Student({user,tab,setTab,onLogout}){
               <div className="slide-up">
                 <div className="flex justify-between items-center mb-4">
                   <button onClick={()=>setActiveGame(null)} className="btn-glass btn-sm flex items-center gap-2"><Icon d={Icons.arrowLeft} size={16}/>بازگشت</button>
-                  <h3 className="font-bold gradient-text text-lg">{activeGame==='xo'&&'بازی دوز'}{activeGame==='breakout'&&'توپ و راکت'}</h3>
+                  <h3 className="font-bold gradient-text text-lg">{activeGame==='xo'&&'بازی دوز'}{activeGame==='snake'&&'مار و پله'}{activeGame==='breakout'&&'توپ و راکت'}</h3>
                   <div className="w-20"></div>
                 </div>
                 {activeGame==='xo'&&<XOGameHub user={user}/>}
-                {activeGame==='breakout'&&<BreakoutGame user={user}/>}
+                {activeGame==='snake'&&<SnakeGameHub user={user} onBack={()=>setActiveGame(null)}/>}{activeGame==='breakout'&&<BreakoutGame user={user}/>}
               </div>
             )}
           </>
@@ -2226,9 +2292,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
-        <Icon d={Icons.message} size={24}/>
-      </button>
+      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition"><Icon d={Icons.message} size={24}/></button>}
       {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
@@ -2236,7 +2300,11 @@ function Student({user,tab,setTab,onLogout}){
           <div className="glass-strong w-full max-w-md p-6 slide-up" onClick={e=>e.stopPropagation()}>
             <div className="flex justify-between items-center mb-4"><h3 className="font-bold gradient-text">اعتراض به آزمون</h3><button onClick={()=>setShowObjection(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-4 text-xs text-amber-300">
-              ⚠️ دانش‌آموز گرامی، فقط یکبار می‌توانید به نمره خود اعتراض بزنید و نتیجه شما ممکن است بدون تغییر یا افزایش و یا کاهش باشد.
+              ⏳ مهلت باقی‌مانده: <b>{objectionTextTime(objectionRemaining(selectedExamForObjection))}</b>
+            </div>
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              <button onClick={()=>setObjectionType('نمره')} className={`p-3 rounded-xl text-sm font-bold border transition ${objectionType==='نمره'?'bg-indigo-600 border-indigo-400':'bg-white/5 border-white/10'}`}>📊 اعتراض به نمره</button>
+              <button onClick={()=>setObjectionType('سوالات')} className={`p-3 rounded-xl text-sm font-bold border transition ${objectionType==='سوالات'?'bg-pink-600 border-pink-400':'bg-white/5 border-white/10'}`}>📝 اعتراض به سوالات</button>
             </div>
             <textarea className="glass-input mb-4" placeholder="دلیل اعتراض..." value={objectionText} onChange={e=>setObjectionText(e.target.value)} rows="4"/>
             <button onClick={submitObjection} className="btn-glass btn-glass-danger flex items-center justify-center gap-2"><Icon d={Icons.send} size={16}/>ارسال به مدیر</button>
