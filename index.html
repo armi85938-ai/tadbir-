@@ -126,6 +126,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes starPulse{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.1) rotate(-5deg)}75%{transform:scale(1.1) rotate(5deg)}}
 
 /* Chart Container - Enhanced */
+.chart-container-enhanced{position:relative;min-height:390px;padding:20px 14px 18px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(129,140,248,.045));border:1px solid rgba(255,255,255,.12);border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 55px rgba(0,0,0,.32);overflow:hidden}.chart-container-enhanced::before{content:'';position:absolute;inset:-40%;background:radial-gradient(circle at 50% 30%,rgba(192,132,252,.14),transparent 45%);pointer-events:none}.chart-container-enhanced canvas{position:relative!important;height:330px!important;max-height:330px!important;filter:drop-shadow(0 10px 20px rgba(129,140,248,.16))}
 .chart-container-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:2px solid rgba(129,140,248,0.2);border-radius:24px;padding:24px;margin-top:16px;position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
 .chart-container-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6,#818cf8);background-size:200% 100%;animation:chartGlow 3s linear infinite}
 @keyframes chartGlow{0%{background-position:0% 0%}100%{background-position:200% 0%}}
@@ -1959,64 +1960,28 @@ function Student({user,tab,setTab,onLogout}){
   const objectionTextTime=(ms)=>{if(ms===null)return 'پس از ثبت نهایی نمره توسط مدیر فعال می‌شود';if(ms<=0)return 'زمان ثبت اعتراض به اتمام رسیده است';const total=Math.floor(ms/1000),h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;return `${h} ساعت ${String(m).padStart(2,'0')} دقیقه ${String(s).padStart(2,'0')} ثانیه`};
 
   useEffect(()=>{
-    if(tab==='chart'){
-      const ctx=document.getElementById('gradeChart');
-      if(!ctx)return;
-      if(window.myChart)window.myChart.destroy();
-      const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{
-        const s=getExamScore(ex.id);
-        return {title:ex.title,score:parseFloat(s.percentage),date:ex.created_at};
-      }).sort((a,b)=>new Date(a.date)-new Date(b.date));
-      if(examData.length===0)return;
-      const gradient=ctx.getContext('2d').createLinearGradient(0,0,400,0);
-      gradient.addColorStop(0,'rgba(129,140,248,0.8)');
-      gradient.addColorStop(0.5,'rgba(192,132,252,0.8)');
-      gradient.addColorStop(1,'rgba(244,114,182,0.8)');
-      window.myChart=new Chart(ctx,{
-        type:'line',
-        data:{
-          labels:examData.map((_,i)=>i+1),
-          datasets:[{
-            label:'نمره',
-            data:examData.map(d=>d.score),
-            borderColor:gradient,
-            backgroundColor:'rgba(129,140,248,0.1)',
-            borderWidth:3,
-            tension:0.4,
-            fill:true,
-            pointBackgroundColor:'#f472b6',
-            pointBorderColor:'#fff',
-            pointBorderWidth:2,
-            pointRadius:7,
-             pointHoverRadius:11,
-            pointHoverRadius:9
-          }]
-        },
-        options:{
-          responsive:true,
-          animation:{duration:2000,easing:'easeInOutQuart'},
-          plugins:{
-            legend:{display:false},
-            tooltip:{
-              callbacks:{
-                label:(context)=>{
-                  const idx=context.dataIndex;
-                  return `${examData[idx].title}: ${examData[idx].score}/20`;
-                }
-              }
-            }
-          },
-          scales:{
-            y:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true,max:20,
-             afterBuildTicks:axis=>{axis.ticks=[...axis.ticks,{value:20}]},
-             ticks:{color:'rgba(255,255,255,0.55)',font:{weight:'700'},stepSize:2},
-             border:{color:'rgba(255,255,255,0.12)',width:2},
-             suggestedMax:20},
-            x:{ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.03)'},display:false}
-          }
-        }
-      });
-    }
+    if(tab!=='chart')return;
+    const ctx=document.getElementById('gradeChart');
+    if(!ctx||typeof Chart==='undefined')return;
+    if(window.myChart){window.myChart.destroy();window.myChart=null;}
+    const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{
+      const s=getExamScore(ex.id);
+      return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(s.percentage)||0)),date:ex.created_at||0};
+    }).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(!examData.length)return;
+    const context=ctx.getContext('2d');
+    const fill=context.createLinearGradient(0,0,0,ctx.height||360);
+    fill.addColorStop(0,'rgba(192,132,252,0.34)');
+    fill.addColorStop(.45,'rgba(129,140,248,0.16)');
+    fill.addColorStop(1,'rgba(244,114,182,0.02)');
+    const line=context.createLinearGradient(0,0,ctx.width||500,0);
+    line.addColorStop(0,'#818cf8');line.addColorStop(.5,'#c084fc');line.addColorStop(1,'#f472b6');
+    window.myChart=new Chart(context,{
+      type:'line',
+      data:{labels:examData.map((d,i)=>`آزمون ${i+1}`),datasets:[{label:'نمره',data:examData.map(d=>d.score),borderColor:line,backgroundColor:fill,fill:true,borderWidth:5,tension:.45,pointRadius:8,pointHoverRadius:13,pointBackgroundColor:'#f472b6',pointBorderColor:'#fff',pointBorderWidth:3,pointShadowBlur:18,pointShadowColor:'rgba(244,114,182,.65)'}]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},animation:{duration:1400,easing:'easeOutQuart'},plugins:{legend:{display:false},tooltip:{displayColors:false,padding:12,callbacks:{title:items=>examData[items[0].dataIndex]?.title||'',label:c=>` نمره: ${Number(c.parsed.y).toFixed(2)} از ۲۰`}}},scales:{y:{min:0,max:20,ticks:{stepSize:2,color:'rgba(255,255,255,.65)',font:{weight:'700'},callback:v=>v+' / ۲۰'},grid:{color:'rgba(255,255,255,.07)',drawBorder:false},border:{display:false}},x:{ticks:{color:'rgba(255,255,255,.55)',font:{weight:'600'}},grid:{display:false},border:{display:false}}}}
+    });
+    return()=>{if(window.myChart){window.myChart.destroy();window.myChart=null;}};
   },[tab,answers,exams]);
 
   if(incomingSnakeRoom)return <SnakeOnlineGame user={user} roomId={incomingSnakeRoom} onEnd={()=>setIncomingSnakeRoom(null)}/>;
@@ -2147,12 +2112,12 @@ function Student({user,tab,setTab,onLogout}){
                     </div>
                   </div>
                   {hasObjection&&<div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2.5 text-xs text-amber-300 mt-2">⏳ اعتراض در حال بررسی</div>}
-                  {!hasObjection&&<div className={`objection-box mt-3 ${openObjection===ex.id?'open':''} ${(objectionRemaining(ex.id)||0)<=0?'expired':''}`}>
-                    <button disabled={(objectionRemaining(ex.id)||0)<=0} onClick={()=>setOpenObjection(openObjection===ex.id?null:ex.id)} className="w-full text-right">
+                  {!hasObjection&&<div className={`objection-box mt-3 ${openObjection===ex.id?'open':''} ${(objectionRemaining(ex.id)!==null&&objectionRemaining(ex.id)<=0)?'expired':''}`}>
+                    <button type="button" onClick={()=>setOpenObjection(openObjection===ex.id?null:ex.id)} className="w-full text-right">
                       <div className="flex items-center justify-between"><span className="font-bold text-sm">⚠️ اعتراض به آزمون</span><span className="text-xs text-white/40">{openObjection===ex.id?'▲':'▼'}</span></div>
-                      {openObjection===ex.id&&<div className={`objection-countdown mt-2 ${(objectionRemaining(ex.id)||0)<=0?'text-white/35':'text-amber-300'}`}>{objectionTextTime(objectionRemaining(ex.id))}</div>}
+                      {openObjection===ex.id&&<div className={`objection-countdown mt-2 ${(objectionRemaining(ex.id)!==null&&objectionRemaining(ex.id)<=0)?'text-white/35':'text-amber-300'}`}>{objectionTextTime(objectionRemaining(ex.id))}</div>}
                     </button>
-                    {openObjection===ex.id&&(objectionRemaining(ex.id)||0)>0&&<button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true)}} className="btn-glass btn-glass-danger mt-2 text-sm w-full"><Icon d={Icons.alert} size={16}/> ثبت اعتراض</button>}
+                    {openObjection===ex.id&&(objectionRemaining(ex.id)||0)>0&&<button type="button" onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true)}} className="btn-glass btn-glass-danger mt-2 text-sm w-full"><Icon d={Icons.alert} size={16}/> ثبت اعتراض</button>}
                   </div>}
                 </div>
               );
@@ -2386,9 +2351,22 @@ function App(){
     if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
   },[]);
   const login=async(un,pw)=>{
-    const {data}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).single();
-    if(data){setUser(data);sessionStorage.setItem('edu_user',JSON.stringify(data));setView(data.role);return true;}
-    return false;
+    try{
+      const username=String(un||'').trim().toUpperCase();
+      const password=String(pw||'');
+      const {data,error}=await SB.from('users').select('*').eq('username',username).eq('password',password).limit(1);
+      if(error){console.error('Login error:',error);return false;}
+      const account=Array.isArray(data)?data[0]:data;
+      if(account){
+        const normalizedRole=String(account.role||'student').trim().toLowerCase();
+        const normalizedUser={...account,role:normalizedRole};
+        setUser(normalizedUser);
+        sessionStorage.setItem('edu_user',JSON.stringify(normalizedUser));
+        setView(normalizedRole==='admin'?'admin':'student');
+        return true;
+      }
+      return false;
+    }catch(err){console.error('Login exception:',err);return false;}
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
   if(view==='login') return <Login onLogin={login}/>;
