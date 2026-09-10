@@ -534,6 +534,57 @@ linear-gradient(180deg,#3b2515,#1b110a);border:2px solid rgba(218,164,75,.32);bo
 .admin-student-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}.admin-student-form .full{grid-column:1/-1}
 @media(max-width:560px){.snake13-dice-stage{height:138px!important}.snake13-dice-flight{width:82px!important;height:82px!important}.snake13-dice-cube{width:70px!important;height:70px!important}.snake13-dice-face span{font-size:27px!important}.admin-student-form{grid-template-columns:1fr}.admin-student-form .full{grid-column:auto}}
 
+
+/* ===== V14 Grade chart + Telegram chat + student delete polish ===== */
+.grade3d-card{
+  position:relative; overflow:hidden; border-radius:28px; padding:16px 12px 14px;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(244,114,182,.16),transparent 30%),
+    radial-gradient(circle at 92% 88%,rgba(99,102,241,.18),transparent 34%),
+    linear-gradient(145deg,rgba(29,25,58,.98),rgba(15,17,38,.98));
+  border:1px solid rgba(192,132,252,.28);
+  box-shadow:0 24px 70px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.08),inset 0 -25px 55px rgba(0,0,0,.18);
+}
+.grade3d-card:before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.07),transparent 22%,transparent 76%,rgba(236,72,153,.06));
+}
+.grade3d-title{position:relative;z-index:2;text-align:center;font-weight:900;font-size:17px;
+  background:linear-gradient(90deg,#f9a8d4,#c4b5fd,#f9a8d4);-webkit-background-clip:text;color:transparent}
+.grade3d-subtitle{position:relative;z-index:2;text-align:center;font-size:10px;color:rgba(255,255,255,.38);margin-top:4px}
+.grade3d-wrap{position:relative;z-index:2;margin-top:10px;height:330px;border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.12));
+  box-shadow:inset 0 0 35px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.05);overflow:visible}
+.grade3d-svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18))}
+.grade3d-label{font-size:11px;fill:rgba(255,255,255,.72);font-weight:700}
+.grade3d-point{cursor:pointer;transition:transform .2s}
+.grade3d-point:hover{transform:scale(1.12)}
+.grade3d-empty{height:250px;display:grid;place-items:center;color:rgba(255,255,255,.35)}
+.grade3d-tooltip{position:absolute;z-index:10;min-width:145px;padding:9px 11px;border-radius:14px;
+  background:rgba(9,10,24,.96);border:1px solid rgba(244,114,182,.38);box-shadow:0 15px 35px rgba(0,0,0,.5);
+  pointer-events:none;transform:translate(-50%,-115%);font-size:11px;text-align:center;backdrop-filter:blur(15px)}
+.grade3d-tooltip b{display:block;color:#f9a8d4;margin-bottom:3px}
+.grade3d-tooltip span{color:#fff;font-weight:900;font-size:15px}
+.grade3d-legend{display:flex;justify-content:center;gap:14px;margin-top:4px;color:rgba(255,255,255,.42);font-size:9px}
+.pencil-line{filter:url(#pencilRough);stroke-dasharray:1200;stroke-dashoffset:1200;animation:pencilDraw14 2.2s cubic-bezier(.2,.8,.2,1) .15s forwards}
+.grade3d-point{transform-origin:center;transform-box:fill-box;animation:pointPop14 .55s cubic-bezier(.2,1.5,.3,1) both}
+.grade3d-point:nth-of-type(1){animation-delay:.15s}.grade3d-point:nth-of-type(2){animation-delay:.32s}.grade3d-point:nth-of-type(3){animation-delay:.49s}.grade3d-point:nth-of-type(4){animation-delay:.66s}.grade3d-point:nth-of-type(5){animation-delay:.83s}
+@keyframes pencilDraw14{to{stroke-dashoffset:0}}
+@keyframes pointPop14{0%{opacity:0;transform:scale(.35)}75%{opacity:1;transform:scale(1.13)}100%{opacity:1;transform:scale(1)}}
+
+.grade3d-axis-20{font-size:12px!important;fill:#fff!important;font-weight:1000!important}
+.admin-delete-student{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(145deg,rgba(239,68,68,.18),rgba(127,29,29,.12));
+  border:1px solid rgba(248,113,113,.3);color:#fca5a5;transition:.25s}
+.admin-delete-student:hover{transform:scale(1.06);background:rgba(239,68,68,.28);box-shadow:0 0 22px rgba(239,68,68,.18)}
+.telegram-chat{background:linear-gradient(180deg,#0e1225,#0b1020)!important;overflow:hidden}
+.telegram-header{background:linear-gradient(135deg,rgba(99,102,241,.34),rgba(139,92,246,.18));border-bottom:1px solid rgba(255,255,255,.08);padding:12px 10px;border-radius:18px 18px 10px 10px}
+.telegram-avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#6366f1,#ec4899);box-shadow:0 5px 18px rgba(99,102,241,.35);font-size:19px}
+.chat-bubble{max-width:82%;border-radius:18px 18px 5px 18px!important;padding:10px 12px!important}
+.chat-bubble.me{background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;box-shadow:0 6px 18px rgba(79,70,229,.22)!important}
+.chat-bubble.other{background:linear-gradient(135deg,rgba(43,49,75,.92),rgba(30,35,57,.92))!important}
+.chat-meta{display:block;font-size:8px;color:rgba(255,255,255,.46);margin-top:4px;text-align:left}
+
 </style>
 </head>
 <body>
@@ -1562,9 +1613,9 @@ function ChatModal({user,onClose}){
 
   return(
     <div className="modal-overlay" onClick={onClose}>
-      <div className="glass-strong w-full max-w-md h-[75vh] flex flex-col p-4 slide-up" onClick={e=>e.stopPropagation()}>
-        <div className="flex justify-between items-center mb-3 pb-2 border-b border-white/5">
-          <h3 className="font-bold gradient-text">💬 گفتگو با مدیر</h3>
+      <div className="glass-strong telegram-chat w-full max-w-md h-[75vh] flex flex-col p-3 slide-up" onClick={e=>e.stopPropagation()}>
+        <div className="telegram-header flex justify-between items-center mb-3">
+          <div className="flex items-center gap-3"><div className="telegram-avatar">👨‍🏫</div><div><h3 className="font-black text-sm">گفتگو با مدیر</h3><p className="text-[9px] text-emerald-300 mt-0.5">● آنلاین</p></div></div>
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
         <div className="flex-1 overflow-y-auto mb-3 space-y-2">
@@ -1584,7 +1635,7 @@ function ChatModal({user,onClose}){
                 ):(
                   <>
                     <div className={`chat-bubble ${isMe?'me':'other'} ${m.edited?'edited':''} ${isDeleting?'deleting':''}`}>
-                      <div>{m.content}</div>
+                      <div>{m.content}</div><span className="chat-meta">{m.created_at?new Date(m.created_at).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"}):""}{m.edited?" · ویرایش شده":""}</span>
                       <div className="chat-actions" style={{justifyContent:isMe?'flex-end':'flex-start'}}>
                         {isMe&&(
                           <>
@@ -1750,6 +1801,40 @@ function Admin({user,tab,setTab,onLogout}){
     setStudents(x=>[data,...x]);setStudentForm({full_name:'',username:'',password:''});toast('✅ دانش‌آموز با موفقیت ساخته شد','success');
   };
 
+  const deleteStudent=async(s)=>{
+    if(!s?.id)return;
+    const ok=confirm(`⚠️ حذف کامل «${s.full_name}»؟\n\nتمام پیام‌ها، پاسخ آزمون‌ها، برنامه‌ها، چک‌لیست‌ها، امتیاز بازی‌ها و ارتباطات بازی این دانش‌آموز حذف می‌شود و سپس حساب کاربری او برای همیشه حذف خواهد شد.\n\nاین عملیات قابل بازگشت نیست.`);
+    if(!ok)return;
+    setStudentBusy(true);
+    const sid=String(s.id);
+    const errors=[];
+    const safe=async(label,fn)=>{
+      try{const r=await fn(); if(r?.error) errors.push(label+': '+r.error.message);}
+      catch(e){errors.push(label+': '+(e?.message||'خطای نامشخص'));}
+    };
+    // First remove dependent communication/game records.
+    await safe('پیام‌ها',()=>SB.from('messages').delete().or(`sender_id.eq.${sid},receiver_id.eq.${sid}`));
+    await safe('پاسخ آزمون‌ها',()=>SB.from('answers').delete().eq('student_id',sid));
+    await safe('چک‌لیست',()=>SB.from('checklists').delete().eq('user_id',sid));
+    await safe('برنامه مطالعه',()=>SB.from('study_plans').delete().eq('user_id',sid));
+    await safe('امتیاز بازی',()=>SB.from('game_scores').delete().eq('user_id',sid));
+    await safe('درخواست‌های دوز',()=>SB.from('game_requests').delete().or(`from_user.eq.${sid},to_user.eq.${sid}`));
+    await safe('اتاق‌های دوز',()=>SB.from('xo_rooms').delete().or(`player_x.eq.${sid},player_o.eq.${sid}`));
+    await safe('درخواست‌های مار و پله',()=>SB.from('snake_requests').delete().or(`from_user.eq.${sid},to_user.eq.${sid}`));
+    await safe('اتاق‌های مار و پله',()=>SB.from('snake_rooms').delete().or(`player1_id.eq.${sid},player2_id.eq.${sid},player3_id.eq.${sid}`));
+    // Remove a now-stale specific assignment without deleting the exam itself.
+    await safe('اختصاص آزمون',()=>SB.from('exams').update({assigned_to:'all'}).eq('assigned_to',sid));
+    // Finally delete the account itself.
+    await safe('حساب دانش‌آموز',()=>SB.from('users').delete().eq('id',sid).eq('role','student'));
+    setStudentBusy(false);
+    await loadAll();
+    if(errors.length){
+      toast('⚠️ حذف کامل انجام نشد: '+errors[0],'error');
+    }else{
+      toast('✅ دانش‌آموز و اطلاعات وابسته او حذف شد','success');
+    }
+  };
+
   const gradeAnswer=async(id,score)=>{const value=parseFloat(score);if(Number.isNaN(value)){toast('نمره معتبر نیست','error');return;}const {error}=await SB.from('answers').update({score:value,status:'graded',graded_at:new Date().toISOString()}).eq('id',id);if(error){toast('خطا در ثبت نمره: '+error.message,'error');return;}loadAll();toast('✅ نمره ثبت شد و مهلت اعتراض شروع شد','success');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText,reactions:{}});setReplyText('');loadAll();};
   
@@ -1898,7 +1983,7 @@ function Admin({user,tab,setTab,onLogout}){
             )}
           </>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div></div></>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5">🔑</button></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}</>}</div>)}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div></div></>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}</>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -2543,7 +2628,77 @@ function SnakeGame({user,students=[],isAdmin=false}){
   </div>;
 }
 
-function Student({user,tab,setTab,onLogout}){
+
+function PremiumGradeChart({data}){
+  const [active,setActive]=useState(null);
+  if(!data?.length) return <div className="grade3d-card"><div className="grade3d-title">📈 رشد نمرات</div><div className="grade3d-empty">هنوز نمره‌ای ثبت نشده است</div></div>;
+  const W=520,H=300,left=48,right=18,top=24,bottom=42;
+  const plotW=W-left-right, plotH=H-top-bottom;
+  const points=data.map((d,i)=>{
+    const x=data.length===1?left+plotW/2:left+(i/(data.length-1))*plotW;
+    const score=Math.max(0,Math.min(20,Number(d.score)||0));
+    const y=top+((20-score)/20)*plotH;
+    return {...d,x,y,score};
+  });
+  const smoothPath=(pts)=>{
+    if(pts.length===1)return `M ${pts[0].x} ${pts[0].y}`;
+    let d=`M ${pts[0].x} ${pts[0].y}`;
+    for(let i=1;i<pts.length;i++){
+      const p0=pts[i-1],p1=pts[i];
+      const dx=(p1.x-p0.x)/2;
+      d+=` C ${p0.x+dx*.55} ${p0.y}, ${p1.x-dx*.55} ${p1.y}, ${p1.x} ${p1.y}`;
+    }
+    return d;
+  };
+  const line=smoothPath(points);
+  const area=line+` L ${points[points.length-1].x} ${H-bottom} L ${points[0].x} ${H-bottom} Z`;
+  return <div className="grade3d-card">
+    <div className="grade3d-title">📈 رشد نمرات</div>
+    <div className="grade3d-subtitle">برای دیدن نام آزمون و نمره، روی نقطه بزن</div>
+    <div className="grade3d-wrap">
+      <svg className="grade3d-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" onClick={()=>setActive(null)}>
+        <defs>
+          <linearGradient id="g3dArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#ec4899" stopOpacity=".30"/><stop offset="48%" stopColor="#8b5cf6" stopOpacity=".18"/><stop offset="100%" stopColor="#6366f1" stopOpacity="0"/>
+          </linearGradient>
+          <linearGradient id="g3dLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#f43f5e"/><stop offset="42%" stopColor="#ef4444"/><stop offset="100%" stopColor="#fb7185"/>
+          </linearGradient>
+          <radialGradient id="g3dPoint"><stop offset="0%" stopColor="#fff"/><stop offset="55%" stopColor="#f9a8d4"/><stop offset="100%" stopColor="#db2777"/></radialGradient>
+          <filter id="g3dShadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="6" stdDeviation="5" floodColor="#000" floodOpacity=".45"/></filter>
+          <filter id="pencilRough" x="-5%" y="-10%" width="110%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency=".035 .24" numOctaves="2" seed="9" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <filter id="softGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <rect x="0" y="0" width={W} height={H} rx="22" fill="rgba(255,255,255,.012)"/>
+        {[0,2,4,6,8,10,12,14,16,18,20].map(v=>{
+          const y=top+((20-v)/20)*plotH;
+          return <g key={v}><line x1={left} x2={W-right} y1={y} y2={y} stroke={v===20?'rgba(255,255,255,.16)':'rgba(255,255,255,.075)'} strokeWidth={v===20?1.5:1}/>
+            <text x={left-8} y={y+4} textAnchor="end" className={`grade3d-label ${v===20?'grade3d-axis-20':''}`}>{v}</text></g>
+        })}
+        <path d={area} fill="url(#g3dArea)" opacity=".9"/>
+        <path d={line} fill="none" stroke="rgba(127,29,29,.55)" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round" transform="translate(0 5)" opacity=".78"/>
+        <path d={line} fill="none" stroke="rgba(0,0,0,.38)" strokeWidth="8" strokeLinecap="round" opacity=".42"/>
+        <path d={line} fill="none" stroke="url(#g3dLine)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" className="pencil-line"/>
+        <path d={line} fill="none" stroke="rgba(255,210,220,.42)" strokeWidth="1.5" strokeLinecap="round" className="pencil-line"/>
+        {points.map((pt,i)=><g key={i} className="grade3d-point" filter="url(#g3dShadow)"
+          onClick={e=>{e.stopPropagation();setActive(active===i?null:i)}}>
+          <circle cx={pt.x} cy={pt.y} r="13" fill="rgba(244,63,94,.15)" filter="url(#softGlow)"/>
+          <circle cx={pt.x} cy={pt.y} r="9.5" fill="url(#g3dPoint)" stroke="#fff" strokeWidth="3"/>
+          <circle cx={pt.x-2.5} cy={pt.y-3} r="2.4" fill="#fff" opacity=".85"/>
+        </g>)}
+      </svg>
+      {active!==null && points[active] && <div className="grade3d-tooltip" style={{left:`${(points[active].x/W)*100}%`,top:`${(points[active].y/H)*100}%`}}>
+        <b>{points[active].title}</b><span>{points[active].score.toFixed(2)} / ۲۰</span>
+      </div>}
+    </div>
+    <div className="grade3d-legend"><span>۰</span><span>نمره</span><span>۲۰</span></div>
+  </div>;
+}
+
+function Student({user,tab,setTab,onLogout})
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
   const [activeExam,setActiveExam]=useState(null);
@@ -2709,18 +2864,7 @@ function Student({user,tab,setTab,onLogout}){
   const canObject=(examId)=>getObjectionState(examId).state==='active';
 
 
-  useEffect(()=>{
-    if(tab!=='chart')return;
-    const ctx=document.getElementById('gradeChart');
-    if(!ctx||typeof Chart==='undefined')return;
-    if(window.myChart)window.myChart.destroy();
-    const examData=exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(sc.percentage)||0)),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date));
-    if(!examData.length)return;
-    const c=ctx.getContext('2d');
-    const grad=c.createLinearGradient(0,0,ctx.width||400,0);grad.addColorStop(0,'#60a5fa');grad.addColorStop(.45,'#a78bfa');grad.addColorStop(1,'#f472b6');
-    const fill=c.createLinearGradient(0,0,0,260);fill.addColorStop(0,'rgba(129,140,248,.30)');fill.addColorStop(1,'rgba(129,140,248,0)');
-    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:fill,borderWidth:5,tension:.52,fill:true,pointBackgroundColor:'#fff',pointBorderColor:'#f472b6',pointBorderWidth:4,pointRadius:9,pointHoverRadius:13,pointHitRadius:18,clip:false}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:96,right:42,left:30,bottom:22}},animation:{duration:2200,easing:'easeOutQuart'},interaction:{mode:'nearest',intersect:true},plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(12,14,32,.97)',padding:14,cornerRadius:16,caretPadding:10,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(item)=>`نمره: ${Number(item.raw).toFixed(2)}/20`}}},scales:{y:{min:0,max:20.8,beginAtZero:true,offset:false,suggestedMax:20,ticks:{stepSize:2,color:'rgba(255,255,255,.65)',padding:10,callback:(value)=>value<=20?value:''},grid:{color:'rgba(255,255,255,.075)',drawBorder:false}},x:{display:false,grid:{display:false}}}}});
-  },[tab,answers,exams]);
+
 
   if(activeExam){
     const q=activeExam.questions[currentQ];
@@ -2842,7 +2986,7 @@ function Student({user,tab,setTab,onLogout}){
               <p className="text-4xl font-black gradient-text">{getAverage()}</p>
               <p className="text-xs text-white/40">معدل کل از 20</p>
             </div>
-            <div className="chart-container-enhanced chart-heartbeat"><div className="chart-orbit chart-orbit-a"></div><div className="chart-orbit chart-orbit-b"></div><h3 className="font-bold mb-2 text-center text-sm gradient-text">📈 رشد نمرات</h3><p className="text-[10px] text-white/30 text-center mb-2">برای دیدن جزئیات، روی نقطه نمره بزن</p><div className="grade-chart-shell">{exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-8">نمره‌ای نیست</p>:<canvas id="gradeChart"></canvas>}</div></div>
+            <PremiumGradeChart data={exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(sc.percentage)||0)),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date))}/>
             <div className="glass p-4 mt-4">
               <h4 className="font-bold text-sm mb-3 gradient-text"> لیست آزمون‌ها</h4>
               {exams.filter(ex=>getExamScore(ex.id)).length===0?<p className="text-center text-white/30 py-4">آزمونی ندارید</p>:
@@ -2965,9 +3109,9 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      <button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
+      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
         <Icon d={Icons.message} size={24}/>
-      </button>
+      </button>}
       {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
