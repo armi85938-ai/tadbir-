@@ -728,6 +728,12 @@ const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co"
 const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
 
+// Local penalty-game sound effects; no external audio asset is required.
+let tadbirAudioContext=null;
+const getTadbirAudio=()=>{try{if(!tadbirAudioContext)tadbirAudioContext=new (window.AudioContext||window.webkitAudioContext)();if(tadbirAudioContext.state==='suspended')tadbirAudioContext.resume();return tadbirAudioContext;}catch{return null;}};
+const playWhistle=()=>{const c=getTadbirAudio();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type='sine';o.frequency.setValueAtTime(1450,c.currentTime);o.frequency.exponentialRampToValueAtTime(2050,c.currentTime+.16);o.frequency.exponentialRampToValueAtTime(1250,c.currentTime+.48);g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.16,c.currentTime+.025);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.5);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+.52);};
+const playBallKick=()=>{const c=getTadbirAudio();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type='triangle';o.frequency.setValueAtTime(180,c.currentTime);o.frequency.exponentialRampToValueAtTime(75,c.currentTime+.12);g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.22,c.currentTime+.008);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.16);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+.18);};
+
 const ToastContext=createContext();
 function ToastProvider({children}){
   const [toasts,setToasts]=useState([]);
@@ -1872,6 +1878,7 @@ function Admin({user,tab,setTab,onLogout}){
   const [adminGame,setAdminGame]=useState(null);
   const [studentForm,setStudentForm]=useState({full_name:'',username:'',password:''});
   const [studentBusy,setStudentBusy]=useState(false);
+  const [objectionTick,setObjectionTick]=useState(Date.now());
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
@@ -1917,6 +1924,16 @@ function Admin({user,tab,setTab,onLogout}){
     const {data:{publicUrl}}=SB.storage.from('exam-images').getPublicUrl(path);
     const nq=[...questions];nq[i].image_url=publicUrl;setQuestions(nq);
     toast('✅ عکس آپلود شد','success');
+  };
+  const handleOptionImageUpload=async(file,i,opt)=>{
+    if(!file)return;
+    const ext=file.name.split('.').pop();
+    const path=`option-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const {error}=await SB.storage.from('exam-images').upload(path,file);
+    if(error){toast('خطا در آپلود عکس گزینه: '+error.message,'error');return;}
+    const {data:{publicUrl}}=SB.storage.from('exam-images').getPublicUrl(path);
+    setQuestions(prev=>prev.map((q,idx)=>idx===i?{...q,[`opt_${opt}_image`]:publicUrl}:q));
+    toast('✅ عکس گزینه ذخیره شد','success');
   };
 
   const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
@@ -2248,7 +2265,6 @@ function Admin({user,tab,setTab,onLogout}){
       )}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
     </div>
-      </div>
     </>
   );
 }
@@ -2304,90 +2320,187 @@ function OfflinePenaltyGame({onBack}){
 }
 
 function PenaltyGame({user}){
-  const [people,setPeople]=useState([]),[selected,setSelected]=useState([]),[roomId,setRoomId]=useState(()=>sessionStorage.getItem('penalty_room')||null);
-  const [room,setRoom]=useState(null),[localMode,setLocalMode]=useState(false),[busy,setBusy]=useState(false),[notice,setNotice]=useState(''),[started,setStarted]=useState(false),[zone,setZone]=useState(null),[otherZone,setOtherZone]=useState(null),[result,setResult]=useState(null),[finish,setFinish]=useState(false),[seconds,setSeconds]=useState(120),[ball,setBall]=useState(false);
-  const toast=useToast();
-  const self={id:user.id,name:user.full_name};
-  useEffect(()=>{SB.from('users').select('id,full_name,username,role').neq('id',user.id).then(({data})=>setPeople(data||[]));},[user.id]);
+  const [people,setPeople]=useState([]);
+  const [selected,setSelected]=useState([]);
+  const [room,setRoom]=useState(null);
+  const [invite,setInvite]=useState(null);
+  const [notice,setNotice]=useState('');
+  const [busy,setBusy]=useState(false);
+  const [started,setStarted]=useState(false);
+  const [choice,setChoice]=useState(null);
+  const [choices,setChoices]=useState({});
+  const [result,setResult]=useState(null);
+  const [finish,setFinish]=useState(false);
+  const [localMode,setLocalMode]=useState(false);
+  const [now,setNow]=useState(Date.now());
   const channelRef=useRef(null);
+  const whistleTurnRef=useRef('');
+  const self={id:user.id,name:user.full_name};
+
   useEffect(()=>{
-    if(!roomId)return;
-    const ch=SB.channel('penalty-room-'+roomId)
-      .on('broadcast',{event:'accepted'},({payload})=>{setRoom(r=>r?{...r,players:[...(r.players||[]).filter(p=>p.id!==payload.userId),{id:payload.userId,name:payload.name}]}:r);})
-      .on('broadcast',{event:'declined'},({payload})=>{setNotice(`${payload.name} درخواست را رد کرد.`);})
-      .on('broadcast',{event:'started'},({payload})=>{setRoom(payload.room);setStarted(true);setResult(null);setZone(null);setOtherZone(null);setNotice('بازی شروع شد!');})
-      .on('broadcast',{event:'choice'},({payload})=>{if(payload.roomId!==roomId||payload.userId===user.id)return;setOtherZone(payload.zone);})
-      .on('broadcast',{event:'resolved'},({payload})=>{setRoom(r=>r?{...r,...payload.room}:payload.room);setResult(payload.result);setBall(true);setTimeout(()=>setBall(false),850);setZone(null);setOtherZone(null);})
-      .on('broadcast',{event:'left'},({payload})=>{setRoom(r=>r?{...r,players:(r.players||[]).filter(p=>p.id!==payload.userId)}:r);})
+    SB.from('users').select('id,full_name,username,role').neq('id',user.id).then(({data})=>setPeople(data||[]));
+  },[user.id]);
+
+  useEffect(()=>{
+    const ch=SB.channel('penalty-user-'+user.id)
+      .on('broadcast',{event:'invite'},({payload})=>{
+        if(!payload||payload.fromId===user.id)return;
+        const created=Number(payload.createdAt)||Date.now();
+        if(Date.now()-created>=120000)return;
+        setInvite(payload);
+      }).subscribe();
+    return()=>{SB.removeChannel(ch);};
+  },[user.id]);
+
+  useEffect(()=>{
+    if(!invite)return;
+    const timer=setInterval(()=>{if(Date.now()-(Number(invite.createdAt)||Date.now())>=120000)setInvite(null);setNow(Date.now());},1000);
+    return()=>clearInterval(timer);
+  },[invite]);
+
+  useEffect(()=>{
+    if(!room?.id)return;
+    const ch=SB.channel('penalty-room-'+room.id)
+      .on('broadcast',{event:'accepted'},({payload})=>{
+        if(!payload?.userId)return;
+        setRoom(r=>r?{...r,players:[...(r.players||[]).filter(p=>String(p.id)!==String(payload.userId)),{id:payload.userId,name:payload.name}]}:r);
+      })
+      .on('broadcast',{event:'started'},({payload})=>{
+        if(!payload?.room)return;
+        setRoom(payload.room);setStarted(true);setChoice(null);setChoices({});setResult(null);setFinish(false);
+      })
+      .on('broadcast',{event:'choice'},({payload})=>{
+        if(!payload||String(payload.roomId)!==String(room.id))return;
+        setChoices(c=>({...c,[payload.userId]:payload.choice}));
+      })
+      .on('broadcast',{event:'resolved'},({payload})=>{
+        if(!payload?.room)return;
+        setRoom(payload.room);setResult(payload.result||null);setChoice(null);setChoices({});
+        if(payload.room.status==='finished')setFinish(true);
+      })
+      .on('broadcast',{event:'left'},({payload})=>{
+        if(!payload?.userId)return;
+        setRoom(r=>r?{...r,players:(r.players||[]).filter(p=>String(p.id)!==String(payload.userId))}:r);
+      })
       .subscribe();
     channelRef.current=ch;
     return()=>{SB.removeChannel(ch);channelRef.current=null;};
-  },[roomId]);
+  },[room?.id]);
+
   const send=(event,payload)=>channelRef.current?.send({type:'broadcast',event,payload});
   const makeRoom=async()=>{
-    if(!selected.length)return;setBusy(true);setNotice('');
+    if(!selected.length)return;
+    setBusy(true);setNotice('');
     const id='pen-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
-    const players=[self];setRoom({id,players,status:'waiting',turn:0,shots:{},saves:{},scores:{}});setRoomId(id);sessionStorage.setItem('penalty_room',id);
-    for(const p of selected){
-      const c=SB.channel('penalty-user-'+p.id);
-      c.subscribe(status=>{if(status==='SUBSCRIBED'){c.send({type:'broadcast',event:'invite',payload:{roomId:id,fromId:user.id,fromName:user.full_name,createdAt:Date.now()}});setTimeout(()=>SB.removeChannel(c),1800);}});
+    const players=[self];
+    const initial={id,players,status:'waiting',turn:0,turnCount:0,scores:{[user.id]:0},shots:{[user.id]:0},saves:{[user.id]:0},created_at:new Date().toISOString()};
+    setRoom(initial);setStarted(false);setChoice(null);setChoices({});
+    for(const pid of selected){
+      const ch=SB.channel('penalty-user-'+pid);
+      ch.subscribe(status=>{
+        if(status==='SUBSCRIBED'){
+          ch.send({type:'broadcast',event:'invite',payload:{roomId:id,fromId:user.id,fromName:user.full_name,createdAt:Date.now()}});
+          setTimeout(()=>SB.removeChannel(ch),1200);
+        }
+      });
     }
     setNotice('درخواست‌ها ارسال شد؛ ۲ دقیقه برای پیوستن فرصت دارند.');setBusy(false);
   };
-  const start=()=>{
-    if(!room||room.players.length<2){toast('حداقل یک حریف باید قبول کند','warning');return;}
-    const normalized={...room,status:'playing',turn:0,turnCount:0,shots:Object.fromEntries(room.players.map(p=>[p.id,0])),saves:Object.fromEntries(room.players.map(p=>[p.id,0])),scores:Object.fromEntries(room.players.map(p=>[p.id,0]))};
-    setRoom(normalized);setStarted(true);send('started',{room:normalized});
+
+  const acceptInvite=()=>{
+    if(!invite)return;
+    const id=invite.roomId;
+    const ch=SB.channel('penalty-room-'+id);
+    ch.subscribe(status=>{
+      if(status==='SUBSCRIBED'){
+        ch.send({type:'broadcast',event:'accepted',payload:{userId:user.id,name:user.full_name}});
+        setTimeout(()=>SB.removeChannel(ch),900);
+      }
+    });
+    setRoom({id,players:[self],status:'waiting',turn:0,turnCount:0,scores:{[user.id]:0},shots:{[user.id]:0},saves:{[user.id]:0},created_at:new Date().toISOString()});
+    setInvite(null);setNotice('به اتاق پیوستی؛ منتظر شروع بازی بمان.');
   };
-  if(localMode)return <OfflinePenaltyGame onBack={()=>setLocalMode(false)}/>;
+
+  const start=()=>{
+    getTadbirAudio();
+    if(!room||room.players.length<2){setNotice('حداقل یک حریف باید قبول کند.');return;}
+    if(String(room.players[0].id)!==String(user.id)){setNotice('فقط سازنده اتاق می‌تواند بازی را شروع کند.');return;}
+    const scores={};const shots={};const saves={};room.players.forEach(p=>{scores[p.id]=0;shots[p.id]=0;saves[p.id]=0;});
+    const nr={...room,status:'playing',turn:0,turnCount:0,scores,shots,saves};
+    setRoom(nr);setStarted(true);setChoice(null);setChoices({});send('started',{room:nr});
+  };
+
   const currentKeeper=()=>room?.players?.[room.turn%room.players.length];
   const currentShooter=()=>room?.players?.[(room.turn+1)%room.players.length];
-  const meRole=()=>{if(!room)return null;const k=currentKeeper(),s=currentShooter();return user.id===k?.id?'keeper':user.id===s?.id?'shooter':null};
-  const choose=(z)=>{if(!started||!room||result||zone)return;const role=meRole();if(!role)return;setZone(z);send('choice',{roomId,turn:room.turn,userId:user.id,zone:z,role});};
+  const meRole=()=>{const k=currentKeeper(),s=currentShooter();if(!k||!s)return null;if(String(user.id)===String(k.id))return 'keeper';if(String(user.id)===String(s.id))return 'shooter';return null;};
+
   useEffect(()=>{
-    if(!room||!started||result||zone===null||otherZone===null)return;
-    const k=currentKeeper(),s=currentShooter();
-    if(!k||!s)return;
-    const keeperZone=user.id===k.id?zone:otherZone;const shooterZone=user.id===s.id?zone:otherZone;
-    if(keeperZone==null||shooterZone==null)return;
-    const goal=!((keeperZone.row===shooterZone.row)&&(keeperZone.col===shooterZone.col));
-    const nextTurn=room.turn+1, done=nextTurn>=room.players.length*5;
+    if(!started||!room||room.status!=='playing')return;
+    const shooter=currentShooter();const key=`${room.id}:${room.turn}`;
+    if(shooter&&String(shooter.id)===String(user.id)&&whistleTurnRef.current!==key){whistleTurnRef.current=key;const t=setTimeout(playWhistle,100);return()=>clearTimeout(t);}
+  },[started,room?.id,room?.turn]);
+
+  const choose=(z)=>{
+    if(!started||!room||room.status!=='playing'||choice)return;
+    const role=meRole();if(!role)return;
+    setChoice(z);setChoices(c=>({...c,[user.id]:z}));
+    if(role==='shooter')playBallKick();
+    send('choice',{roomId:room.id,turn:room.turn,userId:user.id,role,choice:z});
+  };
+
+  useEffect(()=>{
+    if(!room||!started||room.status!=='playing'||String(room.players?.[0]?.id)!==String(user.id))return;
+    const k=currentKeeper(),s=currentShooter();if(!k||!s)return;
+    const kz=choices[k.id],sz=choices[s.id];if(!kz||!sz||result)return;
+    const goal=!(kz.row===sz.row&&kz.col===sz.col);
     const scores={...room.scores},shots={...room.shots},saves={...room.saves};
     shots[s.id]=(shots[s.id]||0)+1;saves[k.id]=(saves[k.id]||0)+1;
     if(goal)scores[s.id]=(scores[s.id]||0)+3;else scores[k.id]=(scores[k.id]||0)+2;
+    const nextTurn=room.turn+1;const done=nextTurn>=room.players.length*5;
     const nr={...room,scores,shots,saves,turn:done?room.turn:nextTurn,turnCount:nextTurn,status:done?'finished':'playing'};
     const res=goal?{type:'goal',shooter:s.name,keeper:k.name}:{type:'save',shooter:s.name,keeper:k.name};
     setResult(res);send('resolved',{room:nr,result:res});
-    setTimeout(()=>{setResult(null);setZone(null);setOtherZone(null);setRoom(nr);if(done)setFinish(true);},1250);
-  },[zone,otherZone]);
-  const exit=()=>{if(roomId)send('left',{userId:user.id});sessionStorage.removeItem('penalty_room');setRoomId(null);setRoom(null);setStarted(false);setFinish(false);setNotice('از بازی خارج شدی؛ می‌توانی بازی جدید بسازی.');};
-  const backToLobby=()=>{sessionStorage.removeItem('penalty_room');setRoomId(null);setRoom(null);setStarted(false);setFinish(false);setSelected([]);setNotice('بازی بسته شد.');};
-  const players=room?.players||[];
-  if(started&&room)return <div className="penalty-shell" dir="rtl">
-    <div className="penalty-hero"><div className="penalty-kicker">TADBIR • PENALTY ARENA</div><div className="penalty-title">⚽ پنالتی</div><div className="penalty-subtitle">هر بازیکن ۵ شوت و ۵ دروازه‌بانی • گل ۳ امتیاز • مهار ۲ امتیاز</div></div>
-    <div className="penalty-stadium">
-      <div className="penalty-lights"></div>
-      <div className="penalty-scoreboard">{players.map(p=><div key={p.id} className={'penalty-team '+(p.id===currentKeeper()?.id||p.id===currentShooter()?.id?'active':'')}><b>{p.name}</b><strong>{room.scores?.[p.id]||0}</strong><small>شوت {room.shots?.[p.id]||0}/۵ • مهار {room.saves?.[p.id]||0}/۵</small></div>)}</div>
-      <div className="penalty-scene">
-        <div className="penalty-goal"></div>
-        <div className="penalty-zone-grid">{[0,1,2,3,4,5,6,7,8].map(i=>{const z={row:Math.floor(i/3),col:i%3};return <button key={i} className={'penalty-zone '+((zone?.row===z.row&&zone?.col===z.col)?'chosen':'')} onClick={()=>choose(z)} aria-label="منطقه دروازه"></button>})}</div>
-        <div className="penalty-gk" style={{transform:meRole()==='keeper'&&zone?`translateX(-50%) translate(${(zone.col-1)*55}px,${(zone.row-1)*28}px)`:undefined}}><div className="head"></div><div className="body"></div><div className="shirt">TADBIR</div><div className="arm left"></div><div className="arm right"></div></div>
-        <div className={'penalty-ball '+(ball?'shoot':'')} style={{'--bx':otherZone?`${28+otherZone.col*22}%`:'50%','--by':otherZone?`${32+otherZone.row*12}%`:'38%'}}></div>
-        {result&&<div className="penalty-result"><div className="penalty-result-card"><div className="emoji">{result.type==='goal'?'⚽🔥':'🧤✨'}</div><h3>{result.type==='goal'?'گل!':'مهار شد!'}</h3><p className="text-white/55 text-sm">{result.type==='goal'?`${result.shooter} • +۳ امتیاز`:`${result.keeper} • +۲ امتیاز`}</p></div></div>}
+    const t=setTimeout(()=>{setResult(null);setChoices({});setChoice(null);setRoom(nr);if(done)setFinish(true);},1200);
+    return()=>clearTimeout(t);
+  },[choices,room?.turn,started,result]);
+
+  const leave=()=>{
+    if(room?.id)send('left',{userId:user.id});
+    setRoom(null);setStarted(false);setChoice(null);setChoices({});setFinish(false);setInvite(null);setSelected([]);setNotice('از بازی خارج شدی؛ آماده ساخت یا پیوستن به بازی جدید هستی.');
+  };
+
+  if(localMode)return <OfflinePenaltyGame onBack={()=>setLocalMode(false)}/>;
+
+  if(started&&room)return (
+    <div className="penalty-shell" dir="rtl">
+      <div className="penalty-hero"><div className="penalty-kicker">TADBIR • PENALTY ARENA</div><div className="penalty-title">⚽ پنالتی</div><div className="penalty-subtitle">گل +۳ امتیاز • مهار +۲ امتیاز • هر بازیکن ۵ نوبت شوت و دروازه‌بانی</div></div>
+      <div className="penalty-stadium">
+        <div className="penalty-lights"></div>
+        <div className="penalty-scoreboard">{room.players.map(p=><div key={p.id} className={'penalty-team '+(String(p.id)===String(currentKeeper()?.id)||String(p.id)===String(currentShooter()?.id)?'active':'')}><b>{p.name}</b><strong>{room.scores?.[p.id]||0}</strong><small>شوت {room.shots?.[p.id]||0}/۵ • مهار {room.saves?.[p.id]||0}/۵</small></div>)}</div>
+        <div className="penalty-scene">
+          <div className="penalty-goal"></div>
+          <div className="penalty-zone-grid">{[0,1,2,3,4,5,6,7,8].map(i=>{const z={row:Math.floor(i/3),col:i%3};const chosen=choice?.row===z.row&&choice?.col===z.col;return <button key={i} className={'penalty-zone '+(chosen?'chosen':'')} onClick={()=>choose(z)} aria-label="منطقه دروازه"></button>})}</div>
+          <div className="penalty-gk"><div className="head"></div><div className="body"></div><div className="shirt">TADBIR</div><div className="arm left"></div><div className="arm right"></div></div>
+          {result&&<div className="penalty-result"><div className="penalty-result-card"><div className="emoji">{result.type==='goal'?'⚽🔥':'🧤✨'}</div><h3>{result.type==='goal'?'گل!':'مهار شد!'}</h3><p className="text-white/55 text-sm">{result.type==='goal'?`${result.shooter} • +۳ امتیاز`:`${result.keeper} • +۲ امتیاز`}</p></div></div>}
+        </div>
+        <div className="penalty-role">{meRole()==='keeper'?'🧤 شما دروازه‌بان هستید؛ یک جهت را انتخاب کنید.':meRole()==='shooter'?'🎯 شما شوت می‌زنید؛ نقطه‌ای از دروازه را انتخاب کنید.':'⏳ نوبت بازیکنان دیگر است...'}</div>
+        <button onClick={leave} className="snake10-leave-button">🚪 پایان بازی برای من</button>
       </div>
-      <div className="penalty-role">{meRole()==='keeper'?'🧤 شما دروازه‌بان هستید؛ یکی از ۹ جهت را انتخاب کنید.':meRole()==='shooter'?'🎯 شما شوت می‌زنید؛ نقطه‌ای از دروازه را انتخاب کنید.':'⏳ نوبت بازیکنان دیگر است...'}</div>
-      <button className="penalty-action" onClick={()=>{if(zone===null&&meRole())toast('یک نقطه از دروازه را انتخاب کن','warning')}} disabled={!!zone||!meRole()||!!result}>{zone?'انتخاب ثبت شد ✓':'انتخاب جهت / نقطه شوت'}</button>
-      <button onClick={exit} className="snake10-leave-button" style={{marginTop:8}}>🚪 پایان بازی برای من</button>
+      {finish&&<div className="penalty-finish"><div className="penalty-finish-card"><div className="cup">🏆</div><div className="text-amber-300 font-black text-sm">پایان بازی</div><h2>{room.players.slice().sort((a,b)=>(room.scores?.[b.id]||0)-(room.scores?.[a.id]||0))[0]?.name||'بازیکن'}</h2><p className="text-white/45 text-xs mt-2">بیشترین امتیاز</p><button onClick={leave}>پایان بازی</button></div></div>}
     </div>
-    {finish&&<div className="penalty-finish"><div className="penalty-finish-card"><div className="cup">🏆</div><div className="text-amber-300 font-black text-sm">پایان پنالتی</div><h2>{players.slice().sort((a,b)=>(room.scores?.[b.id]||0)-(room.scores?.[a.id]||0))[0]?.name||'بازیکن'}</h2><p className="text-white/45 text-xs mt-2">با {room.scores?.[players.slice().sort((a,b)=>(room.scores?.[b.id]||0)-(room.scores?.[a.id]||0))[0]?.id]||0} امتیاز برنده شد</p><button onClick={backToLobby}>پایان بازی</button></div></div>}
-  </div>;
-  return <div className="penalty-shell" dir="rtl">
-    <div className="penalty-hero"><div className="penalty-kicker">ONLINE • OFFLINE</div><div className="penalty-title">⚽ پنالتی</div><div className="penalty-subtitle">یک نبرد فوتبالی سریع، روان و گرافیکی</div></div>
-    {notice&&<div className="penalty-lobby-card"><p className="text-xs text-amber-200">{notice}</p></div>}
-    {room&&room.status==='waiting'&&<div className="penalty-lobby-card"><b className="block mb-2">⏳ بازیکنان پذیرفته‌شده</b><div className="penalty-accepted">{room.players.map(p=><span key={p.id}>{p.id===user.id?'👑':'⚽'} {p.name}</span>)}</div><button className="penalty-start" disabled={room.players.length<2} onClick={start}>🚀 شروع بازی ({room.players.length} نفر)</button></div>}
-    <div className="penalty-lobby-card"><div className="flex justify-between items-center mb-2"><b>👥 حریف‌های خود را دعوت کن</b><span className="text-xs text-cyan-300">{selected.length}/۲</span></div>{people.map(p=><label key={p.id} className={'penalty-player-row '+(selected.includes(p.id)?'selected':'')}><input type="checkbox" className="hidden" checked={selected.includes(p.id)} onChange={()=>setSelected(x=>x.includes(p.id)?x.filter(id=>id!==p.id):x.length<2?[...x,p.id]:x)}/><div className="penalty-avatar">{p.full_name?.[0]||'؟'}</div><div><b className="block text-sm">{p.full_name}</b><span className="text-[9px] text-white/35">{p.role==='admin'?'مدیر':'دانش‌آموز'}</span></div><span className="penalty-check">✓</span></label>)}<button className="penalty-invite" disabled={busy||!selected.length} onClick={makeRoom}>{busy?'در حال ارسال...':'📩 ارسال درخواست پنالتی'}</button></div><button className="btn-glass mt-2" onClick={()=>setLocalMode(true)}>🎮 بازی آفلاین دو نفره</button></div>
-    <div className="penalty-lobby-card"><div className="grid grid-cols-2 gap-2"><div className="glass p-3 text-center"><div className="text-3xl">🥅</div><b className="text-xs">دروازه‌بانی</b><p className="text-[9px] text-white/35 mt-1">۹ جهت انتخابی</p></div><div className="glass p-3 text-center"><div className="text-3xl">⚽</div><b className="text-xs">شوت</b><p className="text-[9px] text-white/35 mt-1">هر گل +۳ امتیاز</p></div></div></div>
-  </div>;
+  );
+
+  return (
+    <div className="penalty-shell" dir="rtl">
+      {invite&&<div className="penalty-inbox"><div className="flex items-center gap-3"><div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-500 grid place-items-center text-2xl">⚽</div><div className="flex-1"><b className="block">دعوت بازی پنالتی</b><span className="text-[10px] text-white/45">{invite.fromName} تو را به بازی دعوت کرده است</span></div><strong className="text-amber-300">{Math.max(0,120-Math.floor((now-(Number(invite.createdAt)||now))/1000))}ث</strong></div><div className="penalty-inbox-actions"><button className="penalty-accept" onClick={acceptInvite}>✓ قبول</button><button className="penalty-decline" onClick={()=>setInvite(null)}>✕ رد</button></div></div>}
+      <div className="penalty-hero"><div className="penalty-kicker">ONLINE • OFFLINE</div><div className="penalty-title">⚽ پنالتی</div><div className="penalty-subtitle">یک نبرد فوتبالی سریع، روان و گرافیکی</div></div>
+      {notice&&<div className="penalty-lobby-card"><p className="text-xs text-amber-200">{notice}</p></div>}
+      {room&&room.status==='waiting'&&<div className="penalty-lobby-card"><b className="block mb-2">⏳ بازیکنان پذیرفته‌شده</b><div className="penalty-accepted">{room.players.map(p=><span key={p.id}>{String(p.id)===String(user.id)?'👑':'⚽'} {p.name}</span>)}</div>{String(room.players[0]?.id)===String(user.id)&&<button className="penalty-start" disabled={room.players.length<2} onClick={start}>🚀 شروع بازی ({room.players.length} نفر)</button>}</div>}
+      <div className="penalty-lobby-card"><div className="flex justify-between items-center mb-2"><b>👥 حریف‌های خود را دعوت کن</b><span className="text-xs text-cyan-300">{selected.length}/۲</span></div>{people.map(p=><label key={p.id} className={'penalty-player-row '+(selected.includes(p.id)?'selected':'')}><input type="checkbox" className="hidden" checked={selected.includes(p.id)} onChange={()=>setSelected(x=>x.includes(p.id)?x.filter(id=>id!==p.id):x.length<2?[...x,p.id]:x)}/><div className="penalty-avatar">{p.full_name?.[0]||'؟'}</div><div><b className="block text-sm">{p.full_name}</b><span className="text-[9px] text-white/35">{p.role==='admin'?'مدیر':'دانش‌آموز'}</span></div><span className="penalty-check">✓</span></label>)}<button className="penalty-invite" disabled={busy||!selected.length} onClick={makeRoom}>{busy?'در حال ارسال...':'📩 ارسال درخواست پنالتی'}</button></div>
+      <button className="btn-glass mt-2" onClick={()=>setLocalMode(true)}>🎮 بازی آفلاین دو نفره</button>
+      <div className="penalty-lobby-card"><div className="grid grid-cols-2 gap-2"><div className="glass p-3 text-center"><div className="text-3xl">🥅</div><b className="text-xs">دروازه‌بانی</b><p className="text-[9px] text-white/35 mt-1">۹ جهت انتخابی</p></div><div className="glass p-3 text-center"><div className="text-3xl">⚽</div><b className="text-xs">شوت</b><p className="text-[9px] text-white/35 mt-1">هر گل +۳ امتیاز</p></div></div></div>
+    </div>
+  );
 }
 
 function SnakeGame({user,students=[],isAdmin=false}){
@@ -3444,7 +3557,6 @@ function Student({user,tab,setTab,onLogout}){
         </div>
       )}
     </div>
-      </div>
     </>
   );
 }
@@ -3481,25 +3593,11 @@ function AppWrapper(){
 
 ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 </script>
-<svg className="xo-gradients" style={{position:'absolute',width:0,height:0,overflow:hidden}}>
-  <defs>
-    <linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#818cf8"/>
-      <stop offset="100%" stopColor="#c084fc"/>
-    </linearGradient>
-    <linearGradient id="oGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#f472b6"/>
-      <stop offset="100%" stopColor="#fb923c"/>
-    </linearGradient>
-    <linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stopColor="#10b981"/>
-      <stop offset="100%" stopColor="#ef4444"/>
-    </linearGradient>
-    <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stopColor="#818cf8"/>
-      <stop offset="100%" stopColor="#c084fc"/>
-    </linearGradient>
-  </defs>
-</svg>
+<svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none"><defs>
+<linearGradient id="xGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc"/></linearGradient>
+<linearGradient id="oGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f472b6"/><stop offset="100%" stop-color="#fb923c"/></linearGradient>
+<linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#ef4444"/></linearGradient>
+<linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc"/></linearGradient>
+</defs></svg>
 </body>
 </html>
