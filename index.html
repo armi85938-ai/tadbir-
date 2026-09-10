@@ -336,6 +336,164 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .snake-v9-bottom{position:relative;z-index:6;display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px;margin-top:12px}.snake-v9-action{border:0;border-radius:16px;padding:12px 9px;font-weight:1000;font-size:10px;color:#fff;cursor:pointer;border:1px solid rgba(255,255,255,.1);box-shadow:0 10px 24px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.14)}.snake-v9-action.roll{background:linear-gradient(145deg,#16a34a,#065f46)}.snake-v9-action.exit{background:linear-gradient(145deg,#ef4444,#7f1d1d)}.snake-v9-action:disabled{opacity:.42;cursor:not-allowed}.snake-v9-players{position:relative;z-index:6;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}.snake-v9-player{padding:9px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);font-size:9px;display:flex;align-items:center;gap:7px}.snake-v9-player.active{border-color:#fbbf24;box-shadow:0 0 22px rgba(251,191,36,.12)}.snake-v9-dot{width:11px;height:11px;border-radius:50%;box-shadow:0 0 12px currentColor}.snake-v9-player small{margin-right:auto;color:rgba(255,255,255,.45)}
 @media(max-width:560px){.snake-v9-controls{grid-template-columns:1fr 90px 1fr}.snake-v9-dice{width:58px;height:58px}.snake-v9-face.f{transform:translateZ(29px)}.snake-v9-face.b{transform:rotateY(180deg) translateZ(29px)}.snake-v9-face.r{transform:rotateY(90deg) translateZ(29px)}.snake-v9-face.l{transform:rotateY(-90deg) translateZ(29px)}.snake-v9-face.t{transform:rotateX(90deg) translateZ(29px)}.snake-v9-face.bt{transform:rotateX(-90deg) translateZ(29px)}.snake-v9-piece{width:28px;height:35px}.snake-v9-piece .base{width:25px;height:10px}.snake-v9-piece .body{width:14px;height:20px}.snake-v9-piece .cap{width:17px;height:17px}.snake-v9-piece em{top:35px;font-size:6px}}
 
+
+/* ===== SNAKES & LADDERS V10 — premium mobile board ===== */
+.snake10-shell{position:relative;width:100%;min-height:100dvh;background:
+radial-gradient(circle at 50% 20%,rgba(255,194,76,.12),transparent 28%),
+linear-gradient(180deg,#24150c 0%,#0e0906 38%,#1c1009 100%);
+color:#fff;overflow:auto;padding:12px 10px 22px;isolation:isolate}
+.snake10-shell:before{content:"";position:absolute;inset:0;background:
+linear-gradient(rgba(255,255,255,.015),rgba(0,0,0,.2)),
+repeating-linear-gradient(90deg,rgba(255,184,80,.045) 0 2px,transparent 2px 15px);
+pointer-events:none;z-index:-2}
+.snake10-ambient{position:absolute;inset:0;pointer-events:none;z-index:-1;background:
+radial-gradient(circle at 12% 5%,rgba(54,180,81,.16),transparent 18%),
+radial-gradient(circle at 88% 6%,rgba(248,179,47,.13),transparent 20%),
+radial-gradient(circle at 50% 76%,rgba(255,126,32,.09),transparent 26%)}
+.snake10-scorebar{max-width:760px;margin:0 auto 9px;display:grid;grid-template-columns:1fr 74px 1fr;gap:7px;align-items:center}
+.snake10-player-card{min-width:0;display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:14px;background:linear-gradient(145deg,rgba(20,16,12,.92),rgba(63,39,20,.86));border:2px solid rgba(239,184,73,.34);box-shadow:0 7px 18px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.08)}
+.snake10-player-card b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snake10-player-card span{display:block;color:#f4d58a;font-size:9px;margin-top:1px}
+.snake10-avatar{width:38px;height:38px;flex:0 0 38px;border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:1000;color:#fff;border:2px solid rgba(255,255,255,.65);box-shadow:0 0 0 3px rgba(0,0,0,.25),0 5px 12px rgba(0,0,0,.45);background:linear-gradient(145deg,#8b5cf6,#2e1065)}
+.snake10-avatar.purple{background:linear-gradient(145deg,#9b5de5,#2e1065)}
+.snake10-trophy-big{font-size:42px;text-align:center;filter:drop-shadow(0 6px 7px rgba(255,183,45,.45));animation:trophyFloat 2.6s ease-in-out infinite}
+@keyframes trophyFloat{50%{transform:translateY(-3px) rotate(2deg)}}
+.snake10-board-frame{max-width:760px;margin:0 auto;padding:8px;border-radius:22px;background:linear-gradient(145deg,#7d4b1f,#2d1609 46%,#8c5b2b);box-shadow:0 18px 45px rgba(0,0,0,.65),inset 0 0 0 2px rgba(255,220,138,.18),inset 0 0 22px rgba(0,0,0,.5)}
+.snake10-board-inner{position:relative;width:100%;aspect-ratio:1;border-radius:13px;overflow:hidden;background:#4a2b16;box-shadow:inset 0 0 24px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.12)}
+.snake10-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);z-index:1}
+.snake10-cell{position:relative;display:flex;align-items:center;justify-content:center;border:1px solid rgba(34,22,10,.5);font-size:clamp(10px,2.7vw,21px);font-weight:1000;color:#fff2c6;text-shadow:0 2px 2px #261405,0 0 6px rgba(0,0,0,.4);box-shadow:inset 0 1px rgba(255,255,255,.1),inset 0 -5px 8px rgba(0,0,0,.12)}
+.snake10-cell:nth-child(4n+1){background:linear-gradient(145deg,#2f7251,#17452f)}
+.snake10-cell:nth-child(4n+2){background:linear-gradient(145deg,#a86f25,#674116)}
+.snake10-cell:nth-child(4n+3){background:linear-gradient(145deg,#42688a,#263e58)}
+.snake10-cell:nth-child(4n){background:linear-gradient(145deg,#7d4730,#4f291d)}
+.snake10-cell:after{content:"";position:absolute;inset:2px;border-radius:5px;border:1px solid rgba(255,255,255,.08);pointer-events:none}
+.snake10-cell.start{background:linear-gradient(145deg,#d9a52d,#75420b)!important}
+.snake10-cell.start small{position:absolute;bottom:2px;font-size:clamp(5px,1.4vw,10px);color:#fff2b8;letter-spacing:.4px}
+.snake10-cell.finish{background:radial-gradient(circle at 50% 45%,#ffe9a0,#c98317 48%,#65330b)!important}
+.snake10-trophy-cell{font-size:clamp(27px,7vw,62px);filter:drop-shadow(0 6px 5px rgba(0,0,0,.7))}
+.snake10-art{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;overflow:visible}
+.snake10-body{fill:none;stroke-width:3.65;stroke-linecap:round;stroke-linejoin:round}
+.snake10-scale-line{fill:none;stroke:rgba(14,38,20,.25);stroke-width:1.25;stroke-dasharray:.7 1.2;stroke-linecap:round}
+.snake10-shine{fill:none;stroke:rgba(255,255,255,.32);stroke-width:.55;stroke-linecap:round;stroke-dasharray:4 7}
+.snake10-tongue{fill:none;stroke:#e52e38;stroke-width:.7;stroke-linecap:round;opacity:.2}
+.snake10-strike .snake10-tongue{opacity:1;animation:snake10Tongue .65s steps(4,end)}
+.snake10-strike{animation:snake10HeadStrike .7s ease-in-out}
+@keyframes snake10HeadStrike{35%{transform:scale(1.08) translate(1px,-1px)}65%{transform:scale(.96) translate(-1px,1px)}}
+@keyframes snake10Tongue{0%{stroke-dasharray:0 10}45%{stroke-dasharray:10 0}100%{stroke-dasharray:0 10}}
+.snake10-ladder{filter:drop-shadow(0 3px 3px rgba(0,0,0,.7))}
+.ladder-shadow{stroke:#4b2508;stroke-width:3.1;stroke-linecap:round;opacity:.9}
+.ladder-rail{stroke:#d89a31;stroke-width:1.65;stroke-linecap:round}
+.ladder-rung{stroke:#f6d27a;stroke-width:1.2;stroke-linecap:round}
+.snake10-piece{position:absolute;z-index:6;width:clamp(24px,7vw,46px);height:clamp(34px,9vw,58px);transform:translate(-50%,-88%);transition:left .15s linear,top .15s linear;filter:drop-shadow(0 7px 7px rgba(0,0,0,.72));pointer-events:none}
+.snake10-piece-shadow{position:absolute;bottom:0;left:50%;width:78%;height:17%;transform:translateX(-50%);border-radius:50%;background:rgba(0,0,0,.45)}
+.snake10-piece-base{position:absolute;bottom:0;left:50%;width:92%;height:24%;transform:translateX(-50%);border-radius:50%;background:linear-gradient(145deg,var(--pl),var(--pc) 42%,var(--pd));border:2px solid rgba(255,255,255,.7);box-shadow:inset 0 3px 4px rgba(255,255,255,.3),0 2px 3px rgba(0,0,0,.5)}
+.snake10-piece-body{position:absolute;left:50%;bottom:13%;width:46%;height:47%;transform:translateX(-50%);border-radius:45% 45% 30% 30%;background:linear-gradient(145deg,var(--pl),var(--pc) 45%,var(--pd));border:2px solid rgba(255,255,255,.65);box-shadow:inset 3px 3px 4px rgba(255,255,255,.25),inset -4px -5px 5px rgba(0,0,0,.2)}
+.snake10-piece-cap{position:absolute;left:50%;bottom:48%;width:54%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;display:grid;place-items:center;font-size:clamp(8px,2vw,13px);font-weight:1000;color:#fff;background:radial-gradient(circle at 33% 25%,#fff,var(--pl) 22%,var(--pc) 52%,var(--pd));border:2px solid rgba(255,255,255,.8);box-shadow:inset 3px 3px 5px rgba(255,255,255,.28)}
+.snake10-piece em{position:absolute;top:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:clamp(5px,1.35vw,9px);font-style:normal;font-weight:1000;color:#fff;text-shadow:0 2px 3px #000}
+.snake10-piece.left{filter:grayscale(1) brightness(.5) drop-shadow(0 5px 5px rgba(0,0,0,.7));opacity:.7}
+.snake10-dice-panel{max-width:760px;margin:7px auto 4px;display:grid;grid-template-columns:1fr 150px 1fr;align-items:center;gap:8px;min-height:108px;background:
+radial-gradient(circle at 50% 70%,rgba(255,191,78,.22),transparent 38%),
+linear-gradient(180deg,#3b2515,#1b110a);border:2px solid rgba(218,164,75,.32);border-radius:20px;box-shadow:inset 0 0 25px rgba(0,0,0,.5),0 10px 25px rgba(0,0,0,.45);position:relative;overflow:hidden}
+.snake10-dice-panel:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 80%,rgba(255,229,157,.2),transparent 25%);pointer-events:none}
+.snake10-side-control{display:flex;flex-direction:column;align-items:center;gap:4px;color:#f5d690;text-shadow:0 2px 2px #000}
+.snake10-side-control span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:25px;background:linear-gradient(145deg,#3b3b3b,#101010);border:2px solid #8f6b37;box-shadow:inset 0 2px rgba(255,255,255,.12),0 5px 12px rgba(0,0,0,.5)}
+.snake10-side-control small{font-size:8px;font-weight:900}
+.snake10-dice-stage{position:relative;height:98px;display:grid;place-items:center;perspective:900px}
+.snake10-dice-glow{position:absolute;width:100px;height:30px;border-radius:50%;bottom:6px;background:radial-gradient(ellipse,rgba(255,191,71,.45),transparent 65%);filter:blur(5px)}
+.snake10-dice-flight{position:relative;width:68px;height:68px;transform:translate(0,0);transition:transform .35s}
+.snake10-dice-flight.flight{animation:diceFlyV10 1.05s cubic-bezier(.2,.8,.2,1)}
+@keyframes diceFlyV10{
+0%{transform:translate(0,0) rotate(0) scale(.85)}
+18%{transform:translate(-36px,-28px) rotate(120deg) scale(1.12)}
+38%{transform:translate(42px,-20px) rotate(255deg) scale(1.18)}
+62%{transform:translate(-28px,12px) rotate(405deg) scale(1.08)}
+82%{transform:translate(20px,7px) rotate(540deg) scale(1)}
+100%{transform:translate(0,0) rotate(720deg) scale(.92)}
+}
+.snake10-dice-cube{position:relative;width:64px;height:64px;transform-style:preserve-3d;transform:rotateX(-12deg) rotateY(22deg);transition:transform .65s cubic-bezier(.2,.8,.2,1);animation:diceIdleV10 3.2s ease-in-out infinite}
+@keyframes diceIdleV10{50%{transform:rotateX(-8deg) rotateY(30deg) translateY(-2px)}}
+.snake10-dice-cube.rolling{animation:diceSpinV10 .95s cubic-bezier(.15,.8,.15,1)}
+@keyframes diceSpinV10{
+0%{transform:rotateX(-15deg) rotateY(20deg) rotateZ(0)}
+30%{transform:rotateX(190deg) rotateY(150deg) rotateZ(80deg) scale(1.08)}
+65%{transform:rotateX(390deg) rotateY(320deg) rotateZ(190deg) scale(1.15)}
+100%{transform:rotateX(720deg) rotateY(540deg) rotateZ(360deg) scale(1)}
+}
+.snake10-dice-face{position:absolute;inset:0;border-radius:14px;background:linear-gradient(145deg,#fff,#d6d8dc 55%,#777);border:2px solid rgba(255,255,255,.9);box-shadow:inset 8px 8px 13px rgba(255,255,255,.65),inset -10px -10px 15px rgba(0,0,0,.22),0 10px 15px rgba(0,0,0,.4);display:grid;place-items:center;backface-visibility:hidden}
+.snake10-dice-face span{font-size:27px;font-weight:1000;color:#111;text-shadow:0 1px rgba(255,255,255,.5)}
+.face-1{transform:translateZ(32px)}
+.face-2{transform:rotateY(180deg) translateZ(32px)}
+.face-3{transform:rotateY(90deg) translateZ(32px)}
+.face-4{transform:rotateY(-90deg) translateZ(32px)}
+.face-5{transform:rotateX(90deg) translateZ(32px)}
+.face-6{transform:rotateX(-90deg) translateZ(32px)}
+.snake10-turn-line{max-width:760px;margin:4px auto;text-align:center;color:#f4d48a;font-size:10px;font-weight:1000;text-shadow:0 2px 3px #000}
+.snake10-roll-button{max-width:760px;width:100%;margin:4px auto 6px;display:flex;justify-content:center;align-items:center;gap:12px;border:0;border-radius:22px;padding:10px 18px;color:#fff;background:linear-gradient(145deg,#65bd28,#1d7113 50%,#10480c);border:2px solid #9ce04e;box-shadow:inset 0 2px rgba(255,255,255,.28),0 8px 18px rgba(0,0,0,.45),0 0 18px rgba(85,209,46,.18);cursor:pointer}
+.snake10-roll-button .roll-dice-icon{font-size:28px;filter:drop-shadow(0 3px 2px #000)}
+.snake10-roll-button b{display:block;font-size:17px;text-shadow:0 2px 2px #214d0b}
+.snake10-roll-button small{display:block;font-size:9px;opacity:.9}
+.snake10-roll-button:disabled{opacity:.42;filter:grayscale(.35);cursor:not-allowed}
+.snake10-leave-button{max-width:760px;width:100%;display:block;margin:0 auto 8px;border:0;border-radius:22px;padding:10px 16px;font-size:15px;font-weight:1000;color:#fff3e9;background:linear-gradient(145deg,#ef4a34,#a91512 55%,#68100d);border:2px solid #ff7c61;box-shadow:inset 0 2px rgba(255,255,255,.22),0 8px 18px rgba(0,0,0,.45);cursor:pointer}
+.snake10-leave-button:disabled{opacity:.42}
+.snake10-players-strip{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.snake10-mini-player{padding:6px 7px;border-radius:11px;background:rgba(0,0,0,.35);border:1px solid rgba(255,214,130,.16);font-size:8px;display:flex;align-items:center;gap:5px}
+.snake10-mini-player span{width:8px;height:8px;border-radius:50%;box-shadow:0 0 7px currentColor}
+.snake10-mini-player small{margin-right:auto;color:#e8d8af}
+.snake10-mini-player.active{border-color:#f4cf69;box-shadow:0 0 13px rgba(244,207,105,.15)}
+.snake10-mini-player.out{filter:grayscale(1);opacity:.55}
+.snake10-shake .snake10-board-frame{animation:boardShakeV10 .48s cubic-bezier(.36,.07,.19,.97)}
+.snake10-shake .snake10-board-inner{filter:blur(.8px)}
+@keyframes boardShakeV10{0%,100%{transform:translate3d(0,0,0)}20%{transform:translate3d(-4px,2px,0) rotate(-.35deg)}40%{transform:translate3d(4px,-2px,0) rotate(.35deg)}60%{transform:translate3d(-2px,1px,0)}80%{transform:translate3d(2px,-1px,0)}}
+.snake10-winner-overlay{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.72);backdrop-filter:blur(9px);display:grid;place-items:center;padding:20px}
+.snake10-winner-modal{position:relative;width:min(360px,92vw);padding:30px 22px 20px;text-align:center;border-radius:30px;background:linear-gradient(145deg,#38210e,#17100a 55%,#5a3512);border:2px solid #e6b64e;box-shadow:0 25px 80px rgba(0,0,0,.75),0 0 45px rgba(255,192,65,.18);overflow:hidden;animation:winnerPopV10 .55s cubic-bezier(.2,1.5,.35,1)}
+@keyframes winnerPopV10{from{transform:scale(.72) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.winner-rays{position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,rgba(255,221,117,.12) 0 8deg,transparent 8deg 16deg);animation:raysV10 10s linear infinite}
+@keyframes raysV10{to{transform:rotate(360deg)}}
+.winner-cup{position:relative;font-size:72px;filter:drop-shadow(0 10px 7px rgba(255,184,40,.4));animation:cupV10 1.5s ease-in-out infinite}
+@keyframes cupV10{50%{transform:translateY(-5px) rotate(2deg)}}
+.winner-label{position:relative;color:#e8cb83;font-size:13px;font-weight:900}
+.snake10-winner-modal h2{position:relative;margin:5px 0 18px;font-size:26px;color:#fff1bc;text-shadow:0 3px 4px #000}
+.snake10-winner-modal button{position:relative;width:100%;border:0;border-radius:16px;padding:13px;color:#fff;font-size:15px;font-weight:1000;background:linear-gradient(145deg,#e8a92e,#8b4a0a);box-shadow:inset 0 2px rgba(255,255,255,.28),0 8px 18px rgba(0,0,0,.4);cursor:pointer}
+.snake10-lobby{max-width:760px;margin:auto}
+.snake10-lobby-head{display:flex;justify-content:space-between;align-items:center;padding:14px 4px}
+.snake10-kicker{font-size:8px;letter-spacing:4px;color:#d7b86f;font-weight:1000}
+.snake10-lobby-head h2{font-size:29px;margin-top:2px;background:linear-gradient(135deg,#f8d47b,#c1812b,#fff0b0);-webkit-background-clip:text;color:transparent}
+.snake10-lobby-head p{font-size:10px;color:#cbb78e}
+.snake10-time-badge{padding:10px 13px;border-radius:20px;background:linear-gradient(145deg,#40301d,#1a130d);border:1px solid #a17a3e;color:#f4d48d;font-weight:1000;font-size:11px}
+.snake10-notice{padding:11px 13px;border-radius:14px;background:rgba(244,180,60,.1);border:1px solid rgba(244,180,60,.25);color:#ffe5a5;font-size:11px;margin-bottom:8px}
+.snake10-lobby-card{padding:13px;margin:8px 0;border-radius:19px;background:linear-gradient(145deg,rgba(55,35,19,.92),rgba(20,13,8,.92));border:1px solid rgba(226,176,82,.25);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.snake10-lobby-card h3{font-size:13px;margin-bottom:9px;color:#f5d58f}
+.snake10-request{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:9px;border-radius:13px;background:rgba(255,255,255,.04);margin-top:6px}
+.snake10-request b,.snake10-request small{display:block}.snake10-request b{font-size:11px}.snake10-request small{font-size:8px;color:#cbb78e;margin-top:2px}
+.snake10-request button{border:0;border-radius:10px;padding:8px 10px;font-weight:900;color:#fff;cursor:pointer}
+.snake10-request .accept{background:#1d8c45}.snake10-request .decline{background:#7d2520}
+.snake10-wait{display:flex;gap:10px;align-items:center;padding:12px;margin:8px 0;border-radius:17px;background:rgba(255,190,72,.08);border:1px solid rgba(255,190,72,.2)}
+.snake10-wait>span{font-size:28px}.snake10-wait b,.snake10-wait small{display:block}.snake10-wait b{font-size:12px}.snake10-wait small{font-size:8px;color:#cbb78e}
+.snake10-joined{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.snake10-joined span{padding:7px 9px;border-radius:11px;background:rgba(255,255,255,.05);font-size:9px}
+.snake10-start,.snake10-invite{width:100%;border:0;border-radius:15px;padding:12px;color:#fff;font-weight:1000;cursor:pointer}
+.snake10-start{background:linear-gradient(145deg,#65bd28,#1d7113);border:1px solid #98df51}.snake10-invite{margin-top:8px;background:linear-gradient(145deg,#a55be8,#53249a);border:1px solid #c48cf7}
+.snake10-invite:disabled{opacity:.4}
+.snake10-select-head{display:flex;justify-content:space-between;align-items:center}.snake10-select-head b{color:#f2cb6f}
+.snake10-person{display:flex;align-items:center;gap:9px;padding:9px;border-radius:14px;border:1px solid rgba(255,255,255,.08);margin:6px 0;background:rgba(255,255,255,.03);cursor:pointer}
+.snake10-person.selected{border-color:#d8a64d;background:rgba(213,160,65,.1);box-shadow:0 0 18px rgba(213,160,65,.1)}
+.snake10-person input{display:none}
+.snake10-person-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#7c3aed,#2e1065);font-weight:1000}
+.snake10-person b,.snake10-person small{display:block}.snake10-person b{font-size:10px}.snake10-person small{font-size:8px;color:#cbb78e;margin-top:2px}.snake10-person>span{margin-right:auto;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.15);color:transparent}.snake10-person.selected>span{background:#d39b31;color:#fff;border-color:#f0cf7a}
+@media(max-width:520px){
+ .snake10-shell{padding:7px 6px 14px}
+ .snake10-scorebar{grid-template-columns:1fr 55px 1fr;gap:4px}
+ .snake10-player-card{padding:5px 4px}.snake10-avatar{width:32px;height:32px;flex-basis:32px;font-size:15px}.snake10-player-card b{font-size:9px}.snake10-player-card span{font-size:7px}
+ .snake10-trophy-big{font-size:32px}
+ .snake10-board-frame{padding:5px;border-radius:17px}
+ .snake10-dice-panel{grid-template-columns:1fr 126px 1fr;min-height:94px;border-radius:17px}
+ .snake10-dice-stage{height:88px}.snake10-dice-flight{width:60px;height:60px}.snake10-dice-cube{width:58px;height:58px}.snake10-dice-face{border-radius:12px}.snake10-dice-face span{font-size:23px}
+ .face-1{transform:translateZ(29px)}.face-2{transform:rotateY(180deg) translateZ(29px)}.face-3{transform:rotateY(90deg) translateZ(29px)}.face-4{transform:rotateY(-90deg) translateZ(29px)}.face-5{transform:rotateX(90deg) translateZ(29px)}.face-6{transform:rotateX(-90deg) translateZ(29px)}
+ .snake10-roll-button b{font-size:15px}.snake10-leave-button{font-size:13px}.snake10-side-control span{width:42px;height:42px;font-size:21px}
+}
+@media(max-height:760px) and (orientation:portrait){
+ .snake10-scorebar{margin-bottom:4px}.snake10-dice-panel{min-height:82px}.snake10-dice-stage{height:76px}.snake10-roll-button{padding:7px 14px}.snake10-leave-button{padding:8px 14px}
+}
+
 </style>
 </head>
 <body>
@@ -1816,56 +1974,471 @@ function Admin({user,tab,setTab,onLogout}){
 }
 
 function SnakeGame({user,students=[],isAdmin=false}){
-  const COLORS=[['#8b5cf6','#4c1d95'],['#22c55e','#166534'],['#ef4444','#991b1b']];
-  const SNAKES={30:10,47:26,62:18,78:50,95:72};
-  const LADDERS={4:25,12:40,22:58,36:67,48:85,60:80};
-  const [people,setPeople]=useState([]),[selected,setSelected]=useState([]),[room,setRoom]=useState(null),[requests,setRequests]=useState([]),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[rolling,setRolling]=useState(false),[dice,setDice]=useState(1),[now,setNow]=useState(Date.now()),[viewMode,setViewMode]=useState('lobby'),[movingSlot,setMovingSlot]=useState(null),[strikingSnake,setStrikingSnake]=useState(null),[visualPos,setVisualPos]=useState({}),[leftGame,setLeftGame]=useState(false),[shake,setShake]=useState(false);
+  const COLORS=[
+    {main:'#7c3aed',light:'#c4b5fd',dark:'#2e1065'},
+    {main:'#16a34a',light:'#86efac',dark:'#14532d'},
+    {main:'#dc2626',light:'#fca5a5',dark:'#7f1d1d'}
+  ];
+  const SNAKES={
+    21:10,
+    33:6,
+    48:26,
+    62:18,
+    75:54,
+    91:73
+  };
+  const LADDERS={
+    3:22,
+    12:31,
+    19:40,
+    28:46,
+    44:67,
+    55:82,
+    69:90
+  };
+
+  const [people,setPeople]=useState([]);
+  const [selected,setSelected]=useState([]);
+  const [room,setRoom]=useState(null);
+  const [requests,setRequests]=useState([]);
+  const [notice,setNotice]=useState('');
+  const [busy,setBusy]=useState(false);
+  const [rolling,setRolling]=useState(false);
+  const [dice,setDice]=useState(1);
+  const [now,setNow]=useState(Date.now());
+  const [viewMode,setViewMode]=useState('lobby');
+  const [visualPos,setVisualPos]=useState({});
+  const [strikingSnake,setStrikingSnake]=useState(null);
+  const [leftGame,setLeftGame]=useState(false);
+  const [shake,setShake]=useState(false);
+  const [winnerOpen,setWinnerOpen]=useState(false);
+  const [settled,setSettled]=useState(false);
+
+  const safeUserId=String(user?.id||'');
+  const isMine=(id)=>String(id||'')===safeUserId;
+
   const load=async()=>{
     try{
-      const {data:target,error:pe}=await SB.from('users').select('*').neq('id',user.id); if(pe)throw pe; setPeople(target||[]);
-      const {data:r,error:re}=await SB.from('snake_requests').select('*').or(`from_user.eq.${user.id},to_user.eq.${user.id}`).order('created_at',{ascending:false}); if(re)throw re; setRequests(r||[]);
-      const ids=(r||[]).filter(x=>x.status==='accepted'||(x.status==='pending'&&new Date(x.expires_at).getTime()>Date.now())).map(x=>x.room_id).filter(Boolean);
-      if(ids.length){const {data:rooms,error:rr}=await SB.from('snake_rooms').select('*').in('id',ids).order('created_at',{ascending:false}).limit(1);if(rr)throw rr;if(rooms?.[0]){const rm=rooms[0];setRoom(rm);if(rm.status==='playing'||rm.status==='finished')setViewMode('game');}}
-    }catch(e){setNotice('خطا در ارتباط با بازی: '+(e?.message||'خطای نامشخص'));}
+      const {data:target,error:pe}=await SB.from('users').select('*').neq('id',user.id);
+      if(pe)throw pe;
+      setPeople((target||[]).filter(Boolean));
+
+      const {data:r,error:re}=await SB.from('snake_requests')
+        .select('*')
+        .or(`from_user.eq.${user.id},to_user.eq.${user.id}`)
+        .order('created_at',{ascending:false});
+      if(re)throw re;
+      setRequests(r||[]);
+
+      const ids=(r||[])
+        .filter(x=>x.status==='accepted'||(x.status==='pending'&&new Date(x.expires_at).getTime()>Date.now()))
+        .map(x=>x.room_id).filter(Boolean);
+
+      if(ids.length){
+        const {data:rooms,error:rr}=await SB.from('snake_rooms')
+          .select('*').in('id',ids).order('created_at',{ascending:false}).limit(1);
+        if(rr)throw rr;
+        if(rooms?.[0]){
+          const rm=rooms[0];
+          setRoom(rm);
+          if(rm.status==='playing'||rm.status==='finished'){
+            setViewMode('game');
+            if(rm.status==='finished')setWinnerOpen(true);
+          }
+        }
+      }
+    }catch(e){
+      setNotice('خطا در ارتباط با بازی: '+(e?.message||'خطای نامشخص'));
+    }
   };
-  useEffect(()=>{load();const a=setInterval(load,2200),b=setInterval(()=>setNow(Date.now()),1000);return()=>{clearInterval(a);clearInterval(b)}},[user.id]);
-  const pendingIncoming=requests.filter(r=>r.to_user===user.id&&r.status==='pending'&&new Date(r.expires_at).getTime()>now);
-  const pendingOutgoing=requests.filter(r=>r.from_user===user.id&&r.status==='pending'&&new Date(r.expires_at).getTime()>now);
-  const makeRoom=async()=>{if(!selected.length)return;setBusy(true);setNotice('');try{const token=String(Math.floor(Math.random()*899999)+100000);const {data:r,error:re}=await SB.from('snake_rooms').insert({player1_id:user.id,player1_name:user.full_name,player1_token:token,status:'waiting',player1_pos:1,player2_pos:1,player3_pos:1}).select().single();if(re)throw re;const expires=new Date(Date.now()+120000).toISOString();for(const id of selected){const {error:e}=await SB.from('snake_requests').insert({from_user:user.id,to_user:id,room_id:r.id,status:'pending',expires_at:expires});if(e)throw e;}setRoom(r);setNotice('درخواست‌ها ارسال شد؛ ۲ دقیقه برای پیوستن فرصت دارید.');}catch(e){setNotice('خطا در ساخت اتاق: '+(e?.message||'خطای نامشخص'));}finally{setBusy(false)}};
-  const accept=async(req)=>{try{const {data:r,error:re}=await SB.from('snake_rooms').select('*').eq('id',req.room_id).single();if(re)throw re;const slot=!r.player2_id?2:!r.player3_id?3:null;if(!slot){setNotice('ظرفیت این اتاق تکمیل شده است.');return;}const patch={[`player${slot}_id`]:user.id,[`player${slot}_name`]:user.full_name,[`player${slot}_token`]:String(Math.floor(Math.random()*899999)+100000),[`player${slot}_pos`]:1};const {data:nr,error:e}=await SB.from('snake_rooms').update(patch).eq('id',r.id).select().single();if(e)throw e;await SB.from('snake_requests').update({status:'accepted'}).eq('id',req.id);setRoom(nr);setViewMode('lobby');setNotice('به اتاق پیوستی. منتظر شروع بازی بمان.');load();}catch(e){setNotice('خطا در پیوستن: '+(e?.message||'خطای نامشخص'));}};
-  const decline=async(req)=>{try{await SB.from('snake_requests').update({status:'declined'}).eq('id',req.id);load();}catch(e){setNotice('خطا در رد درخواست');}};
-  const start=async()=>{if(!room||String(room.player1_id)!==String(user.id))return;const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);if(ids.length<2){setNotice('حداقل یک حریف باید بپیوندد.');return;}const first=ids[Math.floor(Math.random()*ids.length)];try{const {data,error}=await SB.from('snake_rooms').update({status:'playing',turn_id:first,winner_id:null,player1_pos:1,player2_pos:1,player3_pos:1}).eq('id',room.id).select().single();if(error)throw error;setRoom(data);setViewMode('game');setNotice('بازی شروع شد؛ نفر اول به‌صورت تصادفی انتخاب شد.');}catch(e){setNotice('خطا در شروع بازی: '+(e?.message||'خطای نامشخص'));}};
-  const exitGame=()=>{setLeftGame(true);setNotice('از بازی خارج شدی؛ مهره تو غیرفعال شد.');};
-  const roll=async()=>{
-    if(!room||room.status!=='playing'||String(room.turn_id)!==String(user.id)||rolling||leftGame)return;
-    const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);const slot=String(room.player1_id)===String(user.id)?1:String(room.player2_id)===String(user.id)?2:3;const old=Math.max(1,Number(room[`player${slot}_pos`]||1));const d=1+Math.floor(Math.random()*6);
-    setRolling(true);setShake(true);setDice(d);setTimeout(()=>setShake(false),1100);
+
+  useEffect(()=>{
+    load();
+    const a=setInterval(load,1600);
+    const b=setInterval(()=>setNow(Date.now()),1000);
+    return()=>{clearInterval(a);clearInterval(b)};
+  },[user.id]);
+
+  const pendingIncoming=requests.filter(r=>
+    isMine(r.to_user)&&r.status==='pending'&&new Date(r.expires_at).getTime()>now
+  );
+  const pendingOutgoing=requests.filter(r=>
+    isMine(r.from_user)&&r.status==='pending'&&new Date(r.expires_at).getTime()>now
+  );
+
+  const makeRoom=async()=>{
+    if(!selected.length)return;
+    setBusy(true);setNotice('');
     try{
-      let cursor=old;const target=Math.min(100,old+d);setMovingSlot(slot);
-      for(let n=old+1;n<=target;n++){await new Promise(res=>setTimeout(res,190));cursor=n;setVisualPos(v=>({...v,[user.id]:n}));}
-      if(target<100&&Object.prototype.hasOwnProperty.call(SNAKES,String(target))){setStrikingSnake(Number(target));await new Promise(res=>setTimeout(res,650));const tail=SNAKES[target];setVisualPos(v=>({...v,[user.id]:tail}));await new Promise(res=>setTimeout(res,350));cursor=tail;setStrikingSnake(null);}
-      else if(target<100&&Object.prototype.hasOwnProperty.call(LADDERS,String(target))){const top=LADDERS[target];await new Promise(res=>setTimeout(res,350));setVisualPos(v=>({...v,[user.id]:top}));await new Promise(res=>setTimeout(res,350));cursor=top;}
-      const nextTurn=ids[(ids.findIndex(x=>String(x)===String(user.id))+1)%ids.length];const patch={[`player${slot}_pos`]:cursor,turn_id:cursor===100?null:nextTurn,winner_id:cursor===100?user.id:null,status:cursor===100?'finished':'playing'};const {data,error}=await SB.from('snake_rooms').update(patch).eq('id',room.id).select().single();if(error)throw error;setRoom(data);setVisualPos(v=>{const q={...v};delete q[user.id];return q});
-    }catch(e){setNotice('خطا در حرکت: '+(e?.message||'خطای نامشخص'));}finally{setStrikingSnake(null);setRolling(false);setMovingSlot(null);}
+      const token=String(Math.floor(Math.random()*899999)+100000);
+      const {data:r,error:re}=await SB.from('snake_rooms').insert({
+        player1_id:user.id,
+        player1_name:user.full_name,
+        player1_token:token,
+        status:'waiting',
+        player1_pos:1,
+        player2_pos:1,
+        player3_pos:1
+      }).select().single();
+      if(re)throw re;
+
+      const expires=new Date(Date.now()+120000).toISOString();
+      for(const id of selected){
+        const {error:e}=await SB.from('snake_requests').insert({
+          from_user:user.id,
+          to_user:id,
+          room_id:r.id,
+          status:'pending',
+          expires_at:expires
+        });
+        if(e)throw e;
+      }
+      setRoom(r);
+      setNotice('درخواست‌ها ارسال شد؛ تا ۲ دقیقه فرصت پیوستن دارند.');
+    }catch(e){
+      setNotice('خطا در ساخت اتاق: '+(e?.message||'خطای نامشخص'));
+    }finally{setBusy(false)}
   };
-  const board=[];for(let row=9;row>=0;row--){const cols=row%2===0?[0,1,2,3,4,5,6,7,8,9]:[9,8,7,6,5,4,3,2,1,0];cols.forEach(col=>board.push(row*10+col+1));}
-  const point=(pos)=>{const n=Math.max(1,Math.min(100,Number(pos)||1));const r=Math.floor((n-1)/10);const c=r%2===0?(n-1)%10:9-((n-1)%10);return{x:c*10+5,y:(9-r)*10+5};};
-  const players=room?[1,2,3].map(n=>room[`player${n}_id`]?{n,id:room[`player${n}_id`],name:room[`player${n}_name`],token:room[`player${n}_token`],pos:Number(visualPos[room[`player${n}_id`]]??room[`player${n}_pos`]??1)}:null).filter(Boolean):[];
-  const pipMap={1:['c'],2:['tl','br'],3:['tl','c','br'],4:['tl','tr','bl','br'],5:['tl','tr','c','bl','br'],6:['tl','tr','ml','mr','bl','br']};
-  const DiceFace=()=>{const faces=['f','b','r','l','t','bt'];return <div className={'snake-v9-dice-zone '+(rolling?'rolling-zone':'')}><div className="snake-v9-dice-shadow"></div><div className={'snake-v9-dice '+(rolling?'rolling':'')}>{faces.map((cl,i)=><div key={cl} className={'snake-v9-face '+cl}>{(pipMap[((dice+i)%6)+1]||[]).map((x,j)=><span key={j} className={'snake-pip '+x}></span>)}</div>)}</div></div>};
-  const SnakeArt=()=>{const snakeColors=[['#35d399','#087f5b'],['#f43f5e','#8b102f'],['#a78bfa','#4c1d95'],['#f59e0b','#7c2d12'],['#38bdf8','#075985']];return <svg className="snake-v9-art" viewBox="0 0 100 100" preserveAspectRatio="none"><defs>{snakeColors.map((c,i)=><linearGradient key={i} id={'sv9g'+i} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor={c[0]}/><stop offset=".48" stopColor={c[0]}/><stop offset="1" stopColor={c[1]}/></linearGradient>)}</defs>{Object.entries(SNAKES).map(([from,to],i)=>{const a=point(from),b=point(to),mx=(a.x+b.x)/2;const d=`M ${a.x} ${a.y} C ${mx+15} ${a.y-9}, ${mx-18} ${b.y+11}, ${b.x} ${b.y}`;return <g key={from} className={strikingSnake===Number(from)?'snake-v9-strike':''}><path d={d} className="snake-v9-body" stroke={'url(#sv9g'+(i%snakeColors.length)+')'} strokeWidth="5.4"/><path d={d} className="snake-v9-highlight" strokeWidth="1.15"/><ellipse cx={a.x} cy={a.y} rx="3.5" ry="2.8" className="snake-v9-head" fill={snakeColors[i%snakeColors.length][0]}/><circle cx={a.x-1.15} cy={a.y-.75} r=".72" className="snake-v9-eye"/><circle cx={a.x+1.15} cy={a.y-.75} r=".72" className="snake-v9-eye"/><circle cx={a.x-1.15} cy={a.y-.75} r=".28" className="snake-v9-pupil"/><circle cx={a.x+1.15} cy={a.y-.75} r=".28" className="snake-v9-pupil"/><path d={`M ${a.x+2.5} ${a.y+.4} l 3 0 M ${a.x+5.5} ${a.y+.4} l 1.8 -1.2 M ${a.x+5.5} ${a.y+.4} l 1.8 1.2`} className="snake-v9-tongue"/></g>})}{Object.entries(LADDERS).map(([from,to])=>{const a=point(from),b=point(to),dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len*1.5,ny=dx/len*1.5;const count=Math.max(3,Math.floor(len/6));return <g key={'l'+from} className="snake-v9-ladder"><line className="rail2" x1={a.x+nx} y1={a.y+ny} x2={b.x+nx} y2={b.y+ny}/><line className="rail2" x1={a.x-nx} y1={a.y-ny} x2={b.x-nx} y2={b.y-ny}/><line className="rail" x1={a.x+nx} y1={a.y+ny} x2={b.x+nx} y2={b.y+ny}/><line className="rail" x1={a.x-nx} y1={a.y-ny} x2={b.x-nx} y2={b.y-ny}/>{Array.from({length:count}).map((_,k)=>{const t=(k+1)/(count+1);return <line key={k} className="rung" x1={a.x+dx*t+nx} y1={a.y+dy*t+ny} x2={a.x+dx*t-nx} y2={a.y+dy*t-ny}/>})}</g>})}</svg>};
-  if(viewMode==='game'&&room)return <div className={'snake-v9-shell slide-up '+(shake?'shaking':'')}>
-    <div className="snake-v9-top"><div><div className="snake-kicker">BOARD GAME • ONLINE</div><div className="snake-v9-title">🐍 مار و پله</div><div className="snake-v9-sub">{players.map(p=>p.name).join('  •  ')}</div></div><div className="snake-v9-badge">{players.length} نفره</div></div>
-    <div className="snake-v9-controls"><div className="snake-v9-turn">{room.status==='finished'?'🏆 برنده: '+(players.find(p=>String(p.id)===String(room.winner_id))?.name||'بازیکن'):leftGame?'🚪 از بازی خارج شدی':String(room.turn_id)===String(user.id)?'✨ نوبت توست':'🎯 نوبت '+(players.find(p=>String(p.id)===String(room.turn_id))?.name||'حریف')}</div><DiceFace/><div className="snake-v9-turn">{rolling?'🎲 تاس در حال پرتاب است...':'هر خانه یک قدم'}</div></div>
-    <div className="snake-v9-board-wrap"><div className="snake-v9-board"><div className="snake-v9-grid">{board.map(pos=><div key={pos} className={'snake-v9-cell '+(pos===1?'start ':'')+(pos===100?'finish':'')}>{pos===100?<span className="snake-v9-trophy">🏆</span>:<span>{pos}</span>}{pos===1&&<b style={{position:'absolute',left:4,bottom:3,fontSize:6,color:'#fde68a'}}>START</b>}</div>)}</div><SnakeArt/>{players.map(p=>{const pt=point(p.pos);return <div key={p.id} className={'snake-v9-piece '+(leftGame&&String(p.id)===String(user.id)?'out ':'')+(movingSlot===p.n?'step':'')} style={{left:pt.x+'%',top:pt.y+'%'}}><div className="base" style={{background:`linear-gradient(135deg,${COLORS[p.n-1][0]},${COLORS[p.n-1][1]})`}}></div><div className="body" style={{background:`linear-gradient(135deg,${COLORS[p.n-1][0]},${COLORS[p.n-1][1]})`}}></div><div className="cap" style={{background:`radial-gradient(circle at 35% 28%,#fff,${COLORS[p.n-1][0]} 38%,${COLORS[p.n-1][1]})`}}></div><em>{p.name}</em></div>})}</div></div>
-    <div className="snake-v9-bottom"><button className="snake-v9-action exit" onClick={exitGame} disabled={leftGame||room.status==='finished'}>🚪 پایان بازی برای من</button><button className="snake-v9-action roll" onClick={roll} disabled={rolling||leftGame||String(room.turn_id)!==String(user.id)||room.status!=='playing'}>{rolling?'🎲 در حال غلتیدن...':'🎲 تاس بریز'}</button><button className="snake-v9-action" style={{background:'linear-gradient(145deg,#2563eb,#1e3a8a)'}} onClick={()=>{setViewMode('lobby');setRoom(null)}}>← بازگشت</button></div>
-    <div className="snake-v9-players">{players.map(p=><div key={p.id} className={'snake-v9-player '+(String(room.turn_id)===String(p.id)?'active':'')}><span className="snake-v9-dot" style={{background:COLORS[p.n-1][0],color:COLORS[p.n-1][0]}}></span><strong>{p.name}</strong><small>خانه {p.pos}</small></div>)}</div>
+
+  const accept=async(req)=>{
+    try{
+      const {data:r,error:re}=await SB.from('snake_rooms').select('*').eq('id',req.room_id).single();
+      if(re)throw re;
+      const slot=!r.player2_id?2:!r.player3_id?3:null;
+      if(!slot){setNotice('ظرفیت این اتاق تکمیل شده است.');return;}
+      const patch={
+        [`player${slot}_id`]:user.id,
+        [`player${slot}_name`]:user.full_name,
+        [`player${slot}_token`]:String(Math.floor(Math.random()*899999)+100000),
+        [`player${slot}_pos`]:1
+      };
+      const {data:nr,error:e}=await SB.from('snake_rooms').update(patch).eq('id',r.id).select().single();
+      if(e)throw e;
+      await SB.from('snake_requests').update({status:'accepted'}).eq('id',req.id);
+      setRoom(nr);setViewMode('lobby');setNotice('به اتاق پیوستی؛ منتظر شروع بازی بمان.');load();
+    }catch(e){
+      setNotice('خطا در پیوستن: '+(e?.message||'خطای نامشخص'));
+    }
+  };
+
+  const decline=async(req)=>{
+    try{
+      await SB.from('snake_requests').update({status:'declined'}).eq('id',req.id);
+      load();
+    }catch(e){setNotice('خطا در رد درخواست');}
+  };
+
+  const start=async()=>{
+    if(!room||!isMine(room.player1_id))return;
+    const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);
+    if(ids.length<2){setNotice('حداقل یک حریف باید بپیوندد.');return;}
+    const first=ids[Math.floor(Math.random()*ids.length)];
+    try{
+      const {data,error}=await SB.from('snake_rooms').update({
+        status:'playing',
+        turn_id:first,
+        winner_id:null,
+        player1_pos:1,player2_pos:1,player3_pos:1
+      }).eq('id',room.id).select().single();
+      if(error)throw error;
+      setRoom(data);setViewMode('game');setWinnerOpen(false);
+      setNotice('بازی شروع شد؛ نفر اول به‌صورت تصادفی انتخاب شد.');
+    }catch(e){setNotice('خطا در شروع بازی: '+(e?.message||'خطای نامشخص'));}
+  };
+
+  const leaveGame=async()=>{
+    if(!room||leftGame||room.status==='finished')return;
+    const slot=isMine(room.player1_id)?1:isMine(room.player2_id)?2:isMine(room.player3_id)?3:null;
+    if(!slot)return;
+    try{
+      await SB.from('snake_rooms').update({[`player${slot}_token`]:'__LEFT__'}).eq('id',room.id);
+      setLeftGame(true);
+      setNotice('از بازی خارج شدی؛ مهره تو غیرفعال شد.');
+      load();
+    }catch(e){setNotice('خطا در خروج از بازی: '+(e?.message||''));}
+  };
+
+  const deleteFinishedGame=async()=>{
+    if(!room)return;
+    try{
+      await SB.from('snake_requests').delete().eq('room_id',room.id);
+      await SB.from('snake_rooms').delete().eq('id',room.id);
+      setRoom(null);setWinnerOpen(false);setViewMode('lobby');setRequests([]);
+      setNotice('بازی و نتیجه آن پایان یافت و حذف شد.');
+    }catch(e){
+      setNotice('حذف بازی انجام نشد: '+(e?.message||'مجوز حذف در Supabase بررسی شود.'));
+    }
+  };
+
+  const roll=async()=>{
+    if(!room||room.status!=='playing'||!isMine(room.turn_id)||rolling||leftGame)return;
+    const ids=[room.player1_id,room.player2_id,room.player3_id].filter(Boolean);
+    const slot=isMine(room.player1_id)?1:isMine(room.player2_id)?2:3;
+    const old=Math.max(1,Number(room[`player${slot}_pos`]||1));
+    const d=1+Math.floor(Math.random()*6);
+
+    setRolling(true);setShake(true);setDice(d);
+    setTimeout(()=>setShake(false),1150);
+
+    try{
+      let cursor=old;
+      const target=Math.min(100,old+d);
+      for(let n=old+1;n<=target;n++){
+        await new Promise(res=>setTimeout(res,250));
+        cursor=n;
+        setVisualPos(v=>({...v,[user.id]:n}));
+      }
+
+      if(target<100&&Object.prototype.hasOwnProperty.call(SNAKES,target)){
+        setStrikingSnake(target);
+        await new Promise(res=>setTimeout(res,720));
+        const tail=SNAKES[target];
+        setVisualPos(v=>({...v,[user.id]:tail}));
+        await new Promise(res=>setTimeout(res,500));
+        cursor=tail;
+        setStrikingSnake(null);
+      }else if(target<100&&Object.prototype.hasOwnProperty.call(LADDERS,target)){
+        const top=LADDERS[target];
+        await new Promise(res=>setTimeout(res,420));
+        setVisualPos(v=>({...v,[user.id]:top}));
+        await new Promise(res=>setTimeout(res,420));
+        cursor=top;
+      }
+
+      const nextTurn=ids[(ids.findIndex(x=>isMine(x))+1)%ids.length];
+      const patch={
+        [`player${slot}_pos`]:cursor,
+        turn_id:cursor===100?null:nextTurn,
+        winner_id:cursor===100?user.id:null,
+        status:cursor===100?'finished':'playing'
+      };
+      const {data,error}=await SB.from('snake_rooms').update(patch).eq('id',room.id).select().single();
+      if(error)throw error;
+      setRoom(data);
+      if(cursor===100)setWinnerOpen(true);
+      setVisualPos(v=>{const q={...v};delete q[user.id];return q});
+    }catch(e){
+      setNotice('خطا در حرکت: '+(e?.message||'خطای نامشخص'));
+    }finally{
+      setStrikingSnake(null);setRolling(false);
+    }
+  };
+
+  const board=[];
+  for(let row=0;row<10;row++){
+    const nums=row%2===0
+      ?Array.from({length:10},(_,i)=>row*10+i+1)
+      :Array.from({length:10},(_,i)=>row*10+10-i);
+    board.push(...nums);
+  }
+
+  const point=(pos)=>{
+    const n=Math.max(1,Math.min(100,Number(pos)||1));
+    const row=Math.floor((n-1)/10);
+    const col=row%2===0?(n-1)%10:9-((n-1)%10);
+    return {x:col*10+5,y:(9-row)*10+5};
+  };
+
+  const players=room
+    ?[1,2,3].map(n=>room[`player${n}_id`]?{
+      n,id:room[`player${n}_id`],name:room[`player${n}_name`],
+      token:room[`player${n}_token`],
+      pos:Number(visualPos[room[`player${n}_id`]]??room[`player${n}_pos`]??1)
+    }:null).filter(Boolean)
+    :[];
+
+  const DiceFace=()=>{
+    const settleClass=settled?'settled':'';
+    return <div className="snake10-dice-stage">
+      <div className="snake10-dice-glow"></div>
+      <div className={'snake10-dice-flight '+(rolling?'flight':'')}>
+        <div className={'snake10-dice-cube '+(rolling?'rolling ':'')+settleClass} data-value={dice}>
+          {[1,2,3,4,5,6].map(v=><div key={v} className={'snake10-dice-face face-'+v}><span>{v}</span></div>)}
+        </div>
+      </div>
+    </div>
+  };
+
+  const SnakeArt=()=>{
+    const defs=[
+      ['green','#56c596','#0b6b48'],
+      ['red','#ff633f','#9d160d'],
+      ['purple','#a47bdb','#3c1d68'],
+      ['gold','#f2b233','#8b4c05'],
+      ['blue','#3fa6d8','#064a73'],
+      ['lime','#8adf45','#286b1e']
+    ];
+    return <svg className="snake10-art" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        {defs.map((c,i)=><React.Fragment key={i}>
+          <linearGradient id={'snake10g'+i} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor={c[1]}/>
+            <stop offset=".42" stopColor={c[1]}/>
+            <stop offset="1" stopColor={c[2]}/>
+          </linearGradient>
+          <filter id={'snake10shadow'+i} x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="1.4" stdDeviation="1.2" floodColor="#000" floodOpacity=".7"/>
+          </filter>
+        </React.Fragment>)}
+      </defs>
+
+      {Object.entries(SNAKES).map(([from,to],i)=>{
+        const a=point(Number(from)),b=point(Number(to));
+        const mx=(a.x+b.x)/2;
+        const bend=((i%2)?-1:1)*(10+(i%3)*5);
+        const d=`M ${a.x} ${a.y} C ${mx+bend} ${a.y-7}, ${mx-bend} ${b.y+9}, ${b.x} ${b.y}`;
+        const color=defs[i%defs.length];
+        return <g key={from} className={strikingSnake===Number(from)?'snake10-strike':''} filter={`url(#snake10shadow${i%defs.length})`}>
+          <path d={d} className="snake10-body" stroke={'url(#snake10g'+(i%defs.length)+')'}/>
+          <path d={d} className="snake10-scale-line"/>
+          <path d={d} className="snake10-shine"/>
+          <g transform={`translate(${a.x} ${a.y})`}>
+            <ellipse cx="0" cy="0" rx="4.2" ry="3.25" fill={color[1]} stroke="#24120d" strokeWidth=".75"/>
+            <path d="M-3.5-1.5 Q0-5 3.7-1.3 Q1.7 2.7 0 3.2 Q-2 2.5-3.5-1.5Z" fill={color[1]} opacity=".9"/>
+            <circle cx="-1.35" cy="-1.05" r=".95" fill="#fff"/><circle cx="1.35" cy="-1.05" r=".95" fill="#fff"/>
+            <circle cx="-1.35" cy="-1.05" r=".36" fill="#111"/><circle cx="1.35" cy="-1.05" r=".36" fill="#111"/>
+            <path d="M2.8 .45 C4.4 .4 5.8 .7 7.1 .2 M7.1 .2 l1.8 -1.1 M7.1 .2 l1.8 1.1" className="snake10-tongue"/>
+          </g>
+        </g>
+      })}
+
+      {Object.entries(LADDERS).map(([from,to],i)=>{
+        const a=point(Number(from)),b=point(Number(to));
+        const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1;
+        const nx=-dy/len*1.7,ny=dx/len*1.7;
+        const count=Math.max(4,Math.floor(len/6));
+        return <g key={'lad'+from} className="snake10-ladder">
+          <line x1={a.x+nx} y1={a.y+ny} x2={b.x+nx} y2={b.y+ny} className="ladder-shadow"/>
+          <line x1={a.x-nx} y1={a.y-ny} x2={b.x-nx} y2={b.y-ny} className="ladder-shadow"/>
+          <line x1={a.x+nx} y1={a.y+ny} x2={b.x+nx} y2={b.y+ny} className="ladder-rail"/>
+          <line x1={a.x-nx} y1={a.y-ny} x2={b.x-nx} y2={b.y-ny} className="ladder-rail"/>
+          {Array.from({length:count}).map((_,k)=>{
+            const t=(k+1)/(count+1);
+            return <line key={k} x1={a.x+dx*t+nx} y1={a.y+dy*t+ny} x2={a.x+dx*t-nx} y2={a.y+dy*t-ny} className="ladder-rung"/>
+          })}
+        </g>
+      })}
+    </svg>
+  };
+
+  if(viewMode==='game'&&room)return <div className={'snake10-shell '+(shake?'snake10-shake':'')}>
+    <div className="snake10-ambient"></div>
+
+    <div className="snake10-scorebar">
+      <div className="snake10-player-card">
+        <div className="snake10-avatar purple">{players[0]?.name?.[0]||'م'}</div>
+        <div><b>{players[0]?.name||'بازیکن'}</b><span>📍 {players[0]?.pos||1}</span></div>
+      </div>
+      <div className="snake10-trophy-big">🏆</div>
+      {players.slice(1).map(p=><div key={p.id} className="snake10-player-card">
+        <div className="snake10-avatar" style={{background:`linear-gradient(145deg,${COLORS[p.n-1].main},${COLORS[p.n-1].dark})`}}>{p.name?.[0]||'؟'}</div>
+        <div><b>{p.name}</b><span>📍 {p.pos}</span></div>
+      </div>)}
+    </div>
+
+    <div className="snake10-board-frame">
+      <div className="snake10-board-inner">
+        <div className="snake10-grid">
+          {board.map(pos=><div key={pos} className={'snake10-cell '+(pos===1?'start':'')+(pos===100?'finish':'')}>
+            {pos===100?<span className="snake10-trophy-cell">🏆</span>:<span>{pos}</span>}
+            {pos===1&&<small>START</small>}
+          </div>)}
+        </div>
+        <SnakeArt/>
+        {players.map(p=>{
+          const pt=point(p.pos);
+          const idx=p.n-1;
+          const out=p.token==='__LEFT__';
+          return <div key={p.id} className={'snake10-piece '+(out?'left':'')+(isMine(p.id)&&leftGame?' left':'')} style={{left:pt.x+'%',top:pt.y+'%', '--pc':COLORS[idx].main,'--pl':COLORS[idx].light,'--pd':COLORS[idx].dark}}>
+            <div className="snake10-piece-shadow"></div>
+            <div className="snake10-piece-base"></div>
+            <div className="snake10-piece-body"></div>
+            <div className="snake10-piece-cap">{p.name?.[0]||'?'}</div>
+            <em>{p.name}</em>
+          </div>
+        })}
+      </div>
+    </div>
+
+    <div className="snake10-dice-panel">
+      <div className="snake10-side-control"><span>⚑</span><small>تاریخچه بازی</small></div>
+      <DiceFace/>
+      <div className="snake10-side-control"><span>⚙</span><small>تنظیمات</small></div>
+    </div>
+
+    <div className="snake10-turn-line">
+      {room.status==='finished'
+        ?'🏆 بازی به پایان رسید'
+        :leftGame
+          ?'🚪 از بازی خارج شدی'
+          :isMine(room.turn_id)
+            ?'✨ نوبت شماست'
+            :'🎯 نوبت '+(players.find(p=>isMine(p.id===room.turn_id?user.id:p.id))?.name||players.find(p=>String(p.id)===String(room.turn_id))?.name||'حریف')}
+    </div>
+
+    <button className="snake10-roll-button" onClick={roll} disabled={rolling||leftGame||!isMine(room.turn_id)||room.status!=='playing'}>
+      <span className="roll-dice-icon">🎲</span>
+      <span><b>{rolling?'تاس در حال غلتیدن...':'تاس بریز!'}</b><small>{isMine(room.turn_id)?'نوبت شماست':'منتظر نوبت بازیکن'}</small></span>
+    </button>
+
+    <button className="snake10-leave-button" onClick={leaveGame} disabled={leftGame||room.status==='finished'}>
+      🚪 پایان بازی برای من
+    </button>
+
+    <div className="snake10-players-strip">
+      {players.map(p=><div key={p.id} className={'snake10-mini-player '+(String(room.turn_id)===String(p.id)?'active':'')+(p.token==='__LEFT__'?' out':'')}>
+        <span style={{background:COLORS[p.n-1].main}}></span><b>{p.name}</b><small>{p.token==='__LEFT__'?'خارج شد':'خانه '+p.pos}</small>
+      </div>)}
+    </div>
+
+    {room.status==='finished'&&winnerOpen&&<div className="snake10-winner-overlay">
+      <div className="snake10-winner-modal">
+        <div className="winner-rays"></div>
+        <div className="winner-cup">🏆</div>
+        <div className="winner-label">برنده بازی</div>
+        <h2>{players.find(p=>String(p.id)===String(room.winner_id))?.name||'بازیکن'}</h2>
+        <button onClick={deleteFinishedGame}>پایان بازی</button>
+      </div>
+    </div>}
   </div>;
-  return <div className="snake-v9-shell slide-up"><div className="snake-v9-top"><div><div className="snake-kicker">ONLINE LOBBY</div><div className="snake-v9-title">🐍 مار و پله</div><div className="snake-v9-sub">حریف های خود را دعوت کن!</div></div><div className="snake-v9-badge">۲ دقیقه</div></div>{notice&&<div className="snake-alert mb-3">{notice}</div>}
-    {pendingIncoming.length>0&&<div className="snake-section"><div className="snake-section-title">🔔 درخواست‌های بازی</div>{pendingIncoming.map(r=><div className="snake-request-card" key={r.id}><div><b>دعوت مار و پله</b><small>زمان باقی‌مانده: {Math.max(0,Math.ceil((new Date(r.expires_at).getTime()-now)/1000))} ثانیه</small></div><button onClick={()=>accept(r)} className="snake-accept">قبول</button><button onClick={()=>decline(r)} className="snake-decline">رد</button></div>)}</div>}
-    {pendingOutgoing.length>0&&<div className="snake-waiting"><span className="waiting-orb">⏳</span><div><b>در انتظار حریف‌ها</b><small>{pendingOutgoing.length} درخواست • تا پایان ۲ دقیقه فرصت پاسخ</small></div></div>}
-    {room&&room.status==='waiting'&&<div className="snake-section snake-room-card"><div className="snake-section-title">🎮 اتاق بازی</div><div className="snake-joined-list">{[room.player1_name,room.player2_name,room.player3_name].filter(Boolean).map((n,i)=><span key={i}>{i===0?'👑':'🎮'} {n}</span>)}</div>{String(room.player1_id)===String(user.id)&&[room.player2_id,room.player3_id].filter(Boolean).length>0&&<button onClick={start} className="snake-start-btn">🚀 شروع بازی <small>({[room.player2_id,room.player3_id].filter(Boolean).length+1} نفر)</small></button>}</div>}
-    <div className="snake-section"><div className="snake-section-title">👥 حریف های خود را انتخاب کن <span>{selected.length}/۲</span></div>{people.filter(p=>String(p.id)!==String(user.id)).map(p=><label key={p.id} className={'snake-person '+(selected.includes(p.id)?'selected':'')}><input type="checkbox" checked={selected.includes(p.id)} onChange={()=>setSelected(x=>x.includes(p.id)?x.filter(i=>i!==p.id):x.length<2?[...x,p.id]:x)}/><div className="snake-avatar">{p.full_name?.[0]||'؟'}</div><div className="flex-1"><b>{p.full_name}</b><small>{p.role==='admin'?'مدیر':'دانش‌آموز'}</small></div><span className="check-orb">✓</span></label>)}<button onClick={makeRoom} disabled={busy||selected.length===0} className="snake-invite-btn">{busy?'در حال ساخت اتاق...':'📩 ارسال درخواست بازی'}</button></div>
+
+  return <div className="snake10-shell snake10-lobby">
+    <div className="snake10-lobby-head">
+      <div><div className="snake10-kicker">BOARD GAME • ONLINE</div><h2>🐍 مار و پله</h2><p>حریف های خود را دعوت کن!</p></div>
+      <div className="snake10-time-badge">۲ دقیقه</div>
+    </div>
+    {notice&&<div className="snake10-notice">{notice}</div>}
+
+    {pendingIncoming.length>0&&<div className="snake10-lobby-card">
+      <h3>🔔 درخواست‌های بازی</h3>
+      {pendingIncoming.map(r=><div className="snake10-request" key={r.id}>
+        <div><b>دعوت مار و پله</b><small>{Math.max(0,Math.ceil((new Date(r.expires_at).getTime()-now)/1000))} ثانیه باقی مانده</small></div>
+        <button className="accept" onClick={()=>accept(r)}>قبول</button>
+        <button className="decline" onClick={()=>decline(r)}>رد</button>
+      </div>)}
+    </div>}
+
+    {pendingOutgoing.length>0&&<div className="snake10-wait">
+      <span>⏳</span><div><b>در انتظار حریف‌ها</b><small>{pendingOutgoing.length} درخواست • فرصت پاسخ تا ۲ دقیقه</small></div>
+    </div>}
+
+    {room&&room.status==='waiting'&&<div className="snake10-lobby-card">
+      <h3>🎮 اتاق بازی</h3>
+      <div className="snake10-joined">{[room.player1_name,room.player2_name,room.player3_name].filter(Boolean).map((n,i)=><span key={i}>{i===0?'👑':'🎮'} {n}</span>)}</div>
+      {isMine(room.player1_id)&&[room.player2_id,room.player3_id].filter(Boolean).length>0&&
+        <button onClick={start} className="snake10-start">🚀 شروع بازی <small>({[room.player2_id,room.player3_id].filter(Boolean).length+1} نفر)</small></button>}
+    </div>}
+
+    <div className="snake10-lobby-card">
+      <div className="snake10-select-head"><h3>👥 حریف های خود را انتخاب کن</h3><b>{selected.length}/۲</b></div>
+      {people.filter(p=>String(p.id)!==safeUserId).map(p=><label key={p.id} className={'snake10-person '+(selected.includes(p.id)?'selected':'')}>
+        <input type="checkbox" checked={selected.includes(p.id)} onChange={()=>setSelected(x=>x.includes(p.id)?x.filter(i=>i!==p.id):x.length<2?[...x,p.id]:x)}/>
+        <div className="snake10-person-avatar">{p.full_name?.[0]||'؟'}</div>
+        <div><b>{p.full_name}</b><small>{p.role==='admin'?'مدیر':'دانش‌آموز'}</small></div>
+        <span>✓</span>
+      </label>)}
+      <button onClick={makeRoom} disabled={busy||selected.length===0} className="snake10-invite">📩 ارسال درخواست بازی</button>
+    </div>
   </div>;
 }
 
