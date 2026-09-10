@@ -494,6 +494,11 @@ linear-gradient(180deg,#3b2515,#1b110a);border:2px solid rgba(218,164,75,.32);bo
  .snake10-scorebar{margin-bottom:4px}.snake10-dice-panel{min-height:82px}.snake10-dice-stage{height:76px}.snake10-roll-button{padding:7px 14px}.snake10-leave-button{padding:8px 14px}
 }
 
+
+.snake10-dice-panel-clean{grid-template-columns:1fr;min-height:132px}
+.snake10-dice-panel-clean .snake10-dice-stage{margin:auto;width:180px;height:124px}
+.snake10-dice-panel-clean .snake10-dice-flight{transform-origin:center}
+@media(max-width:560px){.snake10-shell{padding:6px 5px 14px}.snake10-board-frame{padding:5px;border-radius:18px}.snake10-board-inner{border-radius:10px}.snake10-scorebar{grid-template-columns:1fr 54px 1fr;gap:4px}.snake10-avatar{width:34px;height:34px;flex-basis:34px}.snake10-player-card{padding:5px 6px}.snake10-trophy-big{font-size:30px}.snake10-dice-panel-clean{min-height:138px}.snake10-dice-panel-clean .snake10-dice-stage{height:130px;width:200px}.snake10-roll-button{margin-bottom:5px}.snake10-leave-button{margin-bottom:7px}}
 </style>
 </head>
 <body>
@@ -2153,6 +2158,7 @@ function SnakeGame({user,students=[],isAdmin=false}){
     try{
       await SB.from('snake_rooms').update({[`player${slot}_token`]:'__LEFT__'}).eq('id',room.id);
       setLeftGame(true);
+      setViewMode('lobby');
       setNotice('از بازی خارج شدی؛ مهره تو غیرفعال شد.');
       load();
     }catch(e){setNotice('خطا در خروج از بازی: '+(e?.message||''));}
@@ -2224,18 +2230,17 @@ function SnakeGame({user,students=[],isAdmin=false}){
     }
   };
 
+  // Visual board: START is bottom-left and 100 is top-right.
+  // Every row is intentionally left-to-right so the path is easy to read on mobile.
   const board=[];
-  for(let row=0;row<10;row++){
-    const nums=row%2===0
-      ?Array.from({length:10},(_,i)=>row*10+i+1)
-      :Array.from({length:10},(_,i)=>row*10+10-i);
-    board.push(...nums);
+  for(let visualRow=9;visualRow>=0;visualRow--){
+    for(let col=0;col<10;col++) board.push(visualRow*10+col+1);
   }
 
   const point=(pos)=>{
     const n=Math.max(1,Math.min(100,Number(pos)||1));
     const row=Math.floor((n-1)/10);
-    const col=row%2===0?(n-1)%10:9-((n-1)%10);
+    const col=(n-1)%10;
     return {x:col*10+5,y:(9-row)*10+5};
   };
 
@@ -2360,10 +2365,8 @@ function SnakeGame({user,students=[],isAdmin=false}){
       </div>
     </div>
 
-    <div className="snake10-dice-panel">
-      <div className="snake10-side-control"><span>⚑</span><small>تاریخچه بازی</small></div>
+    <div className="snake10-dice-panel snake10-dice-panel-clean">
       <DiceFace/>
-      <div className="snake10-side-control"><span>⚙</span><small>تنظیمات</small></div>
     </div>
 
     <div className="snake10-turn-line">
