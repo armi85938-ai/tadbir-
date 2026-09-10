@@ -499,6 +499,41 @@ linear-gradient(180deg,#3b2515,#1b110a);border:2px solid rgba(218,164,75,.32);bo
 .snake10-dice-panel-clean .snake10-dice-stage{margin:auto;width:180px;height:124px}
 .snake10-dice-panel-clean .snake10-dice-flight{transform-origin:center}
 @media(max-width:560px){.snake10-shell{padding:6px 5px 14px}.snake10-board-frame{padding:5px;border-radius:18px}.snake10-board-inner{border-radius:10px}.snake10-scorebar{grid-template-columns:1fr 54px 1fr;gap:4px}.snake10-avatar{width:34px;height:34px;flex-basis:34px}.snake10-player-card{padding:5px 6px}.snake10-trophy-big{font-size:30px}.snake10-dice-panel-clean{min-height:138px}.snake10-dice-panel-clean .snake10-dice-stage{height:130px;width:200px}.snake10-roll-button{margin-bottom:5px}.snake10-leave-button{margin-bottom:7px}}
+
+/* ===== V13 polish: realistic board, dice, pieces, admin students ===== */
+.snake13-piece{position:absolute;z-index:12;width:clamp(30px,8vw,54px);height:clamp(42px,11vw,68px);transform:translate(-50%,-88%);pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.72));will-change:left,top,transform}
+.snake13-piece .p-shadow{position:absolute;bottom:0;left:50%;width:88%;height:17%;transform:translateX(-50%);border-radius:50%;background:rgba(0,0,0,.52);filter:blur(2px)}
+.snake13-piece .p-base{position:absolute;bottom:0;left:50%;width:96%;height:25%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle at 35% 25%,var(--pl),var(--pc) 45%,var(--pd) 82%);border:2px solid rgba(255,255,255,.78);box-shadow:inset 0 3px 5px rgba(255,255,255,.42),inset 0 -5px 7px rgba(0,0,0,.32),0 3px 5px rgba(0,0,0,.55)}
+.snake13-piece .p-body{position:absolute;left:50%;bottom:11%;width:48%;height:50%;transform:translateX(-50%);border-radius:48% 48% 30% 30%;background:linear-gradient(145deg,var(--pl),var(--pc) 45%,var(--pd));border:2px solid rgba(255,255,255,.72);box-shadow:inset 3px 3px 5px rgba(255,255,255,.34),inset -4px -6px 7px rgba(0,0,0,.25)}
+.snake13-piece .p-head{position:absolute;left:50%;bottom:48%;width:58%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:1000;font-size:clamp(9px,2.2vw,14px);background:radial-gradient(circle at 30% 25%,#fff,var(--pl) 20%,var(--pc) 52%,var(--pd));border:2px solid rgba(255,255,255,.9);box-shadow:inset 3px 3px 6px rgba(255,255,255,.34),inset -5px -5px 7px rgba(0,0,0,.22),0 3px 5px rgba(0,0,0,.45)}
+.snake13-piece .p-head:after{content:'';position:absolute;right:16%;top:23%;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:8px 0 0 #fff,2px 2px 0 1px #111,10px 2px 0 1px #111}
+.snake13-piece em{position:absolute;top:101%;left:50%;transform:translateX(-50%);font-style:normal;white-space:nowrap;font-size:clamp(6px,1.5vw,10px);font-weight:1000;color:#fff;text-shadow:0 2px 4px #000}
+.snake13-piece.left{filter:grayscale(1) brightness(.42) drop-shadow(0 5px 5px #000);opacity:.55}
+.snake13-piece.step{animation:pieceHop13 .42s cubic-bezier(.2,.9,.25,1)}
+@keyframes pieceHop13{0%{transform:translate(-50%,-88%) translateY(8px) scale(.92)}45%{transform:translate(-50%,-88%) translateY(-14px) scale(1.08)}72%{transform:translate(-50%,-88%) translateY(2px) scale(.99)}100%{transform:translate(-50%,-88%) translateY(0) scale(1)}}
+.snake13-board{box-shadow:0 22px 55px rgba(0,0,0,.72),inset 0 0 0 2px rgba(255,221,140,.18),inset 0 0 35px rgba(0,0,0,.65);border:3px solid #a66b2d}
+.snake13-cell{background-image:linear-gradient(145deg,rgba(255,255,255,.12),rgba(0,0,0,.16)),repeating-linear-gradient(12deg,rgba(255,255,255,.035) 0 2px,transparent 2px 9px)!important}
+.snake13-cell:nth-child(4n+1){background-color:#2f7251!important}.snake13-cell:nth-child(4n+2){background-color:#a86f25!important}.snake13-cell:nth-child(4n+3){background-color:#42688a!important}.snake13-cell:nth-child(4n){background-color:#7d4730!important}
+.snake13-cell{border-color:rgba(255,225,166,.25)!important;box-shadow:inset 0 1px rgba(255,255,255,.16),inset 0 -7px 10px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.08)}
+.snake13-cell.finish{background:radial-gradient(circle,#fff0ad 0,#e9a62d 43%,#6e3608 75%)!important}
+.snake13-dice-stage{height:150px!important;perspective:1200px;overflow:visible}
+.snake13-dice-flight{width:90px!important;height:90px!important;will-change:transform;z-index:20}
+.snake13-dice-cube{width:78px!important;height:78px!important;transform-style:preserve-3d;will-change:transform;filter:drop-shadow(0 15px 11px rgba(0,0,0,.48))}
+.snake13-dice-face{border-radius:17px!important;background:linear-gradient(145deg,#fff 0%,#eef1f4 42%,#a9b0b7 72%,#676d73 100%)!important;border:2px solid #fff!important;box-shadow:inset 10px 10px 15px rgba(255,255,255,.75),inset -11px -12px 17px rgba(0,0,0,.28),0 13px 20px rgba(0,0,0,.42)!important}
+.snake13-dice-face span{font-size:31px!important;font-family:Georgia,serif;color:#121820!important;text-shadow:0 2px 1px rgba(255,255,255,.9)!important}
+.snake13-dice-flight.flight{animation:diceThrow13 1.55s cubic-bezier(.15,.72,.18,1)}
+.snake13-dice-cube.rolling{animation:diceRoll13 1.55s cubic-bezier(.12,.72,.18,1)}
+@keyframes diceThrow13{0%{transform:translate3d(0,0,0) rotate(0) scale(.72)}18%{transform:translate3d(-45px,-40px,55px) rotate(55deg) scale(1.08)}42%{transform:translate3d(52px,-24px,90px) rotate(145deg) scale(1.18)}65%{transform:translate3d(-30px,18px,35px) rotate(255deg) scale(1.08)}82%{transform:translate3d(18px,8px,12px) rotate(335deg) scale(1)}100%{transform:translate3d(0,0,0) rotate(360deg) scale(.96)}}
+@keyframes diceRoll13{0%{transform:rotateX(-18deg) rotateY(20deg) rotateZ(0)}20%{transform:rotateX(150deg) rotateY(115deg) rotateZ(80deg)}42%{transform:rotateX(310deg) rotateY(280deg) rotateZ(170deg)}68%{transform:rotateX(510deg) rotateY(420deg) rotateZ(280deg)}86%{transform:rotateX(650deg) rotateY(530deg) rotateZ(335deg)}100%{transform:rotateX(720deg) rotateY(540deg) rotateZ(360deg)}}
+.snake13-roll-impact{animation:diceImpact13 .32s ease-out}
+@keyframes diceImpact13{0%{transform:scale(1)}35%{transform:scale(1.16)}70%{transform:scale(.96)}100%{transform:scale(1)}}
+.admin-student-panel{background:linear-gradient(145deg,rgba(18,20,42,.96),rgba(35,20,57,.94));border:1px solid rgba(167,139,250,.25);border-radius:22px;padding:16px;box-shadow:0 18px 45px rgba(0,0,0,.28)}
+.admin-student-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);margin-top:8px}
+.admin-student-avatar{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#8b5cf6,#ec4899);font-weight:1000;font-size:18px;box-shadow:0 6px 15px rgba(139,92,246,.22)}
+.admin-last-seen{font-size:10px;color:#86efac}.admin-last-seen.off{color:rgba(255,255,255,.32)}
+.admin-student-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}.admin-student-form .full{grid-column:1/-1}
+@media(max-width:560px){.snake13-dice-stage{height:138px!important}.snake13-dice-flight{width:82px!important;height:82px!important}.snake13-dice-cube{width:70px!important;height:70px!important}.snake13-dice-face span{font-size:27px!important}.admin-student-form{grid-template-columns:1fr}.admin-student-form .full{grid-column:auto}}
+
 </style>
 </head>
 <body>
@@ -1648,6 +1683,8 @@ function Admin({user,tab,setTab,onLogout}){
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [adminTool,setAdminTool]=useState('menu');
   const [adminGame,setAdminGame]=useState(null);
+  const [studentForm,setStudentForm]=useState({full_name:'',username:'',password:''});
+  const [studentBusy,setStudentBusy]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
@@ -1700,6 +1737,19 @@ function Admin({user,tab,setTab,onLogout}){
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
   const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);loadAll();toast('رمز تغییر کرد','success');}};
+  const createStudent=async()=>{
+    const full_name=studentForm.full_name.trim();
+    const username=studentForm.username.trim().toUpperCase();
+    const password=studentForm.password;
+    if(!full_name||!username||!password){toast('نام، نام کاربری و رمز را کامل کنید','error');return;}
+    if(password.length<4){toast('رمز باید حداقل ۴ کاراکتر باشد','error');return;}
+    setStudentBusy(true);
+    const {data,error}=await SB.from('users').insert({full_name,username,password,role:'student'}).select().single();
+    setStudentBusy(false);
+    if(error){toast('خطا در ساخت دانش‌آموز: '+error.message,'error');return;}
+    setStudents(x=>[data,...x]);setStudentForm({full_name:'',username:'',password:''});toast('✅ دانش‌آموز با موفقیت ساخته شد','success');
+  };
+
   const gradeAnswer=async(id,score)=>{const value=parseFloat(score);if(Number.isNaN(value)){toast('نمره معتبر نیست','error');return;}const {error}=await SB.from('answers').update({score:value,status:'graded',graded_at:new Date().toISOString()}).eq('id',id);if(error){toast('خطا در ثبت نمره: '+error.message,'error');return;}loadAll();toast('✅ نمره ثبت شد و مهلت اعتراض شروع شد','success');};
   const sendMessage=async()=>{if(!replyText.trim()||!selectedChat)return;await SB.from('messages').insert({sender_id:user.id,receiver_id:selectedChat.sender_id,content:replyText,reactions:{}});setReplyText('');loadAll();};
   
@@ -1848,7 +1898,7 @@ function Admin({user,tab,setTab,onLogout}){
             )}
           </>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!adminGame?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div></div>{adminTool==='games'&&<div className="mt-4 game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div>}</>:<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}</>}</div>)}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div></div></>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5">🔑</button></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}</>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -2018,6 +2068,9 @@ function SnakeGame({user,students=[],isAdmin=false}){
   const [shake,setShake]=useState(false);
   const [winnerOpen,setWinnerOpen]=useState(false);
   const [settled,setSettled]=useState(false);
+  const [hiddenRoomId,setHiddenRoomId]=useState(null);
+  const previousPositionsRef=useRef({});
+  const animationLockRef=useRef(false);
 
   const safeUserId=String(user?.id||'');
   const isMine=(id)=>String(id||'')===safeUserId;
@@ -2045,10 +2098,20 @@ function SnakeGame({user,students=[],isAdmin=false}){
         if(rr)throw rr;
         if(rooms?.[0]){
           const rm=rooms[0];
-          setRoom(rm);
-          if(rm.status==='playing'||rm.status==='finished'){
-            setViewMode('game');
-            if(rm.status==='finished')setWinnerOpen(true);
+          const expired=rm.created_at && (Date.now()-new Date(rm.created_at).getTime()>=60*60*1000);
+          if(expired){
+            await SB.from('snake_requests').delete().eq('room_id',rm.id);
+            await SB.from('snake_rooms').delete().eq('id',rm.id);
+            if(String(hiddenRoomId)===String(rm.id)){setHiddenRoomId(null);}
+            setRoom(null);setViewMode('lobby');setWinnerOpen(false);
+            return;
+          }
+          if(String(hiddenRoomId)!==String(rm.id)){
+            setRoom(rm);
+            if(rm.status==='playing'||rm.status==='finished'){
+              setViewMode('game');
+              if(rm.status==='finished')setWinnerOpen(true);
+            }
           }
         }
       }
@@ -2062,7 +2125,22 @@ function SnakeGame({user,students=[],isAdmin=false}){
     const a=setInterval(load,1600);
     const b=setInterval(()=>setNow(Date.now()),1000);
     return()=>{clearInterval(a);clearInterval(b)};
-  },[user.id]);
+  },[user.id,hiddenRoomId]);
+
+  useEffect(()=>{
+    if(!room?.created_at)return;
+    const check=()=>{
+      if(Date.now()-new Date(room.created_at).getTime()>=60*60*1000){
+        setHiddenRoomId(room.id);
+        SB.from('snake_requests').delete().eq('room_id',room.id);
+        SB.from('snake_rooms').delete().eq('id',room.id);
+        setRoom(null);setViewMode('lobby');setWinnerOpen(false);
+        setNotice('⏱️ این بازی پس از یک ساعت به‌صورت خودکار بسته و حذف شد.');
+      }
+    };
+    const t=setInterval(check,10000);check();
+    return()=>clearInterval(t);
+  },[room?.id,room?.created_at]);
 
   const pendingIncoming=requests.filter(r=>
     isMine(r.to_user)&&r.status==='pending'&&new Date(r.expires_at).getTime()>now
@@ -2158,9 +2236,12 @@ function SnakeGame({user,students=[],isAdmin=false}){
     try{
       await SB.from('snake_rooms').update({[`player${slot}_token`]:'__LEFT__'}).eq('id',room.id);
       setLeftGame(true);
+      setHiddenRoomId(room.id);
+      setRoom(null);
+      setWinnerOpen(false);
       setViewMode('lobby');
-      setNotice('از بازی خارج شدی؛ مهره تو غیرفعال شد.');
-      load();
+      setRequests(requests.filter(r=>String(r.room_id)!==String(room.id)));
+      setNotice('🚪 از بازی خارج شدی و به صفحه شروع بازی برگشتی.');
     }catch(e){setNotice('خطا در خروج از بازی: '+(e?.message||''));}
   };
 
@@ -2183,7 +2264,7 @@ function SnakeGame({user,students=[],isAdmin=false}){
     const old=Math.max(1,Number(room[`player${slot}_pos`]||1));
     const d=1+Math.floor(Math.random()*6);
 
-    setRolling(true);setShake(true);setDice(d);
+    setRolling(true);animationLockRef.current=true;setShake(true);setDice(d);
     setTimeout(()=>setShake(false),1150);
 
     try{
@@ -2226,7 +2307,7 @@ function SnakeGame({user,students=[],isAdmin=false}){
     }catch(e){
       setNotice('خطا در حرکت: '+(e?.message||'خطای نامشخص'));
     }finally{
-      setStrikingSnake(null);setRolling(false);
+      setStrikingSnake(null);setRolling(false);animationLockRef.current=false;
     }
   };
 
@@ -2254,11 +2335,11 @@ function SnakeGame({user,students=[],isAdmin=false}){
 
   const DiceFace=()=>{
     const settleClass=settled?'settled':'';
-    return <div className="snake10-dice-stage">
+    return <div className="snake10-dice-stage snake13-dice-stage">
       <div className="snake10-dice-glow"></div>
-      <div className={'snake10-dice-flight '+(rolling?'flight':'')}>
-        <div className={'snake10-dice-cube '+(rolling?'rolling ':'')+settleClass} data-value={dice}>
-          {[1,2,3,4,5,6].map(v=><div key={v} className={'snake10-dice-face face-'+v}><span>{v}</span></div>)}
+      <div className={'snake10-dice-flight snake13-dice-flight '+(rolling?'flight':'')}>
+        <div className={'snake10-dice-cube snake13-dice-cube '+(rolling?'rolling ':'')+settleClass} data-value={dice}>
+          {[1,2,3,4,5,6].map(v=><div key={v} className={'snake10-dice-face snake13-dice-face face-'+v}><span>{v}</span></div>)}
         </div>
       </div>
     </div>
@@ -2326,6 +2407,27 @@ function SnakeGame({user,students=[],isAdmin=false}){
     </svg>
   };
 
+  useEffect(()=>{
+    if(!room || room.status!=='playing')return;
+    const current={};
+    [1,2,3].forEach(n=>{const id=room[`player${n}_id`];if(id)current[id]=Number(room[`player${n}_pos`]||1);});
+    const previous=previousPositionsRef.current;
+    Object.entries(current).forEach(([id,target])=>{
+      const start=Number(previous[id]||target);
+      if(start===target){setVisualPos(v=>({...v,[id]:target}));return;}
+      if(String(id)===safeUserId)return;
+      let step=start;
+      const dir=target>start?1:-1;
+      const walk=()=>{
+        step+=dir;
+        setVisualPos(v=>({...v,[id]:step}));
+        if(step!==target)setTimeout(walk,230);
+      };
+      walk();
+    });
+    previousPositionsRef.current=current;
+  },[room?.player1_pos,room?.player2_pos,room?.player3_pos,room?.status]);
+
   if(viewMode==='game'&&room)return <div className={'snake10-shell '+(shake?'snake10-shake':'')}>
     <div className="snake10-ambient"></div>
 
@@ -2341,10 +2443,10 @@ function SnakeGame({user,students=[],isAdmin=false}){
       </div>)}
     </div>
 
-    <div className="snake10-board-frame">
+    <div className="snake10-board-frame snake13-board">
       <div className="snake10-board-inner">
         <div className="snake10-grid">
-          {board.map(pos=><div key={pos} className={'snake10-cell '+(pos===1?'start':'')+(pos===100?'finish':'')}>
+          {board.map(pos=><div key={pos} className={'snake10-cell snake13-cell '+(pos===1?'start':'')+(pos===100?'finish':'')}>
             {pos===100?<span className="snake10-trophy-cell">🏆</span>:<span>{pos}</span>}
             {pos===1&&<small>START</small>}
           </div>)}
@@ -2354,12 +2456,8 @@ function SnakeGame({user,students=[],isAdmin=false}){
           const pt=point(p.pos);
           const idx=p.n-1;
           const out=p.token==='__LEFT__';
-          return <div key={p.id} className={'snake10-piece '+(out?'left':'')+(isMine(p.id)&&leftGame?' left':'')} style={{left:pt.x+'%',top:pt.y+'%', '--pc':COLORS[idx].main,'--pl':COLORS[idx].light,'--pd':COLORS[idx].dark}}>
-            <div className="snake10-piece-shadow"></div>
-            <div className="snake10-piece-base"></div>
-            <div className="snake10-piece-body"></div>
-            <div className="snake10-piece-cap">{p.name?.[0]||'?'}</div>
-            <em>{p.name}</em>
+          return <div key={p.id} className={'snake13-piece '+(out?'left':'')+(isMine(p.id)&&leftGame?' left':'')} style={{left:pt.x+'%',top:pt.y+'%', '--pc':COLORS[idx].main,'--pl':COLORS[idx].light,'--pd':COLORS[idx].dark}}>
+            <div className="p-shadow"></div><div className="p-base"></div><div className="p-body"></div><div className="p-head">{p.name?.[0]||'?'}</div><em>{p.name}</em>
           </div>
         })}
       </div>
@@ -2621,7 +2719,7 @@ function Student({user,tab,setTab,onLogout}){
     const c=ctx.getContext('2d');
     const grad=c.createLinearGradient(0,0,ctx.width||400,0);grad.addColorStop(0,'#60a5fa');grad.addColorStop(.45,'#a78bfa');grad.addColorStop(1,'#f472b6');
     const fill=c.createLinearGradient(0,0,0,260);fill.addColorStop(0,'rgba(129,140,248,.30)');fill.addColorStop(1,'rgba(129,140,248,0)');
-    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:fill,borderWidth:5,tension:.52,fill:true,pointBackgroundColor:'#fff',pointBorderColor:'#f472b6',pointBorderWidth:4,pointRadius:9,pointHoverRadius:13,pointHitRadius:18,clip:false}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:72,right:34,left:22,bottom:18}},animation:{duration:2200,easing:'easeOutQuart'},interaction:{mode:'nearest',intersect:true},plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(12,14,32,.97)',padding:14,cornerRadius:16,caretPadding:10,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(item)=>`نمره: ${Number(item.raw).toFixed(2)}/20`}}},scales:{y:{min:0,max:21,beginAtZero:true,offset:false,ticks:{stepSize:2,color:'rgba(255,255,255,.65)',padding:8,callback:(value)=>value<=20?value:''},grid:{color:'rgba(255,255,255,.075)',drawBorder:false}},x:{display:false,grid:{display:false}}}}});
+    window.myChart=new Chart(ctx,{type:'line',data:{labels:examData.map((_,i)=>String(i+1)),datasets:[{data:examData.map(d=>d.score),borderColor:grad,backgroundColor:fill,borderWidth:5,tension:.52,fill:true,pointBackgroundColor:'#fff',pointBorderColor:'#f472b6',pointBorderWidth:4,pointRadius:9,pointHoverRadius:13,pointHitRadius:18,clip:false}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:96,right:42,left:30,bottom:22}},animation:{duration:2200,easing:'easeOutQuart'},interaction:{mode:'nearest',intersect:true},plugins:{legend:{display:false},tooltip:{displayColors:false,backgroundColor:'rgba(12,14,32,.97)',padding:14,cornerRadius:16,caretPadding:10,callbacks:{title:(items)=>examData[items[0].dataIndex]?.title||'',label:(item)=>`نمره: ${Number(item.raw).toFixed(2)}/20`}}},scales:{y:{min:0,max:20.8,beginAtZero:true,offset:false,suggestedMax:20,ticks:{stepSize:2,color:'rgba(255,255,255,.65)',padding:10,callback:(value)=>value<=20?value:''},grid:{color:'rgba(255,255,255,.075)',drawBorder:false}},x:{display:false,grid:{display:false}}}}});
   },[tab,answers,exams]);
 
   if(activeExam){
@@ -2956,11 +3054,18 @@ function App(){
   const [tab,setTab]=useState('home');
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){const u=JSON.parse(s);setUser(u);setView(u.role);}
+    if(s){const u=JSON.parse(s);setUser(u);setView(u.role);SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}
   },[]);
+  useEffect(()=>{
+    if(!user?.id)return;
+    const touch=()=>SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',user.id).then(()=>{}).catch(()=>{});
+    touch();
+    const timer=setInterval(touch,60000);
+    return()=>clearInterval(timer);
+  },[user?.id]);
   const login=async(un,pw)=>{
     const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);const account=Array.isArray(data)?data[0]:data;if(error){console.error(error);return false;}
-    if(account){setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView(account.role);return true;}
+    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView(account.role);return true;}
     return false;
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
