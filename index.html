@@ -1017,6 +1017,252 @@ body.tadbir-chat-open .nav-bar{
 }
 </style>
 
+
+<style id="tadbir-v26-telegram-chat-header">
+/* TADBIR V26 — Telegram-like conversation shell
+   The conversation is portaled to <body>, so it is independent of the
+   dashboard header, content transforms and floating navigation stacking. */
+
+body:has(.social-fullscreen-overlay){
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+
+.social-fullscreen-overlay{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:100svh!important;
+  padding:0!important;
+  margin:0!important;
+  display:block!important;
+  z-index:2147483000!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 80% 0,rgba(124,58,237,.16),transparent 34%),
+    linear-gradient(180deg,#121026 0%,#090817 58%,#080713 100%)!important;
+}
+
+.social-fullscreen-overlay .social-chat-fullscreen{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:100svh!important;
+  max-height:none!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  background:
+    radial-gradient(circle at 85% 0,rgba(139,92,246,.13),transparent 32%),
+    linear-gradient(180deg,#121026 0%,#0b091a 55%,#080713 100%)!important;
+}
+
+/* Telegram-style fixed top conversation bar. */
+.social-fullscreen-overlay .social-chat-header{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:68px!important;
+  flex:0 0 auto!important;
+  z-index:2147483003!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  padding:
+    calc(7px + env(safe-area-inset-top))
+    max(10px,env(safe-area-inset-right))
+    8px
+    max(10px,env(safe-area-inset-left))!important;
+  background:rgba(14,12,29,.96)!important;
+  border:0!important;
+  border-bottom:1px solid rgba(255,255,255,.085)!important;
+  box-shadow:0 7px 24px rgba(0,0,0,.28)!important;
+  backdrop-filter:blur(24px)!important;
+  -webkit-backdrop-filter:blur(24px)!important;
+}
+
+/* Back button at the start of the Telegram-like header. */
+.social-fullscreen-overlay .social-chat-header > button:first-child{
+  width:43px!important;
+  min-width:43px!important;
+  height:43px!important;
+  padding:0!important;
+  border-radius:14px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  color:#fff!important;
+  flex:0 0 43px!important;
+}
+
+/* Clickable person area fills the header. */
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger{
+  height:49px!important;
+  min-width:0!important;
+  padding:2px 5px!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  flex:1 1 auto!important;
+  overflow:hidden!important;
+}
+
+/* Make the profile image unmistakable and circular like Telegram. */
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger .social-mini-avatar{
+  width:43px!important;
+  height:43px!important;
+  min-width:43px!important;
+  flex:0 0 43px!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  display:grid!important;
+  place-items:center!important;
+  background:linear-gradient(145deg,#6366f1,#a855f7)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 4px 16px rgba(124,58,237,.28)!important;
+}
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger .social-mini-avatar img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+
+/* Name + online/subtitle remain visible at all times. */
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger .profile-name-line{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:5px!important;
+  min-width:0!important;
+}
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger b{
+  font-size:14px!important;
+  line-height:1.4!important;
+  color:#fff!important;
+}
+.social-fullscreen-overlay .social-chat-header .chat-person-trigger > div:last-child > span{
+  display:block!important;
+  margin-top:1px!important;
+  font-size:9px!important;
+  color:rgba(255,255,255,.42)!important;
+}
+
+/* Close button remains available, but visually secondary. */
+.social-fullscreen-overlay .social-chat-header > button:last-child{
+  width:40px!important;
+  min-width:40px!important;
+  height:40px!important;
+  padding:0!important;
+  border-radius:13px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(255,255,255,.04)!important;
+  border:1px solid rgba(255,255,255,.06)!important;
+  flex:0 0 40px!important;
+}
+
+/* Messages start BELOW the fixed header and can scroll independently. */
+.social-fullscreen-overlay .chat-messages-scroll{
+  position:absolute!important;
+  top:calc(68px + env(safe-area-inset-top))!important;
+  left:0!important;
+  right:0!important;
+  bottom:calc(78px + env(safe-area-inset-bottom))!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:
+    14px
+    max(10px,env(safe-area-inset-right))
+    120px
+    max(10px,env(safe-area-inset-left))!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  scroll-padding-top:90px!important;
+}
+
+/* Composer is fixed above the dashboard nav when keyboard is closed. */
+.social-fullscreen-overlay .chat-composer{
+  position:fixed!important;
+  left:max(8px,env(safe-area-inset-left))!important;
+  right:max(8px,env(safe-area-inset-right))!important;
+  bottom:calc(82px + env(safe-area-inset-bottom))!important;
+  width:auto!important;
+  z-index:2147483004!important;
+  margin:0!important;
+  padding:7px!important;
+  min-height:62px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+  border-radius:20px!important;
+  background:rgba(24,20,45,.97)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 14px 40px rgba(0,0,0,.48)!important;
+  backdrop-filter:blur(22px)!important;
+  -webkit-backdrop-filter:blur(22px)!important;
+}
+
+/* The global dashboard nav must never cover the chat. */
+body:has(.social-fullscreen-overlay) .nav-bar{
+  z-index:0!important;
+  pointer-events:none!important;
+}
+
+/* Profile popup stays above chat header. */
+.social-fullscreen-overlay .profile-float{
+  position:fixed!important;
+  z-index:2147483008!important;
+}
+.social-fullscreen-overlay .follow-list-overlay{
+  position:fixed!important;
+  z-index:2147483010!important;
+}
+
+@media(max-width:560px){
+  .social-fullscreen-overlay .social-chat-header{
+    min-height:62px!important;
+    padding-top:calc(5px + env(safe-area-inset-top))!important;
+    padding-bottom:5px!important;
+  }
+
+  .social-fullscreen-overlay .chat-messages-scroll{
+    top:calc(62px + env(safe-area-inset-top))!important;
+    bottom:calc(76px + env(safe-area-inset-bottom))!important;
+    padding-top:10px!important;
+    padding-bottom:115px!important;
+  }
+
+  .social-fullscreen-overlay .chat-composer{
+    bottom:calc(76px + env(safe-area-inset-bottom))!important;
+    left:7px!important;
+    right:7px!important;
+  }
+}
+
+/* When Android opens the keyboard, only the composer follows the visual viewport.
+   The fixed Telegram-like header stays at the top. */
+html.tadbir-keyboard-open .social-fullscreen-overlay .social-chat-header{
+  top:0!important;
+}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -3447,7 +3693,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const loadConversation=async(person)=>{const {data}=await SB.from('messages').select('*').or(`and(sender_id.eq.${user.id},receiver_id.eq.${person.id}),and(sender_id.eq.${person.id},receiver_id.eq.${user.id})`).order('created_at',{ascending:true});setMessages(data||[]);const ids=(data||[]).filter(m=>m.receiver_id===user.id&&m.sender_id===person.id&&m.read_at===null).map(m=>m.id);if(ids.length){SB.from('messages').update({read_at:new Date().toISOString()}).in('id',ids).then(()=>{});setUnread(x=>Math.max(0,x-ids.length));}};
   const send=async()=>{if(!textMsg.trim()||!selected||busy)return;setBusy(true);const [{data:b1},{data:b2}]=await Promise.all([SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',selected.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',selected.id).eq('blocked_id',user.id).maybeSingle()]);if(b1||b2){setBusy(false);toast('این گفتگو به دلیل مسدودسازی در دسترس نیست','warning');return;}const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content:textMsg.trim(),reactions:{}});setBusy(false);if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}setTextMsg('');await loadConversation(selected);};
   const prof=(id)=>profiles[id]?.avatar_url||'🐱';
-  return <div className={`modal-overlay ${fullScreen?'social-fullscreen-overlay':''}`} onClick={onClose}>
+  const chatUI = <div className={`modal-overlay ${fullScreen?'social-fullscreen-overlay':''}`} onClick={onClose}>
     <div className={`glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up ${fullScreen?'social-chat-fullscreen':''}`} onClick={e=>e.stopPropagation()}>
       {!selected ? <>
         <div className="social-chat-header flex items-center justify-between">
@@ -3476,8 +3722,8 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     </div>
     {profilePerson&&<ProfileView person={profilePerson} viewerId={user.id} onClose={()=>setProfilePerson(null)}/>} 
   </div>;
+  return ReactDOM.createPortal(chatUI, document.body);
 }
-
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
@@ -4003,5 +4249,31 @@ ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 <linearGradient id="countdownGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#ef4444"/></linearGradient>
 <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc"/></linearGradient>
 </defs></svg>
+
+<script>
+(function(){
+  function tadbirKeyboardClass(){
+    try{
+      var vv=window.visualViewport;
+      if(!vv) return;
+      var h=Math.max(0,window.innerHeight-vv.height-vv.offsetTop);
+      document.documentElement.classList.toggle('tadbir-keyboard-open',h>120);
+    }catch(e){}
+  }
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',tadbirKeyboardClass,{passive:true});
+    window.visualViewport.addEventListener('scroll',tadbirKeyboardClass,{passive:true});
+  }
+  window.addEventListener('resize',tadbirKeyboardClass,{passive:true});
+  document.addEventListener('focusin',function(e){
+    if(e.target && e.target.matches && e.target.matches('.social-fullscreen-overlay input,.social-fullscreen-overlay textarea')){
+      setTimeout(tadbirKeyboardClass,80);
+    }
+  });
+  document.addEventListener('focusout',function(){setTimeout(tadbirKeyboardClass,120);});
+  setTimeout(tadbirKeyboardClass,100);
+})();
+</script>
+
 </body>
 </html>
