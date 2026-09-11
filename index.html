@@ -803,6 +803,35 @@ html,body,#root{min-height:100%;}
 .admin-profile-card{background:radial-gradient(circle at 100% 0,rgba(236,72,153,.12),transparent 35%),linear-gradient(145deg,rgba(30,24,58,.9),rgba(12,12,29,.95));border:1px solid rgba(216,180,254,.16);border-radius:24px;padding:16px}
 .verified-badge{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb);box-shadow:0 0 0 2px rgba(56,189,248,.12),0 4px 14px rgba(37,99,235,.38);vertical-align:middle;margin-right:5px;position:relative}.verified-badge:after{content:'✓';font-size:11px;font-weight:1000;color:#fff;line-height:1}.profile-name-line{display:flex;align-items:center;gap:5px;min-width:0}.social-contact-name{display:flex;align-items:center;gap:4px;min-width:0}.social-mini-avatar{position:relative;overflow:hidden}.social-mini-avatar img{width:100%;height:100%;object-fit:cover;display:block}.home-message-fab.admin-message-fab{bottom:92px;left:16px}
 @media(max-width:380px){.profile-preset-grid{grid-template-columns:repeat(6,1fr)}.profile-avatar{width:82px;height:82px}.profile-stat{min-width:68px}}
+
+/* === TADBIR FLOATING GLASS NAV v2 === */
+.nav-bar{
+  position:fixed;left:14px;right:14px;bottom:12px;
+  width:auto;max-width:620px;margin:0 auto;
+  min-height:72px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(28,26,48,.82),rgba(12,12,27,.88));
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:30px;
+  backdrop-filter:blur(28px) saturate(155%);-webkit-backdrop-filter:blur(28px) saturate(155%);
+  box-shadow:0 18px 50px rgba(0,0,0,.48),0 0 0 1px rgba(139,92,246,.08),inset 0 1px 0 rgba(255,255,255,.09);
+  display:flex;justify-content:space-around;align-items:center;gap:4px;z-index:80;
+}
+.nav-bar:before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.04),transparent 35%,rgba(167,139,250,.06));}
+.nav-item{position:relative;z-index:1;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 7px;border-radius:23px;color:rgba(255,255,255,.42);font-size:10px;font-weight:800;cursor:pointer;transition:transform .25s ease,background .25s ease,color .25s ease,box-shadow .25s ease;}
+.nav-item:active{transform:scale(.94)}
+.nav-item.active{color:#b78cff;background:linear-gradient(145deg,rgba(139,92,246,.20),rgba(168,85,247,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 22px rgba(99,102,241,.10);}
+.nav-item.active svg{filter:drop-shadow(0 0 9px rgba(167,139,250,.72));}
+.nav-item svg{width:23px;height:23px;transition:transform .25s ease}.nav-item.active svg{transform:translateY(-1px) scale(1.05)}
+.message-home-badge{position:absolute;top:-4px;right:-7px;min-width:17px;height:17px;padding:0 4px;border-radius:99px;background:linear-gradient(135deg,#ff4d6d,#e11d48);color:#fff;font-size:9px;font-weight:1000;display:grid;place-items:center;border:2px solid #17152b;box-shadow:0 4px 12px rgba(225,29,72,.45);}
+.verified-badge{width:20px;height:20px;border-radius:50%;display:inline-grid;place-items:center;position:relative;vertical-align:middle;margin-right:5px;background:linear-gradient(145deg,#60a5fa 0%,#2563eb 58%,#1d4ed8 100%);border:1.5px solid rgba(255,255,255,.92);box-shadow:0 0 0 2px rgba(37,99,235,.18),0 3px 12px rgba(37,99,235,.52),inset 0 1px 2px rgba(255,255,255,.65);}
+.verified-badge:before{content:'';position:absolute;inset:-3px;border-radius:50%;border:1px solid rgba(96,165,250,.32);}
+.verified-badge:after{content:'✓';font-family:Arial,sans-serif;font-size:12px;font-weight:1000;color:#fff;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.25);}
+/* Messenger page feels like a native app panel while keeping existing modal logic safe. */
+.social-chat{border-radius:28px!important;border-color:rgba(255,255,255,.12)!important;background:linear-gradient(145deg,rgba(27,24,50,.96),rgba(12,12,28,.97))!important;box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 45px rgba(124,58,237,.10)!important;}
+.social-contact{padding:12px;border:1px solid rgba(255,255,255,.065);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018));transition:.2s;box-shadow:inset 0 1px rgba(255,255,255,.04);}
+.social-contact:active{transform:scale(.985);background:rgba(139,92,246,.10)}
+.social-bubble{box-shadow:0 6px 18px rgba(0,0,0,.20)!important}
+@media(max-width:420px){.nav-bar{left:10px;right:10px;bottom:8px;border-radius:27px}.nav-item{font-size:9px;padding-inline:4px}.nav-item svg{width:21px;height:21px}}
 </style>
 </head>
 <body>
@@ -2252,8 +2281,9 @@ function Admin({user,tab,setTab,onLogout}){
       </div>
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='students'?'active':''}`} onClick={()=>{setTab('students');setSubTab('list');}}><Icon d={Icons.users}/><span>کاربران</span></div>
-        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div><div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('messages');}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div><div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTool('menu');setAdminGame(null);}}><Icon d={Icons.list}/><span>ابزار</span></div>
+        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('messages');}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div>
+        <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTool('menu');setAdminGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
       {tab==='home'&&<button onClick={()=>{setTab('messages');setSubTab('messages');}} className="home-message-fab admin-message-fab"><Icon d={Icons.message} size={25}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</button>}
       {modal==='exam'&&(
@@ -3513,9 +3543,13 @@ function Student({user,tab,setTab,onLogout}){
             })}
           </>
         )}
+        {tab==='messages'&&(<div className="slide-up">
+          <SocialChatModal user={user} onClose={()=>setTab('home')}/>
+        </div>)}
         {tab==='grades'&&(<div className="slide-up">
-          <div className="glass p-5 mb-4"><div className="flex items-center justify-between"><div><p className="text-xs text-white/40">معدل کل</p><p className="text-4xl font-black gradient-text">{getAverage()}</p></div><div className="w-14 h-14 rounded-2xl bg-indigo-500/15 flex items-center justify-center"><Icon d={Icons.grade} size={28} className="text-indigo-300"/></div></div></div>
-          <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌های اخیر</h3>
+          <div className="glass p-5 mb-4"><div className="flex items-center justify-between"><div><p className="text-xs text-white/40">معدل کل</p><p className="text-4xl font-black gradient-text">{getAverage()}</p><p className="text-[10px] text-white/35 mt-1">از ۲۰</p></div><div className="w-14 h-14 rounded-2xl bg-indigo-500/15 flex items-center justify-center"><Icon d={Icons.grade} size={28} className="text-indigo-300"/></div></div></div>
+          <PremiumGradeChart data={exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(sc.percentage)||0)),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date))}/>
+          <h3 className="font-bold mt-5 mb-3 text-white/70 text-sm">ریز نمرات</h3>
           {exams.filter(ex=>getExamScore(ex.id)).length===0?<div className="card text-center py-10 text-white/30">نمره‌ای ثبت نشده</div>:exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const score=getExamScore(ex.id);const st=getObjectionState(ex.id);const hasObj=answers.some(a=>String(a.exam_id)===String(ex.id)&&a.objection);const open=openObjection===ex.id;const total=Math.floor(st.remaining/1000);const hh=Math.floor(total/3600);const mm=Math.floor((total%3600)/60);const ss=total%60;return <div key={ex.id} className={`grade-list-card ${st.state==='expired'?'objection-expired':''}`}>
             <div className="flex items-center gap-3"><div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center font-black">{ex.title?.[0]||'آ'}</div><div className="flex-1 min-w-0"><p className="font-bold text-sm truncate">{ex.title}</p><p className="text-[11px] text-white/35">{ex.questions?.length||0} سوال</p></div><div className="grade-score-pill">{score.percentage}<small className="text-[9px] text-white/45"> / ۲۰</small></div><button className={`objection-arrow ${open?'open':''}`} onClick={()=>setOpenObjection(open?null:ex.id)}>⌄</button></div>
             {open&&<div className="objection-box mt-3">{hasObj?<p className="text-xs text-amber-300">⏳ اعتراض شما ثبت شده و در حال بررسی است.</p>:st.state==='waiting'?<p className="text-xs text-white/55">⏰ زمان اعتراض به پایان رسیده است.</p>:st.state==='active'?<><div className="flex items-center justify-between gap-3"><div><p className="text-xs text-white/45">مهلت باقی‌مانده اعتراض</p><p className="text-2xl font-black text-amber-300 font-mono">{String(hh).padStart(2,'0')}:{String(mm).padStart(2,'0')}:{String(ss).padStart(2,'0')}</p></div><button onClick={()=>{setSelectedExamForObjection(ex.id);setShowObjection(true);}} className="btn-glass btn-glass-danger btn-sm"><Icon d={Icons.alert} size={15}/> ثبت اعتراض</button></div></>:<p className="text-xs text-white/45">⏰ زمان ثبت اعتراض به اتمام رسیده است.</p>}</div>}
@@ -3635,8 +3669,8 @@ function Student({user,tab,setTab,onLogout}){
       </div>
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>نمرات</span></div>
-        <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
+        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setShowChat(false);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌رسان</span></div>
+        <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
       {tab==='home'&&<button onClick={()=>setShowChat(true)} className="home-message-fab"><Icon d={Icons.message} size={25}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</button>}
