@@ -832,6 +832,68 @@ html,body,#root{min-height:100%;}
 .social-bubble{box-shadow:0 6px 18px rgba(0,0,0,.20)!important}
 @media(max-width:420px){.nav-bar{left:10px;right:10px;bottom:8px;border-radius:27px}.nav-item{font-size:9px;padding-inline:4px}.nav-item svg{width:21px;height:21px}}
 
+
+/* ===== TADBIR V24 MOBILE MESSENGER FIX ===== */
+/* The messenger must sit above the floating navigation on every mobile browser. */
+.social-fullscreen-overlay{
+  position:fixed!important;inset:0!important;z-index:100000!important;
+  width:100vw!important;height:100dvh!important;min-height:100svh!important;
+  padding:0!important;margin:0!important;display:flex!important;
+  align-items:stretch!important;justify-content:stretch!important;
+  overflow:hidden!important;touch-action:auto!important;
+}
+.social-chat-fullscreen{
+  position:relative!important;z-index:100001!important;
+  width:100%!important;max-width:none!important;
+  height:100dvh!important;min-height:100svh!important;max-height:none!important;
+  border-radius:0!important;margin:0!important;
+  padding:env(safe-area-inset-top) max(10px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))!important;
+  display:flex!important;flex-direction:column!important;overflow:hidden!important;
+}
+.social-chat-fullscreen .social-chat-header{
+  flex:0 0 auto!important;position:relative!important;z-index:5!important;
+  min-height:68px!important;padding:10px 6px 12px!important;
+}
+.social-chat-fullscreen .social-chat-header button{touch-action:manipulation!important}
+.social-chat-fullscreen .social-chat-header + .flex-1,
+.social-chat-fullscreen .social-chat-header ~ .flex-1{
+  min-height:0!important;
+}
+.social-chat-fullscreen .social-bubble{max-width:min(82%,520px)!important}
+.social-chat-fullscreen .chat-composer{
+  position:absolute!important;left:max(10px,env(safe-area-inset-left))!important;
+  right:max(10px,env(safe-area-inset-right))!important;
+  bottom:calc(12px + env(safe-area-inset-bottom))!important;
+  z-index:100003!important;width:auto!important;
+  margin:0!important;padding:8px!important;
+  border-radius:22px!important;
+  background:rgba(18,16,39,.98)!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.62),0 0 28px rgba(124,58,237,.16)!important;
+  transform:translateZ(0)!important;
+}
+.social-chat-fullscreen .chat-composer .glass-input{
+  min-width:0!important;height:48px!important;padding-block:10px!important;
+}
+.social-chat-fullscreen .chat-composer button{width:48px!important;min-width:48px!important;height:48px!important}
+.social-chat-fullscreen .chat-composer + *{display:none!important}
+.social-chat-fullscreen .overflow-y-auto.py-3.space-y-2.pb-40{
+  padding-bottom:92px!important;scroll-padding-bottom:110px!important;
+}
+/* Never let the app's floating bottom navigation paint above the messenger. */
+body:has(.social-fullscreen-overlay) .nav-bar{z-index:1!important}
+body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavior:none!important}
+.profile-float{z-index:100010!important}.follow-list-overlay{z-index:100020!important}
+.follow-list-overlay .follow-list-panel{max-height:88dvh!important;overflow:hidden!important}
+
+/* Compact, polished verified badge. */
+.verified-badge{width:20px!important;height:20px!important;flex-basis:20px!important;box-shadow:0 0 0 1.5px rgba(71,184,255,.16),0 4px 12px rgba(33,150,243,.34)!important}
+.verified-badge:after{font-size:12px!important}
+@media(max-width:520px){
+  .social-chat-fullscreen{padding-left:8px!important;padding-right:8px!important}
+  .social-chat-fullscreen .chat-composer{left:8px!important;right:8px!important;bottom:calc(8px + env(safe-area-inset-bottom))!important}
+  .social-chat-fullscreen .social-bubble{font-size:13px!important;max-width:86%!important}
+}
+
 /* === TADBIR V22 FINAL UI PATCH === */
 /* The messenger is a real full-screen page on both roles; the old floating launcher is intentionally gone. */
 .social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(6,5,18,.94)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
@@ -3296,7 +3358,7 @@ function ProfileView({person,onClose,viewerId}){
   const [profile,setProfile]=useState(null); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followingMe,setFollowingMe]=useState(false); const [blocked,setBlocked]=useState(false); const [followMode,setFollowMode]=useState(null); const toast=useToast();
   useEffect(()=>{load();},[person?.id]);
   const load=async()=>{if(!person)return;let {data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle();setProfile(p||{display_name:person.full_name||person.username,bio:'',avatar_url:'🐱'});const [{count:fc},{count:fg},{data:f},{data:b}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',person.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',person.id),SB.from('follows').select('id').eq('follower_id',viewerId).eq('following_id',person.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',viewerId).eq('blocked_id',person.id).maybeSingle()]);setFollowers(fc||0);setFollowing(fg||0);setFollowingMe(!!f);setBlocked(!!b);};
-  const follow=async()=>{if(viewerId===person.id)return; if(followingMe){await SB.from('follows').delete().eq('follower_id',viewerId).eq('following_id',person.id);setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));toast('دنبال کردن لغو شد','warning');}else{const {error}=await SB.from('follows').insert({follower_id:viewerId,following_id:person.id});if(error){toast('امکان دنبال کردن نیست','error');return;}setFollowingMe(true);setFollowers(x=>x+1);toast('دنبال شد','success');}};
+  const follow=async()=>{if(viewerId===person.id)return; if(followingMe){setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));const {error}=await SB.from('follows').delete().eq('follower_id',viewerId).eq('following_id',person.id);if(error){setFollowingMe(true);setFollowers(x=>x+1);toast('امکان لغو دنبال کردن نیست','error');return;}toast('دنبال کردن لغو شد','warning');}else{setFollowingMe(true);setFollowers(x=>x+1);const {error}=await SB.from('follows').insert({follower_id:viewerId,following_id:person.id});if(error){setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));toast('امکان دنبال کردن نیست','error');return;}toast('دنبال شد','success');}};
   const block=async()=>{if(blocked){await SB.from('blocks').delete().eq('blocker_id',viewerId).eq('blocked_id',person.id);setBlocked(false);toast('مسدودسازی لغو شد','success');}else{await SB.from('blocks').insert({blocker_id:viewerId,blocked_id:person.id});setBlocked(true);toast('کاربر مسدود شد','warning');}};
   if(!person)return null; const av=profile?.avatar_url||'🐱';
   return <div className="modal-overlay" onClick={onClose}><div className="glass-strong profile-float slide-up" onClick={e=>e.stopPropagation()}><div className="profile-float-cover"></div><div className="profile-float-body"><div className="profile-float-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="flex justify-between items-start mt-3"><div><div className="profile-name-line"><h2 className="font-black text-xl">{profile?.display_name||person.full_name}</h2>{person.role==='admin'&&<VerifiedBadge/>}</div><p className="text-[10px] text-white/35 mt-1">@{person.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><p className="text-sm text-white/55 mt-4 leading-7 min-h-[28px]">{profile?.bio||'این کاربر هنوز بیوگرافی ننوشته است.'}</p><div className="flex gap-2 mt-4"><button type="button" className="profile-stat profile-stat-click flex-1" onClick={()=>setFollowMode('followers')}><strong>{followers}</strong><span>فالوور</span></button><button type="button" className="profile-stat profile-stat-click flex-1" onClick={()=>setFollowMode('following')}><strong>{following}</strong><span>فالوینگ</span></button></div>{viewerId!==person.id&&<div className="grid grid-cols-[1fr_auto] gap-2 mt-5"><button className="profile-action text-white" onClick={follow}>{followingMe?'✓ در حال دنبال کردن':'دنبال کن'}</button><button onClick={block} className={`px-4 rounded-2xl border ${blocked?'bg-red-500/15 border-red-400/30 text-red-300':'bg-white/5 border-white/10 text-white/60'}`}>{blocked?'رفع مسدودی':'مسدود'}</button></div>}</div></div>{followMode&&<FollowList userId={person.id} type={followMode} onClose={()=>setFollowMode(null)}/>}</div>;
