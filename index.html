@@ -783,6 +783,25 @@ html,body,#root{min-height:100%;}
 @keyframes playerCelebrate{from{transform:translateY(0) scale(1)}to{transform:translateY(-5px) scale(1.015)}}
 @keyframes playerReact{0%,100%{transform:translateX(0)}35%{transform:translateX(-4px) rotate(-.6deg)}70%{transform:translateX(4px) rotate(.6deg)}}
 
+
+/* ===== V22 SOCIAL PROFILE + MESSENGER ===== */
+.profile-tool-btn{background:linear-gradient(145deg,rgba(139,92,246,.16),rgba(236,72,153,.08));border-color:rgba(192,132,252,.25)!important}
+.profile-hero{position:relative;overflow:hidden;border-radius:28px;padding:22px;background:radial-gradient(circle at 15% 10%,rgba(168,85,247,.22),transparent 34%),radial-gradient(circle at 90% 80%,rgba(236,72,153,.16),transparent 36%),linear-gradient(145deg,rgba(32,25,65,.94),rgba(12,12,30,.96));border:1px solid rgba(216,180,254,.18);box-shadow:0 25px 70px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.09)}
+.profile-hero:before{content:'';position:absolute;width:170px;height:170px;right:-70px;top:-80px;border-radius:50%;background:rgba(139,92,246,.18);filter:blur(10px)}
+.profile-avatar{width:94px;height:94px;border-radius:30px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#7c3aed,#ec4899);border:3px solid rgba(255,255,255,.18);box-shadow:0 15px 35px rgba(124,58,237,.35),0 0 0 7px rgba(139,92,246,.08);font-size:44px;flex:none}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-stat{min-width:78px;text-align:center;padding:9px 7px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}
+.profile-stat strong{display:block;font-size:18px}.profile-stat span{display:block;font-size:9px;color:rgba(255,255,255,.4);margin-top:2px}
+.profile-preset-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.profile-preset{height:46px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);display:grid;place-items:center;font-size:24px;cursor:pointer;transition:.25s}.profile-preset:hover,.profile-preset.active{transform:translateY(-3px) scale(1.05);border-color:#a78bfa;background:rgba(139,92,246,.16);box-shadow:0 8px 20px rgba(139,92,246,.2)}
+.profile-upload{position:relative;overflow:hidden}.profile-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.social-chat{background:linear-gradient(180deg,rgba(16,15,36,.97),rgba(9,9,24,.99))!important;overflow:hidden}.social-chat-header{padding:8px 7px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.social-contact{display:flex;align-items:center;gap:11px;padding:11px;border-radius:18px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.035);cursor:pointer;transition:.25s}.social-contact:hover{background:rgba(139,92,246,.1);transform:translateX(-2px)}
+.social-mini-avatar{width:46px;height:46px;border-radius:16px;overflow:hidden;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,#6366f1,#ec4899);font-size:23px;border:1px solid rgba(255,255,255,.12)}.social-mini-avatar img{width:100%;height:100%;object-fit:cover}.online-dot{width:9px;height:9px;border-radius:50%;background:#34d399;border:2px solid #101024;position:absolute;right:-1px;bottom:0}.unread-badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;display:grid;place-items:center;box-shadow:0 4px 12px rgba(239,68,68,.35)}
+.social-bubble{max-width:78%;padding:10px 12px;border-radius:18px;line-height:1.7;font-size:12px;box-shadow:0 7px 18px rgba(0,0,0,.15);position:relative}.social-bubble.me{margin-right:auto;background:linear-gradient(135deg,#6d28d9,#8b5cf6);border-bottom-left-radius:6px}.social-bubble.other{margin-left:auto;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.07);border-bottom-right-radius:6px}.social-bubble-meta{display:block;font-size:8px;color:rgba(255,255,255,.48);margin-top:4px}
+.profile-float{max-width:390px;width:100%;padding:0;overflow:hidden}.profile-float-cover{height:92px;background:radial-gradient(circle at 20% 20%,rgba(244,114,182,.45),transparent 28%),linear-gradient(135deg,#312e81,#7c3aed,#be185d)}.profile-float-body{padding:0 18px 18px}.profile-float-avatar{margin-top:-45px;width:88px;height:88px;border-radius:28px;border:4px solid #111022;background:#17142d;overflow:hidden;display:grid;place-items:center;font-size:42px}.profile-float-avatar img{width:100%;height:100%;object-fit:cover}.profile-action{height:48px;border-radius:16px;font-weight:900;border:1px solid rgba(167,139,250,.28);background:linear-gradient(135deg,#6d28d9,#8b5cf6);box-shadow:0 12px 28px rgba(109,40,217,.25)}
+.message-home-badge{position:absolute;right:-4px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#ef4444;border:2px solid #0a0a1a;color:white;font-size:9px;font-weight:900;display:grid;place-items:center}.home-message-fab{position:fixed;bottom:92px;left:16px;width:58px;height:58px;border-radius:20px;z-index:40;display:grid;place-items:center;background:linear-gradient(145deg,#7c3aed,#db2777);box-shadow:0 15px 35px rgba(124,58,237,.4),0 0 30px rgba(236,72,153,.12)}
+.admin-profile-card{background:radial-gradient(circle at 100% 0,rgba(236,72,153,.12),transparent 35%),linear-gradient(145deg,rgba(30,24,58,.9),rgba(12,12,29,.95));border:1px solid rgba(216,180,254,.16);border-radius:24px;padding:16px}
+@media(max-width:380px){.profile-preset-grid{grid-template-columns:repeat(6,1fr)}.profile-avatar{width:82px;height:82px}.profile-stat{min-width:68px}}
 </style>
 </head>
 <body>
@@ -885,6 +904,8 @@ const Icons={
   arrowLeft:"M15 18l-6-6 6-6",
   eye:"M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
   userCircle:"M20 21a8 8 0 0 0-16 0 M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8",
+  profile:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M4 22a8 8 0 0 1 16 0",
+  image:"M4 5h16v14H4z M8 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M20 16l-4-4-5 5-2-2-5 5" ,
   lock:"M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v10H5z M12 15v2"
 };
 
@@ -1947,9 +1968,11 @@ function Admin({user,tab,setTab,onLogout}){
   const [studentForm,setStudentForm]=useState({full_name:'',username:'',password:''});
   const [studentBusy,setStudentBusy]=useState(false);
   const [objectionTick,setObjectionTick]=useState(Date.now());
+  const [showAdminProfile,setShowAdminProfile]=useState(false);
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{let active=true;const loadUnread=async()=>{const {data}=await SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null);if(active)setUnreadCount((data||[]).length);};loadUnread();const ch=SB.channel('unread-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},loadUnread).subscribe();return()=>{active=false;SB.removeChannel(ch);};},[user.id]);
   useEffect(()=>{const t=setInterval(()=>setObjectionTick(Date.now()),1000);return()=>clearInterval(t);},[]);
 
   const loadAll=async()=>{
@@ -2206,7 +2229,7 @@ function Admin({user,tab,setTab,onLogout}){
             )}
           </>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div></div></>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="text-4xl mb-3">◉</div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، فالوور و فالوینگ</p></div></div></>:adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -3155,6 +3178,58 @@ function PremiumGradeChart({data}){
   </div>;
 }
 
+
+const PROFILE_PRESETS=['🐱','🐶','🐼','🦊','🐰','🐸','🐯','🦁','🐨','🐵','🦄','🐙','🦋','🎀','🍓','🌸','⭐','🧸','🌈','🍒','🐳'];
+
+function compressProfileImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader(); reader.onerror=reject; reader.onload=()=>{
+      const img=new Image(); img.onload=()=>{const max=640,scale=Math.min(1,max/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));const x=c.getContext('2d');x.drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.82));};img.onerror=reject;img.src=reader.result;
+    }; reader.readAsDataURL(file);
+  });
+}
+
+function ProfileEditor({user,onSaved,compact=false}){
+  const [profile,setProfile]=useState(null); const [name,setName]=useState(user.full_name||''); const [bio,setBio]=useState(''); const [avatar,setAvatar]=useState('🐱'); const [busy,setBusy]=useState(false); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const toast=useToast();
+  useEffect(()=>{load();},[user.id]);
+  const load=async()=>{
+    let {data:p}=await SB.from('profiles').select('*').eq('user_id',user.id).maybeSingle();
+    if(!p){await SB.from('profiles').upsert({user_id:user.id,display_name:user.full_name||user.username,bio:'',avatar_url:'🐱'},{onConflict:'user_id'});({data:p}=await SB.from('profiles').select('*').eq('user_id',user.id).maybeSingle());}
+    if(p){setProfile(p);setName(p.display_name||user.full_name||'');setBio(p.bio||'');setAvatar(p.avatar_url||'🐱');}
+    const [{count:fc},{count:fg}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',user.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',user.id)]);setFollowers(fc||0);setFollowing(fg||0);
+  };
+  const save=async()=>{if(!name.trim()){toast('نام را وارد کنید','error');return;}setBusy(true);const payload={user_id:user.id,display_name:name.trim().slice(0,40),bio:bio.trim().slice(0,180),avatar_url:avatar||'🐱',updated_at:new Date().toISOString()};const {data,error}=await SB.from('profiles').upsert(payload,{onConflict:'user_id'}).select().single();setBusy(false);if(error){toast('خطا در ذخیره پروفایل: '+error.message,'error');return;}setProfile(data);onSaved?.(data);toast('پروفایل ذخیره شد','success');};
+  const gallery=async e=>{const f=e.target.files?.[0];if(!f)return; if(!f.type.startsWith('image/')){toast('فقط فایل تصویری انتخاب کنید','error');return;} if(f.size>8*1024*1024){toast('حجم عکس حداکثر ۸ مگابایت باشد','error');return;}try{setAvatar(await compressProfileImage(f));}catch{toast('خواندن عکس انجام نشد','error');}};
+  return <div className={compact?'admin-profile-card':'space-y-3'}>
+    <div className="profile-hero"><div className="flex items-center gap-4 relative z-1"><div className="profile-avatar">{avatar?.startsWith('data:image')?<img src={avatar} alt=""/>:avatar}</div><div className="min-w-0"><p className="text-[10px] text-white/35 mb-1">پروفایل تدبیر</p><h2 className="font-black text-xl truncate">{name||'نام شما'}</h2><p className="text-xs text-white/40 mt-1">@{user.username}</p></div></div><div className="flex justify-center gap-2 mt-5"><div className="profile-stat"><strong>{followers}</strong><span>فالوور</span></div><div className="profile-stat"><strong>{following}</strong><span>فالوینگ</span></div></div></div>
+    <div className="glass p-4 space-y-3"><label className="text-xs text-white/55 font-bold">عکس پروفایل</label><div className="flex gap-2"><label className="btn-glass btn-sm flex-1 profile-upload text-center"><Icon d={Icons.image} size={16}/> انتخاب از گالری<input type="file" accept="image/*" onChange={gallery}/></label><button className="btn-glass btn-sm" onClick={()=>setAvatar('🐱')}>پیش‌فرض</button></div><label className="text-xs text-white/45 block">آیکون‌های آماده</label><div className="profile-preset-grid">{PROFILE_PRESETS.map(x=><button key={x} className={`profile-preset ${avatar===x?'active':''}`} onClick={()=>setAvatar(x)}>{x}</button>)}</div><div><label className="text-xs text-white/55 block mb-2">نام نمایشی</label><input className="glass-input" value={name} maxLength={40} onChange={e=>setName(e.target.value)}/></div><div><label className="text-xs text-white/55 block mb-2">بیوگرافی</label><textarea className="glass-input" rows="3" maxLength={180} placeholder="چند کلمه درباره خودت..." value={bio} onChange={e=>setBio(e.target.value)}/></div><button className="btn-glass" disabled={busy} onClick={save}>{busy?'در حال ذخیره...':'✓ ذخیره پروفایل'}</button></div>
+  </div>;
+}
+
+function ProfileView({person,onClose,viewerId}){
+  const [profile,setProfile]=useState(null); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followingMe,setFollowingMe]=useState(false); const [blocked,setBlocked]=useState(false); const toast=useToast();
+  useEffect(()=>{load();},[person?.id]);
+  const load=async()=>{if(!person)return;let {data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle();if(!p){await SB.from('profiles').upsert({user_id:person.id,display_name:person.full_name||person.username,bio:'',avatar_url:'🐱'},{onConflict:'user_id'});({data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle());}setProfile(p);const [{count:fc},{count:fg},{data:f},{data:b}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',person.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',person.id),SB.from('follows').select('id').eq('follower_id',viewerId).eq('following_id',person.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',viewerId).eq('blocked_id',person.id).maybeSingle()]);setFollowers(fc||0);setFollowing(fg||0);setFollowingMe(!!f);setBlocked(!!b);};
+  const follow=async()=>{if(viewerId===person.id)return; if(followingMe){await SB.from('follows').delete().eq('follower_id',viewerId).eq('following_id',person.id);setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));toast('دنبال کردن لغو شد','warning');}else{const {error}=await SB.from('follows').insert({follower_id:viewerId,following_id:person.id});if(error){toast('امکان دنبال کردن نیست','error');return;}setFollowingMe(true);setFollowers(x=>x+1);toast('دنبال شد','success');}};
+  const block=async()=>{if(blocked){await SB.from('blocks').delete().eq('blocker_id',viewerId).eq('blocked_id',person.id);setBlocked(false);toast('مسدودسازی لغو شد','success');}else{await SB.from('blocks').insert({blocker_id:viewerId,blocked_id:person.id});setBlocked(true);toast('کاربر مسدود شد','warning');}};
+  if(!person)return null; const av=profile?.avatar_url||'🐱';
+  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong profile-float slide-up" onClick={e=>e.stopPropagation()}><div className="profile-float-cover"></div><div className="profile-float-body"><div className="profile-float-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="flex justify-between items-start mt-3"><div><h2 className="font-black text-xl">{profile?.display_name||person.full_name}</h2><p className="text-[10px] text-white/35 mt-1">@{person.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><p className="text-sm text-white/55 mt-4 leading-7 min-h-[28px]">{profile?.bio||'این کاربر هنوز بیوگرافی ننوشته است.'}</p><div className="flex gap-2 mt-4"><div className="profile-stat flex-1"><strong>{followers}</strong><span>فالوور</span></div><div className="profile-stat flex-1"><strong>{following}</strong><span>فالوینگ</span></div></div>{viewerId!==person.id&&<div className="grid grid-cols-[1fr_auto] gap-2 mt-5"><button className="profile-action text-white" onClick={follow}>{followingMe?'✓ در حال دنبال کردن':'دنبال کن'}</button><button onClick={block} className={`px-4 rounded-2xl border ${blocked?'bg-red-500/15 border-red-400/30 text-red-300':'bg-white/5 border-white/10 text-white/60'}`}>{blocked?'رفع مسدودی':'مسدود'}</button></div>}</div></div></div>;
+}
+
+function SocialChatModal({user,onClose}){
+  const [contacts,setContacts]=useState([]); const [selected,setSelected]=useState(null); const [messages,setMessages]=useState([]); const [textMsg,setTextMsg]=useState(''); const [profiles,setProfiles]=useState({}); const [unread,setUnread]=useState(0); const [profilePerson,setProfilePerson]=useState(null); const [busy,setBusy]=useState(false); const endRef=useRef(null); const toast=useToast();
+  useEffect(()=>{loadContacts();const ch=SB.channel('social-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{loadContacts();if(selected)loadConversation(selected);}).subscribe();return()=>SB.removeChannel(ch);},[user.id,selected?.id]);
+  useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth'});},[messages]);
+  const ensureProfiles=async(list)=>{if(!list.length)return;const ids=list.map(x=>x.id);const {data}=await SB.from('profiles').select('*').in('user_id',ids);const map={};(data||[]).forEach(p=>map[p.user_id]=p);for(const u of list){if(!map[u.id]){await SB.from('profiles').upsert({user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:'🐱'},{onConflict:'user_id'});map[u.id]={user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:'🐱'};}}setProfiles(map);};
+  const loadContacts=async()=>{const {data:users}=await SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name');const list=users||[];const {data:blocked}=await SB.from('blocks').select('blocked_id').eq('blocker_id',user.id);const hidden=new Set((blocked||[]).map(x=>x.blocked_id));const visible=list.filter(x=>!hidden.has(x.id));setContacts(visible);await ensureProfiles(visible);const {data:un}=await SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null);setUnread((un||[]).length);};
+  const loadConversation=async(person)=>{const {data}=await SB.from('messages').select('*').or(`and(sender_id.eq.${user.id},receiver_id.eq.${person.id}),and(sender_id.eq.${person.id},receiver_id.eq.${user.id})`).order('created_at',{ascending:true});setMessages(data||[]);const ids=(data||[]).filter(m=>m.receiver_id===user.id&&m.sender_id===person.id&&m.read_at===null).map(m=>m.id);if(ids.length)await SB.from('messages').update({read_at:new Date().toISOString()}).in('id',ids);setUnread(x=>Math.max(0,x-ids.length));};
+  const send=async()=>{if(!textMsg.trim()||!selected||busy)return;setBusy(true);const [{data:b1},{data:b2}]=await Promise.all([SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',selected.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',selected.id).eq('blocked_id',user.id).maybeSingle()]);if(b1||b2){setBusy(false);toast('این گفتگو به دلیل مسدودسازی در دسترس نیست','warning');return;}const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content:textMsg.trim(),reactions:{}});setBusy(false);if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}setTextMsg('');await loadConversation(selected);};
+  const prof=(id)=>profiles[id]?.avatar_url||'🐱';
+  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up" onClick={e=>e.stopPropagation()}>
+    {!selected?<><div className="social-chat-header flex items-center justify-between"><div><h3 className="font-black text-base">پیام‌ها</h3><p className="text-[9px] text-white/35 mt-1">گفتگو با دانش‌آموزان و مدیر</p></div><div className="flex items-center gap-2"><span className="badge badge-new">{contacts.length} مخاطب</span><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div></div><div className="flex-1 overflow-y-auto space-y-2 pt-3">{contacts.length===0?<p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p>:contacts.map(c=><div className="social-contact" key={c.id} onClick={()=>{setSelected(c);loadConversation(c);}}><div className="relative"><div className="social-mini-avatar">{prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id)}</div>{Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div><div className="min-w-0 flex-1"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b><span className="text-[9px] text-white/35">{c.role==='admin'?'مدیر':'دانش‌آموز'} · @{c.username}</span></div><Icon d={Icons.arrowLeft} size={16} className="text-white/25"/></div>)}</div></>:<><div className="social-chat-header flex items-center gap-2"><button onClick={()=>setSelected(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.arrowLeft} size={17}/></button><button className="flex items-center gap-2 min-w-0 flex-1 text-right" onClick={()=>setProfilePerson(selected)}><div className="social-mini-avatar !w-10 !h-10 !rounded-xl">{prof(selected.id)?.startsWith('data:image')?<img src={prof(selected.id)} alt=""/>:prof(selected.id)}</div><div className="min-w-0"><b className="text-sm block truncate">{profiles[selected.id]?.display_name||selected.full_name}</b><span className="text-[9px] text-white/35">برای مشاهده پروفایل لمس کنید</span></div></button><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><div className="flex-1 overflow-y-auto py-3 space-y-2">{messages.map(m=><div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}><div className={`social-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}<span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{m.sender_id===user.id?' ✓':''}</span></div></div>)}<div ref={endRef}/></div><div className="flex gap-2 pt-2 border-t border-white/5"><input className="glass-input flex-1" placeholder="پیام خود را بنویسید..." value={textMsg} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()}/><button className="btn-glass btn-glass-success btn-sm" onClick={send} disabled={busy}><Icon d={Icons.send} size={17}/></button></div></>}
+  </div>{profilePerson&&<ProfileView person={profilePerson} viewerId={user.id} onClose={()=>setProfilePerson(null)}/>}</div>;
+}
+
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
@@ -3166,6 +3241,7 @@ function Student({user,tab,setTab,onLogout}){
   const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);
   const [objectionTick,setObjectionTick]=useState(Date.now());
+  const [showAdminProfile,setShowAdminProfile]=useState(false);
   const [openObjection,setOpenObjection]=useState(null);
   const [objectionText,setObjectionText]=useState('');
   const [selectedExamForObjection,setSelectedExamForObjection]=useState(null);
@@ -3177,6 +3253,8 @@ function Student({user,tab,setTab,onLogout}){
   const [chartReady,setChartReady]=useState(false);
   const [showExamResults,setShowExamResults]=useState(null);
   const [showChat,setShowChat]=useState(false);
+  const [showProfile,setShowProfile]=useState(false);
+  const [unreadCount,setUnreadCount]=useState(0);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [activeGame,setActiveGame]=useState(null);
   const [penaltyRoomId,setPenaltyRoomId]=useState(null);
@@ -3188,11 +3266,10 @@ function Student({user,tab,setTab,onLogout}){
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:a}=await SB.from('answers').select('*,exams(title),questions(q_text,q_type,correct_opt,score,opt_a,opt_b,opt_c,opt_d)');
-    const {data:c}=await SB.from('checklists').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
     const {data:p}=await SB.from('study_plans').select('*').eq('user_id',user.id).order('created_at',{ascending:false});
     if(e)setExams(e.filter(ex=>ex.assigned_to==='all'||ex.assigned_to===String(user.id)));
     if(a)setAnswers(a.filter(ans=>ans.student_id===user.id));
-    if(c)setChecklist(c);if(p)setStudyPlans(p);
+    if(p)setStudyPlans(p);
   };
 
   const hasTakenExam=(examId)=>answers.some(a=>String(a.exam_id)===String(examId));
@@ -3474,9 +3551,9 @@ function Student({user,tab,setTab,onLogout}){
                     <div className="tool-icon"><Icon d={Icons.calc} size={28}/></div>
                     <div className="tool-label">ماشین‌حساب</div>
                   </div>
-                  <div className={`tool-btn check ${toolsTab==='checklist'?'active':''}`} onClick={()=>setToolsTab('checklist')}>
-                    <div className="tool-icon"><Icon d={Icons.check} size={28}/></div>
-                    <div className="tool-label">چک‌لیست</div>
+                  <div className={`tool-btn check profile-tool-btn ${toolsTab==='profile'?'active':''}`} onClick={()=>setToolsTab('profile')}>
+                    <div className="tool-icon"><Icon d={Icons.profile} size={28}/></div>
+                    <div className="tool-label">پروفایل</div>
                   </div>
                   <div className={`tool-btn plan ${toolsTab==='planner'?'active':''}`} onClick={()=>setToolsTab('planner')}>
                     <div className="tool-icon"><Icon d={Icons.calendar} size={28}/></div>
@@ -3497,22 +3574,7 @@ function Student({user,tab,setTab,onLogout}){
                     </div>
                   </div>
                 )}
-                {toolsTab==='checklist'&&(
-                  <div className="space-y-3 slide-up">
-                    <div className="flex gap-2">
-                      <input className="glass-input flex-1" placeholder="کار جدید..." value={newTask} onChange={e=>setNewTask(e.target.value)} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
-                      <button onClick={addTask} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.plus} size={16}/></button>
-                    </div>
-                    {checklist.length===0&&<p className="text-center text-white/30 py-8">لیست خالی است</p>}
-                    {checklist.map(t=>(
-                      <div key={t.id} className="glass p-3 flex items-center gap-3">
-                        <button onClick={()=>toggleTask(t.id,t.is_done)} className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${t.is_done?'bg-emerald-500 border-emerald-500':'border-white/20'}`}>{t.is_done&&<Icon d={Icons.check} size={12}/>}</button>
-                        <span className={`flex-1 text-sm ${t.is_done?'line-through text-white/30':''}`}>{t.title}</span>
-                        <button onClick={()=>deleteTask(t.id)} className="text-red-400/60 hover:text-red-400"><Icon d={Icons.trash} size={16}/></button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                {toolsTab==='profile'&&(<div className="slide-up"><ProfileEditor user={user} onSaved={()=>{}}/></div>)}
                 {toolsTab==='planner'&&(
                   <div className="space-y-3 slide-up">
                     <div className="glass p-4 space-y-3">
@@ -3572,10 +3634,8 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='chart'?'active':''}`} onClick={()=>setTab('chart')}><Icon d={Icons.chart}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="fixed bottom-24 left-4 w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/40 z-40 hover:scale-110 transition">
-        <Icon d={Icons.message} size={24}/>
-      </button>}
-      {showChat&&<ChatModal user={user} onClose={()=>setShowChat(false)}/>}
+      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="home-message-fab"><Icon d={Icons.message} size={25}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</button>}
+      {showChat&&<SocialChatModal user={user} onClose={()=>setShowChat(false)}/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
