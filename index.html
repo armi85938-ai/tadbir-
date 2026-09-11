@@ -799,10 +799,9 @@ html,body,#root{min-height:100%;}
 .social-mini-avatar{width:46px;height:46px;border-radius:16px;overflow:hidden;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,#6366f1,#ec4899);font-size:23px;border:1px solid rgba(255,255,255,.12)}.social-mini-avatar img{width:100%;height:100%;object-fit:cover}.online-dot{width:9px;height:9px;border-radius:50%;background:#34d399;border:2px solid #101024;position:absolute;right:-1px;bottom:0}.unread-badge{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;display:grid;place-items:center;box-shadow:0 4px 12px rgba(239,68,68,.35)}
 .social-bubble{max-width:78%;padding:10px 12px;border-radius:18px;line-height:1.7;font-size:12px;box-shadow:0 7px 18px rgba(0,0,0,.15);position:relative}.social-bubble.me{margin-right:auto;background:linear-gradient(135deg,#6d28d9,#8b5cf6);border-bottom-left-radius:6px}.social-bubble.other{margin-left:auto;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.07);border-bottom-right-radius:6px}.social-bubble-meta{display:block;font-size:8px;color:rgba(255,255,255,.48);margin-top:4px}
 .profile-float{max-width:390px;width:100%;padding:0;overflow:hidden}.profile-float-cover{height:92px;background:radial-gradient(circle at 20% 20%,rgba(244,114,182,.45),transparent 28%),linear-gradient(135deg,#312e81,#7c3aed,#be185d)}.profile-float-body{padding:0 18px 18px}.profile-float-avatar{margin-top:-45px;width:88px;height:88px;border-radius:28px;border:4px solid #111022;background:#17142d;overflow:hidden;display:grid;place-items:center;font-size:42px}.profile-float-avatar img{width:100%;height:100%;object-fit:cover}.profile-action{height:48px;border-radius:16px;font-weight:900;border:1px solid rgba(167,139,250,.28);background:linear-gradient(135deg,#6d28d9,#8b5cf6);box-shadow:0 12px 28px rgba(109,40,217,.25)}
-.message-home-badge{position:absolute;right:-4px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#ef4444;border:2px solid #0a0a1a;color:white;font-size:9px;font-weight:900;display:grid;place-items:center}.home-message-fab{position:fixed;bottom:92px;left:16px;width:58px;height:58px;border-radius:20px;z-index:40;display:grid;place-items:center;background:linear-gradient(145deg,#7c3aed,#db2777);box-shadow:0 15px 35px rgba(124,58,237,.4),0 0 30px rgba(236,72,153,.12)}
+.message-home-badge{position:absolute;right:-4px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:#ef4444;border:2px solid #0a0a1a;color:white;font-size:9px;font-weight:900;display:grid;place-items:center}
 .admin-profile-card{background:radial-gradient(circle at 100% 0,rgba(236,72,153,.12),transparent 35%),linear-gradient(145deg,rgba(30,24,58,.9),rgba(12,12,29,.95));border:1px solid rgba(216,180,254,.16);border-radius:24px;padding:16px}
-.verified-badge{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb);box-shadow:0 0 0 2px rgba(56,189,248,.12),0 4px 14px rgba(37,99,235,.38);vertical-align:middle;margin-right:5px;position:relative}.verified-badge:after{content:'✓';font-size:11px;font-weight:1000;color:#fff;line-height:1}.profile-name-line{display:flex;align-items:center;gap:5px;min-width:0}.social-contact-name{display:flex;align-items:center;gap:4px;min-width:0}.social-mini-avatar{position:relative;overflow:hidden}.social-mini-avatar img{width:100%;height:100%;object-fit:cover;display:block}.home-message-fab.admin-message-fab{bottom:92px;left:16px}
-@media(max-width:380px){.profile-preset-grid{grid-template-columns:repeat(6,1fr)}.profile-avatar{width:82px;height:82px}.profile-stat{min-width:68px}}
+.verified-badge{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#2563eb);box-shadow:0 0 0 2px rgba(56,189,248,.12),0 4px 14px rgba(37,99,235,.38);vertical-align:middle;margin-right:5px;position:relative}.verified-badge:after{content:'✓';font-size:11px;font-weight:1000;color:#fff;line-height:1}.profile-name-line{display:flex;align-items:center;gap:5px;min-width:0}.social-contact-name{display:flex;align-items:center;gap:4px;min-width:0}.social-mini-avatar{position:relative;overflow:hidden}.social-mini-avatar img{width:100%;height:100%;object-fit:cover;display:block}@media(max-width:380px){.profile-preset-grid{grid-template-columns:repeat(6,1fr)}.profile-avatar{width:82px;height:82px}.profile-stat{min-width:68px}}
 
 /* === TADBIR FLOATING GLASS NAV v2 === */
 .nav-bar{
@@ -832,6 +831,22 @@ html,body,#root{min-height:100%;}
 .social-contact:active{transform:scale(.985);background:rgba(139,92,246,.10)}
 .social-bubble{box-shadow:0 6px 18px rgba(0,0,0,.20)!important}
 @media(max-width:420px){.nav-bar{left:10px;right:10px;bottom:8px;border-radius:27px}.nav-item{font-size:9px;padding-inline:4px}.nav-item svg{width:21px;height:21px}}
+
+/* === TADBIR V22 FINAL UI PATCH === */
+/* The messenger is a real full-screen page on both roles; the old floating launcher is intentionally gone. */
+.social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(6,5,18,.94)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
+.social-chat-fullscreen{width:100%!important;max-width:none!important;height:100dvh!important;min-height:100vh!important;border-radius:0!important;border:0!important;padding:12px max(12px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))!important;box-shadow:none!important;background:radial-gradient(circle at 80% 0,rgba(124,58,237,.16),transparent 32%),linear-gradient(145deg,#17132e 0%,#0b0a1b 55%,#090817 100%)!important}
+.social-chat-fullscreen .social-chat-header{padding:14px 8px 16px!important}
+.social-chat-fullscreen .social-contact{padding:14px!important;border-radius:20px!important}
+.social-chat-fullscreen .social-bubble{max-width:82%;font-size:14px!important}
+.admin-messages-screen{height:calc(100dvh - 122px)!important;min-height:520px!important;border-radius:28px!important;padding:14px!important;background:radial-gradient(circle at 80% 0,rgba(124,58,237,.16),transparent 30%),linear-gradient(145deg,rgba(27,24,50,.98),rgba(8,8,20,.99))!important;box-shadow:0 30px 90px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.06)!important}
+.admin-messages-screen .card{border-radius:20px!important;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;border-color:rgba(255,255,255,.07)!important}
+/* Premium blue verification seal: blue scalloped badge + white check, visually closer to the supplied reference. */
+.verified-badge{width:24px!important;height:24px!important;flex:0 0 24px!important;margin-right:5px!important;border:0!important;border-radius:50%!important;background:linear-gradient(145deg,#49c8ff 0%,#2196f3 45%,#1264e8 100%)!important;clip-path:polygon(50% 0%,61% 7%,75% 4%,83% 15%,96% 20%,94% 34%,100% 50%,93% 62%,96% 76%,84% 83%,77% 96%,63% 92%,50% 100%,38% 92%,23% 96%,16% 84%,4% 77%,8% 63%,0% 50%,7% 37%,4% 23%,17% 16%,24% 4%,39% 8%)!important;box-shadow:0 0 0 2px rgba(71,184,255,.16),0 5px 18px rgba(33,150,243,.42)!important;vertical-align:middle!important;position:relative!important}
+.verified-badge:before{content:''!important;position:absolute!important;inset:0!important;border:1px solid rgba(255,255,255,.38)!important;border-radius:50%!important;clip-path:none!important}
+.verified-badge:after{content:'✓'!important;position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;color:#fff!important;font-family:Arial,sans-serif!important;font-size:15px!important;font-weight:1000!important;line-height:1!important;text-shadow:0 1px 2px rgba(0,40,100,.4)!important}
+@media(max-width:520px){.admin-messages-screen{height:calc(100dvh - 108px)!important;min-height:460px!important;border-radius:22px!important}.social-chat-fullscreen{padding-top:max(10px,env(safe-area-inset-top))!important}}
+
 </style>
 </head>
 <body>
@@ -2187,12 +2202,12 @@ function Admin({user,tab,setTab,onLogout}){
         )}
         {(tab==='students'||tab==='messages')&&(
           <>
-            <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+            {tab==='students'&&<div className="flex gap-2 mb-4 overflow-x-auto pb-2">
               {[['list','دانش‌آموزان'],['objections',`اعتراض‌ها (${objections.length})`],['messages','پیام‌ها']].map(([k,l])=>(
                 <button key={k} onClick={()=>setSubTab(k)} className={`btn-sm whitespace-nowrap ${subTab===k?'btn-glass':'bg-white/5'}`}>{l}</button>
               ))}
-            </div>
-            {subTab==='list'&&students.map(s=>(
+            </div>}
+            {tab==='students'&&subTab==='list'&&students.map(s=>(
               <div key={s.id} className="card flex items-center gap-3">
                 <div className="w-11 h-11 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-lg shrink-0">{s.full_name[0]}</div>
                 <div className="flex-1 min-w-0">
@@ -2203,7 +2218,7 @@ function Admin({user,tab,setTab,onLogout}){
                 <button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5 shrink-0"><Icon d={Icons.key} size={14}/></button>
               </div>
             ))}
-            {subTab==='objections'&&(
+            {tab==='students'&&subTab==='objections'&&(
               objections.length===0?<div className="card text-center py-10 text-white/30">اعتراضی نیست</div>:
               objections.map(a=>(
                 <div key={a.id} className="card border-amber-500/20">
@@ -2224,8 +2239,8 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))
             )}
-            {subTab==='messages'&&(
-              <div className="glass-strong p-4 h-[60vh] flex flex-col">
+            {tab==='messages'&&subTab==='messages'&&(
+              <div className="admin-messages-screen glass-strong flex flex-col">
                 {!selectedChat?(
                   <div className="flex-1 overflow-y-auto space-y-2">
                     {messages.filter(m=>m.sender_id!==user.id).length===0&&<p className="text-center text-white/30 mt-8">پیامی نیست</p>}
@@ -2281,11 +2296,10 @@ function Admin({user,tab,setTab,onLogout}){
       </div>
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('messages');}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div>
+        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('messages');setSelectedChat(null);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div>
         <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTool('menu');setAdminGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      {tab==='home'&&<button onClick={()=>{setTab('messages');setSubTab('messages');}} className="home-message-fab admin-message-fab"><Icon d={Icons.message} size={25}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</button>}
       {modal==='exam'&&(
         <div className="modal-overlay" onClick={()=>setModal(null)}>
           <div className="glass-strong w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto slide-up" onClick={e=>e.stopPropagation()}>
@@ -3251,7 +3265,7 @@ function ProfileView({person,onClose,viewerId}){
   return <div className="modal-overlay" onClick={onClose}><div className="glass-strong profile-float slide-up" onClick={e=>e.stopPropagation()}><div className="profile-float-cover"></div><div className="profile-float-body"><div className="profile-float-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="flex justify-between items-start mt-3"><div><div className="profile-name-line"><h2 className="font-black text-xl">{profile?.display_name||person.full_name}</h2>{person.role==='admin'&&<VerifiedBadge/>}</div><p className="text-[10px] text-white/35 mt-1">@{person.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><p className="text-sm text-white/55 mt-4 leading-7 min-h-[28px]">{profile?.bio||'این کاربر هنوز بیوگرافی ننوشته است.'}</p><div className="flex gap-2 mt-4"><div className="profile-stat flex-1"><strong>{followers}</strong><span>فالوور</span></div><div className="profile-stat flex-1"><strong>{following}</strong><span>فالوینگ</span></div></div>{viewerId!==person.id&&<div className="grid grid-cols-[1fr_auto] gap-2 mt-5"><button className="profile-action text-white" onClick={follow}>{followingMe?'✓ در حال دنبال کردن':'دنبال کن'}</button><button onClick={block} className={`px-4 rounded-2xl border ${blocked?'bg-red-500/15 border-red-400/30 text-red-300':'bg-white/5 border-white/10 text-white/60'}`}>{blocked?'رفع مسدودی':'مسدود'}</button></div>}</div></div></div>;
 }
 
-function SocialChatModal({user,onClose}){
+function SocialChatModal({user,onClose,fullScreen=false}){
   const [contacts,setContacts]=useState([]); const [selected,setSelected]=useState(null); const [messages,setMessages]=useState([]); const [textMsg,setTextMsg]=useState(''); const [profiles,setProfiles]=useState({}); const [unread,setUnread]=useState(0); const [profilePerson,setProfilePerson]=useState(null); const [busy,setBusy]=useState(false); const endRef=useRef(null); const toast=useToast();
   useEffect(()=>{loadContacts();const ch=SB.channel('social-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{loadContacts();if(selected)loadConversation(selected);}).subscribe();return()=>SB.removeChannel(ch);},[user.id,selected?.id]);
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth'});},[messages]);
@@ -3260,7 +3274,7 @@ function SocialChatModal({user,onClose}){
   const loadConversation=async(person)=>{const {data}=await SB.from('messages').select('*').or(`and(sender_id.eq.${user.id},receiver_id.eq.${person.id}),and(sender_id.eq.${person.id},receiver_id.eq.${user.id})`).order('created_at',{ascending:true});setMessages(data||[]);const ids=(data||[]).filter(m=>m.receiver_id===user.id&&m.sender_id===person.id&&m.read_at===null).map(m=>m.id);if(ids.length)await SB.from('messages').update({read_at:new Date().toISOString()}).in('id',ids);setUnread(x=>Math.max(0,x-ids.length));};
   const send=async()=>{if(!textMsg.trim()||!selected||busy)return;setBusy(true);const [{data:b1},{data:b2}]=await Promise.all([SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',selected.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',selected.id).eq('blocked_id',user.id).maybeSingle()]);if(b1||b2){setBusy(false);toast('این گفتگو به دلیل مسدودسازی در دسترس نیست','warning');return;}const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content:textMsg.trim(),reactions:{}});setBusy(false);if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}setTextMsg('');await loadConversation(selected);};
   const prof=(id)=>profiles[id]?.avatar_url||'🐱';
-  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up" onClick={e=>e.stopPropagation()}>
+  return <div className={`modal-overlay ${fullScreen?'social-fullscreen-overlay':''}`} onClick={onClose}><div className={`glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up ${fullScreen?'social-chat-fullscreen':''}`} onClick={e=>e.stopPropagation()}>
     {!selected?<><div className="social-chat-header flex items-center justify-between"><div><h3 className="font-black text-base">پیام‌ها</h3><p className="text-[9px] text-white/35 mt-1">گفتگو با دانش‌آموزان و مدیر</p></div><div className="flex items-center gap-2"><span className="badge badge-new">{contacts.length} مخاطب</span><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div></div><div className="flex-1 overflow-y-auto space-y-2 pt-3">{contacts.length===0?<p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p>:contacts.map(c=><div className="social-contact" key={c.id} onClick={()=>{setSelected(c);loadConversation(c);}}><div className="relative"><div className="social-mini-avatar">{prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id)}</div>{Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div><div className="min-w-0 flex-1"><div className="social-contact-name"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b>{c.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">{c.role==='admin'?'مدیر':'دانش‌آموز'} · @{c.username}</span></div><Icon d={Icons.arrowLeft} size={16} className="text-white/25"/></div>)}</div></>:<><div className="social-chat-header flex items-center gap-2"><button onClick={()=>setSelected(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.arrowLeft} size={17}/></button><button className="flex items-center gap-2 min-w-0 flex-1 text-right" onClick={()=>setProfilePerson(selected)}><div className="social-mini-avatar !w-10 !h-10 !rounded-xl">{prof(selected.id)?.startsWith('data:image')?<img src={prof(selected.id)} alt=""/>:prof(selected.id)}</div><div className="min-w-0"><b className="text-sm block truncate">{profiles[selected.id]?.display_name||selected.full_name}</b><span className="text-[9px] text-white/35">برای مشاهده پروفایل لمس کنید</span></div></button><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><div className="flex-1 overflow-y-auto py-3 space-y-2">{messages.map(m=><div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}><div className={`social-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}<span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{m.sender_id===user.id?' ✓':''}</span></div></div>)}<div ref={endRef}/></div><div className="flex gap-2 pt-2 border-t border-white/5"><input className="glass-input flex-1" placeholder="پیام خود را بنویسید..." value={textMsg} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()}/><button className="btn-glass btn-glass-success btn-sm" onClick={send} disabled={busy}><Icon d={Icons.send} size={17}/></button></div></>}
   </div>{profilePerson&&<ProfileView person={profilePerson} viewerId={user.id} onClose={()=>setProfilePerson(null)}/>}</div>;
 }
@@ -3543,9 +3557,7 @@ function Student({user,tab,setTab,onLogout}){
             })}
           </>
         )}
-        {tab==='messages'&&(<div className="slide-up">
-          <SocialChatModal user={user} onClose={()=>setTab('home')}/>
-        </div>)}
+        {tab==='messages'&&<SocialChatModal user={user} onClose={()=>setTab('home')} fullScreen/>}
         {tab==='grades'&&(<div className="slide-up">
           <div className="glass p-5 mb-4"><div className="flex items-center justify-between"><div><p className="text-xs text-white/40">معدل کل</p><p className="text-4xl font-black gradient-text">{getAverage()}</p><p className="text-[10px] text-white/35 mt-1">از ۲۰</p></div><div className="w-14 h-14 rounded-2xl bg-indigo-500/15 flex items-center justify-center"><Icon d={Icons.grade} size={28} className="text-indigo-300"/></div></div></div>
           <PremiumGradeChart data={exams.filter(ex=>getExamScore(ex.id)).map(ex=>{const sc=getExamScore(ex.id);return {title:ex.title,score:Math.max(0,Math.min(20,parseFloat(sc.percentage)||0)),date:ex.created_at};}).sort((a,b)=>new Date(a.date)-new Date(b.date))}/>
@@ -3673,8 +3685,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>کارنامه</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab('calc');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
-      {tab==='home'&&<button onClick={()=>setShowChat(true)} className="home-message-fab"><Icon d={Icons.message} size={25}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</button>}
-      {showChat&&<SocialChatModal user={user} onClose={()=>setShowChat(false)}/>}
+      {showChat&&<SocialChatModal user={user} onClose={()=>setShowChat(false)} fullScreen/>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
