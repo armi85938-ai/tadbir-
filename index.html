@@ -2037,8 +2037,32 @@ function PasswordModal({onClose,user}){
 }
 
 function AdminPasswordModal({student,onClose,onSaved}){
-  const [newPw,setNewPw]=useState(''); const [busy,setBusy]=useState(false); const toast=useToast();\n  const save=async()=>{if(!newPw||newPw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}setBusy(true);const {error}=await SB.from('users').update({password:newPw}).eq('id',student.id);setBusy(false);if(error){toast('خطا در تغییر رمز: '+error.message,'error');return;}toast('رمز دانش‌آموز تغییر کرد','success');onSaved?.(newPw);onClose();};
-  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong admin-password-card slide-up" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-5"><div><h3 className="font-black gradient-text">🔐 مدیریت رمز عبور</h3><p className="text-[10px] text-white/35 mt-1">{student.full_name} · @{student.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><div className="space-y-4"><div><label className="text-xs text-white/55 block mb-2 font-bold">رمز فعلی دانش‌آموز</label><div className="admin-current-password">{student.password||'ثبت نشده'}</div></div><div><label className="text-xs text-white/55 block mb-2 font-bold">رمز جدید</label><input autoFocus className="glass-input" type="text" placeholder="رمز جدید را وارد کنید" value={newPw} onChange={e=>setNewPw(e.target.value)}/></div><button onClick={save} disabled={busy} className="btn-glass btn-glass-success w-full">{busy?'در حال ذخیره...':'✓ ذخیره رمز جدید'}</button></div></div></div>;
+  const [newPw,setNewPw]=useState('');
+  const [busy,setBusy]=useState(false);
+  const toast=useToast();
+  const save=async()=>{
+    if(!newPw||newPw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}
+    setBusy(true);
+    const {error}=await SB.from('users').update({password:newPw}).eq('id',student.id);
+    setBusy(false);
+    if(error){toast('خطا در تغییر رمز: '+error.message,'error');return;}
+    toast('رمز دانش‌آموز تغییر کرد','success');
+    onSaved?.(newPw);
+    onClose();
+  };
+  return <div className="modal-overlay" onClick={onClose}>
+    <div className="glass-strong admin-password-card slide-up" onClick={e=>e.stopPropagation()}>
+      <div className="flex items-center justify-between mb-5">
+        <div><h3 className="font-black gradient-text">🔐 مدیریت رمز عبور</h3><p className="text-[10px] text-white/35 mt-1">{student.full_name} · @{student.username}</p></div>
+        <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button>
+      </div>
+      <div className="space-y-4">
+        <div><label className="text-xs text-white/55 block mb-2 font-bold">رمز فعلی دانش‌آموز</label><div className="admin-current-password">{student.password||'ثبت نشده'}</div></div>
+        <div><label className="text-xs text-white/55 block mb-2 font-bold">رمز جدید</label><input autoFocus className="glass-input" type="text" placeholder="رمز جدید را وارد کنید" value={newPw} onChange={e=>setNewPw(e.target.value)}/></div>
+        <button onClick={save} disabled={busy} className="btn-glass btn-glass-success w-full">{busy?'در حال ذخیره...':'✓ ذخیره رمز جدید'}</button>
+      </div>
+    </div>
+  </div>;
 }
 
 function Admin({user,tab,setTab,onLogout}){
@@ -2253,9 +2277,8 @@ function Admin({user,tab,setTab,onLogout}){
         {(tab==='students'||tab==='messages')&&(
           <>
             {tab==='students'&&<div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              {[['list','دانش‌آموزان'],['objections',`اعتراض‌ها (${objections.length})']].map(([k,l])=>(
-                <button key={k} onClick={()=>setSubTab(k)} className={`btn-sm whitespace-nowrap ${subTab===k?'btn-glass':'bg-white/5'}`}>{l}</button>
-              ))}
+              <button onClick={()=>setSubTab('list')} className={'btn-sm whitespace-nowrap '+(subTab==='list'?'btn-glass':'bg-white/5')}>دانش‌آموزان</button>
+              <button onClick={()=>setSubTab('objections')} className={'btn-sm whitespace-nowrap '+(subTab==='objections'?'btn-glass':'bg-white/5')}>اعتراض‌ها ({objections.length})</button>
             </div>}
             {tab==='students'&&subTab==='list'&&students.map(s=>(
               <div key={s.id} className="card flex items-center gap-3">
@@ -2292,7 +2315,7 @@ function Admin({user,tab,setTab,onLogout}){
             {tab==='messages'&&<div className="admin-messages-host"><SocialChatModal user={user} onClose={()=>setTab('home')} fullScreen/></div>}
           </>
         )}
-        {tab==='tools'&&10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="مشاهده و تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="text-4xl mb-3">◉</div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، فالوور و فالوینگ</p></div></div></>:adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -2423,9 +2446,6 @@ function Admin({user,tab,setTab,onLogout}){
     </>
   );
 }
-
-      {passwordStudent&&<AdminPasswordModal student={passwordStudent} onClose={()=>setPasswordStudent(null)} onSaved={pw=>setStudents(list=>list.map(x=>x.id===passwordStudent.id?{...x,password:pw}:x))}/>}
-
 
 function PenaltyRequestBridge({user,onOpen}){
   const [invite,setInvite]=useState(null);
