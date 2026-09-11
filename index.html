@@ -5791,3 +5791,142 @@ ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 }
 </style>
 
+
+<style id="tadbir-story-v4-simple-shelf">
+/* v4: Stories are ONLY profile circles under the contact search.
+   No story panel/card background; contacts begin below the circles. */
+.social-fullscreen-overlay .social-chat-fullscreen .telegram-stories-strip,
+.telegram-stories-strip{
+  position:fixed!important;
+  top:calc(116px + env(safe-area-inset-top))!important;
+  left:16px!important;
+  right:16px!important;
+  width:auto!important;
+  max-width:none!important;
+  height:78px!important;
+  min-height:78px!important;
+  padding:4px 2px!important;
+  margin:0!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:7px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  direction:rtl!important;
+  white-space:nowrap!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  z-index:2147483001!important;
+  scrollbar-width:none!important;
+}
+.social-fullscreen-overlay .social-chat-fullscreen .telegram-stories-strip:after,
+.telegram-stories-strip:after{display:none!important;content:none!important}
+.telegram-stories-strip::-webkit-scrollbar{display:none!important}
+.telegram-stories-strip .tg-story-item{
+  flex:0 0 62px!important;
+  width:62px!important;
+  min-width:62px!important;
+  height:74px!important;
+  padding:0!important;
+  margin:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:3px!important;
+  background:transparent!important;
+  border:0!important;
+  color:#fff!important;
+}
+.telegram-stories-strip .tg-story-ring{
+  width:54px!important;
+  height:54px!important;
+  min-width:54px!important;
+  min-height:54px!important;
+  padding:2.5px!important;
+  border-radius:50%!important;
+  background:linear-gradient(135deg,#8b5cf6,#ec4899,#f59e0b)!important;
+  box-shadow:0 5px 20px rgba(139,92,246,.24),0 0 0 1px rgba(255,255,255,.08)!important;
+}
+.telegram-stories-strip .tg-story-ring-inner{
+  width:100%!important;height:100%!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  display:grid!important;place-items:center!important;
+  background:#171329!important;
+  border:2px solid #171329!important;
+  font-size:23px!important;
+}
+.telegram-stories-strip .tg-story-ring-inner img{
+  width:100%!important;height:100%!important;display:block!important;object-fit:cover!important;
+}
+.telegram-stories-strip .tg-story-name{
+  display:block!important;
+  width:62px!important;
+  max-width:62px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  font-size:8px!important;
+  line-height:1.2!important;
+  color:rgba(255,255,255,.62)!important;
+}
+.telegram-stories-strip .tg-story-add:after{
+  width:17px!important;height:17px!important;
+  right:1px!important;bottom:18px!important;
+  border:2px solid #171329!important;
+  background:#8774e1!important;
+  font-size:13px!important;
+}
+/* Search remains the first control; the story circles sit directly beneath it. */
+.social-fullscreen-overlay .social-chat-fullscreen .telegram-contact-search,
+.telegram-contact-search{
+  position:fixed!important;
+  top:calc(72px + env(safe-area-inset-top))!important;
+  right:16px!important;
+  left:auto!important;
+  width:min(205px,48vw)!important;
+  height:38px!important;
+  z-index:2147483003!important;
+}
+/* Contacts start after the story-circle row, so no contact can sit behind it. */
+.social-fullscreen-overlay .social-chat-fullscreen .telegram-contact-list,
+.telegram-contact-list{
+  top:calc(198px + env(safe-area-inset-top))!important;
+  bottom:0!important;
+  padding-top:6px!important;
+  z-index:4!important;
+}
+@media(max-width:700px){
+  .social-fullscreen-overlay .social-chat-fullscreen .telegram-stories-strip,
+  .telegram-stories-strip{
+    top:calc(112px + env(safe-area-inset-top))!important;
+    left:12px!important;
+    right:12px!important;
+    height:76px!important;
+    min-height:76px!important;
+    gap:6px!important;
+  }
+  .telegram-stories-strip .tg-story-item{
+    flex-basis:62px!important;width:62px!important;min-width:62px!important;height:73px!important;
+  }
+  .telegram-stories-strip .tg-story-ring{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important}
+  .telegram-stories-strip .tg-story-name{width:62px!important;max-width:62px!important;font-size:8px!important}
+  .social-fullscreen-overlay .social-chat-fullscreen .telegram-contact-search,
+  .telegram-contact-search{
+    top:calc(68px + env(safe-area-inset-top))!important;
+    right:12px!important;
+    width:min(185px,48vw)!important;
+  }
+  .social-fullscreen-overlay .social-chat-fullscreen .telegram-contact-list,
+  .telegram-contact-list{
+    top:calc(190px + env(safe-area-inset-top))!important;
+  }
+}
+</style>
