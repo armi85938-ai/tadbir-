@@ -1498,6 +1498,11 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
   to{opacity:1;transform:translateY(0) scale(1)}
 }
 </style>
+<style id="tadbir-v29-social-message-actions">
+.social-message-row{position:relative;width:100%;display:flex;margin:4px 0 10px;animation:tmIn .22s ease both}.social-message-row.mine{justify-content:flex-start}.social-message-row.theirs{justify-content:flex-end}.social-bubble-wrap{position:relative;max-width:82%;display:flex;align-items:center;gap:5px}.social-bubble-wrap.mine{flex-direction:row-reverse}.social-bubble-wrap.theirs{flex-direction:row}.social-message-more{width:28px;height:28px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);color:rgba(255,255,255,.62);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;opacity:.72;transition:.2s;font-size:18px;line-height:20px}.social-message-more:hover{opacity:1;transform:scale(1.06);background:rgba(139,92,246,.16)}.social-message-menu{position:absolute;bottom:34px;min-width:158px;padding:6px;border-radius:16px;background:linear-gradient(145deg,rgba(34,30,58,.82),rgba(12,12,30,.72));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);box-shadow:0 18px 45px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.08);z-index:100}.social-message-menu.mine{right:0}.social-message-menu.theirs{left:0}.social-message-menu button{display:block;width:100%;border:0;background:transparent;color:#fff;text-align:right;padding:9px 10px;border-radius:11px;font:700 11px inherit;cursor:pointer;transition:.18s}.social-message-menu button:hover{background:rgba(255,255,255,.09)}.social-message-menu button.danger{color:#fb7185}.social-reaction-picker{position:absolute;bottom:34px;display:flex;gap:4px;padding:6px;border-radius:18px;background:rgba(21,19,40,.60);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(28px) saturate(165%);-webkit-backdrop-filter:blur(28px) saturate(165%);box-shadow:0 18px 45px rgba(0,0,0,.46),inset 0 1px rgba(255,255,255,.10);z-index:101;animation:tmPop .22s cubic-bezier(.2,.9,.25,1)}.social-reaction-picker.mine{right:0}.social-reaction-picker.theirs{left:0}.social-reaction-picker button{width:34px;height:34px;border:0;border-radius:11px;background:rgba(255,255,255,.07);font-size:18px;cursor:pointer;transition:.18s}.social-reaction-picker button:hover{transform:translateY(-2px) scale(1.08);background:rgba(139,92,246,.20)}.social-reactions{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.social-reactions.mine{justify-content:flex-start}.social-reactions.theirs{justify-content:flex-end}.social-reactions button{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);color:#fff;border-radius:999px;padding:3px 8px;font-size:11px;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.social-reactions button.active{background:rgba(139,92,246,.24);border-color:rgba(167,139,250,.45)}.social-reactions small{font-size:9px;color:rgba(255,255,255,.55)}.social-edit-box{min-width:230px;padding:8px;border-radius:18px;background:rgba(20,18,40,.70);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 16px 40px rgba(0,0,0,.35)}.social-edit-input{width:100%;font-size:12px}.social-edit-actions{display:flex;gap:6px;margin-top:7px;justify-content:flex-end}.social-edit-actions .btn-sm{font-size:10px;padding:6px 9px}@keyframes tmIn{from{opacity:0;transform:translateY(4px) scale(.985)}to{opacity:1;transform:none}}@keyframes tmPop{from{opacity:0;transform:translateY(7px) scale(.92)}to{opacity:1;transform:none}}
+.tadbir-water-drop{background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.78) 0 7%,rgba(196,181,253,.34) 20%,rgba(129,140,248,.24) 48%,rgba(76,29,149,.18) 70%,rgba(49,46,129,.08) 100%)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:0 10px 35px rgba(99,102,241,.28),inset 0 1px 1px rgba(255,255,255,.42),inset 0 -7px 14px rgba(76,29,149,.12)!important;backdrop-filter:blur(8px) saturate(170%)!important;-webkit-backdrop-filter:blur(8px) saturate(170%)!important}.tadbir-water-splash{border-color:rgba(196,181,253,.45)!important;background:radial-gradient(circle,rgba(255,255,255,.12),rgba(129,140,248,.05) 55%,transparent 70%)!important;backdrop-filter:blur(5px)!important;-webkit-backdrop-filter:blur(5px)!important;box-shadow:0 0 22px rgba(129,140,248,.18),inset 0 0 12px rgba(255,255,255,.08)!important}
+@media(max-width:600px){.social-bubble-wrap{max-width:91%}.social-message-more{width:26px;height:26px}.social-message-menu{min-width:150px}.social-reaction-picker{max-width:calc(100vw - 36px);overflow-x:auto}.social-edit-box{min-width:0;width:min(76vw,300px)}}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -3937,6 +3942,10 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const [profilePerson,setProfilePerson]=useState(null);
   const [busy,setBusy]=useState(false);
   const [chatBlocked,setChatBlocked]=useState(false);
+  const [messageMenuId,setMessageMenuId]=useState(null);
+  const [reactionPickerFor,setReactionPickerFor]=useState(null);
+  const [editingMessageId,setEditingMessageId]=useState(null);
+  const [editingMessageText,setEditingMessageText]=useState('');
   const endRef=useRef(null);
   const composerRef=useRef(null);
   const toast=useToast();
@@ -4070,6 +4079,30 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     await loadConversation(selected);
   };
 
+  const startSocialEdit=(m)=>{setEditingMessageId(m.id);setEditingMessageText(m.content||'');setMessageMenuId(null);setReactionPickerFor(null);};
+  const saveSocialEdit=async()=>{
+    if(!editingMessageId||!editingMessageText.trim())return;
+    const {error}=await SB.from('messages').update({content:editingMessageText.trim(),edited:true,edited_at:new Date().toISOString()}).eq('id',editingMessageId).eq('sender_id',user.id);
+    if(error){toast('خطا در ویرایش پیام: '+error.message,'error');return;}
+    setEditingMessageId(null);setEditingMessageText('');await loadConversation(selected);toast('✅ پیام ویرایش شد','success');
+  };
+  const deleteSocialMessage=async(id)=>{
+    if(!confirm('این پیام برای همه حذف شود؟'))return;
+    const {error}=await SB.from('messages').delete().eq('id',id).eq('sender_id',user.id);
+    if(error){toast('خطا در حذف پیام برای همه: '+error.message,'error');return;}
+    setMessageMenuId(null);await loadConversation(selected);toast('🗑️ پیام برای همه حذف شد','warning');
+  };
+  const toggleSocialReaction=async(msg,emoji)=>{
+    const reactions={...(msg.reactions||{})};
+    const current=Array.isArray(reactions[emoji])?[...reactions[emoji]]:[];
+    const i=current.indexOf(user.id);
+    if(i>=0)current.splice(i,1);else current.push(user.id);
+    if(current.length)reactions[emoji]=current;else delete reactions[emoji];
+    const {error}=await SB.from('messages').update({reactions}).eq('id',msg.id);
+    if(error){toast('خطا در ثبت ریکشن','error');return;}
+    setReactionPickerFor(null);setMessageMenuId(null);await loadConversation(selected);
+  };
+
   const prof=(id)=>profiles[id]?.avatar_url||'🐱';
   const selectedName=selected?(profiles[selected.id]?.display_name||selected.full_name||selected.username||'مخاطب'):'';
   const selectedAvatar=selected?prof(selected.id):'🐱';
@@ -4107,7 +4140,35 @@ function SocialChatModal({user,onClose,fullScreen=false}){
         </div>
         <div className="chat-messages-scroll">
           {messages.length===0&&!chatBlocked&&<div className="chat-empty-state"><div className="chat-empty-avatar">{selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar}</div><b>گفتگو با {selectedName}</b><span>پیام‌ها در اینجا نمایش داده می‌شوند.</span></div>}
-          {messages.map(m=><div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}><div className={`social-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}<span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{m.sender_id===user.id?' ✓':''}</span></div></div>)}
+          {messages.map(m=>{
+            const isMe=m.sender_id===user.id;
+            const reactions=m.reactions||{};
+            return <div key={m.id} className={`social-message-row ${isMe?'mine':'theirs'}`}>
+              <div className={`social-bubble-wrap ${isMe?'mine':'theirs'}`}>
+                {editingMessageId===m.id ? <div className="social-edit-box">
+                  <input autoFocus className="glass-input social-edit-input" value={editingMessageText} onChange={e=>setEditingMessageText(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')saveSocialEdit();if(e.key==='Escape'){setEditingMessageId(null);setEditingMessageText('');}}}/>
+                  <div className="social-edit-actions"><button className="btn-glass btn-sm btn-glass-success" onClick={saveSocialEdit}>✓ ذخیره</button><button className="btn-glass btn-sm" onClick={()=>{setEditingMessageId(null);setEditingMessageText('');}}>انصراف</button></div>
+                </div> : <>
+                  <div className={`social-bubble ${isMe?'me':'other'}`}>
+                    <div>{m.content}</div>
+                    <span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{isMe?' ✓':''}{m.edited?' · ویرایش شده':''}</span>
+                  </div>
+                  <button type="button" className="social-message-more" aria-label="گزینه‌های پیام" onClick={()=>{setMessageMenuId(messageMenuId===m.id?null:m.id);setReactionPickerFor(null);}}>⋯</button>
+                  {messageMenuId===m.id&&<div className={`social-message-menu ${isMe?'mine':'theirs'}`}>
+                    <button type="button" onClick={()=>{setReactionPickerFor(m.id);setMessageMenuId(null);}}>😊 ریکشن</button>
+                    {isMe&&<button type="button" onClick={()=>startSocialEdit(m)}>✏️ ویرایش پیام</button>}
+                    {isMe&&<button type="button" className="danger" onClick={()=>deleteSocialMessage(m.id)}>🗑️ حذف برای همه</button>}
+                  </div>}
+                  {reactionPickerFor===m.id&&<div className={`social-reaction-picker ${isMe?'mine':'theirs'}`}>
+                    {REACTION_EMOJIS.map(e=><button type="button" key={e} onClick={()=>toggleSocialReaction(m,e)}>{e}</button>)}
+                  </div>}
+                  {Object.keys(reactions).length>0&&<div className={`social-reactions ${isMe?'mine':'theirs'}`}>
+                    {Object.entries(reactions).map(([emoji,ids])=><button type="button" key={emoji} className={ids.includes(user.id)?'active':''} onClick={()=>toggleSocialReaction(m,emoji)}>{emoji} <small>{ids.length}</small></button>)}
+                  </div>}
+                </>}
+              </div>
+            </div>;
+          })}
           {chatBlocked&&<div className="chat-blocked-notice"><div>🔒</div><b>امکان ارسال پیام وجود ندارد</b><span>این گفتگو به دلیل مسدودسازی غیرفعال شده است.</span></div>}
           <div ref={endRef}/>
         </div>
