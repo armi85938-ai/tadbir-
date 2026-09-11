@@ -926,6 +926,18 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 
 /* Final badge sizing: compact, premium and readable beside the manager name. */
 .verified-badge{width:19px!important;height:19px!important;flex:0 0 19px!important;box-shadow:0 0 0 1.5px rgba(71,184,255,.16),0 3px 11px rgba(33,150,243,.40)!important}.verified-badge:after{font-size:12px!important}.verified-badge:before{inset:0!important}
+
+/* Story glass layer — kept below contact search and above contact list */
+.telegram-stories-strip{top:calc(120px + env(safe-area-inset-top))!important;height:72px!important;padding:7px 14px!important;border-radius:22px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.09)!important;backdrop-filter:blur(28px)!important;-webkit-backdrop-filter:blur(28px)!important;box-shadow:0 14px 38px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)!important;width:calc(100% - 24px)!important;left:12px!important;right:12px!important;}
+.telegram-contact-search{top:calc(72px + env(safe-area-inset-top))!important;width:min(205px,55vw)!important;z-index:2147483003!important}
+.telegram-contact-list{top:calc(204px + env(safe-area-inset-top))!important}
+.tg-story-item{width:58px!important}
+.tg-story-ring{width:48px!important;height:48px!important;box-shadow:0 5px 20px rgba(139,92,246,.28)!important}
+.tg-story-name{font-size:8px!important}
+.tg-story-composer{width:min(430px,92vw);padding:18px;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.1)}
+.tg-composer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.tg-composer-head b{display:block;font-size:17px}.tg-composer-head span{display:block;font-size:10px;color:rgba(255,255,255,.38);margin-top:4px}
+.tg-composer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tg-composer-option{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.055);color:#fff;border-radius:20px;padding:18px 12px;text-align:right;cursor:pointer;transition:.25s;backdrop-filter:blur(15px)}.tg-composer-option:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.45);background:rgba(139,92,246,.12)}.tg-composer-option span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#8774e1,#ec4899);font-size:20px;margin-bottom:10px}.tg-composer-option b,.tg-composer-option small{display:block}.tg-composer-option small{font-size:9px;color:rgba(255,255,255,.38);margin-top:3px}.tg-story-textarea{width:100%;min-height:105px;margin-top:12px;resize:none;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08);border-radius:18px;color:#fff;padding:13px;outline:none}.tg-story-textarea:focus{border-color:rgba(135,116,225,.55);box-shadow:0 0 0 3px rgba(135,116,225,.1)}.tg-story-publish{width:100%;margin-top:10px;border:0;border-radius:16px;padding:13px;background:linear-gradient(135deg,#8774e1,#6d5ac9);color:#fff;font-weight:900;cursor:pointer}.tg-story-publish:disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:600px){.telegram-stories-strip{top:calc(116px + env(safe-area-inset-top))!important}.telegram-contact-list{top:calc(198px + env(safe-area-inset-top))!important}.tg-story-composer{max-height:78vh;overflow:auto}}
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -4171,6 +4183,9 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const [showChatMenu,setShowChatMenu]=useState(false);
   const [stories,setStories]=useState([]);
   const [storyViewer,setStoryViewer]=useState(null);
+  const [showStoryComposer,setShowStoryComposer]=useState(false);
+  const [storyText,setStoryText]=useState('');
+  const [publicStories,setPublicStories]=useState([]);
   const storyInputRef=useRef(null);
   const endRef=useRef(null);
   const composerRef=useRef(null);
@@ -4226,16 +4241,42 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth',block:'nearest'});},[messages]);
 
   useEffect(()=>{
-    try{const raw=localStorage.getItem('tadbir_stories_'+user.id);setStories(raw?JSON.parse(raw):[]);}catch{setStories([]);}
+    try{
+      const raw=localStorage.getItem('tadbir_stories_'+user.id);
+      setStories(raw?JSON.parse(raw):[]);
+      const pub=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]');
+      setPublicStories(Array.isArray(pub)?pub.filter(x=>Date.now()-new Date(x.created_at).getTime()<24*60*60*1000):[]);
+    }catch{setStories([]);setPublicStories([]);}
   },[user.id]);
+  useEffect(()=>{
+    const refresh=()=>{try{const pub=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]');setPublicStories(Array.isArray(pub)?pub.filter(x=>Date.now()-new Date(x.created_at).getTime()<24*60*60*1000):[]);}catch{}};
+    window.addEventListener('storage',refresh);
+    const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('tadbir-stories'):null;
+    bc?.addEventListener('message',refresh);
+    return()=>{window.removeEventListener('storage',refresh);bc?.close();};
+  },[]);
   const saveStories=(next)=>{setStories(next);try{localStorage.setItem('tadbir_stories_'+user.id,JSON.stringify(next));}catch{}};
+  const publishStory=(story)=>{
+    const mine={...story,author_id:user.id,author_name:user.full_name||user.username,created_at:new Date().toISOString()};
+    try{
+      const old=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]').filter(x=>x.author_id!==user.id&&Date.now()-new Date(x.created_at).getTime()<24*60*60*1000);
+      const next=[mine,...old].slice(0,50);
+      localStorage.setItem('tadbir_public_stories',JSON.stringify(next));setPublicStories(next);
+      const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('tadbir-stories'):null;bc?.postMessage({type:'new-story'});bc?.close();
+    }catch{}
+    saveStories([mine,...stories].slice(0,10));
+    setShowStoryComposer(false);setStoryText('');
+  };
   const addStory=(file)=>{
     if(!file)return;
     const reader=new FileReader();
-    reader.onload=()=>saveStories([{id:Date.now(),type:'image',src:reader.result,created_at:new Date().toISOString()},...stories].slice(0,10));
+    reader.onload=()=>publishStory({id:Date.now(),type:'image',src:reader.result});
     reader.readAsDataURL(file);
   };
-  const addTextStory=()=>{const text=window.prompt('متن استوری را بنویسید:');if(!text?.trim())return;saveStories([{id:Date.now(),type:'text',text:text.trim(),created_at:new Date().toISOString()},...stories].slice(0,10));};
+  const addTextStory=()=>{
+    if(!storyText.trim())return;
+    publishStory({id:Date.now(),type:'text',text:storyText.trim()});
+  };
   const openStory=(story,person=null)=>setStoryViewer({...story,person});
   const replyToStory=()=>{
     const person=storyViewer?.person;
@@ -4396,19 +4437,21 @@ function SocialChatModal({user,onClose,fullScreen=false}){
           </div>
         </div>
         <div className="telegram-stories-strip">
-          <button type="button" className="tg-story-item tg-story-add" onClick={()=>storyInputRef.current?.click()}>
-            <div className="tg-story-ring"><div className="tg-story-ring-inner">{stories[0]?.type==='image'?<img src={stories[0].src} alt=""/>:'＋'}</div></div>
+          <button type="button" className="tg-story-item tg-story-add" onClick={()=>setShowStoryComposer(true)}>
+            <div className="tg-story-ring"><div className="tg-story-ring-inner">＋</div></div>
             <span className="tg-story-name">استوری شما</span>
           </button>
-          <button type="button" className="tg-story-item" onClick={addTextStory}>
-            <div className="tg-story-ring"><div className="tg-story-ring-inner">✦</div></div><span className="tg-story-name">متن</span>
-          </button>
-          {contacts.filter(c=>!c.is_self).slice(0,12).map(c=>{
-            const av=prof(c.id); return <button type="button" className="tg-story-item" key={'story-'+c.id} onClick={()=>openStory({id:'contact-'+c.id,type:'text',text:'استوری فعال این مخاطب',created_at:new Date().toISOString()},c)}>
-              <div className="tg-story-ring"><div className="tg-story-ring-inner">{av?.startsWith?.('data:image')?<img src={av} alt=""/>:av||'🐱'}</div></div><span className="tg-story-name">{profiles[c.id]?.display_name||c.full_name}</span>
+          {[...publicStories.filter(x=>String(x.author_id)!==String(user.id)),...stories].reduce((arr,x)=>{
+            const key=String(x.author_id||user.id); if(!arr.some(y=>String(y.author_id||user.id)===key))arr.push(x); return arr;
+          },[]).slice(0,14).map(st=>{
+            const isMine=String(st.author_id||user.id)===String(user.id);
+            const person=isMine?null:contacts.find(c=>String(c.id)===String(st.author_id));
+            const av=isMine?(prof(user.id)||'🐱'):prof(st.author_id)||'🐱';
+            return <button type="button" className="tg-story-item" key={'story-'+(st.author_id||st.id)} onClick={()=>openStory(st,person)}>
+              <div className="tg-story-ring"><div className="tg-story-ring-inner">{av?.startsWith?.('data:image')?<img src={av} alt=""/>:av}</div></div>
+              <span className="tg-story-name">{isMine?'استوری شما':(profiles[st.author_id]?.display_name||person?.full_name||st.author_name||'کاربر')}</span>
             </button>;
           })}
-          <input ref={storyInputRef} type="file" accept="image/*" hidden onChange={e=>{addStory(e.target.files?.[0]);e.target.value='';}}/>
         </div>
         <div className="telegram-contact-search">
           <span>⌕</span>
@@ -4496,6 +4539,16 @@ function SocialChatModal({user,onClose,fullScreen=false}){
         </div>:<div className="chat-composer chat-composer-disabled"><span>امکان ارسال پیام وجود ندارد</span></div>}
       </>}
     </div>
+    {showStoryComposer&&<div className="tg-story-viewer" onClick={()=>setShowStoryComposer(false)}><div className="tg-story-composer glass-strong" onClick={e=>e.stopPropagation()}>
+      <div className="tg-composer-head"><div><b>استوری جدید</b><span>برای دوستانت یک استوری بگذار</span></div><button className="tg-story-close" onClick={()=>setShowStoryComposer(false)}>×</button></div>
+      <div className="tg-composer-actions">
+        <button type="button" className="tg-composer-option" onClick={()=>storyInputRef.current?.click()}><span>▣</span><b>انتخاب از گالری</b><small>عکس یا تصویر</small></button>
+        <button type="button" className="tg-composer-option" onClick={()=>{if(storyText.trim())addTextStory();else setStoryText('');}}><span>✦</span><b>استوری متنی</b><small>یک متن کوتاه بنویس</small></button>
+      </div>
+      <textarea value={storyText} onChange={e=>setStoryText(e.target.value)} placeholder="متن استوری را اینجا بنویس..." className="tg-story-textarea"/>
+      <input ref={storyInputRef} type="file" accept="image/*" hidden onChange={e=>{addStory(e.target.files?.[0]);e.target.value='';}}/>
+      <button type="button" className="tg-story-publish" onClick={addTextStory} disabled={!storyText.trim()}>انتشار استوری</button>
+    </div></div>}
     {storyViewer&&<div className="tg-story-viewer" onClick={()=>setStoryViewer(null)}><div className="tg-story-card" onClick={e=>e.stopPropagation()}>
       <div className="tg-story-top"><div className="text-xs font-bold">{storyViewer.person?(profiles[storyViewer.person.id]?.display_name||storyViewer.person.full_name):'استوری شما'}</div><button className="tg-story-close" onClick={()=>setStoryViewer(null)}>×</button></div>
       <div className="tg-story-media">{storyViewer.type==='image'?<img src={storyViewer.src} alt="استوری"/>:<div className="tg-story-text">{storyViewer.text}</div>}</div>
