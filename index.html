@@ -834,12 +834,8 @@ html,body,#root{min-height:100%;}
 
 /* === TADBIR V22 FINAL UI PATCH === */
 /* The messenger is a real full-screen page on both roles; the old floating launcher is intentionally gone. */
-.social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(6,5,18,.94)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;z-index:70!important}
-.social-chat-fullscreen{width:100%!important;max-width:none!important;height:100dvh!important;min-height:100vh!important;border-radius:0!important;border:0!important;padding:12px max(12px,env(safe-area-inset-right)) 108px max(12px,env(safe-area-inset-left))!important;box-shadow:none!important;background:radial-gradient(circle at 80% 0,rgba(124,58,237,.16),transparent 32%),linear-gradient(145deg,#17132e 0%,#0b0a1b 55%,#090817 100%)!important}
-.social-chat-fullscreen .social-chat-header{position:sticky;top:0;z-index:4;background:linear-gradient(180deg,rgba(23,19,46,.98),rgba(23,19,46,.88));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:0 0 20px 20px}
-.social-chat-fullscreen .chat-composer{position:sticky;bottom:8px;z-index:5;margin-top:10px;padding:8px;border:1px solid rgba(255,255,255,.11);border-radius:24px;background:linear-gradient(145deg,rgba(38,32,68,.90),rgba(16,14,34,.94));box-shadow:0 14px 36px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
-.social-chat-fullscreen .chat-composer .glass-input{min-height:46px;border-radius:18px;background:rgba(255,255,255,.055);border-color:rgba(255,255,255,.09)}
-.social-chat-fullscreen .chat-composer .btn-glass{min-width:48px;height:46px;border-radius:17px;padding:0;display:grid;place-items:center}
+.social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(6,5,18,.94)!important;backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important}
+.social-chat-fullscreen{width:100%!important;max-width:none!important;height:100dvh!important;min-height:100vh!important;border-radius:0!important;border:0!important;padding:12px max(12px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))!important;box-shadow:none!important;background:radial-gradient(circle at 80% 0,rgba(124,58,237,.16),transparent 32%),linear-gradient(145deg,#17132e 0%,#0b0a1b 55%,#090817 100%)!important}
 .social-chat-fullscreen .social-chat-header{padding:14px 8px 16px!important}
 .social-chat-fullscreen .social-contact{padding:14px!important;border-radius:20px!important}
 .social-chat-fullscreen .social-bubble{max-width:82%;font-size:14px!important}
@@ -852,45 +848,12 @@ html,body,#root{min-height:100%;}
 @media(max-width:520px){.admin-messages-screen{height:calc(100dvh - 108px)!important;min-height:460px!important;border-radius:22px!important}.social-chat-fullscreen{padding-top:max(10px,env(safe-area-inset-top))!important}}
 
 
-/* === TADBIR V23 PROFILE / MESSENGER POLISH === */
-.profile-gallery-row{display:flex;gap:10px;align-items:stretch;width:100%}
-.profile-gallery-main{position:relative;flex:1;min-width:0;height:58px;border-radius:18px;border:1px solid rgba(167,139,250,.28);background:linear-gradient(135deg,rgba(99,102,241,.22),rgba(236,72,153,.14));display:flex;align-items:center;justify-content:center;gap:9px;color:#fff;font-weight:900;overflow:hidden;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.08),0 10px 25px rgba(76,29,149,.12);transition:.25s}
-.profile-gallery-main:hover{transform:translateY(-1px);border-color:rgba(196,181,253,.55)}
-.profile-gallery-main input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.profile-gallery-main.has-image{flex:0 0 calc(100% - 68px);height:52px}
-.profile-gallery-main .gallery-thumb{width:38px;height:38px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.18);box-shadow:0 5px 15px rgba(0,0,0,.22)}
-.profile-gallery-remove{width:58px;height:58px;border-radius:18px;border:1px solid rgba(248,113,113,.24);background:linear-gradient(145deg,rgba(127,29,29,.28),rgba(30,20,35,.7));color:#fda4af;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.05),0 8px 20px rgba(0,0,0,.18);transition:.2s}
-.profile-gallery-remove:hover{transform:translateY(-1px) scale(1.02);background:rgba(127,29,29,.38)}
-.follow-list-modal{width:min(430px,94vw);max-height:min(78dvh,680px);overflow:hidden;border-radius:28px!important;background:radial-gradient(circle at 90% 0,rgba(139,92,246,.20),transparent 32%),linear-gradient(145deg,#19152f,#0d0b1d)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 30px 100px rgba(0,0,0,.65)!important}
-.follow-list-scroll{max-height:56dvh;overflow:auto;padding:8px}
-.follow-list-item{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid rgba(255,255,255,.065);border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018));margin-bottom:8px;animation:followIn .32s cubic-bezier(.16,1,.3,1) both}
-@keyframes followIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
-.follow-list-avatar{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;overflow:hidden;flex:none;background:linear-gradient(145deg,#4f46e5,#a855f7);font-size:24px;border:1px solid rgba(255,255,255,.12)}
-.follow-list-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.follow-stat-click{cursor:pointer;transition:.22s}.follow-stat-click:hover{transform:translateY(-2px);background:rgba(139,92,246,.10)}
-.admin-password-card{width:min(430px,94vw);border-radius:28px!important;padding:22px!important;background:radial-gradient(circle at 10% 0,rgba(59,130,246,.16),transparent 30%),linear-gradient(145deg,#19162f,#0c0b1b)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:0 30px 100px rgba(0,0,0,.65)!important}
-.admin-current-password{padding:13px 15px;border-radius:17px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.075);font-family:ui-monospace,SFMono-Regular,monospace;letter-spacing:.5px;color:#ddd6fe;word-break:break-all}
-.admin-messages-host{position:fixed!important;inset:0!important;z-index:140!important;padding:0!important;background:rgba(5,4,15,.97)!important}
-.admin-messages-host>.social-chat-fullscreen{height:100dvh!important;min-height:100dvh!important}
-/* Smaller, cleaner verified seal */
-.verified-badge{width:20px!important;height:20px!important;flex-basis:20px!important;box-shadow:0 0 0 1.5px rgba(71,184,255,.16),0 4px 13px rgba(33,150,243,.36)!important}
-.verified-badge:after{font-size:12px!important}
-
-
-/* === TADBIR CHAT FIX: true fullscreen messenger + floating composer === */
-.social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:rgba(5,4,15,.97)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;z-index:160!important;overflow:hidden!important}
-.social-chat-fullscreen{position:relative!important;width:100%!important;max-width:none!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;margin:0!important;border:0!important;border-radius:0!important;padding:0!important;overflow:hidden!important;background:radial-gradient(circle at 85% 0,rgba(139,92,246,.18),transparent 30%),radial-gradient(circle at 10% 90%,rgba(236,72,153,.08),transparent 25%),linear-gradient(145deg,#17132e 0%,#0d0a20 52%,#070613 100%)!important;box-shadow:none!important}
-.social-chat-fullscreen .social-chat-header{position:relative!important;top:auto!important;flex:0 0 auto!important;padding:calc(14px + env(safe-area-inset-top)) 16px 14px!important;border-radius:0 0 24px 24px!important;border-bottom:1px solid rgba(255,255,255,.08)!important;background:rgba(20,16,42,.82)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;z-index:4!important}
-.social-chat-fullscreen .social-contacts-list,.social-chat-fullscreen .social-conversation{min-height:0!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}
-.social-chat-fullscreen .social-contacts-list{padding:14px 14px calc(18px + env(safe-area-inset-bottom))!important}
-.social-chat-fullscreen .social-contact{padding:14px!important;min-height:70px!important;border-radius:20px!important;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important}
-.social-chat-fullscreen .social-conversation{padding:14px 14px 118px!important}
-.social-chat-fullscreen .chat-composer{position:absolute!important;left:12px!important;right:12px!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;z-index:8!important;margin:0!important;padding:8px!important;border:1px solid rgba(255,255,255,.13)!important;border-radius:24px!important;background:linear-gradient(145deg,rgba(39,32,70,.94),rgba(13,11,29,.96))!important;box-shadow:0 18px 45px rgba(0,0,0,.55),inset 0 1px rgba(255,255,255,.09)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
-.social-chat-fullscreen .chat-composer .glass-input{min-height:48px!important;height:48px!important;border-radius:18px!important;background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.10)!important}
-.social-chat-fullscreen .chat-composer .btn-glass{min-width:48px!important;width:48px!important;height:48px!important;border-radius:17px!important;padding:0!important;display:grid!important;place-items:center!important}
-.social-chat-fullscreen .social-bubble{max-width:min(82%,520px)!important;font-size:14px!important;line-height:1.8!important}
-@media(max-width:520px){.social-chat-fullscreen .social-chat-header{padding-left:12px!important;padding-right:12px!important}.social-chat-fullscreen .chat-composer{left:9px!important;right:9px!important;bottom:calc(9px + env(safe-area-inset-bottom))!important}.social-chat-fullscreen .social-conversation{padding-left:10px!important;padding-right:10px!important;padding-bottom:112px!important}}
-
+/* Stable messenger layout patch */
+.social-fullscreen-overlay{padding:0!important;align-items:stretch!important;justify-content:stretch!important;z-index:160!important;background:rgba(6,5,18,.96)!important}
+.social-chat-fullscreen{width:100%!important;max-width:none!important;height:100dvh!important;min-height:100vh!important;border-radius:0!important;border:0!important;padding:0 0 92px!important;box-shadow:none!important;overflow:hidden!important}
+.social-chat-fullscreen .social-chat-header{padding:14px 16px!important;border-radius:0 0 20px 20px!important;position:relative!important;z-index:4!important}
+.social-chat-fullscreen .chat-composer{position:absolute!important;left:12px!important;right:12px!important;bottom:12px!important;z-index:8!important;margin:0!important;padding:8px!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:22px!important;background:rgba(25,21,48,.96)!important;backdrop-filter:blur(20px)!important}
+@media(max-width:520px){.social-chat-fullscreen .chat-composer{left:8px!important;right:8px!important;bottom:8px!important}}
 </style>
 </head>
 <body>
@@ -2036,35 +1999,6 @@ function PasswordModal({onClose,user}){
   );
 }
 
-function AdminPasswordModal({student,onClose,onSaved}){
-  const [newPw,setNewPw]=useState('');
-  const [busy,setBusy]=useState(false);
-  const toast=useToast();
-  const save=async()=>{
-    if(!newPw||newPw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}
-    setBusy(true);
-    const {error}=await SB.from('users').update({password:newPw}).eq('id',student.id);
-    setBusy(false);
-    if(error){toast('خطا در تغییر رمز: '+error.message,'error');return;}
-    toast('رمز دانش‌آموز تغییر کرد','success');
-    onSaved?.(newPw);
-    onClose();
-  };
-  return <div className="modal-overlay" onClick={onClose}>
-    <div className="glass-strong admin-password-card slide-up" onClick={e=>e.stopPropagation()}>
-      <div className="flex items-center justify-between mb-5">
-        <div><h3 className="font-black gradient-text">🔐 مدیریت رمز عبور</h3><p className="text-[10px] text-white/35 mt-1">{student.full_name} · @{student.username}</p></div>
-        <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button>
-      </div>
-      <div className="space-y-4">
-        <div><label className="text-xs text-white/55 block mb-2 font-bold">رمز فعلی دانش‌آموز</label><div className="admin-current-password">{student.password||'ثبت نشده'}</div></div>
-        <div><label className="text-xs text-white/55 block mb-2 font-bold">رمز جدید</label><input autoFocus className="glass-input" type="text" placeholder="رمز جدید را وارد کنید" value={newPw} onChange={e=>setNewPw(e.target.value)}/></div>
-        <button onClick={save} disabled={busy} className="btn-glass btn-glass-success w-full">{busy?'در حال ذخیره...':'✓ ذخیره رمز جدید'}</button>
-      </div>
-    </div>
-  </div>;
-}
-
 function Admin({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [students,setStudents]=useState([]);
@@ -2079,7 +2013,6 @@ function Admin({user,tab,setTab,onLogout}){
   const [replyText,setReplyText]=useState('');
   const [selectedChat,setSelectedChat]=useState(null);
   const [showExamResults,setShowExamResults]=useState(null);
-  const [passwordStudent,setPasswordStudent]=useState(null);
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [adminTool,setAdminTool]=useState('menu');
   const [adminGame,setAdminGame]=useState(null);
@@ -2151,7 +2084,7 @@ function Admin({user,tab,setTab,onLogout}){
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
-  const changePassword=async(sid)=>{const st=students.find(x=>x.id===sid);if(st)setPasswordStudent(st);};
+  const changePassword=async(sid)=>{const p=prompt("رمز جدید:");if(p){await SB.from('users').update({password:p}).eq('id',sid);loadAll();toast('رمز تغییر کرد','success');}};
   const createStudent=async()=>{
     const full_name=studentForm.full_name.trim();
     const username=studentForm.username.trim().toUpperCase();
@@ -2277,8 +2210,9 @@ function Admin({user,tab,setTab,onLogout}){
         {(tab==='students'||tab==='messages')&&(
           <>
             {tab==='students'&&<div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-              <button onClick={()=>setSubTab('list')} className={'btn-sm whitespace-nowrap '+(subTab==='list'?'btn-glass':'bg-white/5')}>دانش‌آموزان</button>
-              <button onClick={()=>setSubTab('objections')} className={'btn-sm whitespace-nowrap '+(subTab==='objections'?'btn-glass':'bg-white/5')}>اعتراض‌ها ({objections.length})</button>
+              {[['list','دانش‌آموزان'],['objections',`اعتراض‌ها (${objections.length})`],['messages','پیام‌ها']].map(([k,l])=>(
+                <button key={k} onClick={()=>setSubTab(k)} className={`btn-sm whitespace-nowrap ${subTab===k?'btn-glass':'bg-white/5'}`}>{l}</button>
+              ))}
             </div>}
             {tab==='students'&&subTab==='list'&&students.map(s=>(
               <div key={s.id} className="card flex items-center gap-3">
@@ -2312,7 +2246,40 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))
             )}
-            {tab==='messages'&&<div className="admin-messages-host"><SocialChatModal user={user} onClose={()=>setTab('home')} fullScreen/></div>}
+            {tab==='messages'&&subTab==='messages'&&(
+              <div className="admin-messages-screen glass-strong flex flex-col">
+                {!selectedChat?(
+                  <div className="flex-1 overflow-y-auto space-y-2">
+                    {messages.filter(m=>m.sender_id!==user.id).length===0&&<p className="text-center text-white/30 mt-8">پیامی نیست</p>}
+                    {Object.values(messages.filter(m=>m.sender_id!==user.id).reduce((acc,m)=>{acc[m.sender_id]=m;return acc;},{})).map(m=>(
+                      <div key={m.id} onClick={()=>setSelectedChat(m)} className="card cursor-pointer flex justify-between items-center">
+                        <div className="min-w-0 flex-1"><p className="font-bold text-sm">{m.sender?.full_name}</p><p className="text-xs text-white/40 truncate">{m.content}</p></div>
+                        <span className="text-[10px] text-white/20 shrink-0 mr-2">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}</span>
+                      </div>
+                    ))}
+                  </div>
+                ):(
+                  <>
+                    <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/5">
+                      <div className="flex items-center gap-2">
+                        <button onClick={()=>setSelectedChat(null)} className="p-1.5 bg-white/5 rounded-lg"><Icon d={Icons.arrowLeft} size={16}/></button>
+                        <span className="font-bold text-sm">{selectedChat.sender?.full_name}</span>
+                      </div>
+                      <button onClick={()=>clearChat(selectedChat.sender_id)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg" title="پاک کردن تاریخچه"><Icon d={Icons.trash} size={16}/></button>
+                    </div>
+                    <div className="flex-1 overflow-y-auto mb-3 space-y-1">
+                      {messages.filter(m=>(m.sender_id===selectedChat.sender_id&&m.receiver_id===user.id)||(m.sender_id===user.id&&m.receiver_id===selectedChat.sender_id)).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).map(m=>(
+                        <div key={m.id} className={`chat-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}</div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <input className="glass-input flex-1 text-sm" placeholder="پاسخ..." value={replyText} onChange={e=>setReplyText(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendMessage()}/>
+                      <button onClick={sendMessage} className="btn-glass btn-glass-success btn-sm"><Icon d={Icons.send} size={16}/></button>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </>
         )}
         {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="text-4xl mb-3">◉</div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، فالوور و فالوینگ</p></div></div></>:adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s.id)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
@@ -2336,7 +2303,7 @@ function Admin({user,tab,setTab,onLogout}){
       </div>
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
-        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('list');setSelectedChat(null);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div>
+        <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setSubTab('messages');setSelectedChat(null);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌ها</span></div>
         <div className={`nav-item ${tab==='grading'?'active':''}`} onClick={()=>setTab('grading')}><Icon d={Icons.grade}/><span>تصحیح</span></div>
         <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setAdminTool('menu');setAdminGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
@@ -2446,6 +2413,7 @@ function Admin({user,tab,setTab,onLogout}){
     </>
   );
 }
+
 
 function PenaltyRequestBridge({user,onOpen}){
   const [invite,setInvite]=useState(null);
@@ -3278,7 +3246,7 @@ function compressProfileImage(file){
 function VerifiedBadge(){return <span className="verified-badge" title="حساب تأییدشده" aria-label="حساب تأییدشده"></span>}
 
 function ProfileEditor({user,onSaved,compact=false}){
-  const [profile,setProfile]=useState(null); const [name,setName]=useState(user.full_name||''); const [bio,setBio]=useState(''); const [avatar,setAvatar]=useState('🐱'); const [busy,setBusy]=useState(false); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followList,setFollowList]=useState(null); const toast=useToast();
+  const [profile,setProfile]=useState(null); const [name,setName]=useState(user.full_name||''); const [bio,setBio]=useState(''); const [avatar,setAvatar]=useState('🐱'); const [busy,setBusy]=useState(false); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const toast=useToast();
   useEffect(()=>{load();},[user.id]);
   const load=async()=>{
     let {data:p}=await SB.from('profiles').select('*').eq('user_id',user.id).maybeSingle();
@@ -3287,186 +3255,63 @@ function ProfileEditor({user,onSaved,compact=false}){
     const [{count:fc},{count:fg}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',user.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',user.id)]);setFollowers(fc||0);setFollowing(fg||0);
   };
   const save=async()=>{if(!name.trim()){toast('نام را وارد کنید','error');return;}setBusy(true);const payload={user_id:user.id,display_name:name.trim().slice(0,40),bio:bio.trim().slice(0,180),avatar_url:avatar||'🐱',updated_at:new Date().toISOString()};const {data,error}=await SB.from('profiles').upsert(payload,{onConflict:'user_id'}).select().single();setBusy(false);if(error){toast('خطا در ذخیره پروفایل: '+error.message,'error');return;}setProfile(data);onSaved?.(data);toast('پروفایل ذخیره شد','success');};
-  const gallery=async e=>{const f=e.target.files?.[0];if(!f)return; if(!f.type.startsWith('image/')){toast('فقط فایل تصویری انتخاب کنید','error');return;} if(f.size>8*1024*1024){toast('حجم عکس حداکثر ۸ مگابایت باشد','error');return;}try{setAvatar(await compressProfileImage(f));}catch{toast('خواندن عکس انجام نشد','error');}e.target.value='';};
-  const removeGallery=()=>{const pool=PROFILE_PRESETS.filter(x=>!String(x).startsWith('data:'));setAvatar(pool[Math.floor(Math.random()*pool.length)]||'🐱');toast('عکس گالری حذف شد و یک آیکون جدید انتخاب شد','success');};
-  const showFollowList=(type)=>setFollowList({type,userId:user.id,title:type==='followers'?'فالوورهای شما':'فالوینگ‌های شما'});
-  return <><div className={compact?'admin-profile-card':'space-y-3'}>
-    <div className="profile-hero"><div className="flex items-center gap-4 relative z-1"><div className="profile-avatar">{avatar?.startsWith('data:image')?<img src={avatar} alt=""/>:avatar}</div><div className="min-w-0"><p className="text-[10px] text-white/35 mb-1">پروفایل تدبیر</p><div className="profile-name-line"><h2 className="font-black text-xl truncate">{name||'نام شما'}</h2>{user.role==='admin'&&<VerifiedBadge/>}</div><p className="text-xs text-white/40 mt-1">@{user.username}</p></div></div><div className="flex justify-center gap-2 mt-5"><button type="button" className="profile-stat follow-stat-click" onClick={()=>showFollowList('followers')}><strong>{followers}</strong><span>فالوور</span></button><button type="button" className="profile-stat follow-stat-click" onClick={()=>showFollowList('following')}><strong>{following}</strong><span>فالوینگ</span></button></div></div>
-    <div className="glass p-4 space-y-3"><label className="text-xs text-white/55 font-bold">عکس پروفایل</label><div className="profile-gallery-row"><label className={`profile-gallery-main ${avatar?.startsWith('data:image')?'has-image':''}`}>{avatar?.startsWith('data:image')&&<img className="gallery-thumb" src={avatar} alt=""/>}<Icon d={Icons.image} size={18}/><span>{avatar?.startsWith('data:image')?'تغییر عکس گالری':'انتخاب عکس از گالری'}</span><input type="file" accept="image/*" onChange={gallery}/></label>{avatar?.startsWith('data:image')&&<button type="button" className="profile-gallery-remove" onClick={removeGallery} title="حذف عکس گالری"><Icon d={Icons.trash} size={21}/></button>}</div><label className="text-xs text-white/45 block">آیکون‌های آماده</label><div className="profile-preset-grid">{PROFILE_PRESETS.map(x=><button key={x} className={`profile-preset ${avatar===x?'active':''}`} onClick={()=>setAvatar(x)}>{x}</button>)}</div><div><label className="text-xs text-white/55 block mb-2">نام نمایشی</label><input className="glass-input" value={name} maxLength={40} onChange={e=>setName(e.target.value)}/></div><div><label className="text-xs text-white/55 block mb-2">بیوگرافی</label><textarea className="glass-input" rows="3" maxLength={180} placeholder="چند کلمه درباره خودت..." value={bio} onChange={e=>setBio(e.target.value)}/></div><button className="btn-glass" disabled={busy} onClick={save}>{busy?'در حال ذخیره...':'✓ ذخیره پروفایل'}</button></div>
-  </div>{followList&&<FollowListModal userId={followList.userId} type={followList.type} title={followList.title} onClose={()=>setFollowList(null)}/>}</>;
-}
-
-function FollowListModal({userId,type,title,onClose}){
-  const [items,setItems]=useState([]); const [busy,setBusy]=useState(true);
-  useEffect(()=>{let alive=true;(async()=>{setBusy(true);const key=type==='followers'?'follower_id':'following_id';const {data:rows}=await SB.from('follows').select('follower_id,following_id').eq(type==='followers'?'following_id':'follower_id',userId);const ids=(rows||[]).map(r=>type==='followers'?r.follower_id:r.following_id).filter(Boolean);if(!ids.length){if(alive){setItems([]);setBusy(false)}return;}const {data:users}=await SB.from('users').select('id,full_name,username,role').in('id',ids);const {data:ps}=await SB.from('profiles').select('user_id,display_name,avatar_url').in('user_id',ids);const pm={};(ps||[]).forEach(p=>pm[p.user_id]=p);const um={};(users||[]).forEach(u=>um[u.id]=u);const ordered=ids.map(id=>({...um[id],profile:pm[id]})).filter(x=>x.id);if(alive){setItems(ordered);setBusy(false)}})();return()=>{alive=false}},[userId,type]);
-  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong follow-list-modal slide-up" onClick={e=>e.stopPropagation()}><div className="p-4 flex items-center justify-between border-b border-white/7"><div><h3 className="font-black gradient-text">{title}</h3><p className="text-[9px] text-white/35 mt-1">فهرست کاربران</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><div className="follow-list-scroll">{busy?<div className="text-center text-white/35 py-12">در حال بارگذاری...</div>:items.length===0?<div className="text-center text-white/35 py-12">هنوز کسی اینجا نیست</div>:items.map((u,i)=>{const av=u.profile?.avatar_url||'🐱';return <div className="follow-list-item" style={{animationDelay:`${i*45}ms`}} key={u.id}><div className="follow-list-avatar">{String(av).startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="min-w-0 flex-1"><b className="block truncate">{u.profile?.display_name||u.full_name||u.username}</b><span className="text-[10px] text-white/35">@{u.username} · {u.role==='admin'?'مدیر':'دانش‌آموز'}</span></div>{u.role==='admin'&&<VerifiedBadge/>}</div>})}</div></div></div>;
+  const gallery=async e=>{const f=e.target.files?.[0];if(!f)return; if(!f.type.startsWith('image/')){toast('فقط فایل تصویری انتخاب کنید','error');return;} if(f.size>8*1024*1024){toast('حجم عکس حداکثر ۸ مگابایت باشد','error');return;}try{setAvatar(await compressProfileImage(f));}catch{toast('خواندن عکس انجام نشد','error');}};
+  return <div className={compact?'admin-profile-card':'space-y-3'}>
+    <div className="profile-hero"><div className="flex items-center gap-4 relative z-1"><div className="profile-avatar">{avatar?.startsWith('data:image')?<img src={avatar} alt=""/>:avatar}</div><div className="min-w-0"><p className="text-[10px] text-white/35 mb-1">پروفایل تدبیر</p><div className="profile-name-line"><h2 className="font-black text-xl truncate">{name||'نام شما'}</h2>{user.role==='admin'&&<VerifiedBadge/>}</div><p className="text-xs text-white/40 mt-1">@{user.username}</p></div></div><div className="flex justify-center gap-2 mt-5"><div className="profile-stat"><strong>{followers}</strong><span>فالوور</span></div><div className="profile-stat"><strong>{following}</strong><span>فالوینگ</span></div></div></div>
+    <div className="glass p-4 space-y-3"><label className="text-xs text-white/55 font-bold">عکس پروفایل</label><div className="flex gap-2"><label className="btn-glass btn-sm flex-1 profile-upload text-center"><Icon d={Icons.image} size={16}/> انتخاب از گالری<input type="file" accept="image/*" onChange={gallery}/></label><button className="btn-glass btn-sm" onClick={()=>setAvatar('🐱')}>پیش‌فرض</button></div><label className="text-xs text-white/45 block">آیکون‌های آماده</label><div className="profile-preset-grid">{PROFILE_PRESETS.map(x=><button key={x} className={`profile-preset ${avatar===x?'active':''}`} onClick={()=>setAvatar(x)}>{x}</button>)}</div><div><label className="text-xs text-white/55 block mb-2">نام نمایشی</label><input className="glass-input" value={name} maxLength={40} onChange={e=>setName(e.target.value)}/></div><div><label className="text-xs text-white/55 block mb-2">بیوگرافی</label><textarea className="glass-input" rows="3" maxLength={180} placeholder="چند کلمه درباره خودت..." value={bio} onChange={e=>setBio(e.target.value)}/></div><button className="btn-glass" disabled={busy} onClick={save}>{busy?'در حال ذخیره...':'✓ ذخیره پروفایل'}</button></div>
+  </div>;
 }
 
 function ProfileView({person,onClose,viewerId}){
-  const [profile,setProfile]=useState(null); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followingMe,setFollowingMe]=useState(false); const [blocked,setBlocked]=useState(false); const [followList,setFollowList]=useState(null); const toast=useToast();
+  const [profile,setProfile]=useState(null); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followingMe,setFollowingMe]=useState(false); const [blocked,setBlocked]=useState(false); const toast=useToast();
   useEffect(()=>{load();},[person?.id]);
   const load=async()=>{if(!person)return;let {data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle();if(!p){await SB.from('profiles').upsert({user_id:person.id,display_name:person.full_name||person.username,bio:'',avatar_url:'🐱'},{onConflict:'user_id'});({data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle());}setProfile(p);const [{count:fc},{count:fg},{data:f},{data:b}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',person.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',person.id),SB.from('follows').select('id').eq('follower_id',viewerId).eq('following_id',person.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',viewerId).eq('blocked_id',person.id).maybeSingle()]);setFollowers(fc||0);setFollowing(fg||0);setFollowingMe(!!f);setBlocked(!!b);};
   const follow=async()=>{if(viewerId===person.id)return; if(followingMe){await SB.from('follows').delete().eq('follower_id',viewerId).eq('following_id',person.id);setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));toast('دنبال کردن لغو شد','warning');}else{const {error}=await SB.from('follows').insert({follower_id:viewerId,following_id:person.id});if(error){toast('امکان دنبال کردن نیست','error');return;}setFollowingMe(true);setFollowers(x=>x+1);toast('دنبال شد','success');}};
   const block=async()=>{if(blocked){await SB.from('blocks').delete().eq('blocker_id',viewerId).eq('blocked_id',person.id);setBlocked(false);toast('مسدودسازی لغو شد','success');}else{await SB.from('blocks').insert({blocker_id:viewerId,blocked_id:person.id});setBlocked(true);toast('کاربر مسدود شد','warning');}};
   if(!person)return null; const av=profile?.avatar_url||'🐱';
-  return <><div className="modal-overlay" onClick={onClose}><div className="glass-strong profile-float slide-up" onClick={e=>e.stopPropagation()}><div className="profile-float-cover"></div><div className="profile-float-body"><div className="profile-float-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="flex justify-between items-start mt-3"><div><div className="profile-name-line"><h2 className="font-black text-xl">{profile?.display_name||person.full_name}</h2>{person.role==='admin'&&<VerifiedBadge/>}</div><p className="text-[10px] text-white/35 mt-1">@{person.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><p className="text-sm text-white/55 mt-4 leading-7 min-h-[28px]">{profile?.bio||'این کاربر هنوز بیوگرافی ننوشته است.'}</p><div className="flex gap-2 mt-4"><button type="button" className="profile-stat flex-1 follow-stat-click" onClick={()=>setFollowList({type:'followers',userId:person.id,title:'فالوورهای '+(profile?.display_name||person.full_name)})}><strong>{followers}</strong><span>فالوور</span></button><button type="button" className="profile-stat flex-1 follow-stat-click" onClick={()=>setFollowList({type:'following',userId:person.id,title:'فالوینگ‌های '+(profile?.display_name||person.full_name)})}><strong>{following}</strong><span>فالوینگ</span></button></div>{viewerId!==person.id&&<div className="grid grid-cols-[1fr_auto] gap-2 mt-5"><button className="profile-action text-white" onClick={follow}>{followingMe?'✓ در حال دنبال کردن':'دنبال کن'}</button><button onClick={block} className={`px-4 rounded-2xl border ${blocked?'bg-red-500/15 border-red-400/30 text-red-300':'bg-white/5 border-white/10 text-white/60'}`}>{blocked?'رفع مسدودی':'مسدود'}</button></div>}</div></div></div>{followList&&<FollowListModal userId={followList.userId} type={followList.type} title={followList.title} onClose={()=>setFollowList(null)}/>}</>
+  return <div className="modal-overlay" onClick={onClose}><div className="glass-strong profile-float slide-up" onClick={e=>e.stopPropagation()}><div className="profile-float-cover"></div><div className="profile-float-body"><div className="profile-float-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="flex justify-between items-start mt-3"><div><div className="profile-name-line"><h2 className="font-black text-xl">{profile?.display_name||person.full_name}</h2>{person.role==='admin'&&<VerifiedBadge/>}</div><p className="text-[10px] text-white/35 mt-1">@{person.username}</p></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div><p className="text-sm text-white/55 mt-4 leading-7 min-h-[28px]">{profile?.bio||'این کاربر هنوز بیوگرافی ننوشته است.'}</p><div className="flex gap-2 mt-4"><div className="profile-stat flex-1"><strong>{followers}</strong><span>فالوور</span></div><div className="profile-stat flex-1"><strong>{following}</strong><span>فالوینگ</span></div></div>{viewerId!==person.id&&<div className="grid grid-cols-[1fr_auto] gap-2 mt-5"><button className="profile-action text-white" onClick={follow}>{followingMe?'✓ در حال دنبال کردن':'دنبال کن'}</button><button onClick={block} className={`px-4 rounded-2xl border ${blocked?'bg-red-500/15 border-red-400/30 text-red-300':'bg-white/5 border-white/10 text-white/60'}`}>{blocked?'رفع مسدودی':'مسدود'}</button></div>}</div></div></div>;
 }
 
 function SocialChatModal({user,onClose,fullScreen=false}){
-  const [contacts,setContacts]=useState([]);
-  const [selected,setSelected]=useState(null);
-  const [messages,setMessages]=useState([]);
-  const [textMsg,setTextMsg]=useState('');
-  const [profiles,setProfiles]=useState({});
-  const [unread,setUnread]=useState(0);
-  const [profilePerson,setProfilePerson]=useState(null);
-  const [busy,setBusy]=useState(false);
-  const endRef=useRef(null);
-  const toast=useToast();
-
-  const ensureProfiles=useCallback(async(list)=>{
-    if(!list.length){setProfiles({});return;}
-    const ids=list.map(x=>x.id);
-    const {data}=await SB.from('profiles').select('user_id,display_name,bio,avatar_url').in('user_id',ids);
-    const map={};
-    (data||[]).forEach(p=>{map[p.user_id]=p;});
-    list.forEach(u=>{
-      if(!map[u.id]) map[u.id]={user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:'🐱'};
-    });
-    setProfiles(map);
-  },[]);
-
-  const loadContacts=useCallback(async()=>{
-    const [{data:users},{data:blocked},{data:un}]=await Promise.all([
-      SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name'),
-      SB.from('blocks').select('blocked_id').eq('blocker_id',user.id),
-      SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null)
-    ]);
-    const list=users||[];
-    const hidden=new Set((blocked||[]).map(x=>x.blocked_id));
-    const visible=list.filter(x=>!hidden.has(x.id));
-    setContacts(visible);
-    setUnread((un||[]).length);
-    await ensureProfiles(visible);
-  },[user.id,ensureProfiles]);
-
-  const loadConversation=useCallback(async(person)=>{
-    if(!person?.id)return;
-    const {data,error}=await SB.from('messages').select('*')
-      .or(`and(sender_id.eq.${user.id},receiver_id.eq.${person.id}),and(sender_id.eq.${person.id},receiver_id.eq.${user.id})`)
-      .order('created_at',{ascending:true});
-    if(error){toast('خطا در بارگذاری گفتگو: '+error.message,'error');return;}
-    const rows=data||[];
-    setMessages(rows);
-    const ids=rows.filter(m=>m.receiver_id===user.id&&m.sender_id===person.id&&m.read_at===null).map(m=>m.id);
-    if(ids.length){
-      await SB.from('messages').update({read_at:new Date().toISOString()}).in('id',ids);
-      setUnread(x=>Math.max(0,x-ids.length));
-    }
-  },[user.id,toast]);
-
-  useEffect(()=>{
-    // Load contacts immediately so the messenger never opens to an empty/loading frame.
-    loadContacts();
-    const ch=SB.channel('social-'+user.id)
-      .on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{
-        loadContacts();
-        if(selected) loadConversation(selected);
-      })
-      .subscribe();
-    return()=>{SB.removeChannel(ch);};
-  },[user.id,loadContacts,loadConversation]);
-
-  useEffect(()=>{
-    endRef.current?.scrollIntoView({behavior:'smooth',block:'nearest'});
-  },[messages]);
-
-  const selectContact=async(person)=>{
-    setSelected(person);
-    setMessages([]);
-    await loadConversation(person);
-  };
-
-  const send=async()=>{
-    const content=textMsg.trim();
-    if(!content||!selected||busy)return;
-    setBusy(true);
-    const [{data:b1},{data:b2}]=await Promise.all([
-      SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',selected.id).maybeSingle(),
-      SB.from('blocks').select('id').eq('blocker_id',selected.id).eq('blocked_id',user.id).maybeSingle()
-    ]);
-    if(b1||b2){setBusy(false);toast('این گفتگو به دلیل مسدودسازی در دسترس نیست','warning');return;}
-    const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content,reactions:{}});
-    setBusy(false);
-    if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}
-    setTextMsg('');
-    await loadConversation(selected);
-  };
-
+  const [contacts,setContacts]=useState([]); const [selected,setSelected]=useState(null); const [messages,setMessages]=useState([]); const [textMsg,setTextMsg]=useState(''); const [profiles,setProfiles]=useState({}); const [unread,setUnread]=useState(0); const [profilePerson,setProfilePerson]=useState(null); const [busy,setBusy]=useState(false); const endRef=useRef(null); const toast=useToast();
+  useEffect(()=>{loadContacts();const ch=SB.channel('social-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{loadContacts();if(selected)loadConversation(selected);}).subscribe();return()=>SB.removeChannel(ch);},[user.id,selected?.id]);
+  useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth'});},[messages]);
+  const ensureProfiles=async(list)=>{if(!list.length){setProfiles({});return;}const ids=list.map(x=>x.id);const {data}=await SB.from('profiles').select('user_id,display_name,bio,avatar_url').in('user_id',ids);const map={};(data||[]).forEach(p=>map[p.user_id]=p);for(const u of list){if(!map[u.id])map[u.id]={user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:'🐱'};}setProfiles(map);};
+  const loadContacts=async()=>{const [{data:users},{data:blocked},{data:un}]=await Promise.all([SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name'),SB.from('blocks').select('blocked_id').eq('blocker_id',user.id),SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null)]);const list=users||[];const hidden=new Set((blocked||[]).map(x=>x.blocked_id));const visible=list.filter(x=>!hidden.has(x.id));setContacts(visible);setUnread((un||[]).length);await ensureProfiles(visible);};
+  const loadConversation=async(person)=>{const {data}=await SB.from('messages').select('*').or(`and(sender_id.eq.${user.id},receiver_id.eq.${person.id}),and(sender_id.eq.${person.id},receiver_id.eq.${user.id})`).order('created_at',{ascending:true});setMessages(data||[]);const ids=(data||[]).filter(m=>m.receiver_id===user.id&&m.sender_id===person.id&&m.read_at===null).map(m=>m.id);if(ids.length)await SB.from('messages').update({read_at:new Date().toISOString()}).in('id',ids);setUnread(x=>Math.max(0,x-ids.length));};
+  const send=async()=>{if(!textMsg.trim()||!selected||busy)return;setBusy(true);const [{data:b1},{data:b2}]=await Promise.all([SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',selected.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',selected.id).eq('blocked_id',user.id).maybeSingle()]);if(b1||b2){setBusy(false);toast('این گفتگو به دلیل مسدودسازی در دسترس نیست','warning');return;}const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content:textMsg.trim(),reactions:{}});setBusy(false);if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}setTextMsg('');await loadConversation(selected);};
   const prof=(id)=>profiles[id]?.avatar_url||'🐱';
-  const displayName=(person)=>profiles[person?.id]?.display_name||person?.full_name||person?.username||'کاربر';
-
   return <div className={`modal-overlay ${fullScreen?'social-fullscreen-overlay':''}`} onClick={onClose}>
     <div className={`glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up ${fullScreen?'social-chat-fullscreen':''}`} onClick={e=>e.stopPropagation()}>
       {!selected ? <>
         <div className="social-chat-header flex items-center justify-between">
-          <div>
-            <h3 className="font-black text-base">پیام‌ها</h3>
-            <p className="text-[9px] text-white/35 mt-1">گفتگو با دانش‌آموزان و مدیر</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="badge badge-new">{contacts.length} مخاطب</span>
-            <button onClick={onClose} className="p-2 bg-white/5 rounded-xl" aria-label="بستن"><Icon d={Icons.x} size={17}/></button>
-          </div>
+          <div><h3 className="font-black text-base">پیام‌ها</h3><p className="text-[9px] text-white/35 mt-1">گفتگو با دانش‌آموزان و مدیر</p></div>
+          <div className="flex items-center gap-2"><span className="badge badge-new">{contacts.length} مخاطب</span><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button></div>
         </div>
-        <div className="social-contacts-list flex-1 overflow-y-auto space-y-2 pt-3 pb-4">
-          {contacts.length===0 ? <p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p> : contacts.map(c=>{
-            const avatar=prof(c.id);
-            const online=Date.now()-new Date(c.last_seen_at||0).getTime()<180000;
-            return <button type="button" className="social-contact w-full text-right flex items-center gap-3" key={c.id} onClick={()=>selectContact(c)}>
-              <div className="relative shrink-0">
-                <div className="social-mini-avatar">{String(avatar).startsWith('data:image')?<img src={avatar} alt=""/>:avatar}</div>
-                {online&&<span className="online-dot"/>}
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="social-contact-name"><b className="text-sm block truncate">{displayName(c)}</b>{c.role==='admin'&&<VerifiedBadge/>}</div>
-                <span className="text-[9px] text-white/35">{c.role==='admin'?'مدیر':'دانش‌آموز'} · @{c.username}</span>
-              </div>
-              <Icon d={Icons.arrowLeft} size={16} className="text-white/25"/>
-            </button>;
-          })}
+        <div className="flex-1 overflow-y-auto space-y-2 pt-3">
+          {contacts.length===0?<p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p>:contacts.map(c=><button type="button" className="social-contact w-full text-right" key={c.id} onClick={()=>{setSelected(c);loadConversation(c);}}>
+            <div className="relative"><div className="social-mini-avatar">{prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id)}</div>{Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
+            <div className="min-w-0 flex-1"><div className="social-contact-name"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b>{c.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">{c.role==='admin'?'مدیر':'دانش‌آموز'} · @{c.username}</span></div>
+            <Icon d={Icons.arrowLeft} size={16} className="text-white/25"/>
+          </button>)}
         </div>
       </> : <>
         <div className="social-chat-header flex items-center gap-2">
-          <button onClick={()=>{setSelected(null);setMessages([]);}} className="p-2 bg-white/5 rounded-xl shrink-0" aria-label="بازگشت"><Icon d={Icons.arrowLeft} size={17}/></button>
+          <button onClick={()=>setSelected(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.arrowLeft} size={17}/></button>
           <button type="button" className="flex items-center gap-2 min-w-0 flex-1 text-right" onClick={()=>setProfilePerson(selected)}>
-            <div className="social-mini-avatar !w-10 !h-10 !rounded-xl">{String(prof(selected.id)).startsWith('data:image')?<img src={prof(selected.id)} alt=""/>:prof(selected.id)}</div>
-            <div className="min-w-0">
-              <div className="profile-name-line"><b className="text-sm block truncate">{displayName(selected)}</b>{selected.role==='admin'&&<VerifiedBadge/>}</div>
-              <span className="text-[9px] text-white/35">برای مشاهده پروفایل لمس کنید</span>
-            </div>
+            <div className="social-mini-avatar !w-10 !h-10 !rounded-xl">{prof(selected.id)?.startsWith('data:image')?<img src={prof(selected.id)} alt=""/>:prof(selected.id)}</div>
+            <div className="min-w-0"><div className="profile-name-line"><b className="text-sm block truncate">{profiles[selected.id]?.display_name||selected.full_name}</b>{selected.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">برای مشاهده پروفایل لمس کنید</span></div>
           </button>
-          <button onClick={onClose} className="p-2 bg-white/5 rounded-xl shrink-0" aria-label="بستن"><Icon d={Icons.x} size={17}/></button>
+          <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={17}/></button>
         </div>
-        <div className="social-conversation flex-1 overflow-y-auto py-3 space-y-2 pb-28">
-          {messages.length===0&&<p className="text-center text-white/25 mt-10 text-xs">هنوز پیامی در این گفتگو نیست</p>}
-          {messages.map(m=><div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}>
-            <div className={`social-bubble ${m.sender_id===user.id?'me':'other'}`}>
-              {m.content}
-              <span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{m.sender_id===user.id?' ✓':''}</span>
-            </div>
-          </div>)}
-          <div ref={endRef}/>
-        </div>
-        <div className="chat-composer flex gap-2">
-          <input className="glass-input flex-1" placeholder={`پیام به ${displayName(selected)}...`} value={textMsg} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();send();}}}/>
-          <button className="btn-glass btn-glass-success btn-sm" onClick={send} disabled={busy} aria-label="ارسال پیام"><Icon d={Icons.send} size={17}/></button>
-        </div>
+        <div className="flex-1 overflow-y-auto py-3 space-y-2 pb-28">{messages.map(m=><div key={m.id} className={`flex ${m.sender_id===user.id?'justify-start':'justify-end'}`}><div className={`social-bubble ${m.sender_id===user.id?'me':'other'}`}>{m.content}<span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{m.sender_id===user.id?' ✓':''}</span></div></div>)}<div ref={endRef}/></div>
+        <div className="chat-composer flex gap-2"><input className="glass-input flex-1" placeholder={`پیام به ${profiles[selected.id]?.display_name||selected.full_name||'مخاطب'}...`} value={textMsg} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();send();}}}/><button className="btn-glass btn-glass-success btn-sm" onClick={send} disabled={busy}><Icon d={Icons.send} size={17}/></button></div>
       </>}
     </div>
     {profilePerson&&<ProfileView person={profilePerson} viewerId={user.id} onClose={()=>setProfilePerson(null)}/>} 
   </div>;
 }
+
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
