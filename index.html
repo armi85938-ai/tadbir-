@@ -1503,6 +1503,206 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
 .tadbir-water-drop{background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.78) 0 7%,rgba(196,181,253,.34) 20%,rgba(129,140,248,.24) 48%,rgba(76,29,149,.18) 70%,rgba(49,46,129,.08) 100%)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:0 10px 35px rgba(99,102,241,.28),inset 0 1px 1px rgba(255,255,255,.42),inset 0 -7px 14px rgba(76,29,149,.12)!important;backdrop-filter:blur(8px) saturate(170%)!important;-webkit-backdrop-filter:blur(8px) saturate(170%)!important}.tadbir-water-splash{border-color:rgba(196,181,253,.45)!important;background:radial-gradient(circle,rgba(255,255,255,.12),rgba(129,140,248,.05) 55%,transparent 70%)!important;backdrop-filter:blur(5px)!important;-webkit-backdrop-filter:blur(5px)!important;box-shadow:0 0 22px rgba(129,140,248,.18),inset 0 0 12px rgba(255,255,255,.08)!important}
 @media(max-width:600px){.social-bubble-wrap{max-width:91%}.social-message-more{width:26px;height:26px}.social-message-menu{min-width:150px}.social-reaction-picker{max-width:calc(100vw - 36px);overflow-x:auto}.social-edit-box{min-width:0;width:min(76vw,300px)}}
 </style>
+
+<style id="tadbir-telegram-like-chat-v30">
+/* Telegram-like messenger layer — isolated to SocialChatModal only */
+.telegram-chat-shell{
+  --tg-blue:#8774e1;
+  --tg-blue2:#6f5bd4;
+  --tg-panel:#19162d;
+  --tg-panel2:#11101e;
+  --tg-line:rgba(255,255,255,.075);
+  --tg-muted:rgba(255,255,255,.47);
+}
+.telegram-list-header{
+  border-bottom:0!important;
+  box-shadow:none!important;
+}
+.telegram-contact-search{
+  position:fixed!important;
+  top:calc(72px + env(safe-area-inset-top))!important;
+  left:10px!important;right:10px!important;
+  z-index:2147483002!important;
+  height:44px!important;
+  display:flex!important;align-items:center!important;gap:9px!important;
+  padding:0 13px!important;
+  border-radius:15px!important;
+  background:rgba(255,255,255,.055)!important;
+  border:1px solid rgba(255,255,255,.06)!important;
+  backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;
+}
+.telegram-contact-search span{font-size:23px;color:rgba(255,255,255,.38);line-height:1}
+.telegram-contact-search input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-size:13px;min-width:0}
+.telegram-contact-search input::placeholder{color:rgba(255,255,255,.32)}
+.telegram-contact-search button{border:0;background:transparent;color:rgba(255,255,255,.45);font-size:21px;cursor:pointer}
+.telegram-contact-list{
+  top:calc(124px + env(safe-area-inset-top))!important;
+  padding-top:6px!important;
+}
+.telegram-contact-row{
+  min-height:70px!important;
+  border-radius:0!important;
+  border:0!important;
+  border-bottom:1px solid rgba(255,255,255,.045)!important;
+  background:transparent!important;
+  padding:8px 10px!important;
+  gap:10px!important;
+}
+.telegram-contact-row:hover,.telegram-contact-row:active{background:rgba(255,255,255,.045)!important}
+.telegram-saved-row{background:linear-gradient(90deg,rgba(135,116,225,.085),transparent)!important}
+.telegram-contact-avatar{width:52px!important;height:52px!important;min-width:52px!important;border-radius:50%!important;font-size:24px!important}
+.telegram-contact-copy{display:flex;flex-direction:column;gap:4px}
+.telegram-contact-top,.telegram-contact-bottom{display:flex;align-items:center;gap:8px;min-width:0}
+.telegram-contact-top{justify-content:space-between}
+.telegram-contact-bottom{justify-content:space-between}
+.telegram-contact-time{font-size:9px;color:rgba(255,255,255,.34);white-space:nowrap}
+.telegram-last-message{font-size:10px;color:rgba(255,255,255,.38);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;flex:1}
+.telegram-unread-badge,.telegram-top-unread{
+  min-width:20px;height:20px;padding:0 6px;border-radius:999px;
+  display:grid;place-items:center;
+  font-size:9px;font-weight:900;color:white;
+  background:linear-gradient(135deg,var(--tg-blue),var(--tg-blue2));
+  box-shadow:0 5px 14px rgba(111,91,212,.28);
+}
+.telegram-top-unread{min-width:24px;height:24px}
+.telegram-empty-list{padding:80px 20px;text-align:center;color:rgba(255,255,255,.28);font-size:12px}
+
+.telegram-conversation-header{
+  background:rgba(20,17,37,.965)!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+}
+.telegram-conversation-avatar{border-radius:50%!important}
+.telegram-header-actions{display:flex;align-items:center;gap:4px;margin-inline-start:auto}
+.telegram-icon-btn{
+  width:40px;height:40px;border-radius:50%;border:0;
+  display:grid;place-items:center;
+  background:transparent;color:rgba(255,255,255,.75);
+  font-size:23px;cursor:pointer;transition:.2s;
+}
+.telegram-icon-btn:hover,.telegram-icon-btn:active{background:rgba(255,255,255,.07)}
+.telegram-chat-menu{
+  position:absolute;top:calc(58px + env(safe-area-inset-top));left:10px;
+  width:210px;padding:7px;border-radius:16px;
+  background:rgba(30,26,50,.94);border:1px solid rgba(255,255,255,.09);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 18px 50px rgba(0,0,0,.48);z-index:2147483012;
+  animation:tgMenuIn .2s cubic-bezier(.2,.9,.25,1);
+}
+.telegram-chat-menu button{width:100%;border:0;background:transparent;color:white;padding:11px;border-radius:11px;text-align:right;font-size:11px;cursor:pointer}
+.telegram-chat-menu button:hover{background:rgba(255,255,255,.07)}
+@keyframes tgMenuIn{from{opacity:0;transform:translateY(-7px) scale(.96)}to{opacity:1;transform:none}}
+
+.telegram-chat-search{
+  position:fixed!important;
+  top:calc(68px + env(safe-area-inset-top))!important;
+  left:8px!important;right:8px!important;
+  z-index:2147483002!important;
+  height:44px!important;padding:0 12px!important;
+  display:flex!important;align-items:center!important;gap:8px!important;
+  border-radius:14px!important;
+  background:rgba(26,22,45,.98)!important;border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.28)!important;
+}
+.telegram-chat-search span{font-size:22px;color:rgba(255,255,255,.42)}
+.telegram-chat-search input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-size:13px;min-width:0}
+.telegram-chat-search button{border:0;background:transparent;color:rgba(255,255,255,.5);font-size:22px}
+.telegram-message-canvas{
+  background:
+    radial-gradient(circle at 15% 10%,rgba(135,116,225,.055),transparent 26%),
+    radial-gradient(circle at 82% 68%,rgba(56,189,248,.035),transparent 30%),
+    linear-gradient(180deg,#0d0b18,#0a0913)!important;
+}
+.telegram-message-canvas:before{
+  content:'';position:fixed;inset:0;pointer-events:none;opacity:.08;
+  background-image:
+    radial-gradient(circle at 20px 20px,rgba(255,255,255,.6) 1px,transparent 1.5px),
+    radial-gradient(circle at 70px 55px,rgba(255,255,255,.45) 1px,transparent 1.5px);
+  background-size:90px 90px,120px 120px;
+}
+.telegram-message-canvas.has-search{top:calc(118px + env(safe-area-inset-top))!important}
+.telegram-date-chip{
+  position:sticky;top:5px;z-index:3;
+  width:max-content;margin:8px auto 12px;padding:5px 10px;border-radius:999px;
+  font-size:9px;font-weight:800;color:rgba(255,255,255,.72);
+  background:rgba(37,33,57,.74);border:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.telegram-message-row{margin:1px 0 5px!important}
+.telegram-bubble-wrap{max-width:min(85%,560px)!important;gap:4px!important}
+.telegram-bubble{
+  min-width:68px!important;
+  padding:8px 10px 6px!important;
+  border-radius:17px!important;
+  box-shadow:0 2px 9px rgba(0,0,0,.18)!important;
+  border:1px solid rgba(255,255,255,.045)!important;
+}
+.telegram-bubble.me{
+  background:linear-gradient(145deg,#7667cf,#6856c2)!important;
+  border-bottom-left-radius:5px!important;
+}
+.telegram-bubble.other{
+  background:rgba(34,31,48,.97)!important;
+  border-bottom-right-radius:5px!important;
+}
+.telegram-bubble.me:after,.telegram-bubble.other:after{
+  content:'';position:absolute;bottom:-1px;width:9px;height:11px;
+}
+.telegram-bubble.me:after{left:-5px;background:linear-gradient(145deg,#6856c2,#6856c2);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.telegram-bubble.other:after{right:-5px;background:rgba(34,31,48,.97);clip-path:polygon(0 0,100% 100%,0 100%)}
+.telegram-message-text{font-size:13px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.telegram-message-meta{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:4px!important;margin-top:2px!important}
+.telegram-message-meta time,.telegram-message-meta em{font-style:normal;font-size:8px;opacity:.58}
+.telegram-checks{font-size:9px;letter-spacing:-3px;color:rgba(255,255,255,.65);margin-left:2px}
+.telegram-checks.read{color:#90e0ff;text-shadow:0 0 8px rgba(144,224,255,.22)}
+.telegram-message-more{opacity:.24!important;border:0!important;background:transparent!important}
+.telegram-message-row:hover .telegram-message-more,.telegram-message-more:focus{opacity:.78!important}
+.telegram-message-menu{border-radius:15px!important;overflow:hidden}
+.telegram-reaction-picker{border-radius:999px!important;padding:5px!important}
+.telegram-reaction-picker button{border-radius:50%!important}
+.telegram-reactions button{background:rgba(21,18,38,.62)!important}
+.telegram-empty-chat{margin:auto!important}
+
+.telegram-composer{
+  border-radius:24px!important;
+  background:rgba(28,24,47,.97)!important;
+  padding:6px 7px!important;
+  gap:6px!important;
+  box-shadow:0 10px 34px rgba(0,0,0,.38)!important;
+}
+.telegram-composer-icon{
+  width:42px;height:42px;min-width:42px;border:0;border-radius:50%;
+  background:transparent;color:rgba(255,255,255,.58);font-size:23px;cursor:pointer;transition:.2s;
+}
+.telegram-composer-icon:hover{background:rgba(255,255,255,.06);color:white}
+.telegram-message-input{
+  height:44px!important;min-height:44px!important;border:0!important;background:transparent!important;
+  box-shadow:none!important;font-size:13px!important;padding-inline:6px!important;
+}
+.telegram-send-btn{
+  width:44px!important;height:44px!important;min-width:44px!important;border-radius:50%!important;
+  background:linear-gradient(135deg,#8774e1,#6d5ac9)!important;
+  border:0!important;box-shadow:0 7px 18px rgba(111,91,212,.3)!important;
+}
+.telegram-emoji-tray{
+  position:absolute;bottom:58px;right:8px;left:8px;
+  display:flex;gap:6px;justify-content:center;flex-wrap:wrap;
+  padding:8px;border-radius:18px;background:rgba(29,25,50,.95);
+  border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  box-shadow:0 16px 40px rgba(0,0,0,.38);animation:tgEmojiIn .22s cubic-bezier(.2,.9,.25,1);
+}
+.telegram-emoji-tray button{width:37px;height:37px;border:0;border-radius:12px;background:rgba(255,255,255,.055);font-size:19px;cursor:pointer}
+@keyframes tgEmojiIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+
+@media(max-width:560px){
+  .telegram-contact-search{top:calc(64px + env(safe-area-inset-top))!important}
+  .telegram-contact-list{top:calc(116px + env(safe-area-inset-top))!important}
+  .telegram-chat-search{top:calc(62px + env(safe-area-inset-top))!important}
+  .telegram-message-canvas.has-search{top:calc(112px + env(safe-area-inset-top))!important}
+  .telegram-bubble-wrap{max-width:91%!important}
+  .telegram-contact-avatar{width:48px!important;height:48px!important;min-width:48px!important}
+}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -3946,6 +4146,12 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const [reactionPickerFor,setReactionPickerFor]=useState(null);
   const [editingMessageId,setEditingMessageId]=useState(null);
   const [editingMessageText,setEditingMessageText]=useState('');
+  const [contactSearch,setContactSearch]=useState('');
+  const [chatSearch,setChatSearch]=useState('');
+  const [showChatSearch,setShowChatSearch]=useState(false);
+  const [showEmojiTray,setShowEmojiTray]=useState(false);
+  const [contactMeta,setContactMeta]=useState({});
+  const [showChatMenu,setShowChatMenu]=useState(false);
   const endRef=useRef(null);
   const composerRef=useRef(null);
   const toast=useToast();
@@ -3965,11 +4171,6 @@ function SocialChatModal({user,onClose,fullScreen=false}){
       document.documentElement.style.setProperty('--tadbir-composer-shift',composerShift+'px');
       document.documentElement.style.setProperty('--tadbir-nav-restore',layoutShrink+'px');
       document.documentElement.classList.toggle('tadbir-keyboard-open',keyboard>100);
-      if(document.activeElement===composerRef.current && keyboard>100){
-        requestAnimationFrame(()=>{
-          try{ composerRef.current?.scrollIntoView({block:'nearest',inline:'nearest'}); }catch(e){}
-        });
-      }
     };
     syncViewport();
     vv?.addEventListener('resize',syncViewport,{passive:true});
@@ -4016,12 +4217,30 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     setProfiles(map);
   };
 
+  const buildContactMeta=(rows)=>{
+    const meta={};
+    for(const m of (rows||[])){
+      const other=m.sender_id===user.id?m.receiver_id:m.sender_id;
+      if(!other)continue;
+      const prev=meta[other];
+      if(!prev||new Date(m.created_at)>new Date(prev.created_at)){
+        meta[other]={content:m.content||'',created_at:m.created_at,sender_id:m.sender_id,read_at:m.read_at,unread:prev?.unread||0};
+      }
+      if(m.receiver_id===user.id&&m.sender_id===other&&!m.read_at){
+        if(!meta[other])meta[other]={content:m.content||'',created_at:m.created_at,sender_id:m.sender_id,read_at:m.read_at,unread:0};
+        meta[other].unread=(meta[other].unread||0)+1;
+      }
+    }
+    setContactMeta(meta);
+  };
+
   const loadContacts=async()=>{
     setContactsLoading(true);
-    const [{data:users},{data:blocked},{data:un}]=await Promise.all([
+    const [{data:users},{data:blocked},{data:un},{data:recent}]=await Promise.all([
       SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name'),
       SB.from('blocks').select('blocked_id').eq('blocker_id',user.id),
-      SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null)
+      SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null),
+      SB.from('messages').select('id,sender_id,receiver_id,content,created_at,read_at').or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`).order('created_at',{ascending:true}).limit(500)
     ]);
     const list=users||[];
     const hidden=new Set((blocked||[]).map(x=>x.blocked_id));
@@ -4030,6 +4249,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     const contactList=[selfContact,...visible];
     setContacts(contactList);
     setUnread((un||[]).length);
+    buildContactMeta(recent||[]);
     await ensureProfiles(contactList);
     setContactsLoading(false);
   };
@@ -4048,6 +4268,11 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const openConversation=async(person)=>{
     setSelected(person);
     setTextMsg('');
+    setChatSearch('');
+    setShowChatSearch(false);
+    setShowEmojiTray(false);
+    setMessageMenuId(null);
+    setReactionPickerFor(null);
     await Promise.all([loadConversation(person),checkBlockStatus(person)]);
   };
 
@@ -4067,15 +4292,12 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     if(!textMsg.trim()||!selected||busy||chatBlocked)return;
     setBusy(true);
     const blocked=await checkBlockStatus(selected);
-    if(blocked){
-      setBusy(false);
-      toast('امکان ارسال پیام وجود ندارد','warning');
-      return;
-    }
+    if(blocked){setBusy(false);toast('امکان ارسال پیام وجود ندارد','warning');return;}
     const {error}=await SB.from('messages').insert({sender_id:user.id,receiver_id:selected.id,content:textMsg.trim(),reactions:{}});
     setBusy(false);
     if(error){toast('خطا در ارسال پیام: '+error.message,'error');return;}
     setTextMsg('');
+    setShowEmojiTray(false);
     await loadConversation(selected);
   };
 
@@ -4084,13 +4306,13 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     if(!editingMessageId||!editingMessageText.trim())return;
     const {error}=await SB.from('messages').update({content:editingMessageText.trim(),edited:true,edited_at:new Date().toISOString()}).eq('id',editingMessageId).eq('sender_id',user.id);
     if(error){toast('خطا در ویرایش پیام: '+error.message,'error');return;}
-    setEditingMessageId(null);setEditingMessageText('');await loadConversation(selected);toast('✅ پیام ویرایش شد','success');
+    setEditingMessageId(null);setEditingMessageText('');await loadConversation(selected);toast('پیام ویرایش شد','success');
   };
   const deleteSocialMessage=async(id)=>{
     if(!confirm('این پیام برای همه حذف شود؟'))return;
     const {error}=await SB.from('messages').delete().eq('id',id).eq('sender_id',user.id);
     if(error){toast('خطا در حذف پیام برای همه: '+error.message,'error');return;}
-    setMessageMenuId(null);await loadConversation(selected);toast('🗑️ پیام برای همه حذف شد','warning');
+    setMessageMenuId(null);await loadConversation(selected);toast('پیام برای همه حذف شد','warning');
   };
   const toggleSocialReaction=async(msg,emoji)=>{
     const reactions={...(msg.reactions||{})};
@@ -4102,79 +4324,122 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     if(error){toast('خطا در ثبت ریکشن','error');return;}
     setReactionPickerFor(null);setMessageMenuId(null);await loadConversation(selected);
   };
+  const copyMessage=async(text)=>{
+    try{await navigator.clipboard.writeText(text||'');toast('پیام کپی شد','success');}
+    catch{toast('امکان کپی پیام نیست','error');}
+    setMessageMenuId(null);
+  };
 
   const prof=(id)=>profiles[id]?.avatar_url||'🐱';
   const selectedName=selected?(profiles[selected.id]?.display_name||selected.full_name||selected.username||'مخاطب'):'';
   const selectedAvatar=selected?prof(selected.id):'🐱';
+  const filteredContacts=contacts.filter(c=>{
+    const q=contactSearch.trim().toLowerCase();
+    if(!q)return true;
+    const n=(profiles[c.id]?.display_name||c.full_name||'').toLowerCase();
+    return n.includes(q)||(c.username||'').toLowerCase().includes(q);
+  });
+  const filteredMessages=messages.filter(m=>!chatSearch.trim()||(m.content||'').toLowerCase().includes(chatSearch.trim().toLowerCase()));
+  const dateKey=(v)=>new Date(v).toLocaleDateString('fa-IR');
+  const formatPreview=(v)=>{const x=(v||'').replace(/\s+/g,' ').trim();return x.length>38?x.slice(0,38)+'…':x;};
+  const formatContactTime=(v)=>{if(!v)return'';try{return new Date(v).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'});}catch{return'';}};
 
   const chatUI=<div className={`modal-overlay ${fullScreen?'social-fullscreen-overlay':''}`} onClick={onClose}>
-    <div className={`glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up ${fullScreen?'social-chat-fullscreen':''}`} onClick={e=>e.stopPropagation()}>
+    <div className={`glass-strong social-chat w-full max-w-md h-[82vh] flex flex-col p-3 slide-up ${fullScreen?'social-chat-fullscreen telegram-chat-shell':''}`} onClick={e=>{e.stopPropagation();if(messageMenuId&&!e.target.closest?.('.social-message-more,.social-message-menu'))setMessageMenuId(null);}}>
       {!selected? <>
-        <div className="social-chat-header messenger-list-header">
+        <div className="social-chat-header messenger-list-header telegram-list-header">
           <div className="messenger-title-wrap">
             <div className="messenger-brand">Tadbir</div>
             <div className="messenger-subtitle">پیام رسان</div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="badge badge-new">{contacts.length} مخاطب</span>
+            {unread>0&&<span className="telegram-top-unread">{unread}</span>}
             <button aria-label="بستن پیام رسان" onClick={onClose} className="chat-close-btn"><Icon d={Icons.x} size={18}/></button>
           </div>
         </div>
-        <div className="messenger-contacts-scroll">
+        <div className="telegram-contact-search">
+          <span>⌕</span>
+          <input value={contactSearch} onChange={e=>setContactSearch(e.target.value)} placeholder="جستجو در مخاطبین"/>
+          {contactSearch&&<button type="button" onClick={()=>setContactSearch('')}>×</button>}
+        </div>
+        <div className="messenger-contacts-scroll telegram-contact-list">
           {contactsLoading?<div className="messenger-loading"><span className="follow-spinner"></span><p>در حال آماده‌سازی مخاطبین...</p></div>:
-           contacts.length===0?<p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p>:
-           contacts.map(c=><button type="button" className="social-contact w-full text-right" key={c.id} onClick={()=>openConversation(c)}>
-            <div className="relative"><div className="social-mini-avatar">{prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id)}</div>{Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
-            <div className="min-w-0 flex-1"><div className="social-contact-name"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b>{c.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">{c.is_self?'فضای شخصی · پیام‌های ذخیره‌شده':(c.role==='admin'?'مدیر':'دانش‌آموز')+' · @'+c.username}</span></div>
-            <Icon d={Icons.arrowLeft} size={16} className="text-white/25"/>
-          </button>)}
+           filteredContacts.length===0?<div className="telegram-empty-list">مخاطبی پیدا نشد</div>:
+           filteredContacts.map(c=>{
+             const meta=contactMeta[c.id]||{};
+             return <button type="button" className={`social-contact telegram-contact-row w-full text-right ${c.is_self?'telegram-saved-row':''}`} key={c.id} onClick={()=>openConversation(c)}>
+              <div className="relative"><div className="social-mini-avatar telegram-contact-avatar">{c.is_self?'🔖':(prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id))}</div>{!c.is_self&&Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
+              <div className="min-w-0 flex-1 telegram-contact-copy">
+                <div className="telegram-contact-top"><div className="social-contact-name"><b className="text-sm block truncate">{c.is_self?'فضای شخصی':(profiles[c.id]?.display_name||c.full_name)}</b>{c.role==='admin'&&!c.is_self&&<VerifiedBadge/>}</div><span className="telegram-contact-time">{formatContactTime(meta.created_at)}</span></div>
+                <div className="telegram-contact-bottom"><span className="telegram-last-message">{c.is_self?(meta.content?formatPreview(meta.content):'پیام‌های ذخیره‌شده'):(meta.content?formatPreview(meta.content):((c.role==='admin'?'مدیر':'دانش‌آموز')+' · @'+c.username))}</span>{meta.unread>0&&<span className="telegram-unread-badge">{meta.unread}</span>}</div>
+              </div>
+            </button>
+           })}
         </div>
       </> : <>
-        <div className="social-chat-header conversation-header">
-          <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
-          <button type="button" className="chat-person-trigger conversation-person" onClick={()=>setProfilePerson(selected)}>
-            <div className="social-mini-avatar conversation-avatar">{selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar}</div>
-            <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selected?.is_self?'فضای شخصی':selectedName}</b>{selected.role==='admin'&&<VerifiedBadge/>}</div><span>{selected?.is_self?'پیام‌های ذخیره‌شده':'آخرین بازدید به تازگی'}</span></div>
+        <div className="social-chat-header conversation-header telegram-conversation-header">
+          <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);setShowChatSearch(false);setShowChatMenu(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
+          <button type="button" className="chat-person-trigger conversation-person" onClick={()=>!selected?.is_self&&setProfilePerson(selected)}>
+            <div className="social-mini-avatar conversation-avatar telegram-conversation-avatar">{selected?.is_self?'🔖':(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div>
+            <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selected?.is_self?'فضای شخصی':selectedName}</b>{selected.role==='admin'&&!selected?.is_self&&<VerifiedBadge/>}</div><span>{selected?.is_self?'پیام‌های ذخیره‌شده':'آخرین بازدید به تازگی'}</span></div>
           </button>
-          <button aria-label="بستن چت" onClick={onClose} className="chat-close-btn"><Icon d={Icons.x} size={18}/></button>
+          <div className="telegram-header-actions">
+            <button aria-label="جستجو در گفتگو" type="button" onClick={()=>{setShowChatSearch(v=>!v);setShowChatMenu(false);}} className="telegram-icon-btn">⌕</button>
+            <button aria-label="منوی گفتگو" type="button" onClick={()=>setShowChatMenu(v=>!v)} className="telegram-icon-btn">⋮</button>
+          </div>
+          {showChatMenu&&<div className="telegram-chat-menu">
+            {!selected?.is_self&&<button type="button" onClick={()=>{setProfilePerson(selected);setShowChatMenu(false);}}>👤 مشاهده پروفایل</button>}
+            <button type="button" onClick={()=>{setShowChatSearch(true);setShowChatMenu(false);}}>⌕ جستجو در گفتگو</button>
+            <button type="button" onClick={()=>{endRef.current?.scrollIntoView({behavior:'smooth'});setShowChatMenu(false);}}>↓ رفتن به آخر گفتگو</button>
+          </div>}
         </div>
-        <div className="chat-messages-scroll">
-          {messages.length===0&&!chatBlocked&&<div className="chat-empty-state"><div className="chat-empty-avatar">{selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar}</div><b>گفتگو با {selectedName}</b><span>پیام‌ها در اینجا نمایش داده می‌شوند.</span></div>}
-          {messages.map(m=>{
+        {showChatSearch&&<div className="telegram-chat-search">
+          <span>⌕</span><input autoFocus value={chatSearch} onChange={e=>setChatSearch(e.target.value)} placeholder="جستجو در این گفتگو"/><button type="button" onClick={()=>{setChatSearch('');setShowChatSearch(false);}}>×</button>
+        </div>}
+        <div className={`chat-messages-scroll telegram-message-canvas ${showChatSearch?'has-search':''}`}>
+          {filteredMessages.length===0&&!chatBlocked&&<div className="chat-empty-state telegram-empty-chat"><div className="chat-empty-avatar">{selected?.is_self?'🔖':(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div><b>{selected?.is_self?'فضای شخصی':`گفتگو با ${selectedName}`}</b><span>{chatSearch?'پیامی مطابق جستجو پیدا نشد.':(selected?.is_self?'هر چیزی که می‌خواهی برای خودت نگه داری اینجا بفرست.':'پیام‌ها در اینجا نمایش داده می‌شوند.')}</span></div>}
+          {filteredMessages.map((m,i,arr)=>{
             const isMe=m.sender_id===user.id;
             const reactions=m.reactions||{};
-            return <div key={m.id} className={`social-message-row ${isMe?'mine':'theirs'}`}>
-              <div className={`social-bubble-wrap ${isMe?'mine':'theirs'}`}>
-                {editingMessageId===m.id ? <div className="social-edit-box">
-                  <input autoFocus className="glass-input social-edit-input" value={editingMessageText} onChange={e=>setEditingMessageText(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')saveSocialEdit();if(e.key==='Escape'){setEditingMessageId(null);setEditingMessageText('');}}}/>
-                  <div className="social-edit-actions"><button className="btn-glass btn-sm btn-glass-success" onClick={saveSocialEdit}>✓ ذخیره</button><button className="btn-glass btn-sm" onClick={()=>{setEditingMessageId(null);setEditingMessageText('');}}>انصراف</button></div>
-                </div> : <>
-                  <div className={`social-bubble ${isMe?'me':'other'}`}>
-                    <div>{m.content}</div>
-                    <span className="social-bubble-meta">{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}{isMe?' ✓':''}{m.edited?' · ویرایش شده':''}</span>
-                  </div>
-                  <button type="button" className="social-message-more" aria-label="گزینه‌های پیام" onClick={()=>{setMessageMenuId(messageMenuId===m.id?null:m.id);setReactionPickerFor(null);}}>⋯</button>
-                  {messageMenuId===m.id&&<div className={`social-message-menu ${isMe?'mine':'theirs'}`}>
-                    <button type="button" onClick={()=>{setReactionPickerFor(m.id);setMessageMenuId(null);}}>😊 ریکشن</button>
-                    {isMe&&<button type="button" onClick={()=>startSocialEdit(m)}>✏️ ویرایش پیام</button>}
-                    {isMe&&<button type="button" className="danger" onClick={()=>deleteSocialMessage(m.id)}>🗑️ حذف برای همه</button>}
-                  </div>}
-                  {reactionPickerFor===m.id&&<div className={`social-reaction-picker ${isMe?'mine':'theirs'}`}>
-                    {REACTION_EMOJIS.map(e=><button type="button" key={e} onClick={()=>toggleSocialReaction(m,e)}>{e}</button>)}
-                  </div>}
-                  {Object.keys(reactions).length>0&&<div className={`social-reactions ${isMe?'mine':'theirs'}`}>
-                    {Object.entries(reactions).map(([emoji,ids])=><button type="button" key={emoji} className={ids.includes(user.id)?'active':''} onClick={()=>toggleSocialReaction(m,emoji)}>{emoji} <small>{ids.length}</small></button>)}
-                  </div>}
-                </>}
+            const showDate=i===0||dateKey(arr[i-1]?.created_at)!==dateKey(m.created_at);
+            return <React.Fragment key={m.id}>
+              {showDate&&<div className="telegram-date-chip">{dateKey(m.created_at)}</div>}
+              <div className={`social-message-row telegram-message-row ${isMe?'mine':'theirs'}`}>
+                <div className={`social-bubble-wrap telegram-bubble-wrap ${isMe?'mine':'theirs'}`}>
+                  {editingMessageId===m.id ? <div className="social-edit-box telegram-edit-box">
+                    <input autoFocus className="glass-input social-edit-input" value={editingMessageText} onChange={e=>setEditingMessageText(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')saveSocialEdit();if(e.key==='Escape'){setEditingMessageId(null);setEditingMessageText('');}}}/>
+                    <div className="social-edit-actions"><button className="btn-glass btn-sm btn-glass-success" onClick={saveSocialEdit}>✓ ذخیره</button><button className="btn-glass btn-sm" onClick={()=>{setEditingMessageId(null);setEditingMessageText('');}}>انصراف</button></div>
+                  </div> : <>
+                    <div className={`social-bubble telegram-bubble ${isMe?'me':'other'}`} onContextMenu={e=>{e.preventDefault();setMessageMenuId(m.id);setReactionPickerFor(null);}}>
+                      <div className="telegram-message-text">{m.content}</div>
+                      <span className="social-bubble-meta telegram-message-meta">{m.edited&&<em>ویرایش شده</em>}<time>{new Date(m.created_at).toLocaleTimeString('fa-IR',{hour:'2-digit',minute:'2-digit'})}</time>{isMe&&<span className={`telegram-checks ${m.read_at?'read':''}`}>{m.read_at?'✓✓':'✓'}</span>}</span>
+                    </div>
+                    <button type="button" className="social-message-more telegram-message-more" aria-label="گزینه‌های پیام" onClick={()=>{setMessageMenuId(messageMenuId===m.id?null:m.id);setReactionPickerFor(null);}}>⋯</button>
+                    {messageMenuId===m.id&&<div className={`social-message-menu telegram-message-menu ${isMe?'mine':'theirs'}`}>
+                      <button type="button" onClick={()=>{setReactionPickerFor(m.id);setMessageMenuId(null);}}>😊 ریکشن</button>
+                      <button type="button" onClick={()=>copyMessage(m.content)}>📋 کپی پیام</button>
+                      {isMe&&<button type="button" onClick={()=>startSocialEdit(m)}>✏️ ویرایش پیام</button>}
+                      {isMe&&<button type="button" className="danger" onClick={()=>deleteSocialMessage(m.id)}>🗑️ حذف برای همه</button>}
+                    </div>}
+                    {reactionPickerFor===m.id&&<div className={`social-reaction-picker telegram-reaction-picker ${isMe?'mine':'theirs'}`}>
+                      {REACTION_EMOJIS.map(e=><button type="button" key={e} onClick={()=>toggleSocialReaction(m,e)}>{e}</button>)}
+                    </div>}
+                    {Object.keys(reactions).length>0&&<div className={`social-reactions telegram-reactions ${isMe?'mine':'theirs'}`}>
+                      {Object.entries(reactions).map(([emoji,ids])=><button type="button" key={emoji} className={ids.includes(user.id)?'active':''} onClick={()=>toggleSocialReaction(m,emoji)}>{emoji} <small>{ids.length}</small></button>)}
+                    </div>}
+                  </>}
+                </div>
               </div>
-            </div>;
+            </React.Fragment>;
           })}
           {chatBlocked&&<div className="chat-blocked-notice"><div>🔒</div><b>امکان ارسال پیام وجود ندارد</b><span>این گفتگو به دلیل مسدودسازی غیرفعال شده است.</span></div>}
           <div ref={endRef}/>
         </div>
-        {!chatBlocked?<div className="chat-composer" ref={composerRef}>
-          <input aria-label="متن پیام" className="glass-input flex-1" placeholder={`پیام به ${selectedName}...`} value={textMsg} onChange={e=>setTextMsg(e.target.value)} onFocus={()=>setTimeout(()=>{try{composerRef.current?.scrollIntoView({block:'nearest'});}catch(e){}},60)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}}/>
-          <button aria-label="ارسال پیام" className="btn-glass btn-glass-success btn-sm chat-send-btn" onClick={send} disabled={busy||!textMsg.trim()}><Icon d={Icons.send} size={18}/></button>
+        {!chatBlocked?<div className="chat-composer telegram-composer" ref={composerRef}>
+          <button type="button" className="telegram-composer-icon" aria-label="ایموجی" onClick={()=>setShowEmojiTray(v=>!v)}>☺</button>
+          <input aria-label="متن پیام" className="glass-input flex-1 telegram-message-input" placeholder={selected?.is_self?'پیام ذخیره‌شده...':`پیام به ${selectedName}...`} value={textMsg} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}}/>
+          <button aria-label="ارسال پیام" className="btn-glass btn-glass-success btn-sm chat-send-btn telegram-send-btn" onClick={send} disabled={busy||!textMsg.trim()}><Icon d={Icons.send} size={18}/></button>
+          {showEmojiTray&&<div className="telegram-emoji-tray">{REACTION_EMOJIS.map(e=><button type="button" key={e} onClick={()=>{setTextMsg(t=>t+e);setShowEmojiTray(false);}}>{e}</button>)}</div>}
         </div>:<div className="chat-composer chat-composer-disabled"><span>امکان ارسال پیام وجود ندارد</span></div>}
       </>}
     </div>
