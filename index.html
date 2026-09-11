@@ -1463,6 +1463,41 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
 }
 </style>
 
+
+<style id="tadbir-v29-personal-space-message-menu">
+.tadbir-message-more{
+  min-width:30px!important;width:30px!important;height:28px!important;
+  padding:0!important;border-radius:10px!important;
+  font-size:21px!important;line-height:20px!important;
+  display:inline-flex!important;align-items:center;justify-content:center;
+}
+.tadbir-message-menu{
+  position:absolute;
+  bottom:34px;
+  min-width:142px;
+  z-index:40;
+  padding:6px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  background:rgba(24,18,43,.96);
+  backdrop-filter:blur(18px);
+  box-shadow:0 18px 45px rgba(0,0,0,.38);
+  animation:tadbirMenuIn .16s ease-out;
+}
+.chat-actions[style*="justify-content:flex-end"] .tadbir-message-menu{right:0}
+.chat-actions[style*="justify-content:flex-start"] .tadbir-message-menu{left:0}
+.tadbir-message-menu button{
+  width:100%;border:0;background:transparent;color:#fff;
+  padding:9px 10px;border-radius:9px;text-align:right;
+  font-size:12px;cursor:pointer;
+}
+.tadbir-message-menu button:hover{background:rgba(255,255,255,.08)}
+.tadbir-message-menu button.danger{color:#fb7185}
+@keyframes tadbirMenuIn{
+  from{opacity:0;transform:translateY(5px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -2443,6 +2478,7 @@ function ChatModal({user,onClose}){
   const [editText,setEditText]=useState('');
   const [reactionPickerFor,setReactionPickerFor]=useState(null);
   const [deletingId,setDeletingId]=useState(null);
+  const [messageMenuId,setMessageMenuId]=useState(null);
   const toast=useToast();
   const messagesEndRef=useRef(null);
 
@@ -2526,14 +2562,20 @@ function ChatModal({user,onClose}){
                   <>
                     <div className={`chat-bubble ${isMe?'me':'other'} ${m.edited?'edited':''} ${isDeleting?'deleting':''}`}>
                       <div>{m.content}</div><span className="chat-meta">{m.created_at?new Date(m.created_at).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"}):""}{m.edited?" · ویرایش شده":""}</span>
-                      <div className="chat-actions" style={{justifyContent:isMe?'flex-end':'flex-start'}}>
-                        {isMe&&(
-                          <>
-                            <button onClick={()=>startEdit(m)} className="chat-action-btn">✏️ ویرایش</button>
-                            <button onClick={()=>deleteMessage(m.id)} className="chat-action-btn">🗑️ حذف</button>
-                          </>
+                      <div className="chat-actions" style={{justifyContent:isMe?'flex-end':'flex-start',position:'relative'}}>
+                        <button
+                          type="button"
+                          aria-label="گزینه‌های پیام"
+                          className="chat-action-btn tadbir-message-more"
+                          onClick={()=>{setMessageMenuId(messageMenuId===m.id?null:m.id);setReactionPickerFor(null);}}
+                        >⋯</button>
+                        {messageMenuId===m.id&&(
+                          <div className="tadbir-message-menu">
+                            <button type="button" onClick={()=>{setReactionPickerFor(m.id);setMessageMenuId(null);}}>😊 ریکشن</button>
+                            {isMe&&<button type="button" onClick={()=>{startEdit(m);setMessageMenuId(null);}}>✏️ ویرایش پیام</button>}
+                            {isMe&&<button type="button" className="danger" onClick={()=>{deleteMessage(m.id);setMessageMenuId(null);}}>🗑️ حذف پیام</button>}
+                          </div>
                         )}
-                        {!isMe&&(<button onClick={()=>setReactionPickerFor(reactionPickerFor===m.id?null:m.id)} className="chat-action-btn">😊 واکنش</button>)}
                       </div>
                     </div>
                     {reactionPickerFor===m.id&&(
@@ -2661,7 +2703,7 @@ function Admin({user,tab,setTab,onLogout}){
       const payload={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
       let {error:qe}=await SB.from('questions').insert(payload);
       if(qe){
-        const fallback={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
+        const fallback={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
         const {error:qe2}=await SB.from('questions').insert(fallback);
         if(qe2){toast('خطا در ذخیره سوال: '+qe2.message,'error');setLoading(false);return;}
       }
@@ -2682,13 +2724,34 @@ function Admin({user,tab,setTab,onLogout}){
   };
   const handleOptionImageUpload=async(file,i,opt)=>{
     if(!file)return;
-    const ext=file.name.split('.').pop();
+    const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
     const path=`option-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const {error}=await SB.storage.from('exam-images').upload(path,file);
-    if(error){toast('خطا در آپلود عکس گزینه: '+error.message,'error');return;}
-    const {data:{publicUrl}}=SB.storage.from('exam-images').getPublicUrl(path);
-    setQuestions(prev=>prev.map((q,idx)=>idx===i?{...q,[`opt_${opt}_image`]:publicUrl}:q));
-    toast('✅ عکس گزینه ذخیره شد','success');
+    try{
+      const {error}=await SB.storage.from('exam-images').upload(path,file,{contentType:file.type||'image/jpeg',upsert:false});
+      if(!error){
+        const {data}=SB.storage.from('exam-images').getPublicUrl(path);
+        const publicUrl=data?.publicUrl;
+        if(publicUrl){
+          setQuestions(prev=>prev.map((q,idx)=>idx===i?{...q,[`opt_${opt}_image`]:publicUrl}:q));
+          toast('✅ عکس گزینه آپلود و ذخیره شد','success');
+          return;
+        }
+      }
+      /* If Storage policy blocks the bucket, keep the feature working by
+         embedding a compact local data URL in the question draft. */
+      const reader=new FileReader();
+      reader.onload=()=>{
+        setQuestions(prev=>prev.map((q,idx)=>idx===i?{...q,[`opt_${opt}_image`]:reader.result}:q));
+        toast('✓ عکس گزینه در سوال قرار گرفت؛ هنگام ذخیره آزمون ثبت می‌شود','success');
+      };
+      reader.onerror=()=>toast('خطا در خواندن تصویر گزینه','error');
+      reader.readAsDataURL(file);
+    }catch(err){
+      const reader=new FileReader();
+      reader.onload=()=>setQuestions(prev=>prev.map((q,idx)=>idx===i?{...q,[`opt_${opt}_image`]:reader.result}:q));
+      reader.onerror=()=>toast('خطا در خواندن تصویر گزینه','error');
+      reader.readAsDataURL(file);
+    }
   };
 
   const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
@@ -3939,7 +4002,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     const map={};
     (data||[]).forEach(p=>map[p.user_id]=p);
     for(const u of list){
-      if(!map[u.id])map[u.id]={user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:'🐱'};
+      if(!map[u.id])map[u.id]={user_id:u.id,display_name:u.full_name||u.username,bio:'',avatar_url:u.id===user.id?'💜':'🐱'};
     }
     setProfiles(map);
   };
@@ -3954,14 +4017,16 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     const list=users||[];
     const hidden=new Set((blocked||[]).map(x=>x.blocked_id));
     const visible=list.filter(x=>!hidden.has(x.id));
-    setContacts(visible);
+    const selfContact={id:user.id,full_name:user.full_name||user.username||'فضای شخصی',username:user.username||'self',role:user.role||'student',last_seen_at:new Date().toISOString(),is_self:true};
+    const contactList=[selfContact,...visible];
+    setContacts(contactList);
     setUnread((un||[]).length);
-    await ensureProfiles(visible);
+    await ensureProfiles(contactList);
     setContactsLoading(false);
   };
 
   const checkBlockStatus=async(person)=>{
-    if(!person){setChatBlocked(false);return false;}
+    if(!person||person.is_self){setChatBlocked(false);return false;}
     const [{data:b1},{data:b2}]=await Promise.all([
       SB.from('blocks').select('id').eq('blocker_id',user.id).eq('blocked_id',person.id).maybeSingle(),
       SB.from('blocks').select('id').eq('blocker_id',person.id).eq('blocked_id',user.id).maybeSingle()
@@ -4027,7 +4092,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
            contacts.length===0?<p className="text-center text-white/30 mt-12">مخاطبی پیدا نشد</p>:
            contacts.map(c=><button type="button" className="social-contact w-full text-right" key={c.id} onClick={()=>openConversation(c)}>
             <div className="relative"><div className="social-mini-avatar">{prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id)}</div>{Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
-            <div className="min-w-0 flex-1"><div className="social-contact-name"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b>{c.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">{c.role==='admin'?'مدیر':'دانش‌آموز'} · @{c.username}</span></div>
+            <div className="min-w-0 flex-1"><div className="social-contact-name"><b className="text-sm block truncate">{profiles[c.id]?.display_name||c.full_name}</b>{c.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">{c.is_self?'فضای شخصی · پیام‌های ذخیره‌شده':(c.role==='admin'?'مدیر':'دانش‌آموز')+' · @'+c.username}</span></div>
             <Icon d={Icons.arrowLeft} size={16} className="text-white/25"/>
           </button>)}
         </div>
@@ -4036,7 +4101,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
           <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
           <button type="button" className="chat-person-trigger conversation-person" onClick={()=>setProfilePerson(selected)}>
             <div className="social-mini-avatar conversation-avatar">{selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar}</div>
-            <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selectedName}</b>{selected.role==='admin'&&<VerifiedBadge/>}</div><span>آخرین بازدید به تازگی</span></div>
+            <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selected?.is_self?'فضای شخصی':selectedName}</b>{selected.role==='admin'&&<VerifiedBadge/>}</div><span>{selected?.is_self?'پیام‌های ذخیره‌شده':'آخرین بازدید به تازگی'}</span></div>
           </button>
           <button aria-label="بستن چت" onClick={onClose} className="chat-close-btn"><Icon d={Icons.x} size={18}/></button>
         </div>
