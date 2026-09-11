@@ -2105,6 +2105,11 @@ const Icons={
   lock:"M7 11V8a5 5 0 0 1 10 0v3 M5 11h14v10H5z M12 15v2"
 };
 
+// Dedicated visual identity for Tadbir's personal/saved-messages space.
+function SavedSpaceAvatar({className=''}){
+  return <span className={`saved-space-avatar ${className}`} aria-label="فضای شخصی"><Icon d={Icons.book} size={22}/></span>;
+}
+
 // Star Rating Component - Enhanced
 function StarRating({score}){
   const getStars=()=>{
@@ -4748,8 +4753,8 @@ function SocialChatModal({user,onClose,fullScreen=false}){
           </div>
         </div>
         <div className="telegram-stories-strip">
-          <button type="button" className="tg-story-item tg-story-add" onClick={()=>setShowStoryComposer(true)}>
-            <div className="tg-story-ring"><div className="tg-story-ring-inner">＋</div></div>
+          <button type="button" className="tg-story-item tg-story-add" onClick={()=>setShowStoryComposer(true)} aria-label="افزودن استوری">
+            <div className="tg-story-ring"><div className="tg-story-ring-inner">{(()=>{const av=prof(user.id)||'🐱'; return av?.startsWith?.('data:image')?<img src={av} alt="پروفایل شما"/>:av;})()}</div></div>
             <span className="tg-story-name">استوری شما</span>
           </button>
           {[...publicStories.filter(x=>String(x.author_id)!==String(user.id)),...stories].reduce((arr,x)=>{
@@ -4775,7 +4780,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
            filteredContacts.map(c=>{
              const meta=contactMeta[c.id]||{};
              return <button type="button" className={`social-contact telegram-contact-row w-full text-right ${c.is_self?'telegram-saved-row':''}`} key={c.id} onClick={()=>openConversation(c)}>
-              <div className="relative"><div className="social-mini-avatar telegram-contact-avatar">{c.is_self?'🔖':(prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id))}</div>{!c.is_self&&Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
+              <div className="relative"><div className="social-mini-avatar telegram-contact-avatar">{c.is_self?<SavedSpaceAvatar/>:(prof(c.id)?.startsWith('data:image')?<img src={prof(c.id)} alt=""/>:prof(c.id))}</div>{!c.is_self&&Date.now()-new Date(c.last_seen_at||0).getTime()<180000?<span className="online-dot"/>:null}</div>
               <div className="min-w-0 flex-1 telegram-contact-copy">
                 <div className="telegram-contact-top"><div className="social-contact-name"><b className="text-sm block truncate">{c.is_self?'فضای شخصی':(profiles[c.id]?.display_name||c.full_name)}</b>{c.role==='admin'&&!c.is_self&&<VerifiedBadge/>}</div><span className="telegram-contact-time">{formatContactTime(meta.created_at)}</span></div>
                 <div className="telegram-contact-bottom"><span className="telegram-last-message">{c.is_self?(meta.content?formatPreview(meta.content):'پیام‌های ذخیره‌شده'):(meta.content?formatPreview(meta.content):((c.role==='admin'?'مدیر':'دانش‌آموز')+' · @'+c.username))}</span>{meta.unread>0&&<span className="telegram-unread-badge">{meta.unread}</span>}</div>
@@ -4787,7 +4792,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
         <div className="social-chat-header conversation-header telegram-conversation-header">
           <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);setShowChatSearch(false);setShowChatMenu(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
           <button type="button" className="chat-person-trigger conversation-person" onClick={()=>!selected?.is_self&&setProfilePerson(selected)}>
-            <div className="social-mini-avatar conversation-avatar telegram-conversation-avatar">{selected?.is_self?'🔖':(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div>
+            <div className="social-mini-avatar conversation-avatar telegram-conversation-avatar">{selected?.is_self?<SavedSpaceAvatar/>:(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div>
             <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selected?.is_self?'فضای شخصی':selectedName}</b>{selected.role==='admin'&&!selected?.is_self&&<VerifiedBadge/>}</div><span>{selected?.is_self?'پیام‌های ذخیره‌شده':'آخرین بازدید به تازگی'}</span></div>
           </button>
           <div className="telegram-header-actions">
@@ -4804,7 +4809,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
           <span>⌕</span><input autoFocus value={chatSearch} onChange={e=>setChatSearch(e.target.value)} placeholder="جستجو در این گفتگو"/><button type="button" onClick={()=>{setChatSearch('');setShowChatSearch(false);}}>×</button>
         </div>}
         <div className={`chat-messages-scroll telegram-message-canvas ${showChatSearch?'has-search':''}`}>
-          {filteredMessages.length===0&&!chatBlocked&&<div className="chat-empty-state telegram-empty-chat"><div className="chat-empty-avatar">{selected?.is_self?'🔖':(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div><b>{selected?.is_self?'فضای شخصی':`گفتگو با ${selectedName}`}</b><span>{chatSearch?'پیامی مطابق جستجو پیدا نشد.':(selected?.is_self?'هر چیزی که می‌خواهی برای خودت نگه داری اینجا بفرست.':'پیام‌ها در اینجا نمایش داده می‌شوند.')}</span></div>}
+          {filteredMessages.length===0&&!chatBlocked&&<div className="chat-empty-state telegram-empty-chat"><div className="chat-empty-avatar">{selected?.is_self?<SavedSpaceAvatar/>:(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div><b>{selected?.is_self?'فضای شخصی':`گفتگو با ${selectedName}`}</b><span>{chatSearch?'پیامی مطابق جستجو پیدا نشد.':(selected?.is_self?'هر چیزی که می‌خواهی برای خودت نگه داری اینجا بفرست.':'پیام‌ها در اینجا نمایش داده می‌شوند.')}</span></div>}
           {filteredMessages.map((m,i,arr)=>{
             const isMe=m.sender_id===user.id;
             const reactions=m.reactions||{};
@@ -4861,7 +4866,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
       </>}
     </div>
     {showStoryComposer&&<div className="tg-story-viewer" onClick={()=>setShowStoryComposer(false)}><div className="tg-story-composer glass-strong" onClick={e=>e.stopPropagation()}>
-      <div className="tg-composer-head"><div><b>استوری جدید</b><span>برای دوستانت یک استوری بگذار</span></div><button className="tg-story-close" onClick={()=>setShowStoryComposer(false)}>×</button></div>
+      <div className="tg-composer-head"><div><b>استوری جدید</b><span>حال خودت رو شرح بده</span></div><button className="tg-story-close" onClick={()=>setShowStoryComposer(false)}>×</button></div>
       <div className="tg-composer-actions">
         <button type="button" className="tg-composer-option" onClick={()=>storyInputRef.current?.click()}><span>▣</span><b>انتخاب از گالری</b><small>عکس یا تصویر</small></button>
         <button type="button" className="tg-composer-option" onClick={()=>{if(storyText.trim())addTextStory();else setStoryText('');}}><span>✦</span><b>استوری متنی</b><small>یک متن کوتاه بنویس</small></button>
@@ -4871,7 +4876,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
         <div className="tg-story-image-copy"><b>تصویر آماده انتشار استوری</b><span>{storyImageDraft.name||'تصویر انتخاب‌شده'}</span></div>
       </div>}
       <textarea value={storyText} onChange={e=>setStoryText(e.target.value)} placeholder={storyImageDraft?'متن روی استوری نمی‌رود؛ کپشن را پایین بنویس...':'متن استوری را اینجا بنویس...'} className="tg-story-textarea" style={storyImageDraft?{display:'none'}:undefined}/>
-      <textarea value={storyCaption} onChange={e=>setStoryCaption(e.target.value)} placeholder="کپشن استوری (اختیاری)..." className="tg-story-caption-input" maxLength={180}/>
+      <textarea value={storyCaption} onChange={e=>setStoryCaption(e.target.value)} placeholder="کپشن استوری..." className="tg-story-caption-input" maxLength={180}/>
       <input ref={storyInputRef} type="file" accept="image/*" hidden onChange={e=>{addStory(e.target.files?.[0]);e.target.value='';}}/>
       {storyImageDraft?<button type="button" className="tg-story-publish" onClick={publishImageStory}>انتشار تصویر + کپشن</button>:<button type="button" className="tg-story-publish" onClick={addTextStory} disabled={!storyText.trim()}>انتشار استوری متنی</button>}
     </div></div>}
@@ -5527,6 +5532,26 @@ ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 })();
 </script>
 
+
+<style id="tadbir-v32-profile-story-admin-polish">
+/* Personal space avatar */
+.saved-space-avatar{display:inline-grid;place-items:center;width:100%;height:100%;border-radius:inherit;color:#fff;background:linear-gradient(145deg,#8b5cf6 0%,#6d5ac9 48%,#ec4899 100%);box-shadow:0 8px 22px rgba(139,92,246,.28),inset 0 1px 0 rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.16)}
+.saved-space-avatar svg{filter:drop-shadow(0 2px 4px rgba(0,0,0,.28))}
+.telegram-saved-row .telegram-contact-avatar{padding:3px!important;background:linear-gradient(145deg,rgba(139,92,246,.42),rgba(236,72,153,.22))!important}
+.telegram-conversation-avatar{padding:2px!important}
+
+/* Your story uses the user's real profile instead of a plus glyph. */
+.tg-story-add:after{content:''!important;width:11px!important;height:11px!important;right:0!important;bottom:14px!important;border-radius:50%!important;background:linear-gradient(135deg,#ff5d8f,#ef4444)!important;border:2px solid #171329!important;box-shadow:0 0 0 2px rgba(239,68,68,.12),0 4px 12px rgba(239,68,68,.35)!important}
+.tg-story-add .tg-story-ring-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 0 22px rgba(139,92,246,.18)}
+
+/* Admin option-image controls: clearer upload affordance + reliable preview. */
+.option-image-box{padding:12px!important;border-radius:18px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.075)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)!important}
+.option-image-box>label{display:flex!important;align-items:center!important;gap:7px!important;padding:9px 11px!important;border-radius:12px!important;background:rgba(139,92,246,.10)!important;border:1px dashed rgba(167,139,250,.30)!important;color:rgba(255,255,255,.72)!important;cursor:pointer!important;transition:.2s ease!important}
+.option-image-box>label:hover{background:rgba(139,92,246,.17)!important;border-color:rgba(167,139,250,.55)!important;transform:translateY(-1px)}
+.option-image-box>label:before{content:'▣';display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:linear-gradient(135deg,#8774e1,#ec4899);color:#fff;font-size:12px;box-shadow:0 5px 14px rgba(139,92,246,.22)}
+.option-image-box>input[type=file]{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.option-image-box>img{display:block!important;width:100%!important;max-height:120px!important;object-fit:contain!important;margin-top:9px!important;border-radius:13px!important;border:1px solid rgba(255,255,255,.10)!important;background:rgba(0,0,0,.15)!important;padding:3px!important}
+</style>
 </body>
 </html><style id="tadbir-story-final-fix">
 /* Final story layout fix: compact glass strip, no overlap with search/contacts. */
