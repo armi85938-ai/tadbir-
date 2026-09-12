@@ -2049,7 +2049,20 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
 @keyframes awardFloat{50%{transform:translateY(-3px) rotate(2deg)}}
 @keyframes trophyShine{0%,55%{transform:translateX(-120%)}72%,100%{transform:translateX(120%)}}
 @media(max-width:520px){.trophy-row{grid-template-columns:86px 1fr auto!important;min-height:128px!important}.trophy-art{width:82px!important;height:112px!important}.trophy-info h3{font-size:14px!important}.trophy-buy{min-width:55px;padding:10px 8px!important}}
-</style></head>
+</style><style id="tadbir-royal-trophies-v25">
+/* Royal trophy presentation: transparent art, larger stage, premium metallic shine. */
+.trophy-art{background:transparent!important;overflow:visible!important;display:grid;place-items:center;}
+.trophy-art img,.profile-trophy img,.trophy-celebrate-art img{background:transparent!important;object-fit:contain;mix-blend-mode:normal;}
+.trophy-art img{width:100%!important;height:100%!important;filter:drop-shadow(0 16px 12px rgba(0,0,0,.48)) drop-shadow(0 0 16px rgba(255,215,90,.08));}
+.trophy-row{overflow:visible!important;}
+.profile-trophy{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015))!important;}
+.profile-trophy img{width:68px!important;height:76px!important;filter:drop-shadow(0 10px 8px rgba(0,0,0,.48));}
+.trophy-celebrate-art{background:radial-gradient(circle at 50% 48%,rgba(255,215,100,.13),transparent 44%)!important;}
+.trophy-celebrate-art img{filter:drop-shadow(0 26px 18px rgba(0,0,0,.58)) drop-shadow(0 0 24px rgba(255,215,90,.14))!important;}
+@keyframes royalTrophyHover{0%,100%{transform:translateY(0) rotateZ(0deg)}50%{transform:translateY(-7px) rotateZ(.8deg)}}
+.trophy-row .trophy-art img{animation:royalTrophyHover 4.2s ease-in-out infinite;}
+</style>
+</head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
@@ -2162,35 +2175,53 @@ function SavedSpaceAvatar({className=''}){
 }
 
 const tadbirTrophyArt=(id)=>{
-  const palettes={
-    1:['#55e6a5','#087f63','#d9fff1'],2:['#7dd3fc','#2563eb','#eff6ff'],3:['#c084fc','#6d28d9','#f5e9ff'],
-    4:['#f9a8d4','#be185d','#fff0f8'],5:['#fbbf24','#b45309','#fff7c2'],6:['#34d399','#047857','#ecfdf5'],
-    7:['#f472b6','#7c3aed','#ffe4f1'],8:['#60a5fa','#1d4ed8','#e0f2fe'],9:['#a78bfa','#4338ca','#f3e8ff'],10:['#fcd34d','#92400e','#fff7b2']
+  /* Royal Tadbir trophy set: transparent SVG, metallic materials, no white canvas. */
+  const cfg={
+    1:{metal:'iron',dark:'#242832',mid:'#6f7784',light:'#c8ced6',accent:'#9aa3ad'},
+    2:{metal:'iron',dark:'#1e232b',mid:'#737d8a',light:'#d5d9df',accent:'#aab2bd'},
+    3:{metal:'silver',dark:'#515a68',mid:'#aeb8c6',light:'#f7f9fc',accent:'#dbe3ee',gem:'#8be9ff'},
+    4:{metal:'silver',dark:'#46505f',mid:'#aab5c3',light:'#ffffff',accent:'#d8e1ed',gem:'#ff8bd8'},
+    5:{metal:'gold',dark:'#7a4705',mid:'#d99a16',light:'#fff2a3',accent:'#f6c84d',gem:'#ef4444'},
+    6:{metal:'gold',dark:'#6b3f04',mid:'#d89b1c',light:'#fff6b5',accent:'#ffd95a',gem:'#38bdf8'},
+    7:{metal:'gold',dark:'#754506',mid:'#e0a21a',light:'#fff7bd',accent:'#ffdc63',gem:'#22d3ee'},
+    8:{metal:'gold',dark:'#633900',mid:'#d9920e',light:'#fff0a0',accent:'#ffd34d',gem:'#a78bfa'},
+    9:{metal:'gold',dark:'#5b3200',mid:'#d58c09',light:'#fff0a1',accent:'#ffd84e',gem:'#ef4444'},
+    10:{metal:'gold',dark:'#4b2800',mid:'#d28a08',light:'#fff4ad',accent:'#ffe06a',gem:'#60a5fa'}
   };
-  const [a,b,c]=palettes[id]||palettes[1];
-  const motifs={
-    1:'<path d="M50 74h100l-12 25H62z" fill="'+b+'"/><path d="M61 99h78l-8 18H69z" fill="'+a+'"/>',
-    2:'<path d="M48 77h104l-13 22H61z" fill="'+b+'"/><path d="M70 52h60v28H70z" fill="'+a+'"/>',
-    3:'<path d="M45 76h110l-14 24H59z" fill="'+b+'"/><path d="M68 45h64v34H68z" fill="'+a+'"/>',
-    4:'<path d="M46 76h108l-12 24H58z" fill="'+b+'"/><path d="M73 43h54v36H73z" fill="'+a+'"/>',
-    5:'<path d="M43 76h114l-13 25H56z" fill="'+b+'"/><path d="M66 40h68v39H66z" fill="'+a+'"/>',
-    6:'<path d="M44 76h112l-13 25H57z" fill="'+b+'"/><path d="M67 47h66v32H67z" fill="'+a+'"/>',
-    7:'<path d="M42 76h116l-13 25H55z" fill="'+b+'"/><path d="M64 42h72v37H64z" fill="'+a+'"/>',
-    8:'<path d="M43 76h114l-13 25H56z" fill="'+b+'"/><path d="M65 39h70v40H65z" fill="'+a+'"/>',
-    9:'<path d="M40 76h120l-14 25H54z" fill="'+b+'"/><path d="M62 40h76v39H62z" fill="'+a+'"/>',
-    10:'<path d="M38 76h124l-15 26H53z" fill="'+b+'"/><path d="M60 36h80v44H60z" fill="'+a+'"/>'
-  };
-  const center={1:'<circle cx="100" cy="61" r="20" fill="'+c+'" opacity=".9"/><path d="M100 42l6 12 13 2-9.5 9.5 2.2 13.5L100 73l-11.7 6.2 2.2-13.5L81 56l13-2z" fill="'+a+'"/>',
-  2:'<path d="M100 39l8 16 18 2-13 13 3 18-16-9-16 9 3-18-13-13 18-2z" fill="'+c+'"/><circle cx="100" cy="60" r="9" fill="'+a+'"/>',
-  3:'<path d="M72 49h56v45H72z" fill="'+c+'" opacity=".92"/><path d="M81 58h38M81 68h29M81 78h22" stroke="'+b+'" stroke-width="5" stroke-linecap="round"/>',
-  4:'<path d="M100 42l6 12 13 2-10 10 3 14-12-7-12 7 3-14-10-10 13-2z" fill="'+c+'"/><circle cx="100" cy="61" r="8" fill="'+a+'"/>',
-  5:'<path d="M76 49h48v31H76z" fill="'+c+'"/><path d="M82 49l-9-11M118 49l9-11" stroke="'+a+'" stroke-width="6" stroke-linecap="round"/><path d="M88 59h24M88 69h24" stroke="'+b+'" stroke-width="5" stroke-linecap="round"/>',
-  6:'<path d="M100 40c-19 0-28 17-28 32 0 12 10 21 28 21s28-9 28-21c0-15-9-32-28-32z" fill="'+c+'"/><path d="M100 46c-8 8-13 16-13 25 0 7 5 12 13 12s13-5 13-12c0-9-5-17-13-25z" fill="'+a+'"/>',
-  7:'<circle cx="100" cy="62" r="25" fill="'+c+'"/><path d="M84 64l10-11 8 7 13-14 6 7-19 22z" fill="'+a+'"/>',
-  8:'<path d="M100 40l8 16 18 3-13 13 3 18-16-9-16 9 3-18-13-13 18-3z" fill="'+c+'"/><path d="M100 48v29M86 62h28" stroke="'+b+'" stroke-width="4" stroke-linecap="round"/>',
-  9:'<path d="M100 39l10 18 20 3-15 15 4 20-19-10-19 10 4-20-15-15 20-3z" fill="'+c+'"/><path d="M100 47l7 12 13 2-10 9 2 13-12-7-12 7 2-13-10-9 13-2z" fill="'+a+'"/>',
-  10:'<path d="M100 36l9 15h18l-14 12 6 18-19-9-19 9 6-18-14-12h18z" fill="'+c+'"/><circle cx="100" cy="60" r="8" fill="'+a+'"/>'};
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 230"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c}"/><stop offset=".45" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient><filter id="s" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="${a}" flood-opacity=".45"/></filter></defs><g filter="url(#s)"><path d="M55 34C28 36 26 61 39 76c7 8 16 11 25 12" fill="none" stroke="url(#g)" stroke-width="13" stroke-linecap="round"/><path d="M145 34c27 2 29 27 16 42-7 8-16 11-25 12" fill="none" stroke="url(#g)" stroke-width="13" stroke-linecap="round"/><path d="M55 34h18v40c0 21 11 33 27 33s27-12 27-33V34h18v43c0 30-17 49-45 49S55 107 55 77z" fill="url(#g)"/><path d="M95 122h10v51h-10z" fill="${b}"/><path d="M67 173h66l15 24H52z" fill="url(#g)"/><path d="M58 198h84l-8 18H66z" fill="${b}"/>${motifs[id]}${center[id]}</g><path d="M62 46c9-7 17-8 26-5" stroke="${c}" stroke-width="5" stroke-linecap="round" opacity=".9"/><path d="M137 46c-9-7-17-8-26-5" stroke="${c}" stroke-width="5" stroke-linecap="round" opacity=".9"/></svg>`;
+  const c=cfg[id]||cfg[1];
+  const metallic = c.metal==='gold'
+    ? `<linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c.dark}"/><stop offset=".18" stop-color="${c.mid}"/><stop offset=".42" stop-color="${c.light}"/><stop offset=".57" stop-color="${c.mid}"/><stop offset=".82" stop-color="${c.accent}"/><stop offset="1" stop-color="${c.dark}"/></linearGradient>`
+    : `<linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${c.dark}"/><stop offset=".2" stop-color="${c.mid}"/><stop offset=".42" stop-color="${c.light}"/><stop offset=".58" stop-color="${c.mid}"/><stop offset=".82" stop-color="${c.accent}"/><stop offset="1" stop-color="${c.dark}"/></linearGradient>`;
+  const gem = id>=3 ? `<g class="trophy-gems">
+    <path d="M49 55l-10 10 10 13 10-13z" fill="url(#gem)" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+    <path d="M151 55l10 10-10 13-10-13z" fill="url(#gem)" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+    <path d="M100 40l9 10-9 13-9-13z" fill="url(#gem)" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
+  </g>` : '';
+  const gemDef = id>=3 ? `<radialGradient id="gem" cx="35%" cy="25%"><stop stop-color="#fff"/><stop offset=".18" stop-color="${c.gem}"/><stop offset=".65" stop-color="${c.gem}"/><stop offset="1" stop-color="#111827"/></radialGradient>` : '';
+  const crest = id===1 ? '<path d="M100 48l4 8 9 1-7 6 2 9-8-4-8 4 2-9-7-6 9-1z" fill="#b8c0ca" opacity=".85"/>'
+    : id===2 ? '<path d="M100 46l5 10 11 1-8 8 2 11-10-5-10 5 2-11-8-8 11-1z" fill="#d7dce3" opacity=".9"/>'
+    : `<path d="M100 43l7 13 14 2-10 10 3 14-14-7-14 7 3-14-10-10 14-2z" fill="url(#gem)" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">
+    <defs>${metallic}${gemDef}
+      <filter id="shadow" x="-60%" y="-50%" width="220%" height="220%"><feDropShadow dx="0" dy="13" stdDeviation="8" flood-color="#000" flood-opacity=".55"/></filter>
+      <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff" stop-opacity=".65"/><stop offset=".55" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    </defs>
+    <g filter="url(#shadow)">
+      <path d="M57 38C29 40 26 66 40 82c7 8 16 11 26 12" fill="none" stroke="url(#metal)" stroke-width="15" stroke-linecap="round"/>
+      <path d="M143 38c28 2 31 28 17 44-7 8-16 11-26 12" fill="none" stroke="url(#metal)" stroke-width="15" stroke-linecap="round"/>
+      <path d="M55 35h18v44c0 22 10 35 27 35s27-13 27-35V35h18v46c0 31-17 51-45 51S55 112 55 81z" fill="url(#metal)" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+      <path d="M72 50h56v8H72z" fill="#fff" opacity=".11"/>
+      ${crest}
+      <path d="M95 127h10v48H95z" fill="url(#metal)" stroke="#fff" stroke-opacity=".14"/>
+      <path d="M65 174h70l15 26H50z" fill="url(#metal)" stroke="#fff" stroke-opacity=".2" stroke-width="2"/>
+      <path d="M57 200h86l-8 19H65z" fill="url(#metal)" stroke="#fff" stroke-opacity=".14" stroke-width="2"/>
+      <path d="M65 181h70" stroke="#fff" stroke-opacity=".4" stroke-width="2"/>
+      <path d="M50 35h100" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+      <path d="M45 91h20M135 91h20" stroke="#fff" stroke-opacity=".2" stroke-width="3" stroke-linecap="round"/>
+      <path d="M58 41h84" stroke="url(#shine)" stroke-width="7" opacity=".65"/>
+      ${gem}
+    </g>
+  </svg>`;
   return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
 };
 
@@ -4544,7 +4575,7 @@ function FollowList({userId,type,onClose}){
 function ProfileView({person,onClose,viewerId,onBlockChange}){
   const [profile,setProfile]=useState(null); const [followers,setFollowers]=useState(0); const [following,setFollowing]=useState(0); const [followingMe,setFollowingMe]=useState(false); const [blocked,setBlocked]=useState(false); const [followMode,setFollowMode]=useState(null); const [ownedTrophies,setOwnedTrophies]=useState([]); const [profileCoins,setProfileCoins]=useState(0); const toast=useToast();
   useEffect(()=>{load();},[person?.id]);
-  const load=async()=>{if(!person)return;let {data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle();setProfile(p||{display_name:person.full_name||person.username,bio:'',avatar_url:'🐱'});const [{count:fc},{count:fg},{data:f},{data:b},{data:w},{data:pt}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',person.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',person.id),SB.from('follows').select('id').eq('follower_id',viewerId).eq('following_id',person.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',viewerId).eq('blocked_id',person.id).maybeSingle(),SB.from('tadbir_wallets').select('balance').eq('user_id',String(person.id)).maybeSingle(),SB.from('tadbir_trophy_purchases').select('trophy_id').eq('user_id',String(person.id)).order('trophy_id')]);setFollowers(fc||0);setFollowing(fg||0);setFollowingMe(!!f);setBlocked(!!b);setProfileCoins(Number(w?.balance||0));setOwnedTrophies((pt||[]).map(x=>Number(x.trophy_id)).filter(Boolean));};
+  const load=async()=>{if(!person)return;let {data:p}=await SB.from('profiles').select('*').eq('user_id',person.id).maybeSingle();setProfile(p||{display_name:person.full_name||person.username,bio:'',avatar_url:'🐱'});const [{count:fc},{count:fg},{data:f},{data:b},{data:w},{data:pt}]=await Promise.all([SB.from('follows').select('*',{count:'exact',head:true}).eq('following_id',person.id),SB.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',person.id),SB.from('follows').select('id').eq('follower_id',viewerId).eq('following_id',person.id).maybeSingle(),SB.from('blocks').select('id').eq('blocker_id',viewerId).eq('blocked_id',person.id).maybeSingle(),SB.from('tadbir_wallets').select('balance').eq('user_id',String(person.id)).maybeSingle(),SB.from('tadbir_trophy_purchases').select('trophy_id').eq('user_id',String(person.id)).order('trophy_id')]);setFollowers(fc||0);setFollowing(fg||0);setFollowingMe(!!f);setBlocked(!!b);setProfileCoins(Number(w?.balance||0));setOwnedTrophies(person.role==='admin'?[TADBIR_TROPHIES.length]:(pt||[]).map(x=>Number(x.trophy_id)).filter(Boolean));};
   const follow=async()=>{if(viewerId===person.id)return; if(followingMe){setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));const {error}=await SB.from('follows').delete().eq('follower_id',viewerId).eq('following_id',person.id);if(error){setFollowingMe(true);setFollowers(x=>x+1);toast('امکان لغو دنبال کردن نیست','error');return;}toast('دنبال کردن لغو شد','warning');}else{setFollowingMe(true);setFollowers(x=>x+1);const {error}=await SB.from('follows').insert({follower_id:viewerId,following_id:person.id});if(error){setFollowingMe(false);setFollowers(x=>Math.max(0,x-1));toast('امکان دنبال کردن نیست','error');return;}toast('دنبال شد','success');}};
   const block=async()=>{if(blocked){await SB.from('blocks').delete().eq('blocker_id',viewerId).eq('blocked_id',person.id);setBlocked(false);onBlockChange?.(false);toast('مسدودسازی لغو شد','success');}else{await SB.from('blocks').insert({blocker_id:viewerId,blocked_id:person.id});setBlocked(true);onBlockChange?.(true);toast('کاربر مسدود شد','warning');}};
   if(!person)return null; const av=profile?.avatar_url||'🐱';
