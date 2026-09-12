@@ -938,6 +938,17 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 .tg-composer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.tg-composer-head b{display:block;font-size:17px}.tg-composer-head span{display:block;font-size:10px;color:rgba(255,255,255,.38);margin-top:4px}
 .tg-composer-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tg-composer-option{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.055);color:#fff;border-radius:20px;padding:18px 12px;text-align:right;cursor:pointer;transition:.25s;backdrop-filter:blur(15px)}.tg-composer-option:hover{transform:translateY(-3px);border-color:rgba(139,92,246,.45);background:rgba(139,92,246,.12)}.tg-composer-option span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#8774e1,#ec4899);font-size:20px;margin-bottom:10px}.tg-composer-option b,.tg-composer-option small{display:block}.tg-composer-option small{font-size:9px;color:rgba(255,255,255,.38);margin-top:3px}.tg-story-textarea{width:100%;min-height:105px;margin-top:12px;resize:none;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08);border-radius:18px;color:#fff;padding:13px;outline:none}.tg-story-textarea:focus{border-color:rgba(135,116,225,.55);box-shadow:0 0 0 3px rgba(135,116,225,.1)}.tg-story-publish{width:100%;margin-top:10px;border:0;border-radius:16px;padding:13px;background:linear-gradient(135deg,#8774e1,#6d5ac9);color:#fff;font-weight:900;cursor:pointer}.tg-story-publish:disabled{opacity:.35;cursor:not-allowed}
 @media(max-width:600px){.telegram-stories-strip{top:calc(116px + env(safe-area-inset-top))!important}.telegram-contact-list{top:calc(198px + env(safe-area-inset-top))!important}.tg-story-composer{max-height:78vh;overflow:auto}}
+
+/* FINAL STORY POLISH */
+.telegram-stories-strip .tg-story-item{flex:0 0 86px!important;width:86px!important;min-width:86px!important;height:100px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;}
+.telegram-stories-strip .tg-story-ring{width:78px!important;height:78px!important;min-width:78px!important;min-height:78px!important;aspect-ratio:1/1!important;border-radius:50%!important;overflow:hidden!important;padding:3px!important;box-sizing:border-box!important;}
+.telegram-stories-strip .tg-story-ring-inner{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;aspect-ratio:1/1!important;border-radius:50%!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+.telegram-stories-strip .tg-story-ring-inner img{width:100%!important;height:100%!important;min-width:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;display:block!important;}
+.telegram-stories-strip .tg-story-item.tg-story-add .tg-story-ring{background:linear-gradient(135deg,#8b5cf6,#c084fc,#ec4899)!important;}
+.telegram-stories-strip .tg-story-item.tg-story-add .tg-story-ring-inner{background:rgba(10,8,25,.9)!important;}
+@media(max-width:600px){.telegram-stories-strip .tg-story-item{flex-basis:88px!important;width:88px!important;min-width:88px!important}.telegram-stories-strip .tg-story-ring{width:80px!important;height:80px!important;min-width:80px!important;min-height:80px!important;}}
+.tg-story-publish{position:relative!important;overflow:hidden!important;min-height:52px!important;cursor:pointer!important;}
+.tg-story-publish:active{transform:scale(.98)!important;}
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -4528,6 +4539,19 @@ function SocialChatModal({user,onClose,fullScreen=false}){
 
   const STORY_TTL=24*60*60*1000;
   const storyIsFresh=(x)=>x&&Date.now()-new Date(x.created_at||0).getTime()<STORY_TTL;
+  const loadStoriesFromDB=async()=>{
+    try{
+      const {data,error}=await SB.from('stories').select('*').gt('created_at',new Date(Date.now()-STORY_TTL).toISOString()).order('created_at',{ascending:false}).limit(100);
+      if(error) throw error;
+      const rows=(data||[]).filter(storyIsFresh);
+      setPublicStories(rows.filter(x=>String(x.author_id)!==String(user.id)));
+      setStories(rows.filter(x=>String(x.author_id)===String(user.id)));
+      return rows;
+    }catch(e){
+      console.error('load stories:',e);
+      return null;
+    }
+  };
   const purgeExpiredStories=()=>{
     try{
       const ownKey='tadbir_stories_'+user.id;
@@ -4544,7 +4568,8 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   };
   useEffect(()=>{
     purgeExpiredStories();
-    const timer=setInterval(purgeExpiredStories,60*1000);
+    loadStoriesFromDB();
+    const timer=setInterval(()=>{purgeExpiredStories();loadStoriesFromDB();},30*1000);
     return()=>clearInterval(timer);
   },[user.id]);
   useEffect(()=>{
@@ -4602,15 +4627,15 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     reader.onerror=()=>toast('خواندن تصویر انجام نشد','error');
     reader.readAsDataURL(file);
   };
-  const publishImageStory=()=>{
-    if(!storyImageDraft?.src)return;
-    publishStory({type:'image',src:storyImageDraft.src,caption:storyCaption.trim()});
-    setStoryImageDraft(null);
-    setStoryCaption('');
+  const publishImageStory=async()=>{
+    if(!storyImageDraft?.src){toast('اول یک تصویر انتخاب کن','warning');return;}
+    const ok=await publishStory({type:'image',src:storyImageDraft.src,caption:storyCaption.trim()});
+    if(ok){setStoryImageDraft(null);setStoryCaption('');await loadStoriesFromDB();}
   };
-  const addTextStory=()=>{
-    if(!storyText.trim())return;
-    publishStory({type:'text',text:storyText.trim(),caption:storyCaption.trim()});
+  const addTextStory=async()=>{
+    if(!storyText.trim()){toast('متن استوری را وارد کن','warning');return;}
+    const ok=await publishStory({type:'text',text:storyText.trim(),caption:storyCaption.trim()});
+    if(ok) await loadStoriesFromDB();
   };
   const openStory=(story,person=null)=>setStoryViewer({...story,person});
   const replyToStory=()=>{
