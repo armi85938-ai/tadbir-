@@ -1999,23 +1999,16 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
  .tg-story-reply-message{width:min(270px,70vw)}.tg-story-reply-preview{height:128px}
 }
 </style>
-<style id="tadbir-stories-polish-v30">
-.telegram-stories-strip{overflow:visible!important}
-.tg-story-item{position:relative;overflow:visible!important;transform:translateZ(0);transition:transform .28s cubic-bezier(.2,.8,.2,1),filter .28s ease!important}
-.tg-story-item:hover{transform:translateY(-2px) scale(1.035)!important}
-.tg-story-ring{position:relative!important;isolation:isolate;overflow:visible!important;border-radius:50%!important;aspect-ratio:1/1!important;width:58px!important;height:58px!important;flex:0 0 58px!important}
-.tg-story-ring:before{content:"";position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,#8b5cf6,#c084fc,#7c3aed,#a78bfa,#8b5cf6);z-index:-2;animation:tadbirStorySpin 3.8s linear infinite;filter:drop-shadow(0 0 8px rgba(139,92,246,.42))}
-.tg-story-ring:after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(196,181,253,.16);z-index:-3;transform:scale(.72);opacity:0}
-.tg-story-item.tadbir-story-just-published .tg-story-ring:after{animation:tadbirStoryRipple 1.05s cubic-bezier(.16,.8,.25,1) both}
-.tg-story-item.tadbir-story-just-published .tg-story-ring{animation:tadbirStoryPop .7s cubic-bezier(.16,1,.3,1) both}
-.tg-story-ring-inner{position:absolute!important;inset:3px!important;width:auto!important;height:auto!important;border-radius:50%!important;display:grid!important;place-items:center!important;overflow:hidden!important;background:rgba(17,13,31,.96)!important;border:2px solid rgba(255,255,255,.13)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 8px 25px rgba(0,0,0,.25)!important}
-.tg-story-ring-inner img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important;display:block!important}
-.tg-story-add .tg-story-ring:before{background:conic-gradient(from 180deg,#a78bfa,#8b5cf6,#6d28d9,#a78bfa);animation:none}
-@keyframes tadbirStorySpin{to{transform:rotate(360deg)}}
-@keyframes tadbirStoryPop{0%{transform:scale(.72);opacity:.25}48%{transform:scale(1.12);opacity:1}72%{transform:scale(.96)}100%{transform:scale(1);opacity:1}}
-@keyframes tadbirStoryRipple{0%{transform:scale(.72);opacity:.75}55%{opacity:.28}100%{transform:scale(1.55);opacity:0}}
-@media(max-width:600px){.tg-story-ring{width:62px!important;height:62px!important;flex-basis:62px!important}.tg-story-ring-inner{inset:3px!important}.tg-story-item{min-width:66px!important}}
-@media(prefers-reduced-motion:reduce){.tg-story-ring:before{animation:none!important}.tg-story-item.tadbir-story-just-published .tg-story-ring,.tg-story-item.tadbir-story-just-published .tg-story-ring:after{animation:none!important}}
+
+<style id="tadbir-story-final-polish">
+/* Final story polish: true circles, larger avatars, no decorative card behind each story. */
+.telegram-stories-strip .tg-story-item{flex:0 0 78px!important;width:78px!important;min-width:78px!important;height:92px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;}
+.telegram-stories-strip .tg-story-ring{width:70px!important;height:70px!important;min-width:70px!important;min-height:70px!important;aspect-ratio:1/1!important;border-radius:50%!important;padding:3px!important;}
+.telegram-stories-strip .tg-story-ring-inner{width:100%!important;height:100%!important;aspect-ratio:1/1!important;border-radius:50%!important;overflow:hidden!important;}
+.telegram-stories-strip .tg-story-ring-inner img{width:100%!important;height:100%!important;display:block!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;}
+.telegram-stories-strip .tg-story-name{max-width:76px!important;font-size:10px!important;line-height:16px!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;}
+.telegram-stories-strip .tg-story-item.tg-story-add .tg-story-ring{background:linear-gradient(135deg,#8b5cf6,#c084fc,#ec4899)!important;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 8px 28px rgba(139,92,246,.28)!important;}
+@media(max-width:600px){.telegram-stories-strip{gap:9px!important}.telegram-stories-strip .tg-story-item{flex-basis:82px!important;width:82px!important;min-width:82px!important}.telegram-stories-strip .tg-story-ring{width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important;}}
 </style>
 </head>
 <body>
@@ -4479,7 +4472,6 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const [storyImageDraft,setStoryImageDraft]=useState(null);
   const [storyReplyDraft,setStoryReplyDraft]=useState(null);
   const [publicStories,setPublicStories]=useState([]);
-  const [storyAnimationId,setStoryAnimationId]=useState(null);
   const storyInputRef=useRef(null);
   const endRef=useRef(null);
   const composerRef=useRef(null);
@@ -4516,20 +4508,6 @@ function SocialChatModal({user,onClose,fullScreen=false}){
       document.body.classList.remove('tadbir-chat-open');
     };
   },[]);
-
-  useEffect(()=>{
-    let dead=false;
-    const loadRemoteStories=async()=>{
-      try{
-        const {data,error}=await SB.from('stories').select('*').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(100);
-        if(error)throw error; if(dead)return;
-        const rows=(data||[]).map(x=>({...x,author_id:String(x.author_id)}));
-        setPublicStories(rows); setStories(rows.filter(x=>String(x.author_id)===String(user.id)).slice(0,10));
-      }catch(err){console.warn('stories load:',err);}
-    };
-    loadRemoteStories(); const timer=setInterval(loadRemoteStories,30000);
-    return()=>{dead=true;clearInterval(timer);};
-  },[user.id]);
 
   useEffect(()=>{
     loadContacts();
@@ -4576,46 +4554,45 @@ function SocialChatModal({user,onClose,fullScreen=false}){
     bc?.addEventListener('message',refresh);
     return()=>{window.removeEventListener('storage',refresh);bc?.close();};
   },[user.id]);
-  useEffect(()=>{
-    let alive=true;
-    const loadRemoteStories=async()=>{
-      try{
-        const {data,error}=await SB.from('stories').select('*').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(80);
-        if(error)throw error;
-        if(!alive||!Array.isArray(data))return;
-        const normalized=data.map(x=>({...x,author_id:String(x.author_id),id:x.id||('db-'+x.created_at)}));
-        setPublicStories(normalized);
-        try{localStorage.setItem('tadbir_public_stories',JSON.stringify(normalized));}catch{}
-      }catch(err){console.warn('stories remote load:',err);}
-    };
-    loadRemoteStories();
-    const timer=setInterval(loadRemoteStories,15000);
-    return()=>{alive=false;clearInterval(timer);};
-  },[user.id]);
   const saveStories=(next)=>{const fresh=(next||[]).filter(storyIsFresh);setStories(fresh);try{localStorage.setItem('tadbir_stories_'+user.id,JSON.stringify(fresh));}catch{}};
   const broadcastStoryChange=()=>{try{const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('tadbir-stories'):null;bc?.postMessage({type:'stories-changed'});bc?.close();}catch{}};
   const publishStory=async(story)=>{
-    const mine={...story,id:story.id||Date.now(),author_id:String(user.id),author_name:user.full_name||user.username,created_at:new Date().toISOString(),expires_at:new Date(Date.now()+86400000).toISOString()};
+    if(!story || (!story.src && !String(story.text||'').trim())){toast('محتوای استوری خالی است','warning');return false;}
+    const mine={...story,author_id:String(user.id),author_name:user.full_name||user.username,created_at:new Date().toISOString()};
+    let saved=mine;
     try{
-      const {data,error}=await SB.from('stories').insert({author_id:String(user.id),author_name:mine.author_name,type:mine.type,src:mine.src||null,text:mine.text||null,caption:mine.caption||null,expires_at:mine.expires_at}).select('*').single();
-      if(error)throw error;
-      if(data)Object.assign(mine,data);
-    }catch(err){console.warn('stories remote save:',err);toast('ذخیره استوری در دیتابیس انجام نشد','error');return;}
-    setStories(prev=>[mine,...(prev||[]).filter(x=>String(x.id)!==String(mine.id))].filter(storyIsFresh).slice(0,10));
-    setPublicStories(prev=>[mine,...(prev||[]).filter(x=>String(x.author_id)!==String(user.id))].slice(0,50));
-    setStoryAnimationId(mine.id); window.setTimeout(()=>setStoryAnimationId(null),1700);
-    broadcastStoryChange(); setShowStoryComposer(false);setStoryText('');setStoryCaption('');setStoryImageDraft(null); toast('استوری با موفقیت منتشر شد','success');
+      const payload={author_id:String(user.id),type:mine.type||'text',src:mine.src||null,text:mine.text||null,caption:mine.caption||null,created_at:mine.created_at};
+      const {data,error}=await SB.from('stories').insert(payload).select('*').single();
+      if(error) throw error;
+      if(data) saved={...mine,...data,author_id:String(data.author_id||user.id)};
+    }catch(e){
+      console.error('story publish:',e);
+      toast('استوری در سرور ذخیره نشد: '+(e?.message||'خطای نامشخص'),'error');
+      return false;
+    }
+    try{
+      const old=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]').filter(storyIsFresh).filter(x=>String(x.author_id)!==String(user.id));
+      const next=[saved,...old].slice(0,50);
+      localStorage.setItem('tadbir_public_stories',JSON.stringify(next));setPublicStories(next);
+    }catch{}
+    saveStories([saved,...stories].filter(storyIsFresh).slice(0,10));
+    broadcastStoryChange();
+    setShowStoryComposer(false);setStoryText('');setStoryCaption('');setStoryImageDraft(null);
+    toast('استوری با موفقیت منتشر شد','success');
+    return true;
   };
-  const deleteStory=async(story)=>{
+  const deleteStory=(story)=>{
     if(!story||String(story.author_id||user.id)!==String(user.id))return;
     try{
-      const {error}=await SB.from('stories').delete().eq('id',story.id).eq('author_id',String(user.id));
-      if(error)throw error;
-      setStories(prev=>(prev||[]).filter(x=>String(x.id)!==String(story.id)));
-      setPublicStories(prev=>(prev||[]).filter(x=>String(x.id)!==String(story.id)));
+      const own=JSON.parse(localStorage.getItem('tadbir_stories_'+user.id)||'[]');
+      const nextOwn=(Array.isArray(own)?own:[]).filter(x=>String(x.id)!==String(story.id));
+      localStorage.setItem('tadbir_stories_'+user.id,JSON.stringify(nextOwn));setStories(nextOwn);
+      const pub=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]');
+      const nextPub=(Array.isArray(pub)?pub:[]).filter(x=>String(x.id)!==String(story.id));
+      localStorage.setItem('tadbir_public_stories',JSON.stringify(nextPub));setPublicStories(nextPub);
       if(String(storyViewer?.id)===String(story.id))setStoryViewer(null);
       broadcastStoryChange();toast('استوری حذف شد','success');
-    }catch(err){console.warn('story delete:',err);toast('حذف استوری انجام نشد','error');}
+    }catch{toast('حذف استوری انجام نشد','error');}
   };
   const addStory=(file)=>{
     if(!file)return;
@@ -4627,13 +4604,13 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   };
   const publishImageStory=()=>{
     if(!storyImageDraft?.src)return;
-    publishStory({id:Date.now(),type:'image',src:storyImageDraft.src,caption:storyCaption.trim()});
+    publishStory({type:'image',src:storyImageDraft.src,caption:storyCaption.trim()});
     setStoryImageDraft(null);
     setStoryCaption('');
   };
   const addTextStory=()=>{
     if(!storyText.trim())return;
-    publishStory({id:Date.now(),type:'text',text:storyText.trim(),caption:storyCaption.trim()});
+    publishStory({type:'text',text:storyText.trim(),caption:storyCaption.trim()});
   };
   const openStory=(story,person=null)=>setStoryViewer({...story,person});
   const replyToStory=()=>{
@@ -4811,7 +4788,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
             const isMine=String(st.author_id||user.id)===String(user.id);
             const person=isMine?null:contacts.find(c=>String(c.id)===String(st.author_id));
             const av=isMine?(prof(user.id)||'🐱'):prof(st.author_id)||'🐱';
-            return <button type="button" className={`tg-story-item ${String(st.id)===String(storyAnimationId)?'tadbir-story-just-published':''}`} key={'story-'+(st.author_id||st.id)} onClick={()=>openStory(st,person)}>
+            return <button type="button" className="tg-story-item" key={'story-'+(st.author_id||st.id)} onClick={()=>openStory(st,person)}>
               <div className="tg-story-ring"><div className="tg-story-ring-inner">{av?.startsWith?.('data:image')?<img src={av} alt=""/>:av}</div></div>
               <span className="tg-story-name">{isMine?'استوری شما':(profiles[st.author_id]?.display_name||person?.full_name||st.author_name||'کاربر')}</span>
             </button>;
@@ -5599,25 +5576,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 .option-image-box>label:before{content:'▣';display:grid;place-items:center;width:25px;height:25px;border-radius:8px;background:linear-gradient(135deg,#8774e1,#ec4899);color:#fff;font-size:12px;box-shadow:0 5px 14px rgba(139,92,246,.22)}
 .option-image-box>input[type=file]{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
 .option-image-box>img{display:block!important;width:100%!important;max-height:120px!important;object-fit:contain!important;margin-top:9px!important;border-radius:13px!important;border:1px solid rgba(255,255,255,.10)!important;background:rgba(0,0,0,.15)!important;padding:3px!important}
-</style>
-
-<style id="tadbir-story-v2-fix">
-.telegram-stories-strip{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:visible!important}
-.tg-story-item{width:68px!important;min-width:68px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible!important}
-.tg-story-ring,.tg-story-ring-inner{width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;aspect-ratio:1/1!important;border-radius:50%!important;overflow:hidden!important;box-sizing:border-box!important}
-.tg-story-ring{position:relative!important;display:grid!important;place-items:center!important;padding:2px!important;background:conic-gradient(from 210deg,#8774e1,#ec4899,#f59e0b,#8774e1)!important;box-shadow:0 7px 22px rgba(124,58,237,.28)!important}
-.tg-story-ring-inner{display:grid!important;place-items:center!important;background:#171329!important;font-size:23px!important;line-height:1!important;color:#fff!important}
-.tg-story-ring-inner img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center!important;border-radius:50%!important;aspect-ratio:1/1!important}
-.tg-story-add .tg-story-ring{background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 6px 18px rgba(0,0,0,.18)!important}
-.tg-story-add .tg-story-ring-inner{background:rgba(255,255,255,.045)!important;font-size:30px!important;font-weight:300!important}
-.tg-story-add .tg-story-ring-inner::first-letter{color:#fff}
-.tg-story-ring-story{animation:tadbirStoryEmerges .95s cubic-bezier(.16,1,.3,1) both}
-.tadbir-story-just-published .tg-story-ring-story{animation:tadbirStoryEmerges 1.35s cubic-bezier(.16,1,.3,1) both}
-.tadbir-story-just-published .tg-story-ring-story::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(236,72,153,.65);animation:tadbirStoryRipple 1.25s ease-out both}
-@keyframes tadbirStoryEmerges{0%{transform:scale(.18) translateY(16px);opacity:0;filter:blur(5px)}45%{transform:scale(1.12) translateY(-3px);opacity:1;filter:blur(0)}75%{transform:scale(.96)}100%{transform:scale(1);opacity:1}}
-@keyframes tadbirStoryRipple{0%{transform:scale(.75);opacity:.85}100%{transform:scale(1.45);opacity:0}}
-.tg-story-name{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:68px!important;margin-top:4px!important}
-@media(max-width:600px){.tg-story-ring,.tg-story-ring-inner{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important}.tg-story-item{width:66px!important;min-width:66px!important}}
 </style>
 </body>
 </html><style id="tadbir-story-final-fix">
