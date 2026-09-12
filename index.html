@@ -4516,57 +4516,97 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:'smooth',block:'nearest'});},[messages]);
 
   const STORY_TTL=24*60*60*1000;
-  const storyIsFresh=(x)=>x&&Date.now()-new Date(x.created_at||0).getTime()<STORY_TTL;
-  const purgeExpiredStories=()=>{
+  const storyIsFresh=(x)=>{if(!x)return false;const created=new Date(x.created_at||0).getTime();const expires=new Date(x.expires_at||created+STORY_TTL).getTime();return Number.isFinite(expires)&&expires>Date.now();};
+  const mapStory=(x)=>({...x,author_id:x.author_id||x.user_id,author_name:x.author_name||x.author?.full_name||x.author?.username||'کاربر'});
+
+  const loadStoriesFromDB=async()=>{
     try{
-      const ownKey='tadbir_stories_'+user.id;
-      const own=JSON.parse(localStorage.getItem(ownKey)||'[]');
-      const freshOwn=Array.isArray(own)?own.filter(storyIsFresh):[];
-      localStorage.setItem(ownKey,JSON.stringify(freshOwn));
-      setStories(freshOwn);
-      const pub=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]');
-      const freshPub=Array.isArray(pub)?pub.filter(storyIsFresh):[];
-      localStorage.setItem('tadbir_public_stories',JSON.stringify(freshPub));
-      setPublicStories(freshPub);
-      return freshPub;
+      const now=new Date().toISOString();
+      const {data,error}=await SB.from('stories').select('*').gt('expires_at',now).order('created_at',{ascending:false}).limit(200);
+      if(error){toast('خطا در دریافت استوری‌ها: '+error.message,'error');return []}
+      const fresh=(data||[]).map(mapStory).filter(storyIsFresh);
+      setPublicStories(fresh);
+      setStories(fresh.filter(x=>String(x.author_id)===String(user.id)));
+      return fresh;
+    }catch(e){toast('خطا در دریافت استوری‌ها','error');return []}
+  };
+
+  const purgeExpiredStories=async()=>{
+    try{
+      const now=new Date().toISOString();
+      await SB.from('stories').delete().lte('expires_at',now);
+      return await loadStoriesFromDB();
     }catch{return []}
   };
-  useEffect(()=>{
-    purgeExpiredStories();
-    const timer=setInterval(purgeExpiredStories,60*1000);
-    return()=>clearInterval(timer);
-  },[user.id]);
-  useEffect(()=>{
-    const refresh=()=>purgeExpiredStories();
-    window.addEventListener('storage',refresh);
-    const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('tadbir-stories'):null;
-    bc?.addEventListener('message',refresh);
-    return()=>{window.removeEventListener('storage',refresh);bc?.close();};
-  },[user.id]);
-  const saveStories=(next)=>{const fresh=(next||[]).filter(storyIsFresh);setStories(fresh);try{localStorage.setItem('tadbir_stories_'+user.id,JSON.stringify(fresh));}catch{}};
-  const broadcastStoryChange=()=>{try{const bc=typeof BroadcastChannel!=='undefined'?new BroadcastChannel('tadbir-stories'):null;bc?.postMessage({type:'stories-changed'});bc?.close();}catch{}};
-  const publishStory=(story)=>{
-    const mine={...story,author_id:user.id,author_name:user.full_name||user.username,created_at:new Date().toISOString()};
+
+  const migrateLegacyOwnStories=async()=>{
     try{
-      const old=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]').filter(storyIsFresh).filter(x=>x.author_id!==user.id);
-      const next=[mine,...old].slice(0,50);
-      localStorage.setItem('tadbir_public_stories',JSON.stringify(next));setPublicStories(next);
+      const key='tadbir_stories_'+user.id;
+      const old=JSON.parse(localStorage.getItem(key)||'[]');
+      if(!Array.isArray(old)||!old.length)return;
+      const existing=(await SB.from('stories').select('id,created_at').eq('author_id',String(user.id))).data||[];
+      if(existing.length){localStorage.removeItem(key);return;}
+      for(const oldStory of old.filter(storyIsFresh).slice(0,10)){
+        let src=oldStory.src||null;
+        if(src&&src.startsWith('data:image/')){
+          const m=src.match(/^data:(image\/[^;]+);base64,(.+)$/);
+          if(m){
+            const mime=m[1],bytes=Uint8Array.from(atob(m[2]),c=>c.charCodeAt(0));
+            const ext=(mime.split('/')[1]||'jpg').replace('jpeg','jpg');
+            const path=`${user.id}/legacy-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+            const up=await SB.storage.from('story-media').upload(path,bytes,{contentType:mime,upsert:false});
+            if(!up.error)src=SB.storage.from('story-media').getPublicUrl(path).data.publicUrl;
+          }
+        }
+        await SB.from('stories').insert({author_id:String(user.id),author_name:user.full_name||user.username||'کاربر',type:oldStory.type||'text',src,text:oldStory.text||null,caption:oldStory.caption||null,created_at:oldStory.created_at||new Date().toISOString(),expires_at:new Date(new Date(oldStory.created_at||Date.now()).getTime()+STORY_TTL).toISOString()});
+      }
+      localStorage.removeItem(key);
     }catch{}
-    saveStories([mine,...stories].filter(storyIsFresh).slice(0,10));
-    broadcastStoryChange();
-    setShowStoryComposer(false);setStoryText('');setStoryCaption('');setStoryImageDraft(null);
   };
-  const deleteStory=(story)=>{
-    if(!story||String(story.author_id||user.id)!==String(user.id))return;
+
+  useEffect(()=>{
+    let alive=true;
+    (async()=>{
+      await migrateLegacyOwnStories();
+      if(alive)await purgeExpiredStories();
+    })();
+    const timer=setInterval(purgeExpiredStories,60*1000);
+    const ch=SB.channel('tadbir-stories-global')
+      .on('postgres_changes',{event:'*',schema:'public',table:'stories'},()=>{if(alive)loadStoriesFromDB();})
+      .subscribe();
+    return()=>{alive=false;clearInterval(timer);SB.removeChannel(ch);};
+  },[user.id]);
+
+  const publishStory=async(story)=>{
+    setBusy(true);
     try{
-      const own=JSON.parse(localStorage.getItem('tadbir_stories_'+user.id)||'[]');
-      const nextOwn=(Array.isArray(own)?own:[]).filter(x=>String(x.id)!==String(story.id));
-      localStorage.setItem('tadbir_stories_'+user.id,JSON.stringify(nextOwn));setStories(nextOwn);
-      const pub=JSON.parse(localStorage.getItem('tadbir_public_stories')||'[]');
-      const nextPub=(Array.isArray(pub)?pub:[]).filter(x=>String(x.id)!==String(story.id));
-      localStorage.setItem('tadbir_public_stories',JSON.stringify(nextPub));setPublicStories(nextPub);
+      let src=story.src||null;
+      if(src&&src.startsWith('data:image/')){
+        const m=src.match(/^data:(image\/[^;]+);base64,(.+)$/);
+        if(!m){toast('تصویر استوری معتبر نیست','error');return;}
+        const mime=m[1],bytes=Uint8Array.from(atob(m[2]),c=>c.charCodeAt(0));
+        const ext=(mime.split('/')[1]||'jpg').replace('jpeg','jpg');
+        const path=`${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const up=await SB.storage.from('story-media').upload(path,bytes,{contentType:mime,upsert:false});
+        if(up.error){toast('خطا در آپلود استوری: '+up.error.message,'error');return;}
+        src=SB.storage.from('story-media').getPublicUrl(path).data.publicUrl;
+      }
+      const payload={author_id:String(user.id),author_name:user.full_name||user.username||'کاربر',type:story.type||'text',src,text:story.text||null,caption:story.caption||null,expires_at:new Date(Date.now()+STORY_TTL).toISOString()};
+      const {error}=await SB.from('stories').insert(payload);
+      if(error){toast('خطا در ذخیره استوری: '+error.message,'error');return;}
+      await loadStoriesFromDB();
+      setShowStoryComposer(false);setStoryText('');setStoryCaption('');setStoryImageDraft(null);
+      toast('استوری منتشر شد','success');
+    }finally{setBusy(false)}
+  };
+
+  const deleteStory=async(story)=>{
+    if(!story||String(story.author_id)!==String(user.id))return;
+    try{
+      const {error}=await SB.from('stories').delete().eq('id',story.id).eq('author_id',String(user.id));
+      if(error){toast('حذف استوری انجام نشد: '+error.message,'error');return;}
       if(String(storyViewer?.id)===String(story.id))setStoryViewer(null);
-      broadcastStoryChange();toast('استوری حذف شد','success');
+      await loadStoriesFromDB();toast('استوری حذف شد','success');
     }catch{toast('حذف استوری انجام نشد','error');}
   };
   const addStory=(file)=>{
@@ -5045,7 +5085,8 @@ function Student({user,tab,setTab,onLogout}){
   };
 
   const getObjectionStart=(examId)=>{
-    const rows=answers.filter(a=>String(a.exam_id)===String(examId)&&a.status==='graded');
+    /* Supports both the current grading records and legacy answers from the first site version. */
+    const rows=answers.filter(a=>String(a.exam_id)===String(examId)&&(a.status==='graded'||(a.score!==null&&a.score!==undefined&&a.score!=='')));
     if(!rows.length)return null;
     const dates=rows.map(a=>a.graded_at||a.updated_at||a.created_at).filter(Boolean).map(x=>new Date(x).getTime()).filter(Number.isFinite);
     return dates.length?Math.max(...dates):null;
