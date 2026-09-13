@@ -2069,11 +2069,11 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
 html[data-tadbir-theme="dark-purple"]{--td-accent:#8b5cf6;--td-accent2:#c084fc;--td-bg:#090817}
 html[data-tadbir-theme="dark-blue"]{--td-accent:#2563eb;--td-accent2:#38bdf8;--td-bg:#050b18}
 html[data-tadbir-theme="dark-pink"]{--td-accent:#db2777;--td-accent2:#fb7185;--td-bg:#160711}
-html[data-tadbir-theme="dark-yellow"]{--td-accent:#d97706;--td-accent2:#facc15;--td-bg:#171005}
+html[data-tadbir-theme="dark-white"]{--td-accent:#f8fafc;--td-accent2:#cbd5e1;--td-bg:#090a0d;--td-surface:rgba(255,255,255,.055);--td-surface-strong:rgba(15,16,20,.94);--td-border:rgba(255,255,255,.13);--td-text:#f8fafc;--td-muted:rgba(248,250,252,.52);--td-shadow:rgba(0,0,0,.48)}
 html[data-tadbir-theme="light-purple"]{--td-accent:#7c3aed;--td-accent2:#a855f7;--td-bg:#f7f3ff;--td-surface:rgba(255,255,255,.78);--td-surface-strong:rgba(255,255,255,.94);--td-border:rgba(91,33,182,.13);--td-text:#21173a;--td-muted:rgba(45,29,70,.58);--td-shadow:rgba(76,29,149,.12)}
 html[data-tadbir-theme="light-blue"]{--td-accent:#2563eb;--td-accent2:#0ea5e9;--td-bg:#f1f8ff;--td-surface:rgba(255,255,255,.80);--td-surface-strong:rgba(255,255,255,.95);--td-border:rgba(37,99,235,.13);--td-text:#10213c;--td-muted:rgba(16,33,60,.58);--td-shadow:rgba(37,99,235,.12)}
 html[data-tadbir-theme="light-pink"]{--td-accent:#db2777;--td-accent2:#fb7185;--td-bg:#fff4f9;--td-surface:rgba(255,255,255,.82);--td-surface-strong:rgba(255,255,255,.95);--td-border:rgba(219,39,119,.13);--td-text:#3b1428;--td-muted:rgba(59,20,40,.58);--td-shadow:rgba(219,39,119,.11)}
-html[data-tadbir-theme="light-yellow"]{--td-accent:#ca8a04;--td-accent2:#f59e0b;--td-bg:#fffbed;--td-surface:rgba(255,255,255,.84);--td-surface-strong:rgba(255,255,255,.96);--td-border:rgba(202,138,4,.14);--td-text:#35280d;--td-muted:rgba(53,40,13,.60);--td-shadow:rgba(202,138,4,.11)}
+html[data-tadbir-theme="light-black"]{--td-accent:#111827;--td-accent2:#374151;--td-bg:#f5f6f8;--td-surface:rgba(255,255,255,.86);--td-surface-strong:rgba(255,255,255,.97);--td-border:rgba(17,24,39,.14);--td-text:#111827;--td-muted:rgba(17,24,39,.58);--td-shadow:rgba(17,24,39,.12)}
 html[data-tadbir-theme] body{background:var(--td-bg)!important;color:var(--td-text)!important;transition:background .45s ease,color .3s ease}
 html[data-tadbir-theme],html[data-tadbir-theme] body{overflow-x:hidden}
 html[data-tadbir-theme] button,html[data-tadbir-theme] .glass,html[data-tadbir-theme] .card,html[data-tadbir-theme] .tool-btn,html[data-tadbir-theme] .social-contact{transition:background-color .35s ease,border-color .35s ease,color .25s ease,box-shadow .35s ease,transform .28s cubic-bezier(.16,1,.3,1)}
@@ -2108,88 +2108,64 @@ html[data-tadbir-theme^="light-"] .social-chat-fullscreen{background:linear-grad
 .tg-story-item{width:68px!important;min-width:68px!important;max-width:68px!important;flex:0 0 68px!important}.tg-story-ring{width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important;max-width:58px!important;max-height:58px!important;aspect-ratio:1/1!important;border-radius:50%!important;flex:0 0 58px!important}.tg-story-ring-inner{width:100%!important;height:100%!important;aspect-ratio:1/1!important;border-radius:50%!important}.tg-story-ring-inner img{width:100%!important;height:100%!important;aspect-ratio:1/1!important;object-fit:cover!important;border-radius:50%!important;display:block!important}.tg-story-name{max-width:68px!important}
 .telegram-stories-strip .tg-story-item,.telegram-stories-strip .tg-story-ring,.telegram-stories-strip .tg-story-ring-inner{box-sizing:border-box}
 @media(max-width:640px){.tg-story-item{width:76px!important;min-width:76px!important;max-width:76px!important}.tg-story-ring{width:66px!important;height:66px!important;min-width:66px!important;min-height:66px!important;max-width:66px!important;max-height:66px!important}.tg-story-name{max-width:76px!important}}
-</style>
 
-<style id="tadbir-v42-notification-polish">
-/* V42 notification polish */
-.admin-tool-card .settings-icon-box{margin:0 auto 12px;width:58px;height:58px;border-radius:19px}
-.admin-tool-card .settings-icon-box svg{color:#fff;filter:drop-shadow(0 0 8px rgba(255,255,255,.22))}
-.admin-notification-delete{border:1px solid rgba(239,68,68,.22);background:rgba(239,68,68,.10);color:#fca5a5;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;cursor:pointer;transition:.25s}
-.admin-notification-delete:hover{background:rgba(239,68,68,.18);border-color:rgba(248,113,113,.42);transform:translateY(-1px);box-shadow:0 8px 22px rgba(239,68,68,.15)}
-.notification-permission{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 12px 12px;padding:11px 12px;border-radius:16px;background:color-mix(in srgb,var(--td-accent) 8%,var(--td-surface));border:1px solid var(--td-border);font-size:9px;color:var(--td-muted)}
-.notification-permission button{border:1px solid color-mix(in srgb,var(--td-accent) 35%,transparent);background:color-mix(in srgb,var(--td-accent) 13%,transparent);color:var(--td-text);border-radius:11px;padding:7px 10px;font-size:9px;font-weight:900;cursor:pointer}
-html[data-tadbir-theme^="light-"] .admin-notification-delete{background:rgba(239,68,68,.08);color:#dc2626}
-</style>
-<style id="tadbir-v41-final-stability">
-/* ===== TADBIR V41 — final stability/theme layer ===== */
-html[data-tadbir-theme]{--td-accent-soft:color-mix(in srgb,var(--td-accent) 14%,transparent)}
-html[data-tadbir-theme] body,
-html[data-tadbir-theme] #root{background:var(--td-bg)!important;color:var(--td-text)!important}
-html[data-tadbir-theme] .content,
-html[data-tadbir-theme] .header,
-html[data-tadbir-theme] .nav-bar{color:var(--td-text)}
-html[data-tadbir-theme] .glass-input,
-html[data-tadbir-theme] select,
-html[data-tadbir-theme] textarea{background:color-mix(in srgb,var(--td-surface-strong) 92%,transparent)!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
-html[data-tadbir-theme] select option{background:var(--td-bg);color:var(--td-text)}
-html[data-tadbir-theme] .btn-glass{background:linear-gradient(135deg,color-mix(in srgb,var(--td-accent) 22%,transparent),color-mix(in srgb,var(--td-accent2) 16%,transparent))!important;color:var(--td-text)!important}
-html[data-tadbir-theme] .btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,.28),rgba(5,150,105,.20))!important;color:var(--td-text)!important}
-html[data-tadbir-theme] .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,.25),rgba(220,38,38,.18))!important}
-html[data-tadbir-theme] .badge-new,
-html[data-tadbir-theme] .badge-approved{border-color:color-mix(in srgb,var(--td-accent) 25%,transparent)!important}
-html[data-tadbir-theme] .admin-tool-card,
-html[data-tadbir-theme] .admin-notice-compose,
-html[data-tadbir-theme] .notification-card,
-html[data-tadbir-theme] .notification-modal,
-html[data-tadbir-theme] .exam-calc-modal,
-html[data-tadbir-theme] .settings-panel{color:var(--td-text)!important}
-html[data-tadbir-theme] .admin-tool-card:hover,
-html[data-tadbir-theme] .notification-card.unread{border-color:color-mix(in srgb,var(--td-accent) 42%,transparent)!important;box-shadow:0 16px 45px color-mix(in srgb,var(--td-accent) 15%,transparent)!important}
-html[data-tadbir-theme^="light-"] .header,
-html[data-tadbir-theme^="light-"] .nav-bar{box-shadow:0 10px 35px var(--td-shadow)!important}
-html[data-tadbir-theme^="light-"] .text-indigo-300,
-html[data-tadbir-theme^="light-"] .text-indigo-400,
-html[data-tadbir-theme^="light-"] .text-purple-300,
-html[data-tadbir-theme^="light-"] .text-purple-400{color:var(--td-accent)!important}
-html[data-tadbir-theme^="light-"] .bg-white\/5,
-html[data-tadbir-theme^="light-"] .bg-white\/10{background:color-mix(in srgb,var(--td-accent) 5%,white)!important}
-html[data-tadbir-theme^="light-"] .border-white\/5,
-html[data-tadbir-theme^="light-"] .border-white\/10{border-color:var(--td-border)!important}
-html[data-tadbir-theme^="light-"] .notification-badge{border-color:var(--td-surface-strong)!important}
-html[data-tadbir-theme^="light-"] .exam-calc-launcher{color:#fff!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
-html[data-tadbir-theme^="light-"] .exam-calc-key{color:var(--td-text)!important;background:var(--td-surface)!important;border-color:var(--td-border)!important}
-html[data-tadbir-theme^="light-"] .exam-calc-key.op,
-html[data-tadbir-theme^="light-"] .exam-calc-key.eq{color:#fff!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
-
-/* Direct / chat / story surfaces follow the selected theme */
-html[data-tadbir-theme] .social-fullscreen-overlay,
-html[data-tadbir-theme] .tg-story-viewer{background:color-mix(in srgb,var(--td-bg) 94%,transparent)!important}
-html[data-tadbir-theme] .social-chat-fullscreen,
-html[data-tadbir-theme] .telegram-chat,
-html[data-tadbir-theme] .tg-story-card,
-html[data-tadbir-theme] .tg-story-composer{background:var(--td-surface-strong)!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
-html[data-tadbir-theme] .social-chat-header,
-html[data-tadbir-theme] .telegram-header{background:linear-gradient(135deg,color-mix(in srgb,var(--td-accent) 12%,var(--td-surface-strong)),var(--td-surface-strong))!important;border-color:var(--td-border)!important}
-html[data-tadbir-theme] .chat-bubble.me{background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
-html[data-tadbir-theme^="light-"] .chat-bubble.other{background:#fff!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
-html[data-tadbir-theme] .tg-story-ring{border-color:var(--td-accent)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--td-accent) 20%,transparent),0 8px 28px color-mix(in srgb,var(--td-accent) 24%,transparent)!important}
-
-/* Stories are circles, never ellipses */
-.tg-story-item{width:68px!important;min-width:68px!important}
-.tg-story-ring,
-.tg-story-avatar,
-.tg-story-item img{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;border-radius:50%!important;aspect-ratio:1/1!important;object-fit:cover!important}
-.tg-story-ring{overflow:hidden!important}
-
-/* Floating exam calculator — stays away from question/choices */
-.exam-calc-launcher{position:fixed!important;right:max(16px,env(safe-area-inset-right))!important;bottom:calc(92px + env(safe-area-inset-bottom))!important;width:58px!important;height:58px!important;border-radius:18px!important;display:grid!important;place-items:center!important;z-index:120!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important;color:#fff!important;border:1px solid color-mix(in srgb,var(--td-accent) 45%,transparent)!important;box-shadow:0 12px 34px color-mix(in srgb,var(--td-accent) 35%,transparent),0 0 40px color-mix(in srgb,var(--td-accent2) 18%,transparent)!important}
-.exam-calc-modal{width:min(92vw,360px)!important;padding:18px!important;border-radius:28px!important;background:var(--td-surface-strong)!important;border:1px solid var(--td-border)!important;box-shadow:0 30px 100px var(--td-shadow),0 0 55px color-mix(in srgb,var(--td-accent) 14%,transparent)!important;color:var(--td-text)!important}
-.exam-calc-display{background:color-mix(in srgb,var(--td-accent) 8%,var(--td-surface))!important;color:var(--td-text)!important;border:1px solid var(--td-border)!important}
-.exam-calc-key{border:1px solid var(--td-border)!important;background:var(--td-surface)!important;color:var(--td-text)!important}
-.exam-calc-key.op,.exam-calc-key.eq{background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important;color:#fff!important}
-
-/* Prevent a transient active calculator tile on opening Tools */
-.tool-btn.calc:not(.active){transform:none!important}
+/* === FINAL MOBILE SCROLL + THEME POLISH === */
+html,body,#root{min-height:100%;width:100%;}
+html{overflow-x:hidden;overscroll-behavior-x:none;}
+body{touch-action:pan-y;overscroll-behavior-y:auto;-webkit-text-size-adjust:100%;overflow-y:auto!important;overflow-x:hidden!important;}
+.content{touch-action:pan-y;-webkit-overflow-scrolling:touch;}
+/* Make dashboard content reliably finger-scrollable on Android without stealing touch gestures. */
+main,.dashboard-content,.student-content,.admin-content,.page-content,.content-scroll,.scroll-container,[class*="content-scroll"]{touch-action:pan-y;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;}
+@media(max-width:900px){
+  main,.dashboard-content,.student-content,.admin-content,.page-content{overflow-y:auto!important;overflow-x:hidden!important;}
+  .modal-overlay{touch-action:pan-y;}
+  .notification-list,.follow-list-body,.messenger-contacts-scroll,.chat-messages-scroll{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
+}
+/* Theme must reach fixed navigation, floating panels, calculators, charts and admin surfaces. */
+html[data-tadbir-theme^="light-"] .nav-bar,
+html[data-tadbir-theme^="light-"] .floating-panel,
+html[data-tadbir-theme^="light-"] .bottom-panel,
+html[data-tadbir-theme^="light-"] .grade3d-card,
+html[data-tadbir-theme^="light-"] .grade3d-wrap,
+html[data-tadbir-theme^="light-"] .exam-calc-modal,
+html[data-tadbir-theme^="light-"] .notification-modal,
+html[data-tadbir-theme^="light-"] .settings-panel,
+html[data-tadbir-theme^="light-"] .admin-notice-compose{color:var(--td-text)!important;background:var(--td-surface-strong)!important;border-color:var(--td-border)!important;box-shadow:0 20px 65px var(--td-shadow)!important}
+html[data-tadbir-theme^="light-"] .nav-item{color:var(--td-muted)!important}
+html[data-tadbir-theme^="light-"] .nav-item.active{color:var(--td-accent)!important}
+html[data-tadbir-theme^="light-"] .tool-btn,
+html[data-tadbir-theme^="light-"] .admin-tool-card,
+html[data-tadbir-theme^="light-"] .settings-wide-tile,
+html[data-tadbir-theme^="light-"] .settings-choice,
+html[data-tadbir-theme^="light-"] .theme-card,
+html[data-tadbir-theme^="light-"] .theme-mode-btn,
+html[data-tadbir-theme^="light-"] .notification-card,
+html[data-tadbir-theme^="light-"] .notification-react{color:var(--td-text)!important}
+html[data-tadbir-theme^="light-"] .btn-glass{color:var(--td-text)!important}
+html[data-tadbir-theme^="light-"] .grade3d-label{fill:var(--td-muted)!important;color:var(--td-muted)!important}
+html[data-tadbir-theme^="light-"] .grade3d-axis-20{fill:var(--td-accent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-grid line{stroke:color-mix(in srgb,var(--td-accent) 16%,transparent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-grid line:first-of-type{stroke:color-mix(in srgb,var(--td-accent) 35%,transparent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-highlight{stroke:color-mix(in srgb,var(--td-accent) 28%,white)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-line{stroke:var(--td-accent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-shadow{stroke:color-mix(in srgb,var(--td-accent) 45%,transparent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-point circle:last-child{fill:var(--td-accent)!important;stroke:var(--td-surface-strong)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-pulse{fill:color-mix(in srgb,var(--td-accent) 18%,transparent)!important}
+html[data-tadbir-theme^="light-"] .heartbeat-area{fill:color-mix(in srgb,var(--td-accent) 13%,transparent)!important}
+html[data-tadbir-theme^="light-"] .grade3d-title{color:var(--td-text)!important}
+html[data-tadbir-theme^="light-"] .grade3d-subtitle{color:var(--td-muted)!important}
+/* Requested palettes: dark-white and light-black. */
+html[data-tadbir-theme="dark-white"] .tool-icon,
+html[data-tadbir-theme="dark-white"] .settings-icon-box{color:#111!important}
+html[data-tadbir-theme="light-black"] .tool-icon,
+html[data-tadbir-theme="light-black"] .settings-icon-box{color:#fff!important}
+html[data-tadbir-theme="light-black"] .tool-btn.calc .tool-icon,
+html[data-tadbir-theme="light-black"] .tool-btn.check .tool-icon,
+html[data-tadbir-theme="light-black"] .tool-btn.game .tool-icon,
+html[data-tadbir-theme="light-black"] .tool-btn.achievement-tool .tool-icon{background:linear-gradient(135deg,#111827,#374151)!important;box-shadow:0 8px 28px rgba(17,24,39,.22)!important}
+/* Settings icon: cleaner geometric glass badge instead of a heavy/emoji-like block. */
+.settings-wide-tile .settings-icon-box,.settings-panel .settings-icon-box{border-radius:18px!important;border:1px solid color-mix(in srgb,var(--td-accent) 28%,transparent)!important;box-shadow:0 8px 24px color-mix(in srgb,var(--td-accent) 20%,transparent),inset 0 1px rgba(255,255,255,.25)!important}
+.settings-wide-tile .settings-icon-box svg,.settings-panel .settings-icon-box svg{filter:drop-shadow(0 2px 5px rgba(0,0,0,.22))}
 </style>
 </head>
 <body>
@@ -2200,15 +2176,6 @@ const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co"
 
 const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
-
-// Browser/system notification helper. Works when the page is open or in a background tab.
-const showTadbirBrowserNotification=(title,body)=>{
-  try{
-    if(!('Notification' in window)||Notification.permission!=='granted')return;
-    const n=new Notification('تدبیر', {body:`${title}\n${body}`,tag:'tadbir-notification',icon:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%238b5cf6%22/%3E%3Cpath d=%22M32 13c-8 0-14 6-14 14v8l-5 8h38l-5-8v-8c0-8-6-14-14-14zm-6 38h12%22 fill=%22none%22 stroke=%22white%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E'});
-    n.onclick=()=>{try{window.focus();}catch(e){}};
-  }catch(e){}
-};
 
 // Local penalty-game sound effects; no external audio asset is required.
 let tadbirAudioContext=null;
@@ -3412,7 +3379,7 @@ function PasswordModal({onClose,user}){
           <h3 className="font-bold gradient-text">🔐 تغییر رمز عبور</h3>
           <button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button>
         </div>
-        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">دانش‌آموز گرامی پیشنهاد میشود رمزی را انتخاب کنید که بتوانید آن را به راحتی به خاطر بسپارید.</div>
+        <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 mb-4 text-xs text-indigo-300">ℹ️ پس از تغییر، مدیر نیز می‌تواند رمز جدید را ببیند</div>
         <div className="space-y-3">
           <div><label className="text-xs text-white/60 mb-2 block font-semibold">رمز جدید</label><input className="glass-input" type="password" placeholder="حداقل ۴ کاراکتر" value={newPw} onChange={e=>setNewPw(e.target.value)}/></div>
           <div><label className="text-xs text-white/60 mb-2 block font-semibold">تکرار رمز</label><input className="glass-input" type="password" placeholder="تکرار رمز جدید" value={confirmPw} onChange={e=>setConfirmPw(e.target.value)}/></div>
@@ -3424,14 +3391,12 @@ function PasswordModal({onClose,user}){
 }
 
 function Admin({user,tab,setTab,onLogout}){
-  // Keep the manager/admin panel isolated from student-only state and tolerate
-  // legacy role values without breaking the whole application.
   const [exams,setExams]=useState([]);
   const [students,setStudents]=useState([]);
   const [answers,setAnswers]=useState([]);
   const [modal,setModal]=useState(null);
   const [step,setStep]=useState(1);
-  const [formData,setFormData]=useState({title:'',desc:'',hours:'',minutes:'',assigned:'all',allowCalculator:false});
+  const [formData,setFormData]=useState({hours:'',minutes:'',allowCalculator:false});
   const [questions,setQuestions]=useState([]);
   const [loading,setLoading]=useState(false);
   const [subTab,setSubTab]=useState('list');
@@ -3455,17 +3420,54 @@ function Admin({user,tab,setTab,onLogout}){
   const [objectionTick,setObjectionTick]=useState(Date.now());
   const [showAdminProfile,setShowAdminProfile]=useState(false);
   const [unreadCount,setUnreadCount]=useState(0);
-  const [notificationForm,setNotificationForm]=useState({title:'',body:'',target:'all'});
+  const [notificationForm,setNotificationForm]=useState({title:'',body:''});
+  const [notificationTarget,setNotificationTarget]=useState('all');
   const [notificationBusy,setNotificationBusy]=useState(false);
   const [adminNotifications,setAdminNotifications]=useState([]);
-  const [notificationDeleting,setNotificationDeleting]=useState(null);
   const toast=useToast();
 
-  useEffect(()=>{loadAll();},[]);
   const loadAdminNotifications=async()=>{
-    try{const {data,error}=await SB.from('tadbir_notifications').select('*').order('created_at',{ascending:false}).limit(50);if(error)throw error;setAdminNotifications(data||[]);}catch(err){console.warn('admin notifications:',err);}
+    try{const {data,error}=await SB.rpc('tadbir_admin_notifications',{p_admin_id:String(user.id)});if(error)throw error;setAdminNotifications(data||[]);}catch(e){console.warn('admin notifications:',e);}
   };
   useEffect(()=>{loadAdminNotifications();},[]);
+  useEffect(()=>{if(adminTool==='notifications')loadAdminNotifications();},[adminTool]);
+
+  useEffect(()=>{loadAll();},[]);
+  const loadStudentNotifications=async()=>{
+    try{
+      const [{data:n,error:ne},{data:i,error:ie}]=await Promise.all([
+        SB.from('tadbir_notifications').select('*').order('created_at',{ascending:false}).limit(50),
+        SB.from('tadbir_notification_interactions').select('*').eq('user_id',String(user.id))
+      ]);
+      if(ne)throw ne;if(ie)throw ie;
+      const im={};(i||[]).forEach(x=>im[String(x.notification_id)]=x);
+      const rows=(n||[]).filter(x=>!x.target||x.target==='all'||String(x.target)===String(user.id)).map(x=>({...x,interaction:im[String(x.id)]||null}));
+      setStudentNotifications(rows);setNotificationUnread(rows.filter(x=>!x.interaction?.read_at).length);
+    }catch(err){console.warn('notifications:',err);}
+  };
+  useEffect(()=>{
+    let live=true;loadStudentNotifications();
+    const timer=setInterval(()=>{if(live)loadStudentNotifications();},8000);
+    let ch=null;try{ch=SB.channel('tadbir-notify-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'tadbir_notifications'},()=>loadStudentNotifications()).subscribe();}catch(e){}
+    return()=>{live=false;clearInterval(timer);if(ch)SB.removeChannel(ch);};
+  },[user.id]);
+  const openNotificationCenter=async()=>{
+    setShowNotifications(true);
+    const unread=studentNotifications.filter(x=>!x.interaction?.read_at);
+    if(unread.length){
+      const now=new Date().toISOString();
+      const rows=unread.map(x=>({notification_id:x.id,user_id:String(user.id),read_at:now,reaction:x.interaction?.reaction||null}));
+      try{await SB.from('tadbir_notification_interactions').upsert(rows,{onConflict:'notification_id,user_id'});}catch(e){console.warn(e);}
+      setStudentNotifications(v=>v.map(x=>({...x,interaction:{...(x.interaction||{}),notification_id:x.id,user_id:String(user.id),read_at:now}})));setNotificationUnread(0);
+    }
+  };
+  const reactNotification=async(id,reaction)=>{
+    const now=new Date().toISOString();
+    try{
+      const {error}=await SB.from('tadbir_notification_interactions').upsert({notification_id:id,user_id:String(user.id),read_at:now,reaction},{onConflict:'notification_id,user_id'});if(error)throw error;
+      setStudentNotifications(v=>v.map(x=>String(x.id)===String(id)?{...x,interaction:{...(x.interaction||{}),notification_id:id,user_id:String(user.id),read_at:now,reaction}}:x));
+    }catch(err){toast('ثبت واکنش انجام نشد: '+(err?.message||err),'error');}
+  };
   useEffect(()=>{let active=true;const loadUnread=async()=>{const {data}=await SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null);if(active)setUnreadCount((data||[]).length);};loadUnread();const ch=SB.channel('unread-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},loadUnread).subscribe();return()=>{active=false;SB.removeChannel(ch);};},[user.id]);
   useEffect(()=>{const t=setInterval(()=>setObjectionTick(Date.now()),1000);return()=>clearInterval(t);},[]);
 
@@ -3497,38 +3499,29 @@ function Admin({user,tab,setTab,onLogout}){
   };
 
   const sendStudentNotification=async()=>{
-    const title=notificationForm.title.trim();
-    const body=notificationForm.body.trim();
-    const target=notificationForm.target==='all'?'all':String(notificationForm.target||'');
+    const title=notificationForm.title.trim();const body=notificationForm.body.trim();
     if(!title||!body){toast('عنوان و متن اعلان را کامل کنید','warning');return;}
-    if(target!=='all'&&!students.some(x=>String(x.id)===target)){toast('دانش‌آموز انتخاب‌شده معتبر نیست','warning');return;}
     setNotificationBusy(true);
     try{
-      const payload={title,body,created_by:String(user.id),target};
-      const {data,error}=await SB.from('tadbir_notifications').insert(payload).select('*').maybeSingle();
+      const target=notificationTarget||'all';
+      const {data,error}=await SB.rpc('tadbir_send_notification',{p_admin_id:String(user.id),p_title:title,p_body:body,p_target:target});
       if(error)throw error;
-      setNotificationForm({title:'',body:'',target:'all'});
-      if(data)setAdminNotifications(v=>[data,...v].slice(0,50));
+      if(data?.ok===false)throw new Error(data.message||'ارسال اعلان انجام نشد');
+      setNotificationForm({title:'',body:''});
+      setNotificationTarget('all');
       toast(target==='all'?'🔔 اعلان برای همه دانش‌آموزان ارسال شد':'🔔 اعلان برای دانش‌آموز انتخاب‌شده ارسال شد','success');
-    }catch(err){
-      const msg=String(err?.message||err);
-      toast(msg.includes('schema cache')||msg.includes('does not exist')?'جدول اعلان‌ها در Supabase ساخته نشده است؛ SQL پایین پیام را اجرا کنید.':'خطا در ارسال اعلان: '+msg,'error');
-    }finally{setNotificationBusy(false);}
+    }catch(err){toast('خطا در ارسال اعلان: '+(err?.message||err),'error');}
+    finally{setNotificationBusy(false);}
   };
 
-  const deleteAdminNotification=async(id)=>{
-    if(!id||notificationDeleting)return;
-    if(!confirm('این اعلان برای همیشه حذف شود؟'))return;
-    setNotificationDeleting(id);
+  const deleteStudentNotification=async(id)=>{
+    if(!id)return;
     try{
-      const {error:interactionError}=await SB.from('tadbir_notification_interactions').delete().eq('notification_id',id);
-      if(interactionError && !String(interactionError.message||'').includes('does not exist'))throw interactionError;
-      const {error}=await SB.from('tadbir_notifications').delete().eq('id',id);
+      const {data,error}=await SB.rpc('tadbir_delete_notification',{p_admin_id:String(user.id),p_notification_id:String(id)});
       if(error)throw error;
-      setAdminNotifications(v=>v.filter(n=>String(n.id)!==String(id)));
-      toast('🗑️ اعلان حذف شد','success');
+      if(data?.ok===false)throw new Error(data.message||'حذف اعلان انجام نشد');
+      toast('اعلان حذف شد','success');
     }catch(err){toast('خطا در حذف اعلان: '+(err?.message||err),'error');}
-    finally{setNotificationDeleting(null);}
   };
 
   const createExam=async()=>{
@@ -3683,7 +3676,7 @@ function Admin({user,tab,setTab,onLogout}){
       <div className="header flex justify-between items-center">
         <div><h1 className="text-lg font-black gradient-text">پنل مدیریت</h1><p className="text-xs text-white/30 mt-1">{user.full_name}</p></div>
         <div className="flex gap-2">
-          <button onClick={()=>{setTab('tools');setAdminTool('notifications');setAdminGame(null);}} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="مدیریت اعلان‌ها"><Icon d={Icons.bell} size={18}/></button>
+          <button onClick={openNotificationCenter} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="اعلان‌ها"><Icon d={Icons.bell} size={18}/>{notificationUnread>0&&<span className="notification-badge">{notificationUnread>99?'99+':notificationUnread}</span>}</button>
           <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d={Icons.logout} size={18}/></button>
         </div>
       </div>
@@ -3698,7 +3691,7 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))}
             </div>
-            <button onClick={()=>{setModal('exam');setFormData({title:'',desc:'',hours:'',minutes:'',assigned:'all',allowCalculator:false});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2 mb-6"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
+            <button onClick={()=>{setModal('exam');setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2 mb-6"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
             <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌ها</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>(
@@ -3769,7 +3762,7 @@ function Admin({user,tab,setTab,onLogout}){
             </div>
           </div>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile','achievements','notifications'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="settings-icon-box"><Icon d={Icons.game} size={27}/></div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="settings-icon-box"><Icon d={Icons.users} size={27}/></div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="settings-icon-box"><Icon d={Icons.achievement} size={27}/></div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="settings-icon-box"><Icon d={Icons.profile} size={27}/></div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">مدیریت اعلان‌ها</h2><p className="text-[10px] text-white/40 mt-1">اعلان را برای همه یا فقط یک دانش‌آموز ارسال کن.</p></div></div><div className="space-y-3"><select className="glass-input" value={notificationForm.target} onChange={e=>setNotificationForm({...notificationForm,target:e.target.value})}><option value="all">📢 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 فقط {s.full_name} (@{s.username})</option>)}</select><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':notificationForm.target==='all'?'🔔 ارسال برای همه دانش‌آموزان':'🔔 ارسال برای دانش‌آموز انتخاب‌شده'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black text-sm">اعلان‌های اخیر</h3><button className="btn-sm bg-white/5" onClick={loadAdminNotifications}>↻ بروزرسانی</button></div>{adminNotifications.length===0?<p className="text-[10px] text-white/35 text-center py-6">هنوز اعلانی ثبت نشده است.</p>:adminNotifications.map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0 flex-1"><h4>{n.title}</h4><p>{n.body}</p></div><button type="button" className="admin-notification-delete shrink-0" title="حذف اعلان" onClick={()=>deleteAdminNotification(n.id)} disabled={notificationDeleting===n.id}><Icon d={Icons.trash} size={16}/></button></div><div className="flex items-center justify-between gap-2 mt-2"><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><span className="badge badge-new">{String(n.target)==='all'?'همه':'یک دانش‌آموز'}</span></div></div>)}</div></div>:adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='achievements'?<div className="achievement-shell slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="achievement-head"><div><span className="achievement-kicker">ADMIN REWARDS CENTER</span><h2>🏆 دستاوردهای دانش‌آموزان</h2></div><div className="coin-orb">🪙</div></div><div className="wallet-big mb-3"><div><small>مجموع سکه دانش‌آموزان</small><strong>{adminWallets.reduce((n,x)=>n+Number(x.balance||0),0)}</strong></div><div><small>تعداد دانش‌آموزان</small><strong>{students.length}</strong></div></div><div className="reward-box"><h3>🎁 ساخت کد جایزه</h3><p>کد دلخواه، تعداد سکه و حداکثر دفعات استفاده را تعیین کن.</p><div className="space-y-2"><input className="glass-input" placeholder="کد دلخواه مثلا TADBIR100" value={rewardForm.code} onChange={e=>setRewardForm({...rewardForm,code:e.target.value.toUpperCase()})}/><div className="grid grid-cols-2 gap-2"><input className="glass-input" type="number" min="1" placeholder="تعداد سکه" value={rewardForm.coins} onChange={e=>setRewardForm({...rewardForm,coins:e.target.value})}/><input className="glass-input" type="number" min="1" placeholder="حداکثر استفاده" value={rewardForm.maxUses} onChange={e=>setRewardForm({...rewardForm,maxUses:e.target.value})}/></div><button className="btn-glass btn-glass-success w-full" disabled={achievementAdminBusy} onClick={createRewardCode}>{achievementAdminBusy?'در حال ساخت...':'➕ ساخت کد جایزه'}</button></div></div><div className="glass p-3 mt-3"><h3 className="font-black text-sm">کدهای ساخته‌شده</h3><div className="admin-code-list">{rewardCodes.length?rewardCodes.map(c=><div className="admin-code-row" key={c.id}><code>{c.code}</code><span>🪙 {c.coin_amount} • {c.used_count||0}/{c.max_uses}</span></div>):<span className="text-[9px] text-white/35">هنوز کدی ساخته نشده</span>}</div></div><div className="mt-4"><h3 className="font-black text-sm mb-2">🪙 موجودی دانش‌آموزان</h3><div className="admin-achievement-grid">{adminWallets.map(x=><div className="admin-wallet-row" key={x.user_id}><div className="admin-wallet-avatar">{x.student?.full_name?.[0]||'؟'}</div><div><strong>{x.student?.full_name||'دانش‌آموز'}</strong><small>@{x.student?.username||''} • ⭐ {x.earned_stars||0}</small></div><div className="admin-wallet-coins">{x.balance||0} 🪙</div></div>)}</div></div></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className="text-[10px] text-emerald-300/80 mt-1">رمز فعلی: <span className="font-mono">{s.password||'ثبت نشده'}</span></div><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile','achievements','notifications'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="text-4xl mb-3">🎮</div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="text-4xl mb-3">👥</div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="text-4xl mb-3">🏆</div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box mb-3"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="text-4xl mb-3">◉</div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">ارسال اعلان</h2><p className="text-[10px] text-white/40 mt-1">اعلان برای همه یا یک دانش‌آموز مشخص.</p></div></div><div className="space-y-3"><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><select className="glass-input" value={notificationTarget} onChange={e=>setNotificationTarget(e.target.value)}><option value="all">👥 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 {s.full_name} (@{s.username})</option>)}</select><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':'🔔 ارسال اعلان'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black">اعلان‌های ارسال‌شده</h3><span className="text-[9px] text-white/35">حذف از همین‌جا</span></div><div className="space-y-2">{(adminNotifications||[]).length===0?<div className="text-center py-6 text-white/30 text-xs">هنوز اعلانی ثبت نشده است.</div>:(adminNotifications||[]).map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0"><h4>{n.title}</h4><p>{n.body}</p><div className="notification-meta">{n.target==='all'?'برای همه دانش‌آموزان':'برای یک دانش‌آموز'} • {new Date(n.created_at).toLocaleString('fa-IR')}</div></div><button className="btn-glass btn-sm btn-glass-danger shrink-0" onClick={()=>deleteStudentNotification(n.id)}>🗑️ حذف</button></div></div>))}</div></div></div>:adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='achievements'?<div className="achievement-shell slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="achievement-head"><div><span className="achievement-kicker">ADMIN REWARDS CENTER</span><h2>🏆 دستاوردهای دانش‌آموزان</h2></div><div className="coin-orb">🪙</div></div><div className="wallet-big mb-3"><div><small>مجموع سکه دانش‌آموزان</small><strong>{adminWallets.reduce((n,x)=>n+Number(x.balance||0),0)}</strong></div><div><small>تعداد دانش‌آموزان</small><strong>{students.length}</strong></div></div><div className="reward-box"><h3>🎁 ساخت کد جایزه</h3><p>کد دلخواه، تعداد سکه و حداکثر دفعات استفاده را تعیین کن.</p><div className="space-y-2"><input className="glass-input" placeholder="کد دلخواه مثلا TADBIR100" value={rewardForm.code} onChange={e=>setRewardForm({...rewardForm,code:e.target.value.toUpperCase()})}/><div className="grid grid-cols-2 gap-2"><input className="glass-input" type="number" min="1" placeholder="تعداد سکه" value={rewardForm.coins} onChange={e=>setRewardForm({...rewardForm,coins:e.target.value})}/><input className="glass-input" type="number" min="1" placeholder="حداکثر استفاده" value={rewardForm.maxUses} onChange={e=>setRewardForm({...rewardForm,maxUses:e.target.value})}/></div><button className="btn-glass btn-glass-success w-full" disabled={achievementAdminBusy} onClick={createRewardCode}>{achievementAdminBusy?'در حال ساخت...':'➕ ساخت کد جایزه'}</button></div></div><div className="glass p-3 mt-3"><h3 className="font-black text-sm">کدهای ساخته‌شده</h3><div className="admin-code-list">{rewardCodes.length?rewardCodes.map(c=><div className="admin-code-row" key={c.id}><code>{c.code}</code><span>🪙 {c.coin_amount} • {c.used_count||0}/{c.max_uses}</span></div>):<span className="text-[9px] text-white/35">هنوز کدی ساخته نشده</span>}</div></div><div className="mt-4"><h3 className="font-black text-sm mb-2">🪙 موجودی دانش‌آموزان</h3><div className="admin-achievement-grid">{adminWallets.map(x=><div className="admin-wallet-row" key={x.user_id}><div className="admin-wallet-avatar">{x.student?.full_name?.[0]||'؟'}</div><div><strong>{x.student?.full_name||'دانش‌آموز'}</strong><small>@{x.student?.username||''} • ⭐ {x.earned_stars||0}</small></div><div className="admin-wallet-coins">{x.balance||0} 🪙</div></div>)}</div></div></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className="text-[10px] text-emerald-300/80 mt-1">رمز فعلی: <span className="font-mono">{s.password||'ثبت نشده'}</span></div><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
         {tab==='grading'&&(
           <>
             <h3 className="font-bold mb-3 text-white/70 text-sm">در انتظار تصحیح</h3>
@@ -5280,6 +5273,7 @@ function Student({user,tab,setTab,onLogout}){
   const [settingsView,setSettingsView]=useState('menu');
   const [themeMode,setThemeMode]=useState('dark');
   const [siteTheme,setSiteTheme]=useState(()=>localStorage.getItem(`tadbir_theme_${user.id}`)||'dark-purple');
+  useEffect(()=>{if(!user?.id)return;const t=siteTheme||'dark-purple';document.documentElement.dataset.tadbirTheme=t;localStorage.setItem(`tadbir_theme_${user.id}`,t);setThemeMode(t.startsWith('light-')?'light':'dark');},[siteTheme,user?.id]);
   const [chartReady,setChartReady]=useState(false);
   const [showExamResults,setShowExamResults]=useState(null);
   const [showChat,setShowChat]=useState(false);
@@ -5299,11 +5293,8 @@ function Student({user,tab,setTab,onLogout}){
   const [studentNotifications,setStudentNotifications]=useState([]);
   const [notificationUnread,setNotificationUnread]=useState(0);
   const [showNotifications,setShowNotifications]=useState(false);
-  const notificationInitialized=useRef(false);
-  const notificationKnownIds=useRef(new Set());
   const toast=useToast();
 
-  useEffect(()=>{const theme=siteTheme||'dark-purple';localStorage.setItem(`tadbir_theme_${user.id}`,theme);document.documentElement.dataset.tadbirTheme=theme;},[siteTheme,user.id]);
   useEffect(()=>{loadAll();},[]);
 
   const loadAll=async()=>{
@@ -5322,29 +5313,9 @@ function Student({user,tab,setTab,onLogout}){
   // manager's bell/actions never interfere with the student UI.
   const loadStudentNotifications=async()=>{
     try{
-      const [{data:n,error:ne},{data:i,error:ie}]=await Promise.all([
-        SB.from('tadbir_notifications').select('*').order('created_at',{ascending:false}).limit(50),
-        SB.from('tadbir_notification_interactions').select('*').eq('user_id',String(user.id))
-      ]);
+      const {data:n,error:ne}=await SB.rpc('tadbir_student_notifications',{p_user_id:String(user.id)});
       if(ne) throw ne;
-      if(ie) throw ie;
-      const im={};
-      (i||[]).forEach(x=>{im[String(x.notification_id)]=x;});
-      const rows=(n||[])
-        .filter(x=>!x.target||x.target==='all'||String(x.target)===String(user.id))
-        .map(x=>({...x,interaction:im[String(x.id)]||null}));
-      if(!notificationInitialized.current){
-        rows.forEach(x=>notificationKnownIds.current.add(String(x.id)));
-        notificationInitialized.current=true;
-      }else{
-        rows.forEach(x=>{
-          const id=String(x.id);
-          if(!notificationKnownIds.current.has(id)){
-            notificationKnownIds.current.add(id);
-            showTadbirBrowserNotification(x.title,x.body);
-          }
-        });
-      }
+      const rows=(n||[]);
       setStudentNotifications(rows);
       setNotificationUnread(rows.filter(x=>!x.interaction?.read_at).length);
     }catch(err){
@@ -5373,13 +5344,9 @@ function Student({user,tab,setTab,onLogout}){
   const openNotificationCenter=async()=>{
     setShowNotifications(true);
     try{
-      if('Notification' in window && Notification.permission==='default')await Notification.requestPermission();
       const unread=studentNotifications.filter(n=>!n.interaction?.read_at);
       for(const n of unread){
-        await SB.from('tadbir_notification_interactions').upsert(
-          {notification_id:n.id,user_id:String(user.id),read_at:new Date().toISOString()},
-          {onConflict:'notification_id,user_id'}
-        );
+        await SB.rpc('tadbir_mark_notification_read',{p_user_id:String(user.id),p_notification_id:String(n.id)});
       }
       if(unread.length){
         setStudentNotifications(v=>v.map(n=>n.interaction?.read_at?n:{...n,interaction:{...(n.interaction||{}),read_at:new Date().toISOString()}}));
@@ -5394,10 +5361,8 @@ function Student({user,tab,setTab,onLogout}){
     try{
       const now=new Date().toISOString();
       const current=studentNotifications.find(n=>String(n.id)===String(id))?.interaction||{};
-      await SB.from('tadbir_notification_interactions').upsert(
-        {notification_id:id,user_id:String(user.id),reaction,read_at:current.read_at||now},
-        {onConflict:'notification_id,user_id'}
-      );
+      const {error}=await SB.rpc('tadbir_react_notification',{p_user_id:String(user.id),p_notification_id:String(id),p_reaction:reaction});
+      if(error)throw error;
       setStudentNotifications(v=>v.map(n=>String(n.id)===String(id)?{...n,interaction:{...(n.interaction||{}),reaction,read_at:n.interaction?.read_at||now}}:n));
       setNotificationUnread(v=>Math.max(0,v-(current.read_at?0:1)));
     }catch(err){
@@ -5767,7 +5732,7 @@ function Student({user,tab,setTab,onLogout}){
                 {toolsTab==='settings'&&(
                   <div className="settings-panel">
                     {settingsView==='menu'&&<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR SETTINGS</span><h3 className="text-xl font-black gradient-text mt-1">تنظیمات</h3></div><div className="settings-icon-box"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button className="settings-choice" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود به سامانه را با امنیت بیشتر تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button className="settings-choice" onClick={()=>setSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>رنگ و حالت روشن یا تیره سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>}
-                    {settingsView==='theme'&&<><div className="flex items-center gap-3 mb-2"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم انتخابی روی خانه، ابزارها، کارنامه و دایرکت اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button className={`theme-mode-btn ${themeMode==='light'?'active':''}`} onClick={()=>setThemeMode('light')}>☀️ روشن</button><button className={`theme-mode-btn ${themeMode==='dark'?'active':''}`} onClick={()=>setThemeMode('dark')}>🌙 تیره</button></div><div className="theme-grid">{(themeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-yellow','روشن زرد','#fef3c7','#ca8a04']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-yellow','تیره زرد','#271c06','#d97706']]).map(([id,label,bg,accent])=><button key={id} className={`theme-card ${siteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>{setSiteTheme(id);localStorage.setItem(`tadbir_theme_${user.id}`,id);document.documentElement.dataset.tadbirTheme=id;}}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>}
+                    {settingsView==='theme'&&<><div className="flex items-center gap-3 mb-2"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم انتخابی روی خانه، ابزارها، کارنامه و دایرکت اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button className={`theme-mode-btn ${themeMode==='light'?'active':''}`} onClick={()=>setThemeMode('light')}>☀️ روشن</button><button className={`theme-mode-btn ${themeMode==='dark'?'active':''}`} onClick={()=>setThemeMode('dark')}>🌙 تیره</button></div><div className="theme-grid">{(themeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#eef0f3','#111827']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#101216','#f8fafc']]).map(([id,label,bg,accent])=><button key={id} className={`theme-card ${siteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>setSiteTheme(id)}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>}
                   </div>
                 )}
                 {toolsTab==='calc'&&(
@@ -5840,10 +5805,10 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setShowChat(false);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌رسان</span></div>
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>کارنامه</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab(null);setSettingsView('menu');setActiveGame(null);setShowExamCalc(false);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab(null);setSettingsView('menu');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
       {showChat&&<SocialChatModal user={user} onClose={()=>setShowChat(false)} fullScreen/>}
-      {showNotifications&&<div className="modal-overlay" onClick={()=>setShowNotifications(false)}><div className="notification-modal" onClick={e=>e.stopPropagation()}><div className="notification-head"><div className="flex items-center gap-3"><div className="settings-icon-box"><Icon d={Icons.bell} size={25}/></div><div><h3 className="font-black gradient-text">اعلان‌های تدبیر</h3><p className="text-[9px] text-white/40 mt-1">پیام‌های مدیر و اطلاعیه‌های سامانه</p></div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowNotifications(false)}><Icon d={Icons.x} size={18}/></button></div>{('Notification' in window&&Notification.permission!=='granted')&&<div className="notification-permission"><span>برای دریافت اعلان روی مرورگر، اعلان‌های تدبیر را فعال کنید.</span><button type="button" onClick={async()=>{try{await Notification.requestPermission();}catch(e){}}}>فعال‌سازی اعلان</button></div>}<div className="notification-list">{studentNotifications.length===0?<div className="text-center py-12 text-white/35"><div className="text-4xl mb-2">🔔</div><b className="text-sm">اعلان جدیدی نیست</b></div>:studentNotifications.map(n=><div key={n.id} className={`notification-card ${!n.interaction?.read_at?'unread':''}`}><div className="flex items-start justify-between gap-2"><h4>{n.title}</h4>{!n.interaction?.read_at&&<span className="badge badge-new">جدید</span>}</div><p>{n.body}</p><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><div className="notification-reactions"><button className={`notification-react ${n.interaction?.reaction==='like'?'active':''}`} onClick={()=>reactNotification(n.id,'like')}>👍 پسندیدم</button><button className={`notification-react ${n.interaction?.reaction==='dislike'?'active':''}`} onClick={()=>reactNotification(n.id,'dislike')}>👎 نپسندیدم</button></div></div>)}</div></div></div>}
+      {showNotifications&&<div className="modal-overlay" onClick={()=>setShowNotifications(false)}><div className="notification-modal" onClick={e=>e.stopPropagation()}><div className="notification-head"><div className="flex items-center gap-3"><div className="settings-icon-box"><Icon d={Icons.bell} size={25}/></div><div><h3 className="font-black gradient-text">اعلان‌های تدبیر</h3><p className="text-[9px] text-white/40 mt-1">پیام‌های مدیر و اطلاعیه‌های سامانه</p></div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowNotifications(false)}><Icon d={Icons.x} size={18}/></button></div><div className="notification-list">{studentNotifications.length===0?<div className="text-center py-12 text-white/35"><div className="text-4xl mb-2">🔔</div><b className="text-sm">اعلان جدیدی نیست</b></div>:studentNotifications.map(n=><div key={n.id} className={`notification-card ${!n.interaction?.read_at?'unread':''}`}><div className="flex items-start justify-between gap-2"><h4>{n.title}</h4>{!n.interaction?.read_at&&<span className="badge badge-new">جدید</span>}</div><p>{n.body}</p><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><div className="notification-reactions"><button className={`notification-react ${n.interaction?.reaction==='like'?'active':''}`} onClick={()=>reactNotification(n.id,'like')}>👍 پسندیدم</button><button className={`notification-react ${n.interaction?.reaction==='dislike'?'active':''}`} onClick={()=>reactNotification(n.id,'dislike')}>👎 نپسندیدم</button></div></div>)}</div></div></div>}
       {showPasswordModal&&<PasswordModal user={user} onClose={()=>setShowPasswordModal(false)}/>}
       {showObjection&&(
         <div className="modal-overlay" onClick={()=>setShowObjection(null)}>
@@ -5931,7 +5896,7 @@ function App(){
   useEffect(()=>{if(view==='login')delete document.documentElement.dataset.tadbirTheme;},[view]);
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){try{const u=JSON.parse(s);setUser(u);const role=String(u.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
+    if(s){const u=JSON.parse(s);setUser(u);setView(u.role);SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}
   },[]);
   useEffect(()=>{
     if(!user?.id){
@@ -5950,7 +5915,7 @@ function App(){
   },[user?.id]);
   const login=async(un,pw)=>{
     const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);const account=Array.isArray(data)?data[0]:data;if(error){console.error(error);return false;}
-    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));const role=String(account.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');return true;}
+    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView(account.role);return true;}
     return false;
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
