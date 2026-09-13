@@ -3463,7 +3463,11 @@ function Admin({user,tab,setTab,onLogout}){
 
   useEffect(()=>{loadAll();},[]);
   const loadAdminNotifications=async()=>{
-    try{const {data,error}=await SB.from('tadbir_notifications').select('*').order('created_at',{ascending:false}).limit(50);if(error)throw error;setAdminNotifications(data||[]);}catch(err){console.warn('admin notifications:',err);}
+    try{
+      const {data,error}=await SB.rpc('tadbir_admin_notifications',{p_admin_id:String(user.id)});
+      if(error)throw error;
+      setAdminNotifications(data||[]);
+    }catch(err){console.warn('admin notifications:',err);}
   };
   useEffect(()=>{loadAdminNotifications();},[]);
   useEffect(()=>{let active=true;const loadUnread=async()=>{const {data}=await SB.from('messages').select('id').eq('receiver_id',user.id).is('read_at',null);if(active)setUnreadCount((data||[]).length);};loadUnread();const ch=SB.channel('unread-'+user.id).on('postgres_changes',{event:'*',schema:'public',table:'messages'},loadUnread).subscribe();return()=>{active=false;SB.removeChannel(ch);};},[user.id]);
@@ -3504,15 +3508,22 @@ function Admin({user,tab,setTab,onLogout}){
     if(target!=='all'&&!students.some(x=>String(x.id)===target)){toast('دانش‌آموز انتخاب‌شده معتبر نیست','warning');return;}
     setNotificationBusy(true);
     try{
-      const payload={title,body,created_by:String(user.id),target};
-      const {data,error}=await SB.from('tadbir_notifications').insert(payload).select('*').maybeSingle();
+      // ارسال از طریق RPC انجام می‌شود تا RLS جدول اعلان‌ها مانع سیستم
+      // احراز هویت سفارشی Tadbir (جدول users) نشود.
+      const {data,error}=await SB.rpc('tadbir_send_notification',{
+        p_admin_id:String(user.id),
+        p_title:title,
+        p_body:body,
+        p_target:target
+      });
       if(error)throw error;
+      if(!data?.ok)throw new Error(data?.message||'ارسال اعلان انجام نشد');
       setNotificationForm({title:'',body:'',target:'all'});
-      if(data)setAdminNotifications(v=>[data,...v].slice(0,50));
+      await loadAdminNotifications();
       toast(target==='all'?'🔔 اعلان برای همه دانش‌آموزان ارسال شد':'🔔 اعلان برای دانش‌آموز انتخاب‌شده ارسال شد','success');
     }catch(err){
       const msg=String(err?.message||err);
-      toast(msg.includes('schema cache')||msg.includes('does not exist')?'جدول اعلان‌ها در Supabase ساخته نشده است؛ SQL پایین پیام را اجرا کنید.':'خطا در ارسال اعلان: '+msg,'error');
+      toast(msg.includes('does not exist')||msg.includes('schema cache')?'تابع ارسال اعلان در Supabase پیدا نشد؛ SQL سیستم اعلان را اجرا کنید.':'خطا در ارسال اعلان: '+msg,'error');
     }finally{setNotificationBusy(false);}
   };
 
@@ -3521,10 +3532,12 @@ function Admin({user,tab,setTab,onLogout}){
     if(!confirm('این اعلان برای همیشه حذف شود؟'))return;
     setNotificationDeleting(id);
     try{
-      const {error:interactionError}=await SB.from('tadbir_notification_interactions').delete().eq('notification_id',id);
-      if(interactionError && !String(interactionError.message||'').includes('does not exist'))throw interactionError;
-      const {error}=await SB.from('tadbir_notifications').delete().eq('id',id);
+      const {data,error}=await SB.rpc('tadbir_delete_notification',{
+        p_admin_id:String(user.id),
+        p_notification_id:String(id)
+      });
       if(error)throw error;
+      if(!data?.ok)throw new Error(data?.message||'حذف اعلان انجام نشد');
       setAdminNotifications(v=>v.filter(n=>String(n.id)!==String(id)));
       toast('🗑️ اعلان حذف شد','success');
     }catch(err){toast('خطا در حذف اعلان: '+(err?.message||err),'error');}
@@ -5376,10 +5389,10 @@ function Student({user,tab,setTab,onLogout}){
       if('Notification' in window && Notification.permission==='default')await Notification.requestPermission();
       const unread=studentNotifications.filter(n=>!n.interaction?.read_at);
       for(const n of unread){
-        await SB.from('tadbir_notification_interactions').upsert(
-          {notification_id:n.id,user_id:String(user.id),read_at:new Date().toISOString()},
-          {onConflict:'notification_id,user_id'}
-        );
+        await SB.rpc('tadbir_mark_notification_read',{
+          p_user_id:String(user.id),
+          p_notification_id:String(n.id)
+        });
       }
       if(unread.length){
         setStudentNotifications(v=>v.map(n=>n.interaction?.read_at?n:{...n,interaction:{...(n.interaction||{}),read_at:new Date().toISOString()}}));
@@ -5394,10 +5407,13 @@ function Student({user,tab,setTab,onLogout}){
     try{
       const now=new Date().toISOString();
       const current=studentNotifications.find(n=>String(n.id)===String(id))?.interaction||{};
-      await SB.from('tadbir_notification_interactions').upsert(
-        {notification_id:id,user_id:String(user.id),reaction,read_at:current.read_at||now},
-        {onConflict:'notification_id,user_id'}
-      );
+      const {data,error}=await SB.rpc('tadbir_react_notification',{
+        p_user_id:String(user.id),
+        p_notification_id:String(id),
+        p_reaction:reaction
+      });
+      if(error)throw error;
+      if(!data?.ok)throw new Error(data?.message||'ثبت واکنش انجام نشد');
       setStudentNotifications(v=>v.map(n=>String(n.id)===String(id)?{...n,interaction:{...(n.interaction||{}),reaction,read_at:n.interaction?.read_at||now}}:n));
       setNotificationUnread(v=>Math.max(0,v-(current.read_at?0:1)));
     }catch(err){
