@@ -34,7 +34,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-glass-warning{background:linear-gradient(135deg,rgba(245,158,11,0.3),rgba(217,119,6,0.3));border-color:rgba(251,191,36,0.4)}
 .btn-sm{padding:10px 16px;font-size:13px;width:auto;border-radius:12px}
 
-.tool-btn{touch-action:manipulation;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
+.tool-btn{background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:24px;padding:24px 16px;text-align:center;cursor:pointer;transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
 .tool-btn::before{content:'';position:absolute;inset:0;border-radius:24px;opacity:0;transition:opacity 0.5s}
 .tool-btn:hover::before,.tool-btn.active::before{opacity:1}
 .tool-btn.active{transform:translateY(-8px) scale(1.05);border-color:transparent}
@@ -86,7 +86,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .game-canvas{border-radius:20px;border:2px solid rgba(129,140,248,0.2);width:100%;max-width:380px;margin:0 auto;display:block;touch-action:none;background:linear-gradient(180deg,rgba(15,15,35,0.95),rgba(10,10,26,0.98));box-shadow:0 8px 40px rgba(99,102,241,0.2)}
 
 .nav-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,26,0.95);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,0.06);padding:8px 0 calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;z-index:50}
-.nav-item{touch-action:manipulation;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;border-radius:14px;color:rgba(255,255,255,0.35);font-size:10px;cursor:pointer;transition:all 0.3s}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 14px;border-radius:14px;color:rgba(255,255,255,0.35);font-size:10px;cursor:pointer;transition:all 0.3s}
 .nav-item.active{color:#818cf8;background:rgba(129,140,248,0.1)}
 .nav-item.active svg{filter:drop-shadow(0 0 8px rgba(129,140,248,0.6))}
 .nav-item svg{width:22px;height:22px}
@@ -2069,11 +2069,11 @@ body.tadbir-chat-list-open .messenger-contacts-scroll{
 html[data-tadbir-theme="dark-purple"]{--td-accent:#8b5cf6;--td-accent2:#c084fc;--td-bg:#090817}
 html[data-tadbir-theme="dark-blue"]{--td-accent:#2563eb;--td-accent2:#38bdf8;--td-bg:#050b18}
 html[data-tadbir-theme="dark-pink"]{--td-accent:#db2777;--td-accent2:#fb7185;--td-bg:#160711}
-html[data-tadbir-theme="dark-white"]{--td-accent:#e5e7eb;--td-accent2:#ffffff;--td-bg:#0b0d12;--td-surface:rgba(255,255,255,.06);--td-surface-strong:rgba(18,20,28,.92);--td-border:rgba(255,255,255,.14);--td-text:#f8fafc;--td-muted:rgba(248,250,252,.58);--td-shadow:rgba(0,0,0,.45)}
+html[data-tadbir-theme="dark-yellow"]{--td-accent:#d97706;--td-accent2:#facc15;--td-bg:#171005}
 html[data-tadbir-theme="light-purple"]{--td-accent:#7c3aed;--td-accent2:#a855f7;--td-bg:#f7f3ff;--td-surface:rgba(255,255,255,.78);--td-surface-strong:rgba(255,255,255,.94);--td-border:rgba(91,33,182,.13);--td-text:#21173a;--td-muted:rgba(45,29,70,.58);--td-shadow:rgba(76,29,149,.12)}
 html[data-tadbir-theme="light-blue"]{--td-accent:#2563eb;--td-accent2:#0ea5e9;--td-bg:#f1f8ff;--td-surface:rgba(255,255,255,.80);--td-surface-strong:rgba(255,255,255,.95);--td-border:rgba(37,99,235,.13);--td-text:#10213c;--td-muted:rgba(16,33,60,.58);--td-shadow:rgba(37,99,235,.12)}
 html[data-tadbir-theme="light-pink"]{--td-accent:#db2777;--td-accent2:#fb7185;--td-bg:#fff4f9;--td-surface:rgba(255,255,255,.82);--td-surface-strong:rgba(255,255,255,.95);--td-border:rgba(219,39,119,.13);--td-text:#3b1428;--td-muted:rgba(59,20,40,.58);--td-shadow:rgba(219,39,119,.11)}
-html[data-tadbir-theme="light-black"]{--td-accent:#111827;--td-accent2:#374151;--td-bg:#f3f4f6;--td-surface:rgba(255,255,255,.86);--td-surface-strong:rgba(255,255,255,.97);--td-border:rgba(17,24,39,.14);--td-text:#111827;--td-muted:rgba(17,24,39,.60);--td-shadow:rgba(17,24,39,.12)}
+html[data-tadbir-theme="light-yellow"]{--td-accent:#ca8a04;--td-accent2:#f59e0b;--td-bg:#fffbed;--td-surface:rgba(255,255,255,.84);--td-surface-strong:rgba(255,255,255,.96);--td-border:rgba(202,138,4,.14);--td-text:#35280d;--td-muted:rgba(53,40,13,.60);--td-shadow:rgba(202,138,4,.11)}
 html[data-tadbir-theme] body{background:var(--td-bg)!important;color:var(--td-text)!important;transition:background .45s ease,color .3s ease}
 html[data-tadbir-theme],html[data-tadbir-theme] body{overflow-x:hidden}
 html[data-tadbir-theme] button,html[data-tadbir-theme] .glass,html[data-tadbir-theme] .card,html[data-tadbir-theme] .tool-btn,html[data-tadbir-theme] .social-contact{transition:background-color .35s ease,border-color .35s ease,color .25s ease,box-shadow .35s ease,transform .28s cubic-bezier(.16,1,.3,1)}
@@ -2190,28 +2190,6 @@ html[data-tadbir-theme] .tg-story-ring{border-color:var(--td-accent)!important;b
 
 /* Prevent a transient active calculator tile on opening Tools */
 .tool-btn.calc:not(.active){transform:none!important}
-</style>
-<style id="tadbir-v43-final-safe-polish">
-/* Stable mobile scrolling: native finger scrolling without changing login behavior. */
-html,body,#root{width:100%;max-width:100%;}
-.content{touch-action:pan-y;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;}
-.content *{scrollbar-width:thin;}
-.notification-list,.follow-list-body,.profile-trophy-strip,.theme-grid,.settings-panel,.settings-choice{touch-action:pan-y;-webkit-overflow-scrolling:touch;}
-.modal-overlay{touch-action:pan-y;overscroll-behavior:contain;}
-.settings-wide-tile .settings-icon-box{width:56px;height:56px;border-radius:18px;background:linear-gradient(145deg,var(--td-accent),var(--td-accent2));border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px rgba(255,255,255,.35),0 10px 28px color-mix(in srgb,var(--td-accent) 28%,transparent);color:#fff;}
-.settings-wide-tile .settings-icon-box svg{filter:drop-shadow(0 0 8px rgba(255,255,255,.25));}
-/* Theme-aware SVG grade chart: no fixed dark/red pencil colors in light mode. */
-html[data-tadbir-theme^="light-"] .grade3d-card{background:var(--td-surface)!important;color:var(--td-text)!important;border-color:var(--td-border)!important;box-shadow:0 18px 55px var(--td-shadow)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg rect{fill:color-mix(in srgb,var(--td-accent) 3%,white)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg line{stroke:color-mix(in srgb,var(--td-accent) 14%,transparent)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg .heartbeat-line{stroke:var(--td-accent)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg .heartbeat-highlight{stroke:color-mix(in srgb,var(--td-accent) 55%,white)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg .heartbeat-shadow{stroke:color-mix(in srgb,var(--td-accent) 22%,transparent)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-svg circle{stroke:var(--td-accent)!important;}
-html[data-tadbir-theme^="light-"] .grade3d-label,.grade3d-axis-20{fill:var(--td-text)!important;color:var(--td-text)!important;}
-html[data-tadbir-theme="light-black"] .tool-icon,html[data-tadbir-theme="light-black"] .settings-icon-box{color:#fff!important;}
-html[data-tadbir-theme="dark-white"] .tool-icon,html[data-tadbir-theme="dark-white"] .settings-icon-box{color:#111827!important;}
-html[data-tadbir-theme="dark-white"] .gradient-text{background:linear-gradient(135deg,#fff,#d1d5db)!important;-webkit-background-clip:text!important;background-clip:text!important;}
 </style>
 </head>
 <body>
@@ -3526,17 +3504,11 @@ function Admin({user,tab,setTab,onLogout}){
     if(target!=='all'&&!students.some(x=>String(x.id)===target)){toast('دانش‌آموز انتخاب‌شده معتبر نیست','warning');return;}
     setNotificationBusy(true);
     try{
-      const {data,error}=await SB.rpc('tadbir_send_notification',{
-        p_admin_id:String(user.id),
-        p_title:title,
-        p_body:body,
-        p_target:target
-      });
+      const payload={title,body,created_by:String(user.id),target};
+      const {data,error}=await SB.from('tadbir_notifications').insert(payload).select('*').maybeSingle();
       if(error)throw error;
-      const result=Array.isArray(data)?data[0]:data;
-      if(result?.ok===false)throw new Error(result.message||'ارسال اعلان انجام نشد');
       setNotificationForm({title:'',body:'',target:'all'});
-      await loadAdminNotifications();
+      if(data)setAdminNotifications(v=>[data,...v].slice(0,50));
       toast(target==='all'?'🔔 اعلان برای همه دانش‌آموزان ارسال شد':'🔔 اعلان برای دانش‌آموز انتخاب‌شده ارسال شد','success');
     }catch(err){
       const msg=String(err?.message||err);
@@ -3549,13 +3521,10 @@ function Admin({user,tab,setTab,onLogout}){
     if(!confirm('این اعلان برای همیشه حذف شود؟'))return;
     setNotificationDeleting(id);
     try{
-      const {data,error}=await SB.rpc('tadbir_delete_notification',{
-        p_admin_id:String(user.id),
-        p_notification_id:String(id)
-      });
+      const {error:interactionError}=await SB.from('tadbir_notification_interactions').delete().eq('notification_id',id);
+      if(interactionError && !String(interactionError.message||'').includes('does not exist'))throw interactionError;
+      const {error}=await SB.from('tadbir_notifications').delete().eq('id',id);
       if(error)throw error;
-      const result=Array.isArray(data)?data[0]:data;
-      if(result?.ok===false)throw new Error(result.message||'حذف اعلان انجام نشد');
       setAdminNotifications(v=>v.filter(n=>String(n.id)!==String(id)));
       toast('🗑️ اعلان حذف شد','success');
     }catch(err){toast('خطا در حذف اعلان: '+(err?.message||err),'error');}
@@ -5334,7 +5303,7 @@ function Student({user,tab,setTab,onLogout}){
   const notificationKnownIds=useRef(new Set());
   const toast=useToast();
 
-  useEffect(()=>{let theme=siteTheme||'dark-purple';if(theme==='dark-yellow')theme='dark-white';if(theme==='light-yellow')theme='light-black';if(theme!==siteTheme)setSiteTheme(theme);localStorage.setItem(`tadbir_theme_${user.id}`,theme);document.documentElement.dataset.tadbirTheme=theme;},[siteTheme,user.id]);
+  useEffect(()=>{const theme=siteTheme||'dark-purple';localStorage.setItem(`tadbir_theme_${user.id}`,theme);document.documentElement.dataset.tadbirTheme=theme;},[siteTheme,user.id]);
   useEffect(()=>{loadAll();},[]);
 
   const loadAll=async()=>{
@@ -5353,17 +5322,16 @@ function Student({user,tab,setTab,onLogout}){
   // manager's bell/actions never interfere with the student UI.
   const loadStudentNotifications=async()=>{
     try{
-      const [{data:n,error:ne},{data:i,error:ie}]=await Promise.all([
-        SB.from('tadbir_notifications').select('*').order('created_at',{ascending:false}).limit(50),
-        SB.from('tadbir_notification_interactions').select('*').eq('user_id',String(user.id))
-      ]);
-      if(ne) throw ne;
-      if(ie) throw ie;
-      const im={};
-      (i||[]).forEach(x=>{im[String(x.notification_id)]=x;});
-      const rows=(n||[])
-        .filter(x=>!x.target||x.target==='all'||String(x.target)===String(user.id))
-        .map(x=>({...x,interaction:im[String(x.id)]||null}));
+      // اعلان‌های دانش‌آموز از RPC خوانده می‌شوند تا RLS جدول اصلی
+      // مانع نمایش اعلان‌های عمومی/اختصاصی نشود.
+      const {data,error}=await SB.rpc('tadbir_student_notifications',{p_user_id:String(user.id)});
+      if(error) throw error;
+      const rows=(data||[]).map(x=>({
+        ...x,
+        body:x.body ?? x.message ?? '',
+        interaction:x.interaction||null
+      }));
+
       if(!notificationInitialized.current){
         rows.forEach(x=>notificationKnownIds.current.add(String(x.id)));
         notificationInitialized.current=true;
@@ -5376,11 +5344,12 @@ function Student({user,tab,setTab,onLogout}){
           }
         });
       }
+
       setStudentNotifications(rows);
       setNotificationUnread(rows.filter(x=>!x.interaction?.read_at).length);
     }catch(err){
       console.warn('student notifications:',err);
-      // Do not interrupt login/home rendering if notification tables/RLS are unavailable.
+      // اعلان نباید مانع بالا آمدن پنل دانش‌آموز شود.
     }
   };
 
@@ -5798,7 +5767,7 @@ function Student({user,tab,setTab,onLogout}){
                 {toolsTab==='settings'&&(
                   <div className="settings-panel">
                     {settingsView==='menu'&&<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR SETTINGS</span><h3 className="text-xl font-black gradient-text mt-1">تنظیمات</h3></div><div className="settings-icon-box"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button className="settings-choice" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود به سامانه را با امنیت بیشتر تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button className="settings-choice" onClick={()=>setSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>رنگ و حالت روشن یا تیره سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>}
-                    {settingsView==='theme'&&<><div className="flex items-center gap-3 mb-2"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم انتخابی روی خانه، ابزارها، کارنامه و دایرکت اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button className={`theme-mode-btn ${themeMode==='light'?'active':''}`} onClick={()=>setThemeMode('light')}>☀️ روشن</button><button className={`theme-mode-btn ${themeMode==='dark'?'active':''}`} onClick={()=>setThemeMode('dark')}>🌙 تیره</button></div><div className="theme-grid">{(themeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#f3f4f6','#111827']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#0b0d12','#ffffff']]).map(([id,label,bg,accent])=><button key={id} className={`theme-card ${siteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>{setSiteTheme(id);localStorage.setItem(`tadbir_theme_${user.id}`,id);document.documentElement.dataset.tadbirTheme=id;}}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>}
+                    {settingsView==='theme'&&<><div className="flex items-center gap-3 mb-2"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم انتخابی روی خانه، ابزارها، کارنامه و دایرکت اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button className={`theme-mode-btn ${themeMode==='light'?'active':''}`} onClick={()=>setThemeMode('light')}>☀️ روشن</button><button className={`theme-mode-btn ${themeMode==='dark'?'active':''}`} onClick={()=>setThemeMode('dark')}>🌙 تیره</button></div><div className="theme-grid">{(themeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-yellow','روشن زرد','#fef3c7','#ca8a04']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-yellow','تیره زرد','#271c06','#d97706']]).map(([id,label,bg,accent])=><button key={id} className={`theme-card ${siteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>{setSiteTheme(id);localStorage.setItem(`tadbir_theme_${user.id}`,id);document.documentElement.dataset.tadbirTheme=id;}}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>}
                   </div>
                 )}
                 {toolsTab==='calc'&&(
