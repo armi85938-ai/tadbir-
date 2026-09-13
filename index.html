@@ -2109,6 +2109,78 @@ html[data-tadbir-theme^="light-"] .social-chat-fullscreen{background:linear-grad
 .telegram-stories-strip .tg-story-item,.telegram-stories-strip .tg-story-ring,.telegram-stories-strip .tg-story-ring-inner{box-sizing:border-box}
 @media(max-width:640px){.tg-story-item{width:76px!important;min-width:76px!important;max-width:76px!important}.tg-story-ring{width:66px!important;height:66px!important;min-width:66px!important;min-height:66px!important;max-width:66px!important;max-height:66px!important}.tg-story-name{max-width:76px!important}}
 </style>
+
+<style id="tadbir-v41-final-stability">
+/* ===== TADBIR V41 — final stability/theme layer ===== */
+html[data-tadbir-theme]{--td-accent-soft:color-mix(in srgb,var(--td-accent) 14%,transparent)}
+html[data-tadbir-theme] body,
+html[data-tadbir-theme] #root{background:var(--td-bg)!important;color:var(--td-text)!important}
+html[data-tadbir-theme] .content,
+html[data-tadbir-theme] .header,
+html[data-tadbir-theme] .nav-bar{color:var(--td-text)}
+html[data-tadbir-theme] .glass-input,
+html[data-tadbir-theme] select,
+html[data-tadbir-theme] textarea{background:color-mix(in srgb,var(--td-surface-strong) 92%,transparent)!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
+html[data-tadbir-theme] select option{background:var(--td-bg);color:var(--td-text)}
+html[data-tadbir-theme] .btn-glass{background:linear-gradient(135deg,color-mix(in srgb,var(--td-accent) 22%,transparent),color-mix(in srgb,var(--td-accent2) 16%,transparent))!important;color:var(--td-text)!important}
+html[data-tadbir-theme] .btn-glass-success{background:linear-gradient(135deg,rgba(16,185,129,.28),rgba(5,150,105,.20))!important;color:var(--td-text)!important}
+html[data-tadbir-theme] .btn-glass-danger{background:linear-gradient(135deg,rgba(239,68,68,.25),rgba(220,38,38,.18))!important}
+html[data-tadbir-theme] .badge-new,
+html[data-tadbir-theme] .badge-approved{border-color:color-mix(in srgb,var(--td-accent) 25%,transparent)!important}
+html[data-tadbir-theme] .admin-tool-card,
+html[data-tadbir-theme] .admin-notice-compose,
+html[data-tadbir-theme] .notification-card,
+html[data-tadbir-theme] .notification-modal,
+html[data-tadbir-theme] .exam-calc-modal,
+html[data-tadbir-theme] .settings-panel{color:var(--td-text)!important}
+html[data-tadbir-theme] .admin-tool-card:hover,
+html[data-tadbir-theme] .notification-card.unread{border-color:color-mix(in srgb,var(--td-accent) 42%,transparent)!important;box-shadow:0 16px 45px color-mix(in srgb,var(--td-accent) 15%,transparent)!important}
+html[data-tadbir-theme^="light-"] .header,
+html[data-tadbir-theme^="light-"] .nav-bar{box-shadow:0 10px 35px var(--td-shadow)!important}
+html[data-tadbir-theme^="light-"] .text-indigo-300,
+html[data-tadbir-theme^="light-"] .text-indigo-400,
+html[data-tadbir-theme^="light-"] .text-purple-300,
+html[data-tadbir-theme^="light-"] .text-purple-400{color:var(--td-accent)!important}
+html[data-tadbir-theme^="light-"] .bg-white\/5,
+html[data-tadbir-theme^="light-"] .bg-white\/10{background:color-mix(in srgb,var(--td-accent) 5%,white)!important}
+html[data-tadbir-theme^="light-"] .border-white\/5,
+html[data-tadbir-theme^="light-"] .border-white\/10{border-color:var(--td-border)!important}
+html[data-tadbir-theme^="light-"] .notification-badge{border-color:var(--td-surface-strong)!important}
+html[data-tadbir-theme^="light-"] .exam-calc-launcher{color:#fff!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
+html[data-tadbir-theme^="light-"] .exam-calc-key{color:var(--td-text)!important;background:var(--td-surface)!important;border-color:var(--td-border)!important}
+html[data-tadbir-theme^="light-"] .exam-calc-key.op,
+html[data-tadbir-theme^="light-"] .exam-calc-key.eq{color:#fff!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
+
+/* Direct / chat / story surfaces follow the selected theme */
+html[data-tadbir-theme] .social-fullscreen-overlay,
+html[data-tadbir-theme] .tg-story-viewer{background:color-mix(in srgb,var(--td-bg) 94%,transparent)!important}
+html[data-tadbir-theme] .social-chat-fullscreen,
+html[data-tadbir-theme] .telegram-chat,
+html[data-tadbir-theme] .tg-story-card,
+html[data-tadbir-theme] .tg-story-composer{background:var(--td-surface-strong)!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
+html[data-tadbir-theme] .social-chat-header,
+html[data-tadbir-theme] .telegram-header{background:linear-gradient(135deg,color-mix(in srgb,var(--td-accent) 12%,var(--td-surface-strong)),var(--td-surface-strong))!important;border-color:var(--td-border)!important}
+html[data-tadbir-theme] .chat-bubble.me{background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important}
+html[data-tadbir-theme^="light-"] .chat-bubble.other{background:#fff!important;color:var(--td-text)!important;border-color:var(--td-border)!important}
+html[data-tadbir-theme] .tg-story-ring{border-color:var(--td-accent)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--td-accent) 20%,transparent),0 8px 28px color-mix(in srgb,var(--td-accent) 24%,transparent)!important}
+
+/* Stories are circles, never ellipses */
+.tg-story-item{width:68px!important;min-width:68px!important}
+.tg-story-ring,
+.tg-story-avatar,
+.tg-story-item img{width:54px!important;height:54px!important;min-width:54px!important;min-height:54px!important;border-radius:50%!important;aspect-ratio:1/1!important;object-fit:cover!important}
+.tg-story-ring{overflow:hidden!important}
+
+/* Floating exam calculator — stays away from question/choices */
+.exam-calc-launcher{position:fixed!important;right:max(16px,env(safe-area-inset-right))!important;bottom:calc(92px + env(safe-area-inset-bottom))!important;width:58px!important;height:58px!important;border-radius:18px!important;display:grid!important;place-items:center!important;z-index:120!important;background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important;color:#fff!important;border:1px solid color-mix(in srgb,var(--td-accent) 45%,transparent)!important;box-shadow:0 12px 34px color-mix(in srgb,var(--td-accent) 35%,transparent),0 0 40px color-mix(in srgb,var(--td-accent2) 18%,transparent)!important}
+.exam-calc-modal{width:min(92vw,360px)!important;padding:18px!important;border-radius:28px!important;background:var(--td-surface-strong)!important;border:1px solid var(--td-border)!important;box-shadow:0 30px 100px var(--td-shadow),0 0 55px color-mix(in srgb,var(--td-accent) 14%,transparent)!important;color:var(--td-text)!important}
+.exam-calc-display{background:color-mix(in srgb,var(--td-accent) 8%,var(--td-surface))!important;color:var(--td-text)!important;border:1px solid var(--td-border)!important}
+.exam-calc-key{border:1px solid var(--td-border)!important;background:var(--td-surface)!important;color:var(--td-text)!important}
+.exam-calc-key.op,.exam-calc-key.eq{background:linear-gradient(135deg,var(--td-accent),var(--td-accent2))!important;color:#fff!important}
+
+/* Prevent a transient active calculator tile on opening Tools */
+.tool-btn.calc:not(.active){transform:none!important}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -3333,12 +3405,14 @@ function PasswordModal({onClose,user}){
 }
 
 function Admin({user,tab,setTab,onLogout}){
+  // Keep the manager/admin panel isolated from student-only state and tolerate
+  // legacy role values without breaking the whole application.
   const [exams,setExams]=useState([]);
   const [students,setStudents]=useState([]);
   const [answers,setAnswers]=useState([]);
   const [modal,setModal]=useState(null);
   const [step,setStep]=useState(1);
-  const [formData,setFormData]=useState({hours:'',minutes:'',allowCalculator:false});
+  const [formData,setFormData]=useState({title:'',desc:'',hours:'',minutes:'',assigned:'all',allowCalculator:false});
   const [questions,setQuestions]=useState([]);
   const [loading,setLoading]=useState(false);
   const [subTab,setSubTab]=useState('list');
@@ -3583,7 +3657,7 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               ))}
             </div>
-            <button onClick={()=>{setModal('exam');setFormData({hours:'',minutes:''});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2 mb-6"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
+            <button onClick={()=>{setModal('exam');setFormData({title:'',desc:'',hours:'',minutes:'',assigned:'all',allowCalculator:false});setQuestions([]);setStep(1);}} className="btn-glass flex items-center justify-center gap-2 mb-6"><Icon d={Icons.plus} size={18}/>ساخت آزمون جدید</button>
             <h3 className="font-bold mb-3 text-white/70 text-sm">آزمون‌ها</h3>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>(
@@ -5710,7 +5784,7 @@ function Student({user,tab,setTab,onLogout}){
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setShowChat(false);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌رسان</span></div>
         <div className={`nav-item ${tab==='grades'?'active':''}`} onClick={()=>setTab('grades')}><Icon d={Icons.grade}/><span>کارنامه</span></div>
-        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab(null);setSettingsView('menu');setActiveGame(null);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
+        <div className={`nav-item ${tab==='tools'?'active':''}`} onClick={()=>{setTab('tools');setToolsTab(null);setSettingsView('menu');setActiveGame(null);setShowExamCalc(false);}}><Icon d={Icons.list}/><span>ابزارها</span></div>
       </div>
       {showChat&&<SocialChatModal user={user} onClose={()=>setShowChat(false)} fullScreen/>}
       {showNotifications&&<div className="modal-overlay" onClick={()=>setShowNotifications(false)}><div className="notification-modal" onClick={e=>e.stopPropagation()}><div className="notification-head"><div className="flex items-center gap-3"><div className="settings-icon-box"><Icon d={Icons.bell} size={25}/></div><div><h3 className="font-black gradient-text">اعلان‌های تدبیر</h3><p className="text-[9px] text-white/40 mt-1">پیام‌های مدیر و اطلاعیه‌های سامانه</p></div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowNotifications(false)}><Icon d={Icons.x} size={18}/></button></div><div className="notification-list">{studentNotifications.length===0?<div className="text-center py-12 text-white/35"><div className="text-4xl mb-2">🔔</div><b className="text-sm">اعلان جدیدی نیست</b></div>:studentNotifications.map(n=><div key={n.id} className={`notification-card ${!n.interaction?.read_at?'unread':''}`}><div className="flex items-start justify-between gap-2"><h4>{n.title}</h4>{!n.interaction?.read_at&&<span className="badge badge-new">جدید</span>}</div><p>{n.body}</p><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><div className="notification-reactions"><button className={`notification-react ${n.interaction?.reaction==='like'?'active':''}`} onClick={()=>reactNotification(n.id,'like')}>👍 پسندیدم</button><button className={`notification-react ${n.interaction?.reaction==='dislike'?'active':''}`} onClick={()=>reactNotification(n.id,'dislike')}>👎 نپسندیدم</button></div></div>)}</div></div></div>}
@@ -5801,7 +5875,7 @@ function App(){
   useEffect(()=>{if(view==='login')delete document.documentElement.dataset.tadbirTheme;},[view]);
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){const u=JSON.parse(s);setUser(u);setView((u.role==='admin'||u.role==='manager')?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}
+    if(s){try{const u=JSON.parse(s);setUser(u);const role=String(u.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
   },[]);
   useEffect(()=>{
     if(!user?.id){
@@ -5820,7 +5894,7 @@ function App(){
   },[user?.id]);
   const login=async(un,pw)=>{
     const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);const account=Array.isArray(data)?data[0]:data;if(error){console.error(error);return false;}
-    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView((account.role==='admin'||account.role==='manager')?'admin':'student');return true;}
+    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));const role=String(account.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');return true;}
     return false;
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
