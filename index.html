@@ -2967,54 +2967,20 @@ html,body{overflow-x:hidden!important}
 }
 </style>
 
-
-<style id="tadbir-v17-glass-patch">
-.tadbir-floating-composer{
- position:fixed!important;left:0!important;right:0!important;bottom:0!important;
- z-index:5000!important;width:100%!important;background:transparent!important;
- border:0!important;box-shadow:none!important;
- padding:8px 10px calc(8px + env(safe-area-inset-bottom))!important;
- pointer-events:none!important;
-}
-.tadbir-floating-composer .tadbir-composer-row{pointer-events:auto!important}
-.tadbir-composer-circle,.tadbir-composer-pill{
- background:rgba(255,255,255,.055)!important;
- border:1px solid rgba(255,255,255,.13)!important;
- backdrop-filter:blur(25px) saturate(135%)!important;
- -webkit-backdrop-filter:blur(25px) saturate(135%)!important;
- box-shadow:0 10px 30px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.09)!important;
-}
-.tadbir-composer-circle{position:relative!important}
-.tadbir-composer-circle:after{opacity:.32!important;background:rgba(255,255,255,.22)!important;filter:blur(8px)!important}
-.tadbir-composer-pill{overflow:visible!important}
-.tadbir-composer-input,.tadbir-composer-input:focus{
- background:transparent!important;border:0!important;outline:none!important;box-shadow:none!important;
-}
-.tadbir-composer-input{padding-left:42px!important;padding-right:15px!important}
-.tadbir-emoji-button{
- left:7px!important;right:auto!important;color:rgba(255,255,255,.62)!important;
- background:transparent!important;
- font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
-}
-.tadbir-emoji-tray{z-index:6000!important}
-.tadbir-attach-menu{z-index:6001!important}
-.telegram-chat-header,.chat-header,.pv-header,.conversation-header{
- background:transparent!important;border:0!important;box-shadow:none!important;
- backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
-}
-.telegram-chat-header>* ,.chat-header>* ,.pv-header>* ,.conversation-header>*{
- background:rgba(255,255,255,.045)!important;
- border:1px solid rgba(255,255,255,.11)!important;
- box-shadow:0 8px 25px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.08)!important;
- backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;
-}
-.chat-messages,.telegram-chat-messages,.messages-list,.conversation-messages{
- position:relative!important;z-index:1!important;
-}
-@media(max-width:430px){
- .tadbir-floating-composer{padding-left:7px!important;padding-right:7px!important}
- .tadbir-composer-row{max-width:none!important}
-}
+<style id="tadbir-v18-exam-guide">
+.exam-guide-row{display:flex;justify-content:flex-start;margin:0 0 10px}
+.exam-guide-button{min-height:48px;padding:6px 10px 6px 13px;border-radius:17px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;display:flex;align-items:center;gap:9px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.08);font-family:inherit;transition:.18s ease}
+.exam-guide-button:active{transform:scale(.97)}
+.exam-guide-button span:last-child{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.exam-guide-button b{font-size:10px}.exam-guide-button small{font-size:7px;color:rgba(255,255,255,.42)}
+.exam-guide-lamp{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#fef08a;background:radial-gradient(circle at 35% 30%,#fff9c4 0 12%,rgba(250,204,21,.55) 20%,rgba(250,204,21,.08) 62%,transparent 70%);box-shadow:0 0 20px rgba(250,204,21,.20)}
+.exam-guide-button.disabled{opacity:.30;cursor:default;filter:grayscale(.5)}
+.exam-hint-target{border-color:rgba(250,204,21,.65)!important;background:rgba(250,204,21,.08)!important;box-shadow:0 0 0 1px rgba(250,204,21,.16),0 0 28px rgba(250,204,21,.12)!important;position:relative}
+.exam-hint-finger{position:absolute;right:-5px;top:-15px;font-size:30px;z-index:10;filter:drop-shadow(0 5px 7px rgba(0,0,0,.45));animation:tadbirFinger .72s ease-in-out infinite alternate}
+@keyframes tadbirFinger{from{transform:translateY(3px) rotate(-7deg) scale(.96)}to{transform:translateY(-5px) rotate(3deg) scale(1.04)}}
+.exam-hint-overlay{position:fixed;inset:0;z-index:2147483640;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(2,3,12,.42);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.exam-hint-modal{width:min(92vw,360px);box-sizing:border-box;padding:22px;border-radius:30px;text-align:center;background:rgba(20,21,35,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 35px 100px rgba(0,0,0,.52),0 0 55px rgba(250,204,21,.07);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);direction:rtl}
+.exam-hint-modal-icon{font-size:40px;line-height:1;margin-bottom:7px}.exam-hint-kicker{font-size:7px;letter-spacing:3px;color:#facc15;font-weight:900}.exam-hint-modal h3{font-size:18px;font-weight:1000;margin-top:5px}.exam-hint-modal p{font-size:10px;line-height:2;color:rgba(255,255,255,.48);margin-top:8px}.exam-hint-price{margin:13px auto;width:max-content;min-width:90px;padding:8px 13px;border-radius:999px;background:rgba(250,204,21,.09);border:1px solid rgba(250,204,21,.18);color:#fde68a;font-size:10px;font-weight:900}.exam-hint-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.exam-hint-actions button{min-height:40px;font-family:inherit;font-size:9px}
 </style>
 
 </head>
@@ -6438,6 +6404,9 @@ function Student({user,tab,setTab,onLogout}){
   const [achievementBusy,setAchievementBusy]=useState(false);
   const [celebration,setCelebration]=useState(null);
   const [showExamCalc,setShowExamCalc]=useState(false);
+  const [examHintUsed,setExamHintUsed]=useState(0);
+  const [examHintTarget,setExamHintTarget]=useState(null);
+  const [showExamHintConfirm,setShowExamHintConfirm]=useState(false);
   const [studentNotifications,setStudentNotifications]=useState([]);
   const [notificationUnread,setNotificationUnread]=useState(0);
   const [showNotifications,setShowNotifications]=useState(false);
@@ -6631,6 +6600,9 @@ function Student({user,tab,setTab,onLogout}){
     setHasSubmitted(false);
     setShowExamCalc(false);
     setCalcDisplay('');
+    setExamHintUsed(0);
+    setExamHintTarget(null);
+    setShowExamHintConfirm(false);
   };
 
   useEffect(()=>{
@@ -6639,6 +6611,37 @@ function Student({user,tab,setTab,onLogout}){
       return()=>clearInterval(t);
     }else if(activeExam&&timeLeft===0)submitExam();
   },[activeExam,timeLeft]);
+
+  const getExamHintCost=()=>examHintUsed===0?0:Math.pow(2,examHintUsed-1)*0.5;
+  const requestExamHint=()=>{
+    const q=activeExam?.questions?.[currentQ];
+    if(!q||q.q_type!=='test'||!q.correct_opt)return;
+    setShowExamHintConfirm(true);
+  };
+  const confirmExamHint=async()=>{
+    const q=activeExam?.questions?.[currentQ];
+    if(!q||q.q_type!=='test'||!q.correct_opt){setShowExamHintConfirm(false);return;}
+    const cost=getExamHintCost();
+    try{
+      if(cost>0){
+        const {data:w,error}=await SB.from('tadbir_wallets').select('*').eq('user_id',String(user.id)).maybeSingle();
+        if(error)throw error;
+        const balance=Number(w?.balance||0);
+        if(balance<cost){toast(`🪙 برای این راهنما ${cost} سکه لازم است و موجودی کافی نیست.`,'warning');setShowExamHintConfirm(false);return;}
+        const {error:ue}=await SB.from('tadbir_wallets').update({balance:balance-cost,updated_at:new Date().toISOString()}).eq('user_id',String(user.id));
+        if(ue)throw ue;
+        if(typeof setCoinBalance==='function')setCoinBalance(balance-cost);
+      }
+      setExamHintTarget(String(q.correct_opt).toUpperCase());
+      setExamHintUsed(n=>n+1);
+      setShowExamHintConfirm(false);
+      toast(cost===0?'💡 راهنمای رایگان فعال شد':'💡 راهنما فعال شد و هزینه از سکه‌ها کم شد','success');
+    }catch(err){
+      console.error('exam hint',err);
+      toast('خطا در فعال‌سازی راهنما','error');
+      setShowExamHintConfirm(false);
+    }
+  };
 
   const submitExam=async()=>{
     if(!activeExam||hasSubmitted)return;
@@ -6778,24 +6781,53 @@ function Student({user,tab,setTab,onLogout}){
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
             <p className="mb-5 font-bold leading-relaxed text-lg">{q?.q_text}</p>
             {q?.q_type==='test'?(
-              <div className="space-y-2">
-                {['A','B','C','D'].map(opt=>(
-                  <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
-                      <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
-                      {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
+              <>
+                <div className="exam-guide-row">
+                  <button type="button" className="exam-guide-button" onClick={requestExamHint}>
+                    <span className="exam-guide-lamp">◉</span>
+                    <span><b>راهنما</b><small>{examHintUsed===0?'اولین راهنما رایگان':`راهنمای بعدی: ${getExamHintCost()} سکه`}</small></span>
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {['A','B','C','D'].map(opt=>(
+                    <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'} ${examHintTarget===opt?'exam-hint-target':''}`} onClick={()=>{setStudentAnswers({...studentAnswers,[q.id]:opt});if(examHintTarget===opt)setExamHintTarget(null);}}>
+                      <div className="flex items-center gap-3 relative">
+                        <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
+                        <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
+                        {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
+                        {examHintTarget===opt&&<span className="exam-hint-finger" aria-label="گزینه راهنمایی‌شده">☝️</span>}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ):(<textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>)}
+                  ))}
+                </div>
+              </>
+            ):(
+              <>
+                <div className="exam-guide-row">
+                  <div className="exam-guide-button disabled"><span className="exam-guide-lamp">◉</span><span><b>راهنما</b><small>برای سوالات تشریحی غیرفعال است</small></span></div>
+                </div>
+                <textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>
+              </>
+            )}
           </div>
           <div className="flex gap-2 mt-4">
             {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-glass bg-white/5 flex-1">← قبلی</button>}
             {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-glass flex-1">بعدی →</button>:<button onClick={()=>{if(confirm('ثبت نهایی آزمون؟'))submitExam();}} className="btn-glass btn-glass-success flex-1">✓ ثبت نهایی</button>}
           </div>
         </div>
+        {showExamHintConfirm&&<div className="exam-hint-overlay" onClick={()=>setShowExamHintConfirm(false)}>
+          <div className="exam-hint-modal" onClick={e=>e.stopPropagation()}>
+            <div className="exam-hint-modal-icon">💡</div>
+            <div className="exam-hint-kicker">TADBIR GUIDE</div>
+            <h3>راهنمای این سوال</h3>
+            <p>{getExamHintCost()===0?'این اولین استفاده شما در این آزمون است و رایگان است.':`هزینه این راهنما ${getExamHintCost()} سکه است و بعد از تأیید از موجودی شما کم می‌شود.`}</p>
+            <div className="exam-hint-price">{getExamHintCost()===0?'رایگان':'🪙 '+getExamHintCost()+' سکه'}</div>
+            <div className="exam-hint-actions">
+              <button type="button" className="btn-glass" onClick={()=>setShowExamHintConfirm(false)}>انصراف</button>
+              <button type="button" className="btn-glass btn-glass-success" onClick={confirmExamHint}>تأیید و نمایش راهنما</button>
+            </div>
+          </div>
+        </div>}
         {activeExam.allow_calculator&&<button type="button" className="exam-calc-launcher" onClick={()=>setShowExamCalc(true)} title="ماشین‌حساب"><Icon d={Icons.calc} size={27}/></button>}
         {activeExam.allow_calculator&&showExamCalc&&<div className="modal-overlay" onClick={()=>setShowExamCalc(false)}><div className="exam-calc-modal" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-3"><div><b className="gradient-text">ماشین‌حساب آزمون</b><div className="text-[9px] text-white/40 mt-1">بدون خروج از سوال محاسبه کن</div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowExamCalc(false)}><Icon d={Icons.x} size={18}/></button></div><div className="exam-calc-display">{calcDisplay||'0'}</div><div className="exam-calc-grid">{['7','8','9','÷','4','5','6','×','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`exam-calc-key ${['÷','×','-','+'].includes(b)?'op':''} ${b==='='?'eq':''} ${b==='C'?'clear':''}`}>{b}</button>)}</div></div></div>}
       </div>
