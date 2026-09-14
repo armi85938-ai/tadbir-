@@ -2983,6 +2983,23 @@ html,body{overflow-x:hidden!important}
 .exam-hint-modal-icon{font-size:40px;line-height:1;margin-bottom:7px}.exam-hint-kicker{font-size:7px;letter-spacing:3px;color:#facc15;font-weight:900}.exam-hint-modal h3{font-size:18px;font-weight:1000;margin-top:5px}.exam-hint-modal p{font-size:10px;line-height:2;color:rgba(255,255,255,.48);margin-top:8px}.exam-hint-price{margin:13px auto;width:max-content;min-width:90px;padding:8px 13px;border-radius:999px;background:rgba(250,204,21,.09);border:1px solid rgba(250,204,21,.18);color:#fde68a;font-size:10px;font-weight:900}.exam-hint-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.exam-hint-actions button{min-height:40px;font-family:inherit;font-size:9px}
 </style>
 
+<style id="tadbir-v19-polish">
+.exam-guide-icon-button{
+ width:40px;height:40px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.12);
+ background:rgba(255,255,255,.055);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+ display:grid;place-items:center;cursor:pointer;box-shadow:0 7px 20px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.08);
+}
+.exam-guide-icon-button:active{transform:scale(.94)}
+.exam-guide-icon-button .exam-guide-lamp{width:25px;height:25px;font-size:12px;font-weight:900}
+.exam-guide-icon-button.disabled{opacity:.25;cursor:default;pointer-events:none}
+.tadbir-floating-composer,.bottom-nav,.floating-bottom-nav,.main-bottom-nav{
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.tadbir-floating-composer>* ,.bottom-nav>* ,.floating-bottom-nav>* ,.main-bottom-nav>*{
+ backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;
+ background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.11)!important;
+}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -6626,7 +6643,8 @@ function Student({user,tab,setTab,onLogout}){
       if(cost>0){
         const {data:w,error}=await SB.from('tadbir_wallets').select('*').eq('user_id',String(user.id)).maybeSingle();
         if(error)throw error;
-        const balance=Number(w?.balance||0);
+        const balance=Number(w?.balance ?? 0);
+        if(!w){toast('🪙 کیف سکه برای حساب شما هنوز ساخته نشده است.','warning');setShowExamHintConfirm(false);return;}
         if(balance<cost){toast(`🪙 برای این راهنما ${cost} سکه لازم است و موجودی کافی نیست.`,'warning');setShowExamHintConfirm(false);return;}
         const {error:ue}=await SB.from('tadbir_wallets').update({balance:balance-cost,updated_at:new Date().toISOString()}).eq('user_id',String(user.id));
         if(ue)throw ue;
@@ -6783,9 +6801,8 @@ function Student({user,tab,setTab,onLogout}){
             {q?.q_type==='test'?(
               <>
                 <div className="exam-guide-row">
-                  <button type="button" className="exam-guide-button" onClick={requestExamHint}>
-                    <span className="exam-guide-lamp">◉</span>
-                    <span><b>راهنما</b><small>{examHintUsed===0?'اولین راهنما رایگان':`راهنمای بعدی: ${getExamHintCost()} سکه`}</small></span>
+                  <button type="button" className="exam-guide-icon-button" aria-label="راهنمای سوال" title="راهنمای سوال" onClick={requestExamHint}>
+                    <span className="exam-guide-lamp">i</span>
                   </button>
                 </div>
                 <div className="space-y-2">
@@ -6804,7 +6821,7 @@ function Student({user,tab,setTab,onLogout}){
             ):(
               <>
                 <div className="exam-guide-row">
-                  <div className="exam-guide-button disabled"><span className="exam-guide-lamp">◉</span><span><b>راهنما</b><small>برای سوالات تشریحی غیرفعال است</small></span></div>
+                  <div className="exam-guide-icon-button disabled" aria-label="راهنما غیرفعال"><span className="exam-guide-lamp">i</span></div>
                 </div>
                 <textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>
               </>
