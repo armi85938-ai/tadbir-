@@ -2752,221 +2752,36 @@ html[data-tadbir-theme^="light-"] .competition-wide-tile span,html[data-tadbir-t
 }
 </style>
 
-
-<style id="tadbir-v13-pro-ui">
-/* ===== V13: Admin tools + clean floating composer ===== */
-.admin-tools-grid,.manager-tools-grid,.admin-tools-container,.manager-tools-container{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:14px!important;align-items:stretch!important;
-}
-.admin-tools-grid>* , .manager-tools-grid>* , .admin-tools-container>* , .manager-tools-container>*{
-  min-width:0!important;width:100%!important;box-sizing:border-box!important;
-}
-.tadbir-floating-composer{
-  position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:1200!important;
-  width:100%!important;padding:7px 10px calc(8px + env(safe-area-inset-bottom))!important;
-  background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;
-  pointer-events:none!important;
-}
-.tadbir-floating-composer>*{pointer-events:auto!important}
-.tadbir-composer-row{width:100%!important;max-width:760px!important;margin:0 auto!important;display:flex!important;align-items:center!important;gap:9px!important;direction:ltr!important}
-.tadbir-composer-circle{
-  position:relative!important;flex:0 0 48px!important;width:48px!important;height:48px!important;min-width:48px!important;
-  border-radius:50%!important;padding:0!important;display:grid!important;place-items:center!important;
-  background:transparent!important;border:0!important;color:rgba(255,255,255,.94)!important;
-  box-shadow:0 7px 20px rgba(255,255,255,.08)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
-}
-.tadbir-composer-circle:after{
-  content:""!important;position:absolute!important;z-index:-1!important;left:8px!important;right:8px!important;bottom:-4px!important;
-  height:9px!important;border-radius:50%!important;background:rgba(255,255,255,.18)!important;
-  filter:blur(7px)!important;opacity:.65!important;
-}
-.tadbir-composer-pill{
-  position:relative!important;flex:1 1 auto!important;min-width:0!important;height:48px!important;
-  border-radius:25px!important;background:rgba(255,255,255,.055)!important;
-  border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 9px 28px rgba(0,0,0,.20)!important;
-  backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;overflow:visible!important;
-}
-.tadbir-composer-input{
-  width:100%!important;height:46px!important;min-width:0!important;padding:0 43px 0 15px!important;
-  border:0!important;background:transparent!important;outline:0!important;box-shadow:none!important;
-  color:#fff!important;direction:rtl!important;text-align:right!important;
-}
-.tadbir-composer-input:focus,.tadbir-composer-input:active{
-  background:transparent!important;outline:0!important;box-shadow:none!important;border:0!important;
-}
-.tadbir-composer-input::placeholder{color:rgba(255,255,255,.35)!important}
-.tadbir-composer-pill:focus-within{background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 9px 28px rgba(0,0,0,.20)!important}
-.tadbir-emoji-button{
-  position:absolute!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
-  width:32px!important;height:32px!important;border:0!important;background:transparent!important;
-  color:rgba(255,255,255,.65)!important;display:grid!important;place-items:center!important;font-size:19px!important;
-}
-.tadbir-emoji-button:active{transform:translateY(-50%) scale(.9)!important}
-.tadbir-attach-wrap{position:relative!important;flex:0 0 48px!important;width:48px!important;height:48px!important}
-.tadbir-composer-right{color:rgba(255,255,255,.92)!important}
-.tadbir-attach-menu{
-  position:absolute!important;right:0!important;bottom:55px!important;width:auto!important;
-  display:flex!important;flex-direction:column!important;gap:13px!important;padding:0!important;
-  background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;
-  -webkit-backdrop-filter:none!important;animation:none!important;
-}
-.tadbir-attach-menu button{
-  width:45px!important;height:45px!important;min-width:45px!important;padding:0!important;border-radius:50%!important;
-  background:transparent!important;border:0!important;color:#fff!important;display:grid!important;place-items:center!important;
-  box-shadow:0 7px 18px rgba(255,255,255,.08)!important;position:relative!important;
-  animation:tadbirPinPop .28s cubic-bezier(.2,.8,.2,1) both!important;
-}
-.tadbir-attach-menu button:nth-child(2){animation-delay:.055s!important}
-.tadbir-attach-menu button:after{
-  content:""!important;position:absolute!important;z-index:-1!important;left:8px!important;right:8px!important;bottom:-3px!important;
-  height:8px!important;border-radius:50%!important;background:rgba(255,255,255,.18)!important;filter:blur(6px)!important;
-}
-.tadbir-attach-icon{width:100%!important;height:100%!important;border-radius:50%!important;background:rgba(255,255,255,.075)!important;
-  border:1px solid rgba(255,255,255,.13)!important;display:grid!important;place-items:center!important}
-.tadbir-attach-menu b{display:none!important}
-@keyframes tadbirPinPop{
-  0%{opacity:0;transform:translateY(18px) scale(.35)}
-  65%{opacity:1;transform:translateY(-4px) scale(1.08)}
-  100%{opacity:1;transform:translateY(0) scale(1)}
-}
+<style id="tadbir-v16-final-pv">
+/* Header: three free-floating glass controls, matching the lower composer language */
+.telegram-chat-shell .telegram-chat-header,
+.telegram-chat-shell .social-chat-header{background:transparent!important;border:0!important;box-shadow:none!important;padding:7px 8px!important;gap:8px!important}
+.telegram-chat-shell .telegram-chat-header>* , .telegram-chat-shell .social-chat-header>*{background:transparent!important}
+/* emoji belongs to the left edge of the central typing pill */
+.tadbir-composer-pill{direction:ltr!important}
+.tadbir-composer-input{padding-left:45px!important;padding-right:15px!important;direction:rtl!important;text-align:right!important}
+.tadbir-emoji-button{left:7px!important;right:auto!important;z-index:4!important;width:32px!important;height:32px!important;background:transparent!important;color:rgba(255,255,255,.58)!important;border:0!important;box-shadow:none!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important}
+/* Keep all three lower controls completely free of a parent box */
+.tadbir-floating-composer{background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important}
+.tadbir-composer-row{background:transparent!important;border:0!important;box-shadow:none!important}
+/* Keyboard-safe fixed positioning. The visual viewport transform is handled here instead of a fragile absolute offset. */
+.tadbir-floating-composer{position:fixed!important;left:0!important;right:0!important;bottom:0!important;margin:0!important;width:100vw!important;max-width:100vw!important;transform:translate3d(0,0,0)!important;will-change:bottom,transform!important}
+html.tadbir-keyboard-open .tadbir-floating-composer{bottom:var(--tadbir-keyboard-height,0px)!important}
+/* Poll builder always sits above the chat/composer */
+.tadbir-poll-overlay{z-index:99999!important;pointer-events:auto!important}
+.tadbir-poll-builder{position:relative!important;z-index:100000!important;pointer-events:auto!important}
+.tadbir-poll-overlay button,.tadbir-poll-overlay input{pointer-events:auto!important}
+/* Top controls: no solid container, only a faint under-glow like the lower circles */
+.telegram-chat-shell .telegram-chat-header .chat-close-btn,
+.telegram-chat-shell .social-chat-header .chat-close-btn,
+.telegram-chat-shell .telegram-header-back,
+.telegram-chat-shell .telegram-header-action{background:transparent!important;border:0!important;box-shadow:0 7px 20px rgba(255,255,255,.07)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 @media(max-width:430px){
-  .tadbir-floating-composer{padding-left:7px!important;padding-right:7px!important}
-  .tadbir-composer-row{gap:6px!important}
-  .tadbir-composer-circle,.tadbir-attach-wrap{flex-basis:45px!important;width:45px!important;min-width:45px!important;height:45px!important}
-  .tadbir-composer-pill{height:45px!important;border-radius:23px!important}
-  .tadbir-composer-input{height:43px!important;padding-right:40px!important;font-size:10px!important}
-  .tadbir-emoji-button{width:29px!important;height:29px!important;right:5px!important;font-size:17px!important}
-  .tadbir-attach-menu{bottom:52px!important;gap:10px!important}
-  .tadbir-attach-menu button{width:42px!important;height:42px!important;min-width:42px!important}
-}
-@media(max-width:350px){
-  .tadbir-composer-row{gap:4px!important}
-  .tadbir-composer-circle,.tadbir-attach-wrap{flex-basis:42px!important;width:42px!important;min-width:42px!important;height:42px!important}
-  .tadbir-composer-pill{height:42px!important}
-  .tadbir-composer-input{height:40px!important;padding-right:38px!important}
-}
-
-/* Try the common admin-tool wrappers used by the existing build without touching login */
-[class*="admin"][class*="tools"]>*,[class*="manager"][class*="tools"]>*{
-  box-sizing:border-box!important;
+ .tadbir-composer-input{padding-left:39px!important;padding-right:12px!important}
+ .tadbir-emoji-button{left:5px!important;width:29px!important;height:29px!important}
+ .tadbir-floating-composer{padding-left:6px!important;padding-right:6px!important}
 }
 </style>
-
-
-<style id="tadbir-v14-final-polish">
-.admin-tools-grid{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:14px!important;
-  width:100%!important;
-}
-.admin-tools-grid .admin-tool-card{
-  min-width:0!important;
-  width:100%!important;
-  box-sizing:border-box!important;
-  min-height:148px!important;
-  border-radius:24px!important;
-  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
-}
-.admin-tools-grid .admin-tool-card:active{transform:scale(.985)!important}
-@media(max-width:430px){
-  .admin-tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
-  .admin-tools-grid .admin-tool-card{min-height:132px!important;padding:14px!important;border-radius:20px!important}
-}
-.tadbir-settings-round{
-  width:56px!important;height:56px!important;min-width:56px!important;
-  border-radius:50%!important;display:grid!important;place-items:center!important;
-  background:radial-gradient(circle at 35% 25%,rgba(255,255,255,.20),rgba(124,58,237,.18) 48%,rgba(20,20,35,.30))!important;
-  border:1px solid rgba(255,255,255,.14)!important;
-  box-shadow:0 9px 25px rgba(124,58,237,.18),inset 0 1px rgba(255,255,255,.12)!important;
-}
-.tadbir-emoji-button{
-  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
-  line-height:1!important;unicode-bidi:isolate!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
-.tadbir-emoji-tray{
-  background:rgba(12,13,23,.78)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  border-radius:22px!important;
-  padding:9px!important;
-  box-shadow:0 20px 50px rgba(0,0,0,.38)!important;
-  backdrop-filter:blur(28px)!important;
-  -webkit-backdrop-filter:blur(28px)!important;
-  display:grid!important;
-  grid-template-columns:repeat(6,1fr)!important;
-  gap:4px!important;
-}
-.tadbir-emoji-tray button{
-  width:40px!important;height:40px!important;padding:0!important;
-  border:0!important;border-radius:13px!important;background:transparent!important;
-  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
-  font-size:21px!important;display:grid!important;place-items:center!important;
-  transition:transform .12s ease,background .12s ease!important;
-}
-.tadbir-emoji-tray button:hover{background:rgba(255,255,255,.08)!important;transform:scale(1.08)!important}
-@media(max-width:430px){
-  .tadbir-emoji-tray{grid-template-columns:repeat(6,1fr)!important;width:min(290px,86vw)!important}
-  .tadbir-emoji-tray button{width:37px!important;height:37px!important;font-size:19px!important}
-}
-</style>
-
-
-<style id="tadbir-v15-stability">
-/* Native-like, stable mobile viewport: composer is not inside a background card. */
-html,body{overflow-x:hidden!important}
-.social-fullscreen-overlay .social-chat-fullscreen,.social-fullscreen-overlay .social-chat{min-height:0!important}
-.social-fullscreen-overlay .chat-messages-scroll{padding-bottom:calc(92px + env(safe-area-inset-bottom))!important;z-index:1!important}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer{
-  position:fixed!important;left:0!important;right:0!important;bottom:0!important;
-  width:100%!important;height:auto!important;min-height:0!important;margin:0!important;
-  padding:6px max(8px,env(safe-area-inset-left)) calc(7px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right))!important;
-  background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;
-  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;z-index:2147483004!important;
-  transform:translate3d(0,calc(-1 * var(--tadbir-composer-shift,0px)),0)!important;
-  box-sizing:border-box!important;pointer-events:none!important;
-}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-row{pointer-events:auto!important}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-row{max-width:760px!important;margin:0 auto!important}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle,
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-attach-wrap{isolation:isolate!important}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle{
- background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.10)!important;
- backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;
- box-shadow:0 8px 24px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.10)!important;
-}
-.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-pill{
- background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.10)!important;
- box-shadow:0 8px 26px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.07)!important;
- backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;
-}
-/* The central field never gets the old purple focus surface. */
-.social-fullscreen-overlay .tadbir-composer-pill:focus-within,
-.social-fullscreen-overlay .tadbir-composer-input:focus,
-.social-fullscreen-overlay .tadbir-composer-input:active{
- background:transparent!important;border-color:transparent!important;box-shadow:none!important;outline:none!important;
-}
-/* Keep the message bubbles behind the floating controls while scrolling. */
-.social-fullscreen-overlay .chat-messages-scroll{position:absolute!important;inset:0!important;top:calc(62px + env(safe-area-inset-top))!important;bottom:0!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-y:contain!important}
-.social-fullscreen-overlay .chat-messages-scroll>*{position:relative!important;z-index:1!important}
-.social-fullscreen-overlay .tadbir-floating-composer{z-index:2147483004!important}
-/* Pin menu floats directly out of the pin circle, with motion from its center. */
-.social-fullscreen-overlay .tadbir-attach-menu{z-index:2147483010!important;bottom:56px!important;right:1px!important;gap:9px!important;background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important;animation:none!important}
-.social-fullscreen-overlay .tadbir-attach-menu button{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.12)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;box-shadow:0 8px 20px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.08)!important}
-/* Make the poll builder impossible to hide behind the composer or chat overlay. */
-.tadbir-poll-overlay{z-index:2147483600!important;pointer-events:auto!important}
-.tadbir-poll-builder{position:relative!important;z-index:2147483601!important;pointer-events:auto!important}
-/* Admin settings are real navigation panels, not a decorative tile. */
-.admin-settings-panel{min-height:220px!important}
-.admin-settings-panel .settings-choice{cursor:pointer!important}
-.admin-settings-panel .theme-card{cursor:pointer!important}
-@media(max-width:560px){
- .social-fullscreen-overlay .chat-composer.tadbir-floating-composer{padding-bottom:calc(6px + env(safe-area-inset-bottom))!important}
- .social-fullscreen-overlay .chat-messages-scroll{padding-bottom:calc(82px + env(safe-area-inset-bottom))!important}
-}
-</style>
-
 </head>
 <body>
 <div id="root"></div>
@@ -4240,30 +4055,6 @@ function Admin({user,tab,setTab,onLogout}){
   const [showPasswordModal,setShowPasswordModal]=useState(false);
   const [adminTool,setAdminTool]=useState('menu');
   const [adminSettingsView,setAdminSettingsView]=useState('menu');
-  const [adminBlockedUsers,setAdminBlockedUsers]=useState([]);
-  const [adminBlockedLoading,setAdminBlockedLoading]=useState(false);
-  const [adminThemeMode,setAdminThemeMode]=useState('dark');
-  const [adminSiteTheme,setAdminSiteTheme]=useState(()=>{const k=`tadbir_theme_${user.id}`;let t=localStorage.getItem(k)||'dark-purple';if(t==='dark-yellow')t='dark-white';if(t==='light-yellow')t='light-black';localStorage.setItem(k,t);return t;});
-  const loadAdminBlockedUsers=async()=>{
-    setAdminBlockedLoading(true);
-    try{
-      const {data,error}=await SB.from('blocks').select('blocked_id').eq('blocker_id',user.id);
-      if(error)throw error;
-      const ids=(data||[]).map(x=>x.blocked_id).filter(Boolean);
-      if(!ids.length){setAdminBlockedUsers([]);return}
-      const {data:us,error:ue}=await SB.from('users').select('id,full_name,username,role').in('id',ids);
-      if(ue)throw ue;
-      setAdminBlockedUsers(us||[]);
-    }catch(e){console.warn('admin blocked users:',e);toast('دریافت کاربران مسدود انجام نشد','error')}
-    finally{setAdminBlockedLoading(false)}
-  };
-  const unblockAdminUser=async(id)=>{
-    const {error}=await SB.from('blocks').delete().eq('blocker_id',user.id).eq('blocked_id',id);
-    if(error){toast('رفع مسدودی انجام نشد','error');return}
-    setAdminBlockedUsers(x=>x.filter(u=>String(u.id)!==String(id)));
-    toast('کاربر از مسدودی خارج شد','success');
-  };
-  const applyAdminTheme=(id)=>{setAdminSiteTheme(id);localStorage.setItem(`tadbir_theme_${user.id}`,id);document.documentElement.dataset.tadbirTheme=id};
   const [adminGame,setAdminGame]=useState(null);
   const [penaltyRoomId,setPenaltyRoomId]=useState(null);
   const [studentForm,setStudentForm]=useState({full_name:'',username:'',password:''});
@@ -4653,7 +4444,7 @@ function Admin({user,tab,setTab,onLogout}){
             </div>
           </div>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile','achievements','notifications','competitions','settings'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="admin-tools-grid"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="settings-icon-box"><Icon d={Icons.game} size={27}/></div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="settings-icon-box"><Icon d={Icons.users} size={27}/></div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="settings-icon-box"><Icon d={Icons.achievement} size={27}/></div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('competitions')}><div className="settings-icon-box competition-admin-icon"><Icon d={Icons.trophy} size={27}/></div><h3 className="font-black">مدیریت مسابقات</h3><p className="text-xs text-white/40 mt-1">طراحی مسابقه و مشاهده آثار دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>{setAdminTool('settings');setAdminSettingsView('menu')}}><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div><h3 className="font-black">تنظیمات</h3><p className="text-xs text-white/40 mt-1">تنظیمات مدیریتی سامانه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="settings-icon-box"><Icon d={Icons.profile} size={27}/></div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">مدیریت اعلان‌ها</h2><p className="text-[10px] text-white/40 mt-1">اعلان را برای همه یا فقط یک دانش‌آموز ارسال کن.</p></div></div><div className="space-y-3"><select className="glass-input" value={notificationForm.target} onChange={e=>setNotificationForm({...notificationForm,target:e.target.value})}><option value="all">📢 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 فقط {s.full_name} (@{s.username})</option>)}</select><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':notificationForm.target==='all'?'🔔 ارسال برای همه دانش‌آموزان':'🔔 ارسال برای دانش‌آموز انتخاب‌شده'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black text-sm">اعلان‌های اخیر</h3><button className="btn-sm bg-white/5" onClick={loadAdminNotifications}>↻ بروزرسانی</button></div>{adminNotifications.length===0?<p className="text-[10px] text-white/35 text-center py-6">هنوز اعلانی ثبت نشده است.</p>:adminNotifications.map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0 flex-1"><h4>{n.title}</h4><p>{n.body}</p></div><button type="button" className="admin-notification-delete shrink-0" title="حذف اعلان" onClick={()=>deleteAdminNotification(n.id)} disabled={notificationDeleting===n.id}><Icon d={Icons.trash} size={16}/></button></div><div className="flex items-center justify-between gap-2 mt-2"><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><span className="badge badge-new">{String(n.target)==='all'?'همه':'یک دانش‌آموز'}</span></div></div>)}</div></div>:adminTool==='competitions'?<div className="slide-up"><button onClick={()=>{resetCompetitionForm();setAdminTool('menu')}} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="competition-wide-icon"><Icon d={Icons.trophy} size={27}/></div><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text">مدیریت مسابقات</h2><p className="text-xs text-white/40 mt-1">مسابقه بساز، منتشر کن و آثار دانش‌آموزان را ببین.</p></div></div></div><div className="glass p-4 mb-4 space-y-3"><h3 className="font-black">{competitionEditing?'ویرایش مسابقه':'طراحی مسابقه جدید'}</h3><input className="glass-input" placeholder="عنوان مسابقه" value={competitionForm.title} onChange={e=>setCompetitionForm({...competitionForm,title:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="توضیحات مسابقه" value={competitionForm.description} onChange={e=>setCompetitionForm({...competitionForm,description:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="شرایط شرکت در مسابقه" value={competitionForm.conditions} onChange={e=>setCompetitionForm({...competitionForm,conditions:e.target.value})}/><select className="glass-input" value={competitionForm.target} onChange={e=>setCompetitionForm({...competitionForm,target:e.target.value})}><option value="all">📢 ارسال برای همه دانش‌آموزان</option>{students.map(x=><option key={x.id} value={String(x.id)}>👤 فقط {x.full_name}</option>)}</select><div className="rounded-2xl border border-white/10 bg-white/[.035] p-3"><label className="text-[11px] font-bold block mb-2">زمان پایان ارسال آثار</label><p className="text-[9px] text-white/40 mb-2">شروع مسابقه: امروز • فقط پایان را انتخاب کنید</p><div className="grid grid-cols-2 gap-2"><div><span className="text-[9px] text-white/40 block mb-1">تاریخ پایان</span><input className="glass-input" type="date" value={(competitionForm.expires_at||'').split('T')[0]} onChange={e=>{const t=(competitionForm.expires_at||'').split('T')[1]||'23:59';setCompetitionForm({...competitionForm,expires_at:e.target.value+'T'+t})}}/></div><div><span className="text-[9px] text-white/40 block mb-1">ساعت پایان</span><input className="glass-input" type="time" value={(competitionForm.expires_at||'').split('T')[1]||''} onChange={e=>{const d=(competitionForm.expires_at||'').split('T')[0]||new Date().toISOString().slice(0,10);setCompetitionForm({...competitionForm,expires_at:d+'T'+e.target.value})}}/></div></div></div><label className="competition-upload"><span>🖼️ {competitionForm.poster_url?'تغییر پوستر':'افزودن پوستر مسابقه'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,poster_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.poster_url&&<img className="competition-preview" src={competitionForm.poster_url} alt="پوستر"/>}<label className="competition-upload"><span>🎨 {competitionForm.sample_url?'تغییر نمونه طرح':'افزودن نمونه طرح'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,sample_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.sample_url&&<img className="competition-preview" src={competitionForm.sample_url} alt="نمونه طرح"/>}<div className="flex gap-2"><button className="btn-glass btn-glass-success flex-1" onClick={saveCompetition} disabled={competitionBusy}>{competitionBusy?'در حال ذخیره...':competitionEditing?'✓ ذخیره ویرایش':'🏆 انتشار مسابقه'}</button>{competitionEditing&&<button className="btn-glass flex-1" onClick={resetCompetitionForm}>انصراف</button>}</div></div><div className="competition-admin-grid">{competitions.length===0?<div className="competition-empty">هنوز مسابقه‌ای ساخته نشده است.</div>:competitions.map(c=><div className="competition-admin-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt=""/>}<div className="competition-body"><span className="competition-kicker">مسابقه</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ پایان ارسال</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه"/></details>}<div className="competition-admin-actions"><button className="btn-glass" onClick={()=>editCompetition(c)}>✏️ ویرایش</button>{new Date(c.expires_at)>new Date()&&<button className="btn-glass competition-end-btn" disabled={competitionEnding===c.id} onClick={()=>endCompetition(c.id)}>{competitionEnding===c.id?'در حال اتمام...':'⏹️ اتمام مسابقه'}</button>}<button className="btn-glass btn-glass-danger" onClick={()=>deleteCompetition(c.id)}>🗑️ حذف</button></div><div className="competition-section"><b>آثار ارسالی</b>{competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).length===0?<p>هنوز اثری ارسال نشده است.</p>:competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).map(x=><div className="competition-submission competition-submission-rich" key={x.id}><button type="button" className="competition-submission-image-btn" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>{x.image_url&&<img src={x.image_url} alt="اثر"/>}</button><div className="min-w-0 flex-1"><b className="block truncate">{x.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/40">{new Date(x.created_at).toLocaleString('fa-IR')}</span>{x.review_text&&<p className="competition-review-preview">ارزیابی: {x.review_text}</p>}<div className="competition-submission-actions"><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>🔍 بزرگنمایی</button><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>📝 ارزیابی</button></div></div></div>)}</div></div></div>)}</div></div>:adminTool==='settings'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="settings-panel admin-settings-panel">{adminSettingsView==='menu'?<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR ADMIN SETTINGS</span><h2 className="text-xl font-black gradient-text mt-1">تنظیمات مدیر</h2><p className="text-[9px] text-white/40 mt-1">ظاهر سامانه و حریم خصوصی حساب مدیر</p></div><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button type="button" className="settings-choice" onClick={()=>setAdminSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>حالت روشن یا تیره و رنگ سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button type="button" className="settings-choice" onClick={()=>{setAdminSettingsView('privacy');loadAdminBlockedUsers()}}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>حریم خصوصی و امنیت</b><small>کاربران مسدود و امنیت حساب مدیر</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>:adminSettingsView==='theme'?<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم روی بخش‌های اصلی و پیام‌رسان اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button type="button" className={`theme-mode-btn ${adminThemeMode==='light'?'active':''}`} onClick={()=>setAdminThemeMode('light')}>روشن</button><button type="button" className={`theme-mode-btn ${adminThemeMode==='dark'?'active':''}`} onClick={()=>setAdminThemeMode('dark')}>تیره</button></div><div className="theme-grid">{(adminThemeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#f0f0f2','#111111']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#111116','#f5f5f5']]).map(([id,label,bg,accent])=><button type="button" key={id} className={`theme-card ${adminSiteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>applyAdminTheme(id)}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>:<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">حریم خصوصی و امنیت</h3><p className="text-[9px] text-white/40">مدیریت کاربران مسدود و امنیت حساب</p></div></div><button type="button" className="settings-choice w-full mb-3" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود حساب مدیر را تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><div className="settings-choice blocked-users-panel"><span className="settings-choice-icon"><Icon d={Icons.users} size={22}/></span><span className="settings-choice-copy"><b>کاربران مسدود</b><small>{adminBlockedUsers.length} کاربر مسدود شده</small></span></div><div className="tadbir-blocked-list">{adminBlockedLoading?<div className="text-center text-[10px] text-white/40 py-6">در حال دریافت...</div>:adminBlockedUsers.length===0?<div className="text-center text-[10px] text-white/35 py-6">کاربر مسدودی وجود ندارد.</div>:adminBlockedUsers.map(u=><div className="tadbir-blocked-user" key={u.id}><div><b>{u.full_name||u.username}</b><small>@{u.username}</small></div><button type="button" onClick={()=>unblockAdminUser(u.id)}>رفع مسدودی</button></div>)}</div></>}</div></div>:
+        {tab==='tools'&&(<div className="slide-up">{!adminGame&&!['students','games','profile','achievements','notifications','competitions'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="grid grid-cols-1 gap-3"><div className="admin-tool-card" onClick={()=>setAdminTool('games')}><div className="settings-icon-box"><Icon d={Icons.game} size={27}/></div><h3 className="font-black">مرکز بازی‌ها</h3><p className="text-xs text-white/40 mt-1">مدیریت و بازی مار و پله با دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="settings-icon-box"><Icon d={Icons.users} size={27}/></div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="settings-icon-box"><Icon d={Icons.achievement} size={27}/></div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('competitions')}><div className="settings-icon-box competition-admin-icon"><Icon d={Icons.trophy} size={27}/></div><h3 className="font-black">مدیریت مسابقات</h3><p className="text-xs text-white/40 mt-1">طراحی مسابقه و مشاهده آثار دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>{setAdminTool('settings');setAdminSettingsView('menu')}}><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div><h3 className="font-black">تنظیمات</h3><p className="text-xs text-white/40 mt-1">تنظیمات مدیریتی سامانه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="settings-icon-box"><Icon d={Icons.profile} size={27}/></div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">مدیریت اعلان‌ها</h2><p className="text-[10px] text-white/40 mt-1">اعلان را برای همه یا فقط یک دانش‌آموز ارسال کن.</p></div></div><div className="space-y-3"><select className="glass-input" value={notificationForm.target} onChange={e=>setNotificationForm({...notificationForm,target:e.target.value})}><option value="all">📢 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 فقط {s.full_name} (@{s.username})</option>)}</select><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':notificationForm.target==='all'?'🔔 ارسال برای همه دانش‌آموزان':'🔔 ارسال برای دانش‌آموز انتخاب‌شده'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black text-sm">اعلان‌های اخیر</h3><button className="btn-sm bg-white/5" onClick={loadAdminNotifications}>↻ بروزرسانی</button></div>{adminNotifications.length===0?<p className="text-[10px] text-white/35 text-center py-6">هنوز اعلانی ثبت نشده است.</p>:adminNotifications.map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0 flex-1"><h4>{n.title}</h4><p>{n.body}</p></div><button type="button" className="admin-notification-delete shrink-0" title="حذف اعلان" onClick={()=>deleteAdminNotification(n.id)} disabled={notificationDeleting===n.id}><Icon d={Icons.trash} size={16}/></button></div><div className="flex items-center justify-between gap-2 mt-2"><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><span className="badge badge-new">{String(n.target)==='all'?'همه':'یک دانش‌آموز'}</span></div></div>)}</div></div>:adminTool==='competitions'?<div className="slide-up"><button onClick={()=>{resetCompetitionForm();setAdminTool('menu')}} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="competition-wide-icon"><Icon d={Icons.trophy} size={27}/></div><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text">مدیریت مسابقات</h2><p className="text-xs text-white/40 mt-1">مسابقه بساز، منتشر کن و آثار دانش‌آموزان را ببین.</p></div></div></div><div className="glass p-4 mb-4 space-y-3"><h3 className="font-black">{competitionEditing?'ویرایش مسابقه':'طراحی مسابقه جدید'}</h3><input className="glass-input" placeholder="عنوان مسابقه" value={competitionForm.title} onChange={e=>setCompetitionForm({...competitionForm,title:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="توضیحات مسابقه" value={competitionForm.description} onChange={e=>setCompetitionForm({...competitionForm,description:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="شرایط شرکت در مسابقه" value={competitionForm.conditions} onChange={e=>setCompetitionForm({...competitionForm,conditions:e.target.value})}/><select className="glass-input" value={competitionForm.target} onChange={e=>setCompetitionForm({...competitionForm,target:e.target.value})}><option value="all">📢 ارسال برای همه دانش‌آموزان</option>{students.map(x=><option key={x.id} value={String(x.id)}>👤 فقط {x.full_name}</option>)}</select><div className="rounded-2xl border border-white/10 bg-white/[.035] p-3"><label className="text-[11px] font-bold block mb-2">زمان پایان ارسال آثار</label><p className="text-[9px] text-white/40 mb-2">شروع مسابقه: امروز • فقط پایان را انتخاب کنید</p><div className="grid grid-cols-2 gap-2"><div><span className="text-[9px] text-white/40 block mb-1">تاریخ پایان</span><input className="glass-input" type="date" value={(competitionForm.expires_at||'').split('T')[0]} onChange={e=>{const t=(competitionForm.expires_at||'').split('T')[1]||'23:59';setCompetitionForm({...competitionForm,expires_at:e.target.value+'T'+t})}}/></div><div><span className="text-[9px] text-white/40 block mb-1">ساعت پایان</span><input className="glass-input" type="time" value={(competitionForm.expires_at||'').split('T')[1]||''} onChange={e=>{const d=(competitionForm.expires_at||'').split('T')[0]||new Date().toISOString().slice(0,10);setCompetitionForm({...competitionForm,expires_at:d+'T'+e.target.value})}}/></div></div></div><label className="competition-upload"><span>🖼️ {competitionForm.poster_url?'تغییر پوستر':'افزودن پوستر مسابقه'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,poster_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.poster_url&&<img className="competition-preview" src={competitionForm.poster_url} alt="پوستر"/>}<label className="competition-upload"><span>🎨 {competitionForm.sample_url?'تغییر نمونه طرح':'افزودن نمونه طرح'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,sample_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.sample_url&&<img className="competition-preview" src={competitionForm.sample_url} alt="نمونه طرح"/>}<div className="flex gap-2"><button className="btn-glass btn-glass-success flex-1" onClick={saveCompetition} disabled={competitionBusy}>{competitionBusy?'در حال ذخیره...':competitionEditing?'✓ ذخیره ویرایش':'🏆 انتشار مسابقه'}</button>{competitionEditing&&<button className="btn-glass flex-1" onClick={resetCompetitionForm}>انصراف</button>}</div></div><div className="competition-admin-grid">{competitions.length===0?<div className="competition-empty">هنوز مسابقه‌ای ساخته نشده است.</div>:competitions.map(c=><div className="competition-admin-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt=""/>}<div className="competition-body"><span className="competition-kicker">مسابقه</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ پایان ارسال</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه"/></details>}<div className="competition-admin-actions"><button className="btn-glass" onClick={()=>editCompetition(c)}>✏️ ویرایش</button>{new Date(c.expires_at)>new Date()&&<button className="btn-glass competition-end-btn" disabled={competitionEnding===c.id} onClick={()=>endCompetition(c.id)}>{competitionEnding===c.id?'در حال اتمام...':'⏹️ اتمام مسابقه'}</button>}<button className="btn-glass btn-glass-danger" onClick={()=>deleteCompetition(c.id)}>🗑️ حذف</button></div><div className="competition-section"><b>آثار ارسالی</b>{competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).length===0?<p>هنوز اثری ارسال نشده است.</p>:competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).map(x=><div className="competition-submission competition-submission-rich" key={x.id}><button type="button" className="competition-submission-image-btn" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>{x.image_url&&<img src={x.image_url} alt="اثر"/>}</button><div className="min-w-0 flex-1"><b className="block truncate">{x.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/40">{new Date(x.created_at).toLocaleString('fa-IR')}</span>{x.review_text&&<p className="competition-review-preview">ارزیابی: {x.review_text}</p>}<div className="competition-submission-actions"><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>🔍 بزرگنمایی</button><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>📝 ارزیابی</button></div></div></div>)}</div></div></div>)}</div></div>:adminTool==='settings'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="settings-panel">{adminSettingsView==='menu'?<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR ADMIN SETTINGS</span><h2 className="text-xl font-black gradient-text mt-1">تنظیمات</h2></div><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div></div><div className="settings-choice"><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تنظیمات مدیریتی</b><small>پنل مدیریت و دسترسی‌های سامانه</small></span></div></>:<div></div>}</div></div>:
 adminTool==='profile'?<div><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-3">پروفایل مدیر</h2><ProfileEditor user={user} compact onSaved={()=>{}}/></div>:adminTool==='achievements'?<div className="achievement-shell slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="achievement-head"><div><span className="achievement-kicker">ADMIN REWARDS CENTER</span><h2>🏆 دستاوردهای دانش‌آموزان</h2></div><div className="coin-orb">🪙</div></div><div className="wallet-big mb-3"><div><small>مجموع سکه دانش‌آموزان</small><strong>{adminWallets.reduce((n,x)=>n+Number(x.balance||0),0)}</strong></div><div><small>تعداد دانش‌آموزان</small><strong>{students.length}</strong></div></div><div className="reward-box"><h3>🎁 ساخت کد جایزه</h3><p>کد دلخواه، تعداد سکه و حداکثر دفعات استفاده را تعیین کن.</p><div className="space-y-2"><input className="glass-input" placeholder="کد دلخواه مثلا TADBIR100" value={rewardForm.code} onChange={e=>setRewardForm({...rewardForm,code:e.target.value.toUpperCase()})}/><div className="grid grid-cols-2 gap-2"><input className="glass-input" type="number" min="1" placeholder="تعداد سکه" value={rewardForm.coins} onChange={e=>setRewardForm({...rewardForm,coins:e.target.value})}/><input className="glass-input" type="number" min="1" placeholder="حداکثر استفاده" value={rewardForm.maxUses} onChange={e=>setRewardForm({...rewardForm,maxUses:e.target.value})}/></div><button className="btn-glass btn-glass-success w-full" disabled={achievementAdminBusy} onClick={createRewardCode}>{achievementAdminBusy?'در حال ساخت...':'➕ ساخت کد جایزه'}</button></div></div><div className="glass p-3 mt-3"><h3 className="font-black text-sm">کدهای ساخته‌شده</h3><div className="admin-code-list">{rewardCodes.length?rewardCodes.map(c=><div className="admin-code-row" key={c.id}><code>{c.code}</code><span>🪙 {c.coin_amount} • {c.used_count||0}/{c.max_uses}</span></div>):<span className="text-[9px] text-white/35">هنوز کدی ساخته نشده</span>}</div></div><div className="mt-4"><h3 className="font-black text-sm mb-2">🪙 موجودی دانش‌آموزان</h3><div className="admin-achievement-grid">{adminWallets.map(x=><div className="admin-wallet-row" key={x.user_id}><div className="admin-wallet-avatar">{x.student?.full_name?.[0]||'؟'}</div><div><strong>{x.student?.full_name||'دانش‌آموز'}</strong><small>@{x.student?.username||''} • ⭐ {x.earned_stars||0}</small></div><div className="admin-wallet-coins">{x.balance||0} 🪙</div></div>)}</div></div></div>:adminTool==='students'?<div className="admin-student-panel"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><h2 className="text-xl font-black gradient-text mb-1">👥 دانش‌آموزان</h2><p className="text-xs text-white/40 mb-4">حساب جدید بساز و آخرین بازدید را ببین</p><div className="admin-student-form mb-5"><input className="glass-input full" placeholder="نام و نام خانوادگی" value={studentForm.full_name} onChange={e=>setStudentForm({...studentForm,full_name:e.target.value})}/><input className="glass-input" placeholder="نام کاربری" value={studentForm.username} onChange={e=>setStudentForm({...studentForm,username:e.target.value.toUpperCase()})}/><input className="glass-input" type="password" placeholder="رمز عبور" value={studentForm.password} onChange={e=>setStudentForm({...studentForm,password:e.target.value})}/><button className="btn-glass btn-glass-success full" onClick={createStudent} disabled={studentBusy}>{studentBusy?'در حال ساخت...':'➕ ساخت حساب دانش‌آموز'}</button></div><div>{students.map(s=><div className="admin-student-row" key={s.id}><div className="flex items-center gap-3 min-w-0"><div className="admin-student-avatar">{s.full_name?.[0]||'؟'}</div><div className="min-w-0"><b className="block truncate text-sm">{s.full_name}</b><span className="text-[10px] text-white/40">@{s.username}</span><div className="text-[10px] text-emerald-300/80 mt-1">رمز فعلی: <span className="font-mono">{s.password||'ثبت نشده'}</span></div><div className={s.last_seen_at?'admin-last-seen':'admin-last-seen off'}>{s.last_seen_at?'آخرین بازدید: '+new Date(s.last_seen_at).toLocaleString('fa-IR'):'هنوز وارد نشده است'}</div></div></div><div className="flex items-center gap-2 shrink-0"><button onClick={()=>changePassword(s)} className="btn-sm bg-white/5" title="تغییر رمز"><Icon d={Icons.key} size={14}/></button><button onClick={()=>deleteStudent(s)} className="admin-delete-student" title="حذف کامل دانش‌آموز" disabled={studentBusy}><Icon d={Icons.trash} size={17}/></button></div></div>)}</div></div>:adminTool==='games'?<><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="game-card" onClick={()=>setAdminGame('snake')}><div className="game-card-icon bg-gradient-to-br from-emerald-500 to-cyan-500">🐍</div><h4 className="font-bold">مار و پله</h4><p className="text-[10px] text-white/40 mt-1">۲ یا ۳ نفره • دعوت و انتظار ۲ دقیقه‌ای</p></div><div className="game-card mt-3" onClick={()=>setAdminGame('penalty')}><div className="game-card-icon bg-gradient-to-br from-red-500 to-amber-500">⚽</div><h4 className="font-bold">پنالتی</h4><p className="text-[10px] text-white/40 mt-1">آنلاین</p></div></>:null}{adminGame&&<><button onClick={()=>setAdminGame(null)} className="btn-glass btn-sm mb-4">← بازگشت به بازی‌ها</button>{adminGame==='snake'&&<SnakeGame user={user} students={students} isAdmin={true}/>}{adminGame==='penalty'&&<PenaltyGame user={user} roomId={penaltyRoomId}/>} </>}</div>)}
         {tab==='grading'&&(
           <>
@@ -6281,7 +6072,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
               </button>
               {showAttachMenu&&<div className="tadbir-attach-menu">
                 <button type="button" aria-label="گالری" onClick={()=>{messageImageRef.current?.click();setShowAttachMenu(false);}}><Icon d={Icons.image} size={21}/></button>
-                <button type="button" aria-label="نظرسنجی" onClick={e=>{e.stopPropagation();openPollComposer();}}><span className="tadbir-poll-mini-icon"><i></i><i></i><i></i></span></button>
+                <button type="button" aria-label="نظرسنجی" onClick={e=>{e.preventDefault();e.stopPropagation();openPollComposer();}}><span className="tadbir-poll-mini-icon"><i></i><i></i><i></i></span></button>
               </div>}
             </div>
           </div>
