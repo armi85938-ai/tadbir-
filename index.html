@@ -2368,34 +2368,97 @@ html[data-tadbir-theme^="light-"] .competition-wide-tile span,html[data-tadbir-t
 </style>
 
 
-<style id="tadbir-v5-student-competition-review">
+<style id="tadbir-v6-student-competition-review">
 .competition-student-edit-actions{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   gap:7px!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
   margin-top:10px!important;
+  align-items:stretch!important;
 }
-.competition-student-edit-actions .btn-sm{
-  min-height:38px!important;
+.competition-action-card{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:58px!important;
+  box-sizing:border-box!important;
+  padding:7px 4px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;
+  color:rgba(255,255,255,.86)!important;
+  overflow:hidden!important;
+  white-space:normal!important;
+  line-height:1!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+}
+.competition-action-card:not(:disabled):active{transform:scale(.97)!important}
+.competition-action-card:disabled{opacity:.58!important;cursor:not-allowed!important}
+.competition-action-icon{
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  border-radius:10px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
+  box-sizing:border-box!important;
+}
+.competition-action-icon svg{
+  width:18px!important;
+  height:18px!important;
+  display:block!important;
+}
+.competition-action-label{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
   text-align:center!important;
   font-size:9px!important;
-  padding:8px 6px!important;
-  border:1px solid rgba(255,255,255,.09)!important;
-  border-radius:13px!important;
-  white-space:nowrap!important;
+  font-weight:800!important;
+  line-height:1.2!important;
 }
-.competition-review-btn{
+.competition-action-delete .competition-action-icon{
+  color:#fb7185!important;
+  background:rgba(244,63,94,.12)!important;
+  border:1px solid rgba(251,113,133,.18)!important;
+}
+.competition-action-delete:hover{
+  border-color:rgba(251,113,133,.28)!important;
+  box-shadow:0 8px 24px rgba(244,63,94,.08)!important;
+}
+.competition-action-change .competition-action-icon{
+  color:#60a5fa!important;
+  background:rgba(59,130,246,.12)!important;
+  border:1px solid rgba(96,165,250,.18)!important;
+}
+.competition-action-change:hover{
+  border-color:rgba(96,165,250,.3)!important;
+  box-shadow:0 8px 24px rgba(59,130,246,.08)!important;
+}
+.competition-action-review{
   color:#ddd6fe!important;
-  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(59,130,246,.08))!important;
-  border-color:rgba(167,139,250,.22)!important;
+  background:linear-gradient(145deg,rgba(124,58,237,.13),rgba(59,130,246,.045))!important;
 }
-.competition-review-btn.active{
-  color:#fff!important;
-  border-color:rgba(167,139,250,.48)!important;
-  box-shadow:0 0 22px rgba(124,58,237,.15)!important;
+.competition-action-review .competition-action-icon{
+  color:#c4b5fd!important;
+  background:rgba(139,92,246,.13)!important;
+  border:1px solid rgba(196,181,253,.2)!important;
+}
+.competition-action-review:hover,.competition-action-review.active{
+  border-color:rgba(167,139,250,.42)!important;
+  box-shadow:0 8px 26px rgba(124,58,237,.12)!important;
 }
 .competition-review-panel{
   margin-top:9px!important;
@@ -2416,39 +2479,21 @@ html[data-tadbir-theme^="light-"] .competition-wide-tile span,html[data-tadbir-t
   background:linear-gradient(145deg,rgba(16,185,129,.085),rgba(99,102,241,.045))!important;
 }
 .competition-review-head{display:flex!important;align-items:center!important;gap:9px!important}
-.competition-review-orb{
-  width:38px!important;height:38px!important;min-width:38px!important;
-  border-radius:50%!important;display:grid!important;place-items:center!important;
-  color:#fff!important;background:linear-gradient(135deg,#7c3aed,#2563eb)!important;
-  box-shadow:0 8px 20px rgba(79,70,229,.22)!important;
-}
-.competition-review-panel.reviewed .competition-review-orb{
-  background:linear-gradient(135deg,#10b981,#22c55e)!important;
-  box-shadow:0 8px 20px rgba(16,185,129,.2)!important;
-}
+.competition-review-orb{width:38px!important;height:38px!important;min-width:38px!important;border-radius:50%!important;display:grid!important;place-items:center!important;color:#fff!important;background:linear-gradient(135deg,#7c3aed,#2563eb)!important;box-shadow:0 8px 20px rgba(79,70,229,.22)!important}
+.competition-review-panel.reviewed .competition-review-orb{background:linear-gradient(135deg,#10b981,#22c55e)!important;box-shadow:0 8px 20px rgba(16,185,129,.2)!important}
 .competition-review-head b{display:block!important;font-size:11px!important}
 .competition-review-head span{display:block!important;font-size:8px!important;color:rgba(255,255,255,.42)!important;margin-top:2px!important}
-.competition-review-text{
-  margin-top:10px!important;padding:10px 11px!important;
-  border-radius:14px!important;background:rgba(0,0,0,.14)!important;
-  border:1px solid rgba(255,255,255,.06)!important;
-  font-size:11px!important;line-height:1.9!important;color:rgba(255,255,255,.9)!important;
-  white-space:pre-wrap!important;word-break:break-word!important;
-}
-.competition-review-wait{
-  display:flex!important;justify-content:center!important;gap:5px!important;margin-top:11px!important;
-}
-.competition-review-wait span{
-  width:6px!important;height:6px!important;border-radius:50%!important;background:#a78bfa!important;
-  animation:competitionWait 1.15s infinite ease-in-out!important;
-}
-.competition-review-wait span:nth-child(2){animation-delay:.15s!important}
-.competition-review-wait span:nth-child(3){animation-delay:.3s!important}
+.competition-review-text{margin-top:10px!important;padding:10px 11px!important;border-radius:14px!important;background:rgba(0,0,0,.14)!important;border:1px solid rgba(255,255,255,.06)!important;font-size:11px!important;line-height:1.9!important;color:rgba(255,255,255,.9)!important;white-space:pre-wrap!important;word-break:break-word!important}
+.competition-review-wait{display:flex!important;justify-content:center!important;gap:5px!important;margin-top:11px!important}
+.competition-review-wait span{width:6px!important;height:6px!important;border-radius:50%!important;background:#a78bfa!important;animation:competitionWait 1.15s infinite ease-in-out!important}
+.competition-review-wait span:nth-child(2){animation-delay:.15s!important}.competition-review-wait span:nth-child(3){animation-delay:.3s!important}
 @keyframes competitionReviewIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes competitionWait{0%,70%,100%{transform:translateY(0);opacity:.3}35%{transform:translateY(-4px);opacity:1}}
-@media(max-width:380px){
-  .competition-student-edit-actions{grid-template-columns:1fr 1fr!important}
-  .competition-review-btn{grid-column:1/-1!important}
+@media(max-width:360px){
+  .competition-student-edit-actions{gap:5px!important}
+  .competition-action-card{min-height:55px!important;padding-left:2px!important;padding-right:2px!important}
+  .competition-action-label{font-size:8px!important}
+  .competition-action-icon{width:28px!important;height:28px!important;min-width:28px!important}
 }
 </style>
 
@@ -6112,7 +6157,21 @@ function Student({user,tab,setTab,onLogout}){
                   <button type="button" className={`competition-wide-tile ${toolsTab==='competitions'?'active':''}`} onClick={()=>toggleToolsTab('competitions')}><div className="competition-wide-icon"><Icon d={Icons.trophy} size={27}/></div><div className="min-w-0 text-right"><b className="block font-black">مسابقات</b><span className="block text-[10px] text-white/40 mt-1">مسابقات و ارسال آثار دانش‌آموزی</span></div><Icon d={Icons.arrowLeft} size={18} className="mr-auto opacity-40"/></button>
                   <button type="button" className={`settings-wide-tile ${toolsTab==='settings'?'active':''}`} onClick={()=>{toggleToolsTab('settings');setSettingsView('menu');}}><div className="settings-icon-box"><Icon d={Icons.settings} size={26}/></div><div><b>تنظیمات</b><span>رمز عبور، ظاهر و تم سامانه</span></div><Icon d={Icons.arrowLeft} size={18} className="mr-auto opacity-40"/></button>
                 </div>
-                {toolsTab==='competitions'&&(<div className="slide-up"><div className="flex items-center justify-between mb-4"><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text mt-1">مسابقات</h2><p className="text-[10px] text-white/40 mt-1">مسابقه‌های فعال را ببین و اثرت را تا قبل از پایان ارسال کن.</p></div><div className="competition-wide-icon">🏆</div></div>{competitions.length===0?<div className="competition-empty"><div className="competition-empty-icon"><Icon d={Icons.trophy} size={30}/></div><b>مسابقه فعالی وجود ندارد</b><p className="text-[10px] mt-2">با انتشار مسابقه جدید، اینجا نمایش داده می‌شود.</p></div>:competitions.map(c=><div className="competition-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt="پوستر مسابقه"/>}<div className="competition-body"><span className="competition-kicker">مسابقه تدبیر</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط شرکت</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ مهلت ارسال اثر</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">مشاهده نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه طرح"/></details>}<label className="competition-upload"><span>{competitionBusy===c.id?'در حال ارسال...':'📷 انتخاب تصویر اثر و ارسال'}</span><input type="file" accept="image/*" disabled={competitionBusy===c.id} onChange={e=>submitCompetition(c,e.target.files[0])}/></label>{competitionSubmission[c.id]&&<><p className="text-[10px] text-emerald-300 mt-2">✓ اثر شما ارسال شده است.</p><img className="competition-preview" src={competitionSubmission[c.id].image_url||competitionSubmission[c.id]} alt="اثر ارسالی"/><div className="competition-student-edit-actions"><button type="button" className="btn-sm bg-white/5" disabled={competitionActionBusy===c.id} onClick={()=>deleteCompetitionSubmission({...c,submission_id:competitionSubmission[c.id].submission_id})}>🗑️ حذف اثر</button><label className="btn-sm bg-white/5 cursor-pointer"><span>{competitionActionBusy===c.id?'در حال تغییر...':'🔄 تغییر عکس'}</span><input type="file" accept="image/*" hidden disabled={competitionActionBusy===c.id} onChange={e=>changeCompetitionSubmission(c,e.target.files[0])}/></label><button type="button" className={`btn-sm competition-review-btn ${competitionReviewOpen===c.id?'active':''}`} onClick={()=>setCompetitionReviewOpen(v=>v===c.id?null:c.id)}>📝 ارزیابی مدیر</button></div>{competitionReviewOpen===c.id&&<div className={`competition-review-panel ${competitionSubmission[c.id].review_text?'reviewed':'waiting'}`}><div className="competition-review-head"><div className="competition-review-orb"><Icon d={Icons.check} size={18}/></div><div><b>{competitionSubmission[c.id].review_text?'ارزیابی مدیر':'در انتظار ارزیابی مدیر'}</b><span>{competitionSubmission[c.id].review_text&&competitionSubmission[c.id].reviewed_at?new Date(competitionSubmission[c.id].reviewed_at).toLocaleString('fa-IR'):'لطفاً تا ثبت ارزیابی ایشان منتظر بمانید.'}</span></div></div>{competitionSubmission[c.id].review_text?<p className="competition-review-text">{competitionSubmission[c.id].review_text}</p>:<div className="competition-review-wait"><span></span><span></span><span></span></div>}</div>}<p className="text-[9px] text-white/35 mt-2">حذف یا تغییر عکس فقط تا ۲ دقیقه پس از ارسال اولیه امکان‌پذیر است.</p></>}</div></div>)}</div>)}
+                {toolsTab==='competitions'&&(<div className="slide-up"><div className="flex items-center justify-between mb-4"><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text mt-1">مسابقات</h2><p className="text-[10px] text-white/40 mt-1">مسابقه‌های فعال را ببین و اثرت را تا قبل از پایان ارسال کن.</p></div><div className="competition-wide-icon">🏆</div></div>{competitions.length===0?<div className="competition-empty"><div className="competition-empty-icon"><Icon d={Icons.trophy} size={30}/></div><b>مسابقه فعالی وجود ندارد</b><p className="text-[10px] mt-2">با انتشار مسابقه جدید، اینجا نمایش داده می‌شود.</p></div>:competitions.map(c=><div className="competition-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt="پوستر مسابقه"/>}<div className="competition-body"><span className="competition-kicker">مسابقه تدبیر</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط شرکت</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ مهلت ارسال اثر</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">مشاهده نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه طرح"/></details>}<label className="competition-upload"><span>{competitionBusy===c.id?'در حال ارسال...':'📷 انتخاب تصویر اثر و ارسال'}</span><input type="file" accept="image/*" disabled={competitionBusy===c.id} onChange={e=>submitCompetition(c,e.target.files[0])}/></label>{competitionSubmission[c.id]&&<><p className="text-[10px] text-emerald-300 mt-2">✓ اثر شما ارسال شده است.</p><img className="competition-preview" src={competitionSubmission[c.id].image_url||competitionSubmission[c.id]} alt="اثر ارسالی"/><div className="competition-student-edit-actions">
+<button type="button" className="competition-action-card competition-action-delete" disabled={competitionActionBusy===c.id} onClick={()=>deleteCompetitionSubmission({...c,submission_id:competitionSubmission[c.id].submission_id})} aria-label="حذف عکس">
+<span className="competition-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M9 7V5h6v2M8 10v8m4-8v8m4-8v8M6.5 7l.7 13h9.6l.7-13M4 7h16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+<span className="competition-action-label">{competitionActionBusy===c.id?'در حال حذف...':'حذف عکس'}</span>
+</button>
+<label className="competition-action-card competition-action-change cursor-pointer" aria-label="تغییر عکس">
+<span className="competition-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5V20h3.5L18.8 8.7a1.9 1.9 0 0 0 0-2.7l-.8-.8a1.9 1.9 0 0 0-2.7 0L3 17.5M14 6l4 4M13 20h7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+<span className="competition-action-label">{competitionActionBusy===c.id?'در حال تغییر...':'تغییر عکس'}</span>
+<input type="file" accept="image/*" hidden disabled={competitionActionBusy===c.id} onChange={e=>changeCompetitionSubmission(c,e.target.files[0])}/>
+</label>
+<button type="button" className={`competition-action-card competition-action-review ${competitionReviewOpen===c.id?'active':''}`} onClick={()=>setCompetitionReviewOpen(v=>v===c.id?null:c.id)} aria-label="ارزیابی مدیر">
+<span className="competition-action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h12A1.5 1.5 0 0 1 19.5 6v12A1.5 1.5 0 0 1 18 19.5H6A1.5 1.5 0 0 1 4.5 18V6A1.5 1.5 0 0 1 6 4.5Z" fill="none" stroke="currentColor" strokeWidth="1.7"/><path d="M8 9h8M8 12h6M8 15h5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/><path d="m16.8 14.8.8.8 1.7-1.8" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+<span className="competition-action-label">ارزیابی مدیر</span>
+</button>
+</div>{competitionReviewOpen===c.id&&<div className={`competition-review-panel ${competitionSubmission[c.id].review_text?'reviewed':'waiting'}`}><div className="competition-review-head"><div className="competition-review-orb"><Icon d={Icons.check} size={18}/></div><div><b>{competitionSubmission[c.id].review_text?'ارزیابی مدیر':'در انتظار ارزیابی مدیر'}</b><span>{competitionSubmission[c.id].review_text&&competitionSubmission[c.id].reviewed_at?new Date(competitionSubmission[c.id].reviewed_at).toLocaleString('fa-IR'):'لطفاً تا ثبت ارزیابی ایشان منتظر بمانید.'}</span></div></div>{competitionSubmission[c.id].review_text?<p className="competition-review-text">{competitionSubmission[c.id].review_text}</p>:<div className="competition-review-wait"><span></span><span></span><span></span></div>}</div>}<p className="text-[9px] text-white/35 mt-2">حذف یا تغییر عکس فقط تا ۲ دقیقه پس از ارسال اولیه امکان‌پذیر است.</p></>}</div></div>)}</div>)}
                 {toolsTab==='settings'&&(
                   <div className="settings-panel">
                     {settingsView==='menu'&&<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR SETTINGS</span><h3 className="text-xl font-black gradient-text mt-1">تنظیمات</h3></div><div className="settings-icon-box"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button className="settings-choice" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود به سامانه را با امنیت بیشتر تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button className="settings-choice" onClick={()=>setSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>رنگ و حالت روشن یا تیره سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>}
