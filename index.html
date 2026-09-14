@@ -2716,6 +2716,42 @@ html[data-tadbir-theme^="light-"] .competition-wide-tile span,html[data-tadbir-t
 .blocked-users-panel{cursor:default!important}
 </style>
 
+<style id="tadbir-v12-pv-composer-fix">
+/* V12: true bottom composer, keyboard-friendly, independent attachment menu */
+.social-chat-fullscreen .tadbir-floating-composer{
+  position:absolute!important;left:0!important;right:0!important;bottom:calc(3px + env(safe-area-inset-bottom))!important;
+  width:100%!important;margin:0!important;padding:5px 8px!important;z-index:80!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;box-sizing:border-box!important;
+}
+.social-fullscreen-overlay .social-chat-fullscreen .tadbir-floating-composer{bottom:calc(3px + env(safe-area-inset-bottom))!important;left:0!important;right:0!important}
+.social-chat-fullscreen .tadbir-composer-row{gap:7px!important;align-items:center!important}
+.social-chat-fullscreen .tadbir-composer-circle,.social-chat-fullscreen .tadbir-attach-wrap{width:47px!important;min-width:47px!important;height:47px!important;flex-basis:47px!important}
+.social-chat-fullscreen .tadbir-composer-pill{height:47px!important;border-radius:24px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 8px 26px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.08)!important;overflow:visible!important}
+.social-chat-fullscreen .tadbir-composer-input{height:45px!important;padding:0 10px 0 4px!important}
+.tadbir-emoji-button{width:33px!important;height:33px!important;min-width:33px!important;border:0!important;border-radius:50%!important;background:transparent!important;color:rgba(255,255,255,.58)!important;font-size:20px!important;display:grid!important;place-items:center!important;padding:0!important;cursor:pointer!important}
+.tadbir-emoji-button:active{transform:scale(.9)!important}
+.tadbir-attach-wrap{position:relative!important;display:block!important;overflow:visible!important}
+.social-chat-fullscreen .tadbir-composer-right{width:47px!important;height:47px!important;min-width:47px!important;background:rgba(255,255,255,.055)!important;color:rgba(255,255,255,.82)!important}
+.social-chat-fullscreen .tadbir-composer-right.active{color:#c4b5fd!important;background:rgba(139,92,246,.10)!important}
+.tadbir-attach-menu{position:absolute!important;right:0!important;bottom:53px!important;width:auto!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:9px!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:tadbirAttachFloatIn .18s ease-out!important}
+.tadbir-attach-menu button{width:43px!important;height:43px!important;min-width:43px!important;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:rgba(255,255,255,.075)!important;border:1px solid rgba(255,255,255,.14)!important;color:rgba(255,255,255,.88)!important;box-shadow:0 9px 22px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.10)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important}
+.tadbir-attach-menu button b{display:none!important}.tadbir-attach-menu .tadbir-attach-icon{display:none!important}
+.tadbir-attach-menu button:active{transform:scale(.90)!important}
+.tadbir-poll-mini-icon{width:19px!important;height:19px!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;gap:2px!important}
+.tadbir-poll-mini-icon i{display:block!important;width:4px!important;border-radius:3px 3px 1px 1px!important;background:currentColor!important}.tadbir-poll-mini-icon i:nth-child(1){height:8px!important}.tadbir-poll-mini-icon i:nth-child(2){height:14px!important}.tadbir-poll-mini-icon i:nth-child(3){height:11px!important}
+@keyframes tadbirAttachFloatIn{from{opacity:0;transform:translateY(7px) scale(.82)}to{opacity:1;transform:translateY(0) scale(1)}}
+.social-chat-fullscreen .telegram-message-canvas{padding-bottom:82px!important;overscroll-behavior:contain!important}
+@media(max-width:520px){
+ .social-chat-fullscreen .tadbir-floating-composer{bottom:calc(1px + env(safe-area-inset-bottom))!important;padding:4px 7px!important}
+ .social-fullscreen-overlay .social-chat-fullscreen .tadbir-floating-composer{bottom:calc(1px + env(safe-area-inset-bottom))!important}
+ .social-chat-fullscreen .tadbir-composer-circle,.social-chat-fullscreen .tadbir-attach-wrap{width:44px!important;min-width:44px!important;height:44px!important;flex-basis:44px!important}
+ .social-chat-fullscreen .tadbir-composer-pill{height:44px!important;border-radius:23px!important}
+ .social-chat-fullscreen .tadbir-composer-input{height:42px!important;font-size:10px!important}
+ .social-chat-fullscreen .tadbir-composer-right{width:44px!important;height:44px!important;min-width:44px!important}
+ .tadbir-attach-menu{bottom:50px!important;gap:8px!important}.tadbir-attach-menu button{width:41px!important;height:41px!important;min-width:41px!important}
+}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -5492,6 +5528,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   const [showEmojiTray,setShowEmojiTray]=useState(false);
   const [contactMeta,setContactMeta]=useState({});
   const [showChatMenu,setShowChatMenu]=useState(false);
+  const [showAttachMenu,setShowAttachMenu]=useState(false);
   const [showPollComposer,setShowPollComposer]=useState(false);
   const [pollForm,setPollForm]=useState({mode:'poll',question:'',options:['',''],correctIndex:0});
 
@@ -5840,7 +5877,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
 
 
   const pollPrefix='__TADBIR_POLL__';
-  const openPollComposer=()=>{setShowChatMenu(false);setShowEmojiTray(false);setPollForm({mode:'poll',question:'',options:['',''],correctIndex:0});setShowPollComposer(true)};
+  const openPollComposer=()=>{setShowChatMenu(false);setShowAttachMenu(false);setShowEmojiTray(false);setPollForm({mode:'poll',question:'',options:['',''],correctIndex:0});setShowPollComposer(true)};
   const addPollOption=()=>setPollForm(f=>f.options.length>=5?f:{...f,options:[...f.options,'']});
   const removePollOption=i=>setPollForm(f=>f.options.length<=2?f:{...f,options:f.options.filter((_,n)=>n!==i),correctIndex:f.correctIndex===i?0:f.correctIndex>i?f.correctIndex-1:f.correctIndex});
   const updatePollOption=(i,v)=>setPollForm(f=>({...f,options:f.options.map((x,n)=>n===i?v:x)}));
@@ -5919,14 +5956,14 @@ function SocialChatModal({user,onClose,fullScreen=false}){
         </div>
       </> : <>
         <div className="social-chat-header conversation-header telegram-conversation-header">
-          <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);setShowChatSearch(false);setShowChatMenu(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
+          <button aria-label="بازگشت به مخاطبین" onClick={()=>{setSelected(null);setMessages([]);setProfilePerson(null);setChatBlocked(false);setShowChatSearch(false);setShowChatMenu(false);setShowAttachMenu(false);}} className="conversation-back"><Icon d={Icons.arrowLeft} size={20}/></button>
           <button type="button" className="chat-person-trigger conversation-person" onClick={()=>!selected?.is_self&&setProfilePerson(selected)}>
             <div className="tadbir-avatar-wrap conversation-avatar-wrap"><div className="social-mini-avatar conversation-avatar telegram-conversation-avatar">{selected?.is_self?<SavedSpaceAvatar/>:(selectedAvatar?.startsWith('data:image')?<img src={selectedAvatar} alt=""/>:selectedAvatar)}</div>{!selected?.is_self&&<TrophyMiniBadge trophyId={contactTrophies[String(selected.id)]}/>}</div>
             <div className="conversation-person-copy min-w-0"><div className="profile-name-line"><b className="conversation-person-name truncate">{selected?.is_self?'فضای شخصی':selectedName}</b>{selected.role==='admin'&&!selected?.is_self&&<VerifiedBadge/>}</div><span>{selected?.is_self?'پیام‌های ذخیره‌شده':'آخرین بازدید به تازگی'}</span></div>
           </button>
           <div className="telegram-header-actions">
-            <button aria-label="جستجو در گفتگو" type="button" onClick={()=>{setShowChatSearch(v=>!v);setShowChatMenu(false);}} className="telegram-icon-btn"><Icon d={Icons.search} size={20}/></button>
-            <button aria-label="منوی گفتگو" type="button" onClick={()=>setShowChatMenu(v=>!v)} className="telegram-icon-btn">⋮</button>
+            <button aria-label="جستجو در گفتگو" type="button" onClick={()=>{setShowChatSearch(v=>!v);setShowChatMenu(false);setShowAttachMenu(false);}} className="telegram-icon-btn"><Icon d={Icons.search} size={20}/></button>
+            <button aria-label="منوی گفتگو" type="button" onClick={()=>{setShowChatMenu(v=>!v);setShowAttachMenu(false);}} className="telegram-icon-btn">⋮</button>
           </div>
           {showChatMenu&&<div className="telegram-chat-menu">
             {!selected?.is_self&&<button type="button" onClick={()=>{setProfilePerson(selected);setShowChatMenu(false);}}>👤 مشاهده پروفایل</button>}
@@ -5995,17 +6032,17 @@ function SocialChatModal({user,onClose,fullScreen=false}){
               {textMsg.trim()?<Icon d={Icons.send} size={20}/>:recording?<span className="tadbir-record-stop"></span>:<span className="tadbir-mic-minimal"><i></i><i></i><i></i></span>}
             </button>
             <div className="tadbir-composer-pill">
+              <button type="button" aria-label="ایموجی" className="tadbir-emoji-button" onClick={()=>setShowEmojiTray(v=>!v)}>☺</button>
               <input aria-label="متن پیام" className="glass-input telegram-message-input tadbir-composer-input" placeholder={recording?`در حال ضبط ویس ${recordSeconds} ثانیه...`:(selected?.is_self?'پیام ذخیره‌شده...':`پیام به ${selectedName}...`)} value={textMsg} disabled={recording} onChange={e=>setTextMsg(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}}/>
               {showEmojiTray&&<div className="telegram-emoji-tray tadbir-emoji-tray">{REACTION_EMOJIS.map(e=><button type="button" key={e} onClick={()=>{setTextMsg(t=>t+e);setShowEmojiTray(false);}}>{e}</button>)}</div>}
             </div>
             <div className="tadbir-attach-wrap">
-              <button type="button" aria-label="پیوست" className="tadbir-composer-circle tadbir-composer-right" onClick={()=>setShowEmojiTray(false)||setShowChatMenu(v=>!v)}>
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              <button type="button" aria-label="پیوست" className={`tadbir-composer-circle tadbir-composer-right ${showAttachMenu?'active':''}`} onClick={()=>{setShowAttachMenu(v=>!v);setShowChatMenu(false);setShowEmojiTray(false);}}>
+                <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.5 12.8 13 21.3a5.5 5.5 0 0 1-7.8-7.8l9.1-9.1a3.8 3.8 0 0 1 5.4 5.4l-9.4 9.4a2.2 2.2 0 1 1-3.1-3.1l8.3-8.3"/></svg>
               </button>
-              {showChatMenu&&<div className="tadbir-attach-menu">
-                <button type="button" onClick={()=>{messageImageRef.current?.click();setShowChatMenu(false);}}><span className="tadbir-attach-icon gallery"><Icon d={Icons.image} size={18}/></span><b>گالری</b></button>
-                <button type="button" onClick={openPollComposer}><span className="tadbir-attach-icon poll">⌁</span><b>نظرسنجی</b></button>
-                <button type="button" onClick={()=>{setShowEmojiTray(v=>!v);setShowChatMenu(false);}}><span className="tadbir-attach-icon emoji">☺</span><b>ایموجی</b></button>
+              {showAttachMenu&&<div className="tadbir-attach-menu">
+                <button type="button" aria-label="گالری" onClick={()=>{messageImageRef.current?.click();setShowAttachMenu(false);}}><Icon d={Icons.image} size={21}/></button>
+                <button type="button" aria-label="نظرسنجی" onClick={openPollComposer}><span className="tadbir-poll-mini-icon"><i></i><i></i><i></i></span></button>
               </div>}
             </div>
           </div>
