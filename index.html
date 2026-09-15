@@ -3042,63 +3042,6 @@ html,body{overflow-x:hidden!important}
 .exam-objection-button{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 .question-objection-admin-icon{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 </style>
-
-<style id="tadbir-v29-final-patch">
-/* Floating numbered ruler */
-.tadbir-exam-ruler{position:fixed!important;z-index:2147483000!important;width:220px!important;height:58px!important;box-sizing:border-box!important;border-radius:9px!important;touch-action:none!important;user-select:none!important;cursor:grab!important;transform-origin:50% 50%!important;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.045))!important;border:1px solid rgba(255,255,255,.5)!important;box-shadow:0 18px 42px rgba(0,0,0,.42),0 0 26px rgba(255,255,255,.1),inset 0 1px rgba(255,255,255,.42)!important;backdrop-filter:blur(13px)!important;-webkit-backdrop-filter:blur(13px)!important}
-.tadbir-exam-ruler .ruler-scale{position:absolute!important;left:10px!important;right:10px!important;top:8px!important;height:20px!important;border-bottom:1px solid rgba(255,255,255,.78)!important;background:repeating-linear-gradient(to right,rgba(255,255,255,.9) 0 1px,transparent 1px 7.6px)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-major{position:absolute!important;left:10px!important;right:10px!important;top:8px!important;height:20px!important;display:flex!important;justify-content:space-between!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-major i{font-style:normal!important;font-size:8px!important;color:rgba(255,255,255,.96)!important;font-weight:900!important;transform:translateY(22px)!important;text-shadow:0 1px 2px rgba(0,0,0,.7)!important}
-.tadbir-exam-ruler .ruler-name{position:absolute!important;left:50%!important;top:17px!important;transform:translateX(-50%)!important;font-family:"Segoe Script","Brush Script MT",cursive!important;font-style:italic!important;font-weight:900!important;font-size:12px!important;letter-spacing:2px!important;color:rgba(230,230,230,.62)!important;text-shadow:0 1px 0 rgba(255,255,255,.2),0 -1px 0 rgba(0,0,0,.65),1px 0 rgba(0,0,0,.3)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-unit{position:absolute!important;right:9px!important;bottom:4px!important;font-size:6px!important;color:rgba(255,255,255,.5)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-rotate{position:absolute!important;right:-11px!important;top:-11px!important;width:22px!important;height:22px!important;padding:0!important;border-radius:50%!important;background:rgba(245,211,107,.18)!important;border:1px solid rgba(245,211,107,.6)!important;color:#ffe9a3!important;display:grid!important;place-items:center!important;touch-action:none!important;cursor:alias!important}
-
-/* PV header: three independent floating glass elements, no backing panel */
-.social-fullscreen-overlay .conversation-header,.social-chat-fullscreen .conversation-header{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.social-fullscreen-overlay .conversation-header:before,.social-fullscreen-overlay .conversation-header:after,.social-chat-fullscreen .conversation-header:before,.social-chat-fullscreen .conversation-header:after{display:none!important}
-.social-fullscreen-overlay .conversation-back,.social-fullscreen-overlay .conversation-person,.social-fullscreen-overlay .telegram-header-actions,.social-chat-fullscreen .conversation-back,.social-chat-fullscreen .conversation-person,.social-chat-fullscreen .telegram-header-actions{background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:0 10px 28px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important}
-.social-fullscreen-overlay .conversation-back,.social-chat-fullscreen .conversation-back{border-radius:50%!important}
-.social-fullscreen-overlay .conversation-person,.social-chat-fullscreen .conversation-person{border-radius:28px!important}
-.social-fullscreen-overlay .telegram-header-actions,.social-chat-fullscreen .telegram-header-actions{border-radius:28px!important}
-
-/* PV composer: only the floating controls, no enclosing box */
-.social-fullscreen-overlay .tadbir-floating-composer,.social-chat-fullscreen .tadbir-floating-composer{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:2147483004!important;padding:5px 8px calc(6px + env(safe-area-inset-bottom))!important;background:transparent!important;border:0!important;box-shadow:none!important;pointer-events:none!important}
-.social-fullscreen-overlay .tadbir-composer-row,.social-chat-fullscreen .tadbir-composer-row{max-width:760px!important;margin:0 auto!important}
-.social-fullscreen-overlay .tadbir-composer-circle,.social-fullscreen-overlay .tadbir-attach-wrap,.social-chat-fullscreen .tadbir-composer-circle,.social-chat-fullscreen .tadbir-attach-wrap{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.social-fullscreen-overlay .tadbir-composer-circle:after,.social-fullscreen-overlay .tadbir-attach-wrap:after,.social-chat-fullscreen .tadbir-composer-circle:after,.social-chat-fullscreen .tadbir-attach-wrap:after{content:""!important;position:absolute!important;left:9px!important;right:9px!important;bottom:-3px!important;height:8px!important;border-radius:50%!important;background:rgba(255,255,255,.18)!important;filter:blur(7px)!important;pointer-events:none!important}
-.social-fullscreen-overlay .tadbir-composer-pill,.social-chat-fullscreen .tadbir-composer-pill{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:0 10px 28px rgba(0,0,0,.22)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
-.social-fullscreen-overlay .tadbir-composer-input,.social-chat-fullscreen .tadbir-composer-input{background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important}
-.social-fullscreen-overlay .tadbir-emoji-button,.social-chat-fullscreen .tadbir-emoji-button{left:7px!important;right:auto!important}
-.social-fullscreen-overlay .chat-messages-scroll,.social-chat-fullscreen .chat-messages-scroll{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important}
-
-/* Login title only: no auth/layout changes */
-.login-logo,.login-title,.auth-logo,.brand-title{text-shadow:0 2px 0 rgba(255,255,255,.16),0 0 22px rgba(170,120,255,.28)!important;font-weight:900!important}
-</style>
-<script id="tadbir-v29-ruler">
-(function(){
-"use strict";
-function setup(){
- const r=document.querySelector(".tadbir-exam-ruler"); if(!r)return;
- if(!r.querySelector(".ruler-scale")){let x=document.createElement("div");x.className="ruler-scale";r.appendChild(x)}
- if(!r.querySelector(".ruler-major")){let x=document.createElement("div");x.className="ruler-major";for(let i=0;i<=5;i++){let n=document.createElement("i");n.textContent=i;x.appendChild(n)}r.appendChild(x)}
- if(!r.querySelector(".ruler-name")){let x=document.createElement("div");x.className="ruler-name";x.textContent="TADBIR";r.appendChild(x)}
- if(!r.querySelector(".ruler-unit")){let x=document.createElement("div");x.className="ruler-unit";x.textContent="cm";r.appendChild(x)}
- if(r.dataset.v29)return;r.dataset.v29="1";
- let p={x:Math.max(2,innerWidth/2-110),y:Math.max(90,innerHeight*.45),rot:0},d=null,rr=null;
- const draw=()=>{r.style.left=p.x+"px";r.style.top=p.y+"px";r.style.transform="rotate("+p.rot+"deg)"};
- r.addEventListener("pointerdown",e=>{if(e.target.closest(".ruler-rotate"))return;d={sx:e.clientX,sy:e.clientY,x:p.x,y:p.y};r.setPointerCapture?.(e.pointerId);e.preventDefault()});
- r.addEventListener("pointermove",e=>{if(!d)return;p.x=Math.max(2,Math.min(innerWidth-222,d.x+e.clientX-d.sx));p.y=Math.max(70,Math.min(innerHeight-75,d.y+e.clientY-d.sy));draw();e.preventDefault()});
- ["pointerup","pointercancel"].forEach(t=>r.addEventListener(t,()=>d=null));
- const b=r.querySelector(".ruler-rotate");
- if(b){b.addEventListener("pointerdown",e=>{e.stopPropagation();let q=r.getBoundingClientRect();rr={cx:q.left+q.width/2,cy:q.top+q.height/2,a:Math.atan2(e.clientY-(q.top+q.height/2),e.clientX-(q.left+q.width/2))*180/Math.PI,rot:p.rot};b.setPointerCapture?.(e.pointerId);e.preventDefault()});
- b.addEventListener("pointermove",e=>{if(!rr)return;let a=Math.atan2(e.clientY-rr.cy,e.clientX-rr.cx)*180/Math.PI;p.rot=rr.rot+a-rr.a;draw();e.preventDefault()});
- ["pointerup","pointercancel"].forEach(t=>b.addEventListener(t,()=>rr=null))}
- draw();
-}
-new MutationObserver(setup).observe(document.documentElement,{subtree:true,childList:true});setup();
-})();
-</script>
-
 </head>
 <body>
 <div id="root"></div>
@@ -3376,51 +3319,76 @@ function CircularTimerGlow({timeLeft,totalTime}){
 }
 
 function Login({onLogin}){
-  const [un,setUn]=useState('');const [pw,setPw]=useState('');const [err,setErr]=useState('');const [ld,setLd]=useState(false);
+  const [un,setUn]=useState('');
+  const [pw,setPw]=useState('');
+  const [err,setErr]=useState('');
+  const [ld,setLd]=useState(false);
+  const [showPw,setShowPw]=useState(false);
   const toast=useToast();
   const submit=async(e)=>{
-    e.preventDefault();setLd(true);setErr('');
-    const ok=await onLogin(un,pw);
-    if(!ok){setErr('نام کاربری یا رمز عبور اشتباه است');toast('اطلاعات ورود نادرست است','error');}
-    else toast('خوش آمدید! 🎉','success');
-    setLd(false);
+    e.preventDefault();
+    if(ld)return;
+    setLd(true);setErr('');
+    try{
+      const ok=await onLogin(un,pw);
+      if(!ok){setErr('نام کاربری یا رمز عبور اشتباه است');toast('اطلاعات ورود نادرست است','error');}
+      else toast('خوش آمدید! 🎉','success');
+    }catch(ex){
+      console.error(ex);
+      setErr('ارتباط با سامانه برقرار نشد');
+      toast('خطا در ارتباط با سامانه','error');
+    }finally{setLd(false);}
   };
+  const forgot=()=>toast('امکان تغییر رمز وجود ندارد.','info');
   return(
-    <div className="login-screen fade-in" dir="rtl">
+    <div className="login-screen login-reference-screen fade-in" dir="rtl">
       <div className="login-space" aria-hidden="true">
         <div className="login-nebula"></div><div className="login-nebula n2"></div>
         <div className="login-stars"></div>
         <div className="login-planet p1"></div><div className="login-planet p2"></div><div className="login-planet p3"></div><div className="login-planet p4"></div><div className="login-planet p5"></div><div className="login-planet p6"></div><div className="login-planet p7"></div>
         <div className="login-saturn"></div><div className="login-saturn s2"></div>
       </div>
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-4 py-3">
-        <div className="login-panel slide-up">
-          <div className="text-center mb-5">
-            <div className="login-logo">
-              <div className="login-logo-glow"></div>
-              <div className="login-logo-core"><div className="login-cap" aria-hidden="true"><span className="cap-top"></span><span className="cap-base"></span><span className="cap-tassel"></span></div></div>
-            </div>
-            <h1 className="login-title font-black gradient-text leading-tight">تدبیر</h1>
-            <p className="login-subtitle mt-1 font-medium">دنیای رشد, یادگیری و موفقیت</p>
-          </div>
-          <div className="glass-strong p-4 sm:p-5" style={{background:'rgba(255,255,255,.025)',borderColor:'rgba(216,180,254,.11)'}}>
-            <form onSubmit={submit} className="space-y-4">
-              {err&&<div className="bg-red-500/15 border border-red-500/25 rounded-2xl p-3 text-red-300 text-xs text-center">⚠️ {err}</div>}
-              <div>
-                <label className="text-xs text-white/65 mb-2 block font-bold">نام کاربری</label>
-                <div className="login-input-wrap"><span className="login-input-icon svg-icon"><Icon d={Icons.userCircle} size={21}/></span><input className="glass-input" placeholder="Tadbir" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username"/></div>
-              </div>
-              <div>
-                <label className="text-xs text-white/65 mb-2 block font-bold">رمز عبور</label>
-                <div className="login-input-wrap"><span className="login-input-icon svg-icon"><Icon d={Icons.lock} size={21}/></span><input className="glass-input" type="password" placeholder="رمز عبور خود را وارد کنید" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password"/></div>
-              </div>
-              <button type="submit" className="btn-glass login-submit w-full" disabled={ld}>
-                {ld?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ورود...</span>:<span>ورود به سامانه</span>}
-              </button>
-            </form>
-          </div>
-        </div>
+      <div className="login-reference-art" aria-hidden="true">
+        <div className="login-orbit orbit-a"></div><div className="login-orbit orbit-b"></div>
+        <div className="login-orb orb-a"></div><div className="login-orb orb-b"></div><div className="login-orb orb-c"></div>
+        <div className="login-milky-way"></div>
       </div>
+      <main className="login-reference-content">
+        <section className="login-reference-brand" aria-label="تدبیر">
+          <div className="tadbir-wordmark" aria-hidden="true">
+            <span className="tw-t">ت</span><span className="tw-d">د</span><span className="tw-b">ب</span><span className="tw-i">ی</span><span className="tw-r">ر</span>
+            <i className="tw-dot d1"></i><i className="tw-dot d2"></i><i className="tw-dot d3"></i>
+          </div>
+          <div className="wordmark-orbit"><span></span></div>
+          <p className="login-reference-subtitle"><b>✦</b> دنیای رشد، یادگیری و موفقیت <b>✦</b></p>
+        </section>
+        <section className="login-reference-panel">
+          <div className="login-panel-highlight"></div>
+          <form onSubmit={submit} className="login-reference-form">
+            {err&&<div className="login-error">⚠️ {err}</div>}
+            <label className="reference-input">
+              <span className="reference-icon"><Icon d={Icons.userCircle} size={28}/></span>
+              <span className="reference-divider"></span>
+              <input aria-label="نام کاربری" placeholder="Tadbir" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username"/>
+            </label>
+            <label className="reference-input">
+              <span className="reference-icon"><Icon d={Icons.lock} size={28}/></span>
+              <span className="reference-divider"></span>
+              <input aria-label="رمز عبور" type={showPw?'text':'password'} placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password"/>
+              <button type="button" className="reference-eye" onClick={()=>setShowPw(v=>!v)} aria-label={showPw?'پنهان کردن رمز':'نمایش رمز'}>{showPw?'◉':'◌'}</button>
+            </label>
+            <div className="reference-options">
+              <button type="button" className="reference-forgot" onClick={forgot}>فراموشی رمز عبور؟</button>
+              <label className="remember-box"><input type="checkbox" defaultChecked/><span>✓</span> مرا به خاطر بسپار</label>
+            </div>
+            <button type="submit" className="reference-submit" disabled={ld}>
+              <span className="submit-arrow">←</span>
+              <strong>{ld?'در حال ورود...':'ورود'}</strong>
+            </button>
+          </form>
+        </section>
+        <div className="login-reference-footer"><span></span><b>⌂</b><span></span><p>آینده از اینجا شروع می‌شود</p></div>
+      </main>
     </div>
   );
 }
@@ -7991,4 +7959,55 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 @keyframes trophyShowcase{0%,100%{transform:rotateY(-16deg) rotateZ(-2deg) translateY(0) scale(1)}50%{transform:rotateY(16deg) rotateZ(2deg) translateY(-10px) scale(1.045)}}
 @keyframes celebrateAura{50%{transform:scale(1.12);opacity:.75}}
 @media(max-width:520px){.trophy-row{grid-template-columns:88px 1fr auto!important;min-height:122px!important;padding:8px!important}.trophy-art{width:86px!important;height:108px!important}.trophy-info h3{font-size:13px!important}.trophy-info p{font-size:8px!important}.trophy-buy{min-width:54px!important;padding:8px!important;font-size:9px!important}.trophy-celebrate-card{min-height:470px!important}.trophy-celebrate-art{height:275px!important}.trophy-celebrate-art img{height:255px!important}}
+
+/* ===== FINAL MOBILE COSMIC LOGIN REFERENCE ===== */
+.login-reference-screen{background:#050619!important;color:#fff!important;font-family:inherit!important;overflow:hidden!important;}
+.login-reference-screen .login-space{opacity:.95!important;}
+.login-reference-screen .login-planet{opacity:.32!important;}
+.login-reference-screen .login-reference-art{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;background:radial-gradient(ellipse at 53% 22%,rgba(148,57,255,.28),transparent 30%),radial-gradient(ellipse at 40% 65%,rgba(37,99,235,.16),transparent 35%);}
+.login-milky-way{position:absolute;width:85vw;height:145vh;left:9%;top:-35%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,rgba(153,69,255,.10),rgba(236,72,153,.20),rgba(96,165,250,.08),transparent);filter:blur(28px);opacity:.65;}
+.login-orbit{position:absolute;border:3px solid rgba(174,105,255,.70);border-radius:50%;box-shadow:0 0 10px rgba(168,85,247,.9),0 0 28px rgba(59,130,246,.45);}
+.orbit-a{width:82vw;height:31vw;min-height:180px;max-height:330px;left:9%;top:17%;transform:rotate(-11deg);}
+.orbit-b{width:76vw;height:25vw;min-height:150px;max-height:280px;left:14%;top:20%;transform:rotate(-11deg);border-color:rgba(192,132,252,.38);border-width:1px;}
+.login-orb{position:absolute;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff 0,#e879f9 7%,#8b5cf6 35%,#312e81 67%,#08061d 100%);box-shadow:inset -14px -18px 28px rgba(0,0,0,.52),0 0 26px rgba(139,92,246,.55);}
+.orb-a{width:74px;height:74px;left:5%;top:8%;}.orb-b{width:44px;height:44px;right:7%;top:25%;}.orb-c{width:32px;height:32px;left:17%;top:34%;}
+.login-reference-content{position:relative;z-index:5;width:100%;height:100dvh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(18px,4vh,48px) 18px 16px;box-sizing:border-box;}
+.login-reference-brand{width:min(100%,560px);text-align:center;margin-top:-2vh;margin-bottom:clamp(12px,2.5vh,30px);}
+.tadbir-wordmark{direction:rtl;position:relative;display:flex;justify-content:center;align-items:flex-end;gap:0;height:clamp(82px,18vw,180px);font-family:Tahoma,"Segoe UI",sans-serif;font-weight:1000;font-size:clamp(76px,17vw,165px);line-height:.75;letter-spacing:-.18em;color:#f7c8ff;text-shadow:0 0 3px #fff,0 0 12px #ff4dff,0 0 28px #c026d3,0 8px 0 #6b0b8d,0 14px 24px rgba(0,0,0,.75);filter:drop-shadow(0 0 12px rgba(168,85,247,.75));}
+.tadbir-wordmark span{display:inline-block;transform-origin:center bottom;background:linear-gradient(180deg,#ffd6ff 0,#ff8af2 35%,#d946ef 60%,#7e22ce 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);}
+.tw-t{transform:translateX(5px) scaleX(1.05)}.tw-d{transform:translateX(2px)}.tw-b{transform:translateX(-2px)}.tw-i{transform:translateX(-4px)}.tw-r{transform:translateX(-7px)}
+.tw-dot{position:absolute;width:clamp(11px,2.6vw,23px);height:clamp(11px,2.6vw,23px);border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff,#f0abff 28%,#c026d3 65%,#4c1d95);box-shadow:0 0 12px #f0abff,0 0 26px rgba(217,70,239,.8)}.d1{right:21%;top:5%}.d2{right:17%;top:2%}.d3{right:13%;top:8%}
+.wordmark-orbit{position:absolute;left:50%;transform:translateX(-50%);width:clamp(290px,78vw,500px);height:clamp(65px,17vw,110px);border:3px solid #a855f7;border-top-color:#f0abfc;border-bottom-color:#2563eb;border-radius:50%;box-shadow:0 0 9px #d946ef,0 0 25px rgba(59,130,246,.55);margin-top:-72px;pointer-events:none;}
+.wordmark-orbit span{position:absolute;width:12px;height:12px;border-radius:50%;right:2%;top:48%;background:#f0abff;box-shadow:0 0 14px #fff,0 0 28px #a855f7;}
+.login-reference-subtitle{font-size:clamp(14px,3.6vw,22px);font-weight:800;color:rgba(255,255,255,.92);text-shadow:0 0 10px rgba(255,255,255,.16);margin:clamp(8px,2vh,18px) 0 0;}
+.login-reference-subtitle b{color:#f0abfc;margin:0 9px;text-shadow:0 0 12px #d946ef;}
+.login-reference-panel{position:relative;width:min(92vw,620px);border-radius:38px;padding:clamp(24px,5vw,44px);box-sizing:border-box;background:linear-gradient(145deg,rgba(40,28,91,.42),rgba(7,9,40,.54));border:1.5px solid rgba(180,130,255,.45);box-shadow:0 25px 90px rgba(0,0,0,.60),0 0 45px rgba(129,75,255,.22),inset 0 1px 1px rgba(255,255,255,.16);backdrop-filter:blur(23px);-webkit-backdrop-filter:blur(23px);}
+.login-reference-panel:before{content:"";position:absolute;inset:-1px;border-radius:39px;padding:1px;background:linear-gradient(135deg,rgba(236,72,153,.85),rgba(168,85,247,.35),rgba(37,99,235,.85));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
+.login-panel-highlight{position:absolute;inset:8% 4%;border-radius:30px;background:radial-gradient(circle at 12% 0,rgba(255,255,255,.11),transparent 22%),radial-gradient(circle at 100% 100%,rgba(37,99,235,.13),transparent 25%);pointer-events:none;}
+.login-reference-form{position:relative;z-index:2;display:flex;flex-direction:column;gap:clamp(14px,2.8vh,25px);}
+.reference-input{height:clamp(60px,9vh,84px);border-radius:28px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(44,40,94,.50),rgba(15,15,54,.48));border:1.5px solid rgba(154,113,255,.55);box-shadow:inset 0 1px rgba(255,255,255,.10),0 8px 24px rgba(0,0,0,.22);}
+.reference-input:focus-within{border-color:rgba(220,180,255,.9);box-shadow:0 0 0 4px rgba(168,85,247,.12),0 0 25px rgba(99,102,241,.22);}
+.reference-input input{direction:ltr;flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent!important;color:#eee!important;font-size:clamp(15px,3.8vw,22px);font-weight:600;padding:0 20px!important;box-shadow:none!important;}
+.reference-input input::placeholder{color:rgba(229,221,255,.70);opacity:1;}
+.reference-icon{width:62px;display:grid;place-items:center;color:#f2eaff;filter:drop-shadow(0 0 9px rgba(196,181,253,.6));flex:0 0 62px;}
+.reference-divider{height:45%;width:1px;background:rgba(225,214,255,.36);}
+.reference-eye{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;background:transparent;color:#eee;font-size:25px;opacity:.85;cursor:pointer;}
+.reference-options{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 2px;direction:rtl;}
+.reference-forgot{border:0;background:transparent;color:#c9b9ff;font:inherit;font-size:clamp(11px,2.8vw,16px);font-weight:700;cursor:pointer;text-decoration:none;}
+.reference-forgot:hover{text-decoration:underline;color:#fff;}
+.remember-box{display:flex;align-items:center;gap:8px;color:#eee;font-size:clamp(11px,2.8vw,16px);font-weight:700;cursor:pointer;}
+.remember-box input{position:absolute;opacity:0;pointer-events:none;}.remember-box span{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,#8b5cf6,#7c3aed);box-shadow:0 0 12px rgba(139,92,246,.5);font-weight:900;}
+.reference-submit{height:clamp(62px,9vh,86px);border:1.5px solid rgba(255,255,255,.72);border-radius:30px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(100deg,#b000ff 0%,#7c2cff 43%,#1d6fff 100%);box-shadow:0 13px 40px rgba(111,45,255,.45),inset 0 1px rgba(255,255,255,.48);color:#fff;cursor:pointer;overflow:hidden;}
+.reference-submit:before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.22) 45%,transparent 65%);transform:translateX(-100%);animation:loginShimmer 3.6s ease-in-out infinite;}
+.reference-submit strong{font-size:clamp(21px,5vw,32px);font-weight:1000;position:relative;}.submit-arrow{position:absolute;right:clamp(18px,4vw,34px);width:clamp(42px,8vw,58px);height:clamp(42px,8vw,58px);border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.4);font-size:clamp(24px,5vw,34px);background:rgba(255,255,255,.06);}
+.reference-submit:disabled{opacity:.75;cursor:wait;}
+.login-error{border-radius:18px;background:rgba(239,68,68,.14);border:1px solid rgba(248,113,113,.28);color:#fecaca;padding:10px 13px;text-align:center;font-size:12px;}
+.login-reference-footer{width:min(90vw,500px);margin-top:clamp(13px,2.5vh,25px);text-align:center;color:rgba(255,255,255,.76);position:relative;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;}
+.login-reference-footer span{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45));}.login-reference-footer span:nth-child(3){background:linear-gradient(90deg,rgba(255,255,255,.45),transparent)}
+.login-reference-footer b{font-size:clamp(22px,5vw,32px);color:#f4e7ff;text-shadow:0 0 13px #a855f7;}.login-reference-footer p{grid-column:1/-1;margin:0;font-size:clamp(11px,2.7vw,16px);font-weight:700;}
+@keyframes loginShimmer{0%,55%,100%{transform:translateX(-100%)}72%{transform:translateX(100%)}}
+@media(max-width:480px){.login-reference-content{padding:14px 12px 12px;justify-content:center}.login-reference-brand{margin-bottom:12px}.tadbir-wordmark{font-size:74px;height:86px}.wordmark-orbit{margin-top:-61px;width:83vw}.login-reference-subtitle{font-size:13px;margin-top:10px}.login-reference-panel{width:94vw;padding:23px 16px 25px;border-radius:31px}.reference-input{height:61px;border-radius:23px}.reference-icon{width:52px;flex-basis:52px}.reference-divider{height:44%}.reference-input input{padding:0 14px!important}.reference-options{gap:7px}.remember-box span{width:25px;height:25px}.reference-submit{height:63px;border-radius:24px}.login-reference-footer{margin-top:12px}.login-reference-footer p{font-size:11px}.orb-a{width:52px;height:52px}.orb-b{width:34px;height:34px}.orb-c{width:23px;height:23px}}
+@media(max-height:760px){.login-reference-content{padding-top:10px;padding-bottom:8px}.login-reference-brand{margin-top:0;margin-bottom:8px}.tadbir-wordmark{font-size:64px;height:70px}.login-reference-subtitle{font-size:11px;margin-top:7px}.login-reference-panel{padding:18px 15px 19px}.reference-input{height:52px}.reference-icon{width:48px;flex-basis:48px}.reference-submit{height:54px}.login-reference-footer{margin-top:7px}.login-reference-footer p{font-size:10px}}
+@media(min-width:900px){.login-reference-content{padding-left:24px;padding-right:24px}.login-reference-panel{width:min(78vw,650px)}.tadbir-wordmark{font-size:150px}.login-reference-subtitle{font-size:20px}}
+
 </style>
