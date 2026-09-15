@@ -2975,8 +2975,12 @@ html,body{overflow-x:hidden!important}
 .exam-guide-button b{font-size:10px}.exam-guide-button small{font-size:7px;color:rgba(255,255,255,.42)}
 .exam-guide-lamp{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#fef08a;background:radial-gradient(circle at 35% 30%,#fff9c4 0 12%,rgba(250,204,21,.55) 20%,rgba(250,204,21,.08) 62%,transparent 70%);box-shadow:0 0 20px rgba(250,204,21,.20)}
 .exam-guide-button.disabled{opacity:.30;cursor:default;filter:grayscale(.5)}
-.exam-hint-target{border-color:rgba(250,204,21,.65)!important;background:rgba(250,204,21,.08)!important;box-shadow:0 0 0 1px rgba(250,204,21,.16),0 0 28px rgba(250,204,21,.12)!important;position:relative}
-.exam-hint-finger{position:absolute;right:-5px;top:-15px;font-size:30px;z-index:10;filter:drop-shadow(0 5px 7px rgba(0,0,0,.45));animation:tadbirFinger .72s ease-in-out infinite alternate}
+
+.exam-hint-target{border-color:rgba(250,204,21,.82)!important;background:rgba(250,204,21,.08)!important;box-shadow:0 0 0 1px rgba(250,204,21,.22),0 0 30px rgba(250,204,21,.2)!important;position:relative;overflow:visible}
+.exam-hint-target::after{content:"";position:absolute;inset:-4px;border:2px solid rgba(255,235,90,.95);border-radius:inherit;pointer-events:none;animation:tadbirHintGlow 1.15s ease-in-out infinite;box-shadow:0 0 12px rgba(250,204,21,.8),0 0 30px rgba(250,204,21,.35)}
+@keyframes tadbirHintGlow{0%,100%{opacity:.45;transform:scale(.99)}50%{opacity:1;transform:scale(1.018);box-shadow:0 0 18px rgba(250,204,21,.95),0 0 40px rgba(250,204,21,.5)}}
+
+.exam-hint-finger-old-old{position:absolute;right:-5px;top:-15px;font-size:30px;z-index:10;filter:drop-shadow(0 5px 7px rgba(0,0,0,.45));animation:tadbirFinger .72s ease-in-out infinite alternate}
 @keyframes tadbirFinger{from{transform:translateY(3px) rotate(-7deg) scale(.96)}to{transform:translateY(-5px) rotate(3deg) scale(1.04)}}
 .exam-hint-overlay{position:fixed;inset:0;z-index:2147483640;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(2,3,12,.42);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .exam-hint-modal{width:min(92vw,360px);box-sizing:border-box;padding:22px;border-radius:30px;text-align:center;background:rgba(20,21,35,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 35px 100px rgba(0,0,0,.52),0 0 55px rgba(250,204,21,.07);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);direction:rtl}
@@ -6804,7 +6808,7 @@ function Student({user,tab,setTab,onLogout}){
                         <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
                         <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
                         {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
-                        {examHintTarget===opt&&<span className="exam-hint-finger" aria-label="گزینه راهنمایی‌شده">☝️</span>}
+                        {examHintTarget===opt&&<span className="exam-hint-finger-old" aria-label="گزینه راهنمایی‌شده"></span>}
                       </div>
                     </div>
                   ))}
@@ -6829,7 +6833,7 @@ function Student({user,tab,setTab,onLogout}){
             <div className="exam-hint-modal-icon">💡</div>
             <div className="exam-hint-kicker">TADBIR GUIDE</div>
             <h3>راهنمای این سوال</h3>
-            <p>{globalExamHintUsed?'شما قبلاً راهنمای رایگان خود را در یک آزمون استفاده کرده‌اید. راهنمای رایگان فقط یک‌بار برای همیشه قابل استفاده است.':'این راهنما برای شما فقط یک‌بار و برای همیشه رایگان است. بعد از استفاده، در آزمون‌های بعدی دیگر راهنمای رایگان نخواهید داشت.'}</p>
+            <p>{globalExamHintUsed?'شما قبلاً راهنمای رایگان خود را در یک آزمون استفاده کرده‌اید. راهنمای رایگان فقط یک‌بار برای همیشه قابل استفاده است.':'دانش آموز گرامی،امکان استفاده از این قابلیت بصورت رایگان،فقط یکبار میباشد.'}</p>
             <div className="exam-hint-price">{globalExamHintUsed?'راهنمای رایگان استفاده شده':'رایگان — فقط یک‌بار'}</div>
             <div className="exam-hint-actions">
               <button type="button" className="btn-glass" onClick={()=>setShowExamHintConfirm(false)}>انصراف</button>
