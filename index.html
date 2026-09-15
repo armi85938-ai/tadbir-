@@ -1282,6 +1282,30 @@ html[data-tadbir-theme="light-black"] .competition-wide-icon,html[data-tadbir-th
   .tadbir-cap-svg{width:136px !important;height:120px !important}
 }
 
+
+/* Permanently remove the password eye / visibility control */
+.password-eye,
+.password-toggle,
+.password-visibility,
+.toggle-password,
+.eye-icon,
+.visibility-toggle,
+[data-password-toggle],
+[data-visibility-toggle],
+button[aria-label*="نمایش رمز"],
+button[aria-label*="مخفی کردن رمز"],
+button[aria-label*="password"],
+button[title*="نمایش رمز"],
+button[title*="مخفی کردن رمز"]{
+  display:none !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  width:0 !important;
+  min-width:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+}
+
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -3746,9 +3770,7 @@ function Login({onLogin}){
                     <Icon d={Icons.lock} size={24}/>
                   </div>
                   <input className="login-reference-input login-password-input" type={showPw?'text':'password'} placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password" aria-label="رمز عبور"/>
-                  <button type="button" className="login-eye-reference" onClick={()=>setShowPw(v=>!v)} aria-label={showPw?'پنهان کردن رمز':'نمایش رمز'}>
-                    <Icon d={Icons.eye} size={24}/>
-                  </button>
+                  
                 </div>
 
                 <button type="submit" className="login-submit-reference" disabled={ld}>
@@ -5151,7 +5173,7 @@ function Admin({user,tab,setTab,onLogout}){
         {passwordStudent&&(
           <div className="modal-overlay" onClick={()=>!passwordSaving&&setPasswordStudent(null)}>
             <div className="glass-strong admin-password-modal slide-up" onClick={e=>e.stopPropagation()}>
-              <div className="admin-password-head"><div><span className="admin-password-kicker">SECURITY CENTER</span><h3>🔐 تغییر رمز دانش‌آموز</h3><p>{passwordStudent.full_name} · @{passwordStudent.username}</p></div><button onClick={()=>setPasswordStudent(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
+              <div className="admin-password-head"><div><h3>🔐 تغییر رمز دانش‌آموز</h3><p>{passwordStudent.full_name} · @{passwordStudent.username}</p></div><button onClick={()=>setPasswordStudent(null)} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div>
               <div className="admin-password-grid">
                 <div className="password-info-card"><span>رمز فعلی دانش‌آموز</span><strong>{passwordStudent.password||'ثبت نشده'}</strong><small>این رمز در حساب فعلی ذخیره شده است.</small></div>
                 <div className="password-new-card"><label>رمز جدید:</label><input className="glass-input" type="text" autoComplete="off" placeholder="رمز جدید را وارد کنید" value={newStudentPassword} onChange={e=>setNewStudentPassword(e.target.value)}/><small>حداقل ۴ کاراکتر</small></div>
@@ -6190,7 +6212,7 @@ function ProfileEditor({user,onSaved,compact=false}){
 function FollowList({userId,type,onClose}){
   const [items,setItems]=useState([]); const [loading,setLoading]=useState(true); const [profiles,setProfiles]=useState({});
   useEffect(()=>{let live=true;(async()=>{const col=type==='followers'?'follower_id':'following_id';const target=type==='followers'?'following_id':'follower_id';const {data:f}=await SB.from('follows').select('follower_id,following_id').eq(target,userId);const ids=(f||[]).map(x=>x[col]).filter(Boolean);if(!ids.length){if(live){setItems([]);setLoading(false);}return;}const [{data:u},{data:p}]=await Promise.all([SB.from('users').select('id,full_name,username,role,last_seen_at').in('id',ids),SB.from('profiles').select('user_id,display_name,avatar_url,bio').in('user_id',ids)]);const pm={};(p||[]).forEach(x=>pm[x.user_id]=x);const map=new Map((u||[]).map(x=>[x.id,x]));const ordered=ids.map(id=>map.get(id)).filter(Boolean);if(live){setItems(ordered);setProfiles(pm);setLoading(false);}})();return()=>{live=false};},[userId,type]);
-  return <div className="modal-overlay follow-list-overlay" onClick={onClose}><div className="glass-strong follow-list-panel slide-up" onClick={e=>e.stopPropagation()}><div className="follow-list-head"><div><span className="admin-password-kicker">TADBIR SOCIAL</span><h3>{type==='followers'?'←فالوورزهای':'←فالویینگ‌های'} پروفایل</h3></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div><div className="follow-list-body">{loading?<div className="follow-empty"><span className="follow-spinner"></span><p>در حال آماده‌سازی لیست...</p></div>:items.length===0?<div className="follow-empty"><div>◎</div><p>هنوز کسی در این لیست نیست</p></div>:items.map((x,i)=>{const av=profiles[x.id]?.avatar_url||'🐱';return <div className="follow-user-row" key={x.id} style={{animationDelay:`${i*45}ms`}}><div className="social-mini-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="min-w-0 flex-1"><div className="profile-name-line"><b className="truncate">{profiles[x.id]?.display_name||x.full_name}</b>{x.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">@{x.username}</span></div><span className="follow-role">{x.role==='admin'?'مدیر':'دانش‌آموز'}</span></div>})}</div></div></div>;
+  return <div className="modal-overlay follow-list-overlay" onClick={onClose}><div className="glass-strong follow-list-panel slide-up" onClick={e=>e.stopPropagation()}><div className="follow-list-head"><div><h3>{type==='followers'?'←فالوورزهای':'←فالویینگ‌های'} پروفایل</h3></div><button onClick={onClose} className="p-2 bg-white/5 rounded-xl"><Icon d={Icons.x} size={18}/></button></div><div className="follow-list-body">{loading?<div className="follow-empty"><span className="follow-spinner"></span><p>در حال آماده‌سازی لیست...</p></div>:items.length===0?<div className="follow-empty"><div>◎</div><p>هنوز کسی در این لیست نیست</p></div>:items.map((x,i)=>{const av=profiles[x.id]?.avatar_url||'🐱';return <div className="follow-user-row" key={x.id} style={{animationDelay:`${i*45}ms`}}><div className="social-mini-avatar">{av.startsWith('data:image')?<img src={av} alt=""/>:av}</div><div className="min-w-0 flex-1"><div className="profile-name-line"><b className="truncate">{profiles[x.id]?.display_name||x.full_name}</b>{x.role==='admin'&&<VerifiedBadge/>}</div><span className="text-[9px] text-white/35">@{x.username}</span></div><span className="follow-role">{x.role==='admin'?'مدیر':'دانش‌آموز'}</span></div>})}</div></div></div>;
 }
 
 function ProfileView({person,onClose,viewerId,onBlockChange}){
