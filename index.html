@@ -4322,7 +4322,7 @@ function Admin({user,tab,setTab,onLogout}){
   const loadQuestionObjections=async()=>{
     setQuestionObjectionsLoading(true);
     try{
-      const {data,error}=await SB.rpc('tadbir_admin_question_objections_v2');
+      const {data,error}=await SB.rpc('tadbir_admin_question_objections_v3');
       if(error)throw error;
       setQuestionObjections(Array.isArray(data)?data:[]);
     }catch(e){console.error('question objections:',e);toast('دریافت اعتراض‌های سوال انجام نشد','error');setQuestionObjections([]);}
@@ -6701,7 +6701,7 @@ function Student({user,tab,setTab,onLogout}){
     const cost=Number(getExamHintCost());
 
     try{
-      const {data,error}=await SB.rpc('tadbir_spend_hint_coins_v2',{
+      const {data,error}=await SB.rpc('tadbir_spend_hint_coins_v3',{
         p_user_id:String(user.id),
         p_cost:cost
       });
@@ -6743,7 +6743,7 @@ function Student({user,tab,setTab,onLogout}){
     if(!q||!activeExam){setOpenObjection(null);return;}
     if(!text){toast('لطفاً دلیل اعتراض را بنویسید.','warning');return;}
     try{
-      const {data,error}=await SB.rpc('tadbir_submit_question_objection',{
+      const {data,error}=await SB.rpc('tadbir_submit_question_objection_v2',{
         p_exam_id:String(activeExam.id),
         p_question_id:String(q.id),
         p_student_id:String(user.id),
