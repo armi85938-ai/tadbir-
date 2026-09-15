@@ -3400,6 +3400,44 @@ html,body{overflow-x:hidden!important}
 .exam-objection-button{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 .question-objection-admin-icon{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 </style>
+
+<style id="tadbir-final-visual-polish">
+/* Final visual polish: premium round coin + truly transparent floating bottom navigation */
+.coin-medallion{
+  background:radial-gradient(circle at 28% 20%,rgba(255,255,255,.9),rgba(255,218,91,.95) 24%,rgba(244,174,34,.96) 58%,rgba(157,88,7,.98) 100%)!important;
+  border:1px solid rgba(255,241,170,.9)!important;
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.75),inset 0 -5px 9px rgba(103,55,0,.28),0 8px 24px rgba(245,158,11,.3)!important;
+  overflow:visible;
+}
+.coin-medallion svg{width:34px!important;height:34px!important;filter:drop-shadow(0 2px 3px rgba(100,55,0,.35));}
+.nav-bar{
+  background:rgba(255,255,255,.045)!important;
+  background-color:rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(155%)!important;
+  backdrop-filter:blur(28px) saturate(155%)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-top-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.035)!important;
+  overflow:hidden;
+}
+.nav-bar:before{
+  background:linear-gradient(120deg,rgba(255,255,255,.075),rgba(255,255,255,.012) 38%,rgba(167,139,250,.045) 70%,rgba(255,255,255,.025))!important;
+}
+.nav-bar:after{
+  content:'';position:absolute;left:12%;right:12%;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  opacity:.55;pointer-events:none;
+}
+html[data-tadbir-theme] .nav-bar{
+  background:rgba(255,255,255,.045)!important;
+  background-color:rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(155%)!important;
+  backdrop-filter:blur(28px) saturate(155%)!important;
+}
+@media(max-width:420px){
+  .nav-bar{left:10px!important;right:10px!important;bottom:8px!important;border-radius:27px!important;}
+}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -7442,7 +7480,7 @@ function Student({user,tab,setTab,onLogout}){
       <div className="content">
         {tab==='home'&&(
           <>
-            <div className="coin-home-card slide-up"><div className="coin-home-balance"><div className="coin-orb coin-real-icon" aria-label="سکه"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="15.5" ry="18" transform="rotate(-22 24 24)" fill="url(#coinGold)" stroke="#fff0a8" stroke-width="1.5"/><ellipse cx="24" cy="24" rx="10.5" ry="13" transform="rotate(-22 24 24)" fill="none" stroke="#d88b12" stroke-width="1.6" opacity=".8"/><path d="M18 27c2.4 2.1 7.8 2.3 10.6-.2 2.1-1.9.7-4.4-2.7-4.9l-3.5-.5c-2.4-.35-3.2-1.9-1.6-3.4 1.9-1.8 5.9-1.8 8.1.1" fill="none" stroke="#fff7c7" stroke-width="1.7" stroke-linecap="round"/><path d="M25.5 15.8v16.4" stroke="#fff7c7" stroke-width="1.5" stroke-linecap="round" opacity=".9"/><defs><linearGradient id="coinGold" x1="8" y1="8" x2="39" y2="40"><stop stop-color="#fff6b0"/><stop offset=".3" stop-color="#ffd75a"/><stop offset=".65" stop-color="#f4ad22"/><stop offset="1" stop-color="#c8790c"/></linearGradient></defs></svg></div><div className="coin-count">{coinBalance}</div></div><div className="text-left"><span className="badge badge-new trophy-count-badge"><span className="trophy-mini">♜</span> {ownedTrophyIds.length}/۱۰</span></div></div>
+            <div className="coin-home-card slide-up"><div className="coin-home-balance"><div className="coin-orb coin-real-icon coin-medallion" aria-label="سکه"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="coinFaceGold2" cx="32%" cy="24%" r="78%"><stop offset="0" stop-color="#fff9cf"/><stop offset=".22" stop-color="#ffe98a"/><stop offset=".52" stop-color="#f7bb32"/><stop offset=".82" stop-color="#d88b10"/><stop offset="1" stop-color="#9c5b08"/></radialGradient><linearGradient id="coinEdgeGold2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a1"/><stop offset=".38" stop-color="#f4b52d"/><stop offset=".7" stop-color="#b86c09"/><stop offset="1" stop-color="#7c4305"/></linearGradient></defs><ellipse cx="24" cy="26" rx="15.8" ry="15.8" fill="url(#coinEdgeGold2)" opacity=".95"/><ellipse cx="24" cy="23.5" rx="15.8" ry="15.8" fill="url(#coinFaceGold2)" stroke="#fff2ad" stroke-width="1.2"/><circle cx="24" cy="23.5" r="11.6" fill="none" stroke="#c9820d" stroke-width="1.15" opacity=".85"/><circle cx="24" cy="23.5" r="9.5" fill="none" stroke="#ffe78a" stroke-width=".7" opacity=".7"/><path d="M24 16.2l2.05 4.55 4.95.48-3.7 3.28 1.05 4.78L24 26.85l-4.35 2.44 1.05-4.78-3.7-3.28 4.95-.48z" fill="#fff4b8" stroke="#b66d08" stroke-width=".7"/><ellipse cx="18.2" cy="17.1" rx="4.2" ry="2" fill="#fff" opacity=".3" transform="rotate(-24 18.2 17.1)"/></svg></div><div className="coin-count">{coinBalance}</div></div><div className="text-left"><span className="badge badge-new trophy-count-badge"><span className="trophy-mini">♜</span> {ownedTrophyIds.length}/۱۰</span></div></div>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="glass p-5 text-center slide-up">
                 <Icon d={Icons.award} size={28} className="mx-auto mb-2 text-amber-400"/>
