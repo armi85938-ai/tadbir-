@@ -1325,16 +1325,22 @@ button[title*="مخفی کردن رمز"]{
 .coin-home-card:before{content:'';position:absolute;width:180px;height:180px;right:-75px;top:-105px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.24),rgba(251,191,36,.04) 42%,transparent 70%);filter:blur(3px);z-index:-2;animation:assetAura 4.5s ease-in-out infinite}
 .coin-home-card:after{content:'';position:absolute;inset:1px;border-radius:21px;background:linear-gradient(120deg,rgba(255,255,255,.13),transparent 26%,transparent 72%,rgba(255,255,255,.06));pointer-events:none;z-index:-1}
 .coin-home-shine{position:absolute;top:-80%;left:-22%;width:34%;height:260%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);animation:assetShine 6.5s ease-in-out infinite;pointer-events:none}
-.coin-value-cluster{display:flex;align-items:center;animation:coinAssetFloat 4.6s ease-in-out infinite;will-change:transform}.coin-value-cluster .coin-orb{animation:coinFloat 3.2s ease-in-out infinite}.coin-value-cluster .coin-count{animation:coinCountGlow 4.6s ease-in-out infinite;will-change:transform}.coin-orb{position:relative;width:47px;height:47px;flex:0 0 47px;border-radius:16px;display:grid;place-items:center;
+.coin-value-cluster{display:flex;align-items:center}.coin-value-cluster .coin-orb{animation:none}.coin-value-cluster .coin-count{animation:none;will-change:auto}.coin-orb{position:relative;width:47px;height:47px;flex:0 0 47px;border-radius:16px;display:grid;place-items:center;
   background:linear-gradient(145deg,rgba(255,255,255,.23),rgba(251,191,36,.16));
   border:1px solid rgba(255,255,255,.24);
   box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -7px 14px rgba(99,58,7,.16),0 9px 25px rgba(245,158,11,.18),0 0 0 5px rgba(251,191,36,.035);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:coinFloat 3.2s ease-in-out infinite}
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:none}
 .coin-orb:after{content:'';position:absolute;inset:4px;border-radius:12px;border:1px solid rgba(255,255,255,.12);pointer-events:none}
-.coin-orb svg{filter:drop-shadow(0 3px 7px rgba(0,0,0,.25));animation:coinGemSpin 7s ease-in-out infinite}
+.coin-orb svg{filter:drop-shadow(0 3px 7px rgba(0,0,0,.25));animation:none}
 .coin-count{font-size:25px;line-height:1;font-weight:1000;color:#fff4c4;text-shadow:0 2px 20px rgba(251,191,36,.38);letter-spacing:.2px}
 .coin-home-card .text-xs{font-weight:600;letter-spacing:.1px}
 .coin-home-card .badge{background:rgba(129,140,248,.12);border-color:rgba(255,255,255,.13);box-shadow:inset 0 1px rgba(255,255,255,.08),0 5px 15px rgba(0,0,0,.12);backdrop-filter:blur(10px)}
+.trophy-progress-pill{position:relative;display:inline-flex;align-items:center;gap:7px;min-width:92px;justify-content:center;padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(129,140,248,.12) 55%,rgba(251,191,36,.12));border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 22px rgba(0,0,0,.2),0 0 22px rgba(251,191,36,.06);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px);overflow:hidden}
+.trophy-progress-pill:before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 18%,rgba(255,255,255,.13) 45%,transparent 72%);transform:translateX(-120%);animation:trophyPillShine 5.5s ease-in-out infinite;pointer-events:none}
+.trophy-progress-icon{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe8a3,#f59e0b);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 5px 13px rgba(245,158,11,.24);position:relative;z-index:1}
+.trophy-progress-icon svg{filter:drop-shadow(0 2px 3px rgba(100,55,0,.28))}
+.trophy-progress-text{font-size:12px;font-weight:1000;color:#fff4c7;letter-spacing:.2px;position:relative;z-index:1;direction:rtl}
+@keyframes trophyPillShine{0%,24%{transform:translateX(-120%);opacity:0}35%{opacity:1}58%,100%{transform:translateX(120%);opacity:0}}
 .content>.grid.grid-cols-2>div.glass{
   position:relative;overflow:hidden;
   background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.028) 58%,rgba(129,140,248,.055));
@@ -7490,7 +7496,19 @@ function Student({user,tab,setTab,onLogout}){
       <div className="content">
         {tab==='home'&&(
           <>
-            <div className="coin-home-card slide-up"><div className="coin-home-shine"></div><div className="coin-value-cluster"><div className="flex items-center gap-3"><div className="coin-orb" aria-hidden="true"><svg viewBox="0 0 48 48" width="28" height="28" fill="none"><path d="M24 5.5 39.5 14v20L24 42.5 8.5 34V14L24 5.5Z" fill="url(#coinGemFill)" stroke="rgba(255,255,255,.9)" stroke-width="1.5"/><path d="m24 10 10 5.5v11L24 32l-10-5.5v-11L24 10Z" fill="rgba(255,255,255,.18)"/><path d="M24 10v22M14 15.5l10 5.8 10-5.8" stroke="rgba(255,255,255,.72)" stroke-width="1.2" stroke-linecap="round"/><circle cx="20" cy="15" r="3" fill="rgba(255,255,255,.65)"/><defs><linearGradient id="coinGemFill" x1="9" y1="7" x2="39" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#fff7c2"/><stop offset=".35" stop-color="#f7c948"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs></svg></div><div className="coin-count">{coinBalance}</div></div></div><div className="text-left"><span className="badge badge-new">🏆 {ownedTrophyIds.length}/۱۰</span></div></div>
+            <div className="coin-home-card slide-up"><div className="coin-home-shine"></div><div className="coin-value-cluster"><div className="flex items-center gap-3"><div className="coin-orb" aria-hidden="true"><svg viewBox="0 0 48 48" width="28" height="28" fill="none"><path d="M24 5.5 39.5 14v20L24 42.5 8.5 34V14L24 5.5Z" fill="url(#coinGemFill)" stroke="rgba(255,255,255,.9)" stroke-width="1.5"/><path d="m24 10 10 5.5v11L24 32l-10-5.5v-11L24 10Z" fill="rgba(255,255,255,.18)"/><path d="M24 10v22M14 15.5l10 5.8 10-5.8" stroke="rgba(255,255,255,.72)" stroke-width="1.2" stroke-linecap="round"/><circle cx="20" cy="15" r="3" fill="rgba(255,255,255,.65)"/><defs><linearGradient id="coinGemFill" x1="9" y1="7" x2="39" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#fff7c2"/><stop offset=".35" stop-color="#f7c948"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs></svg></div><div className="coin-count">{coinBalance}</div></div></div><div className="text-left">
+              <div className="trophy-progress-pill" title="تعداد جام‌های کسب‌شده">
+                <span className="trophy-progress-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
+                    <path d="M7 4h10v4.5a5 5 0 0 1-10 0V4Z" fill="#fff3b0" stroke="#9a6507" strokeWidth="1.2"/>
+                    <path d="M7 6H4.8A1.8 1.8 0 0 0 3 7.8 4.2 4.2 0 0 0 7.2 12" stroke="#ffd76a" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M17 6h2.2A1.8 1.8 0 0 1 21 7.8a4.2 4.2 0 0 1-4.2 4.2" stroke="#ffd76a" strokeWidth="1.5" strokeLinecap="round"/>
+                    <path d="M10 13v3h4v-3M8.5 20h7M9.5 17h5" stroke="#ffe69a" strokeWidth="1.6" strokeLinecap="round"/>
+                  </svg>
+                </span>
+                <span className="trophy-progress-text">{ownedTrophyIds.length}/۱۰</span>
+              </div>
+            </div></div>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="glass p-5 text-center slide-up">
                 <Icon d={Icons.award} size={28} className="mx-auto mb-2 text-amber-400"/>
