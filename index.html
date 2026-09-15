@@ -3042,340 +3042,6 @@ html,body{overflow-x:hidden!important}
 .exam-objection-button{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 .question-objection-admin-icon{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 </style>
-
-<style id="tadbir-login-visual-upgrade">
-/* ===== TADBIR LOGIN — GRAPHIC / LIVE UPGRADE ===== */
-.login-screen{
-  background:
-    radial-gradient(circle at 50% 42%,rgba(124,58,237,.20),transparent 28%),
-    radial-gradient(circle at 8% 18%,rgba(56,189,248,.11),transparent 25%),
-    radial-gradient(circle at 92% 82%,rgba(236,72,153,.13),transparent 27%),
-    linear-gradient(145deg,#050611 0%,#0b0820 42%,#160a2b 70%,#05050d 100%) !important;
-}
-.login-space:before{
-  content:"";
-  position:absolute;
-  width:58vmin;height:58vmin;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  border:1px solid rgba(196,181,253,.08);
-  box-shadow:
-    0 0 0 34px rgba(139,92,246,.025),
-    0 0 0 70px rgba(139,92,246,.018),
-    0 0 100px rgba(139,92,246,.12);
-  animation:tadbirCorePulse 5s ease-in-out infinite;
-}
-.login-space:after{
-  background:
-    radial-gradient(circle at 50% 50%,transparent 0 27%,rgba(5,4,18,.10) 52%,rgba(5,4,18,.58) 100%),
-    linear-gradient(115deg,transparent 0 45%,rgba(255,255,255,.025) 50%,transparent 55%) !important;
-}
-.login-stars{
-  opacity:.82 !important;
-  background-image:
-    radial-gradient(circle at 6% 12%,#fff 0 1px,transparent 1.8px),
-    radial-gradient(circle at 14% 66%,rgba(196,181,253,.9) 0 1.2px,transparent 2px),
-    radial-gradient(circle at 28% 31%,rgba(255,255,255,.75) 0 1px,transparent 1.8px),
-    radial-gradient(circle at 43% 11%,rgba(244,114,182,.7) 0 1.2px,transparent 2px),
-    radial-gradient(circle at 57% 84%,rgba(255,255,255,.8) 0 1px,transparent 1.8px),
-    radial-gradient(circle at 69% 23%,rgba(196,181,253,.8) 0 1.1px,transparent 2px),
-    radial-gradient(circle at 81% 61%,rgba(255,255,255,.7) 0 1px,transparent 1.8px),
-    radial-gradient(circle at 94% 35%,rgba(244,114,182,.65) 0 1.2px,transparent 2px);
-  animation:tadbirStars 3.5s ease-in-out infinite !important;
-}
-.login-planet{
-  opacity:.25 !important;
-  animation:tadbirPlanetFloat 8s ease-in-out infinite;
-}
-.login-planet.p1{animation-delay:-2s}
-.login-planet.p2{animation-delay:-5s}
-.login-planet.p3{animation-delay:-1s}
-.login-planet.p4{animation-delay:-6s}
-.login-planet.p5{animation-delay:-3s}
-.login-planet.p6{animation-delay:-7s}
-.login-planet.p7{animation-delay:-4s}
-.login-saturn{filter:drop-shadow(0 0 20px rgba(167,139,250,.25));animation:tadbirSaturn 12s ease-in-out infinite}
-.login-saturn.s2{animation-delay:-5s}
-.login-nebula{opacity:.23 !important;filter:blur(65px) !important}
-
-.login-panel{
-  width:min(92vw,446px) !important;
-  border-radius:36px !important;
-  padding:28px 25px 25px !important;
-  background:
-    linear-gradient(145deg,rgba(30,21,66,.91),rgba(8,9,25,.95)) !important;
-  border:1px solid rgba(221,214,254,.20) !important;
-  box-shadow:
-    0 38px 120px rgba(0,0,0,.72),
-    0 0 0 1px rgba(255,255,255,.025),
-    0 0 90px rgba(124,58,237,.17),
-    inset 0 1px 0 rgba(255,255,255,.15) !important;
-  backdrop-filter:blur(30px) saturate(125%) !important;
-  -webkit-backdrop-filter:blur(30px) saturate(125%) !important;
-  animation:loginPanelFloat 6s ease-in-out infinite !important;
-}
-.login-panel:before{
-  background:linear-gradient(115deg,
-    rgba(244,114,182,.60),
-    rgba(129,140,248,.18) 35%,
-    rgba(56,189,248,.18) 58%,
-    rgba(168,85,247,.50)) !important;
-}
-.login-panel:after{
-  inset:8px !important;
-  border-radius:29px !important;
-  border:1px solid rgba(255,255,255,.045) !important;
-  box-shadow:inset 0 0 35px rgba(139,92,246,.035);
-}
-.login-panel > *{position:relative;z-index:2}
-
-.login-logo{
-  width:122px !important;height:122px !important;
-  margin-bottom:13px !important;
-}
-.login-logo-glow{
-  inset:-22px !important;
-  background:
-    radial-gradient(circle,rgba(168,85,247,.48) 0 18%,rgba(236,72,153,.20) 36%,transparent 70%) !important;
-  filter:blur(15px) !important;
-  animation:tadbirLogoGlow 3s ease-in-out infinite !important;
-}
-.login-logo-core{
-  width:102px !important;height:102px !important;
-  border-radius:31px !important;
-  background:
-    radial-gradient(circle at 28% 18%,#ddd6fe 0 4%,#a78bfa 18%,#7c3aed 48%,#4c1d95 76%,#db2777 100%) !important;
-  border:1px solid rgba(255,255,255,.36) !important;
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.30),
-    inset -12px -16px 28px rgba(30,10,60,.28),
-    0 20px 42px rgba(76,29,149,.40),
-    0 0 38px rgba(168,85,247,.18) !important;
-  transform:rotate(-2deg) !important;
-}
-.login-logo-core:before{
-  content:"";
-  position:absolute;
-  inset:8px;
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:inset 0 0 20px rgba(255,255,255,.04);
-}
-.login-logo-core:after{
-  content:"✦  ✧" !important;
-  right:8px !important;top:7px !important;
-  font-size:10px !important;
-  letter-spacing:4px;
-  color:#fff !important;
-  opacity:.8 !important;
-}
-.login-cap{transform:scale(1.06) !important;filter:drop-shadow(0 9px 13px rgba(0,0,0,.38)) !important}
-.login-cap .cap-top{
-  background:linear-gradient(145deg,#ffffff,#ddd6fe 38%,#8b5cf6 78%,#4c1d95) !important;
-}
-.login-cap .cap-base{
-  background:linear-gradient(180deg,#a78bfa,#6d28d9 60%,#3b0764) !important;
-}
-.login-cap .cap-tassel{
-  background:#fde68a !important;
-  box-shadow:0 0 11px rgba(250,204,21,.9) !important;
-}
-.login-cap .cap-tassel:after{
-  background:#fde68a !important;
-}
-
-.tadbir-brand{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  margin:2px 0 4px;
-  line-height:1;
-}
-.tadbir-brand-main{
-  font-size:clamp(42px,10vw,54px);
-  font-weight:1000;
-  letter-spacing:-3px;
-  background:linear-gradient(110deg,#f5f3ff 0%,#ddd6fe 22%,#a78bfa 48%,#f0abfc 73%,#f9a8d4 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  filter:drop-shadow(0 10px 24px rgba(168,85,247,.28));
-  animation:tadbirTextShine 4.5s ease-in-out infinite;
-}
-.tadbir-brand-line{
-  width:76px;height:3px;
-  margin-top:8px;
-  border-radius:99px;
-  background:linear-gradient(90deg,transparent,#a78bfa,#f472b6,transparent);
-  box-shadow:0 0 16px rgba(192,132,252,.45);
-  animation:tadbirLine 2.6s ease-in-out infinite;
-}
-.tadbir-brand-sub{
-  margin-top:9px;
-  color:rgba(255,255,255,.48);
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:.4px;
-}
-
-.login-subtitle{
-  margin-top:9px !important;
-  font-size:12px !important;
-  color:rgba(255,255,255,.62) !important;
-}
-.login-subtitle::first-letter{color:#f0abfc}
-
-.login-panel > .glass-strong{
-  position:relative;
-  overflow:hidden;
-  border-radius:23px !important;
-  padding:18px !important;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,.050),rgba(255,255,255,.018)) !important;
-  border:1px solid rgba(255,255,255,.085) !important;
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.065),
-    0 14px 35px rgba(0,0,0,.20) !important;
-}
-.login-panel > .glass-strong:before{
-  content:"";
-  position:absolute;
-  width:180px;height:180px;
-  left:-90px;top:-120px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(168,85,247,.16),transparent 70%);
-  pointer-events:none;
-}
-
-.login-input-wrap .glass-input{
-  height:58px !important;
-  border-radius:18px !important;
-  padding-right:52px !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035)) !important;
-  border-color:rgba(196,181,253,.16) !important;
-  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease !important;
-}
-.login-input-wrap .glass-input:hover{
-  border-color:rgba(196,181,253,.30) !important;
-  transform:translateY(-1px);
-}
-.login-input-wrap .glass-input:focus{
-  transform:translateY(-2px) !important;
-  border-color:rgba(216,180,254,.72) !important;
-  box-shadow:
-    0 0 0 4px rgba(168,85,247,.11),
-    0 14px 32px rgba(99,102,241,.16),
-    inset 0 1px rgba(255,255,255,.10) !important;
-}
-.login-input-icon{
-  color:#ddd6fe !important;
-  filter:drop-shadow(0 0 9px rgba(167,139,250,.55));
-}
-
-.login-submit{
-  position:relative !important;
-  height:60px !important;
-  margin-top:2px !important;
-  border-radius:19px !important;
-  background:
-    linear-gradient(105deg,#5b21b6 0%,#7c3aed 32%,#a855f7 57%,#db2777 100%) !important;
-  box-shadow:
-    0 17px 42px rgba(124,58,237,.34),
-    0 0 30px rgba(168,85,247,.11),
-    inset 0 1px rgba(255,255,255,.34) !important;
-  overflow:hidden !important;
-}
-.login-submit:after{
-  content:"";
-  position:absolute;
-  top:-40%;left:-30%;
-  width:35%;height:180%;
-  transform:rotate(22deg);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);
-  animation:tadbirButtonSweep 3.2s ease-in-out infinite;
-  pointer-events:none;
-}
-.login-submit:hover{
-  transform:translateY(-3px) !important;
-  box-shadow:
-    0 21px 48px rgba(124,58,237,.42),
-    0 0 35px rgba(168,85,247,.18),
-    inset 0 1px rgba(255,255,255,.38) !important;
-}
-.login-submit:active{transform:translateY(0) scale(.985) !important}
-
-.login-badge{
-  opacity:.75;
-  margin-top:14px !important;
-}
-.login-badge span{
-  background:rgba(255,255,255,.035) !important;
-  border-color:rgba(255,255,255,.08) !important;
-  box-shadow:inset 0 1px rgba(255,255,255,.05);
-}
-
-@keyframes tadbirCorePulse{
-  0%,100%{transform:translate(-50%,-50%) scale(.96);opacity:.7}
-  50%{transform:translate(-50%,-50%) scale(1.035);opacity:1}
-}
-@keyframes tadbirStars{
-  0%,100%{opacity:.52;transform:scale(1)}
-  50%{opacity:.95;transform:scale(1.015)}
-}
-@keyframes tadbirPlanetFloat{
-  0%,100%{translate:0 0;rotate:0deg}
-  50%{translate:0 -12px;rotate:3deg}
-}
-@keyframes tadbirSaturn{
-  0%,100%{translate:0 0;rotate:-16deg}
-  50%{translate:-8px 10px;rotate:-11deg}
-}
-@keyframes loginPanelFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-5px)}
-}
-@keyframes tadbirLogoGlow{
-  0%,100%{transform:scale(.92);opacity:.62}
-  50%{transform:scale(1.10);opacity:1}
-}
-@keyframes tadbirTextShine{
-  0%,100%{filter:drop-shadow(0 10px 24px rgba(168,85,247,.24))}
-  50%{filter:drop-shadow(0 10px 30px rgba(236,72,153,.34))}
-}
-@keyframes tadbirLine{
-  0%,100%{width:58px;opacity:.55}
-  50%{width:96px;opacity:1}
-}
-@keyframes tadbirButtonSweep{
-  0%,55%{left:-35%;opacity:0}
-  68%{opacity:1}
-  88%,100%{left:115%;opacity:0}
-}
-@media(max-height:650px){
-  .login-panel{padding:15px 18px 17px !important}
-  .login-logo{width:82px !important;height:82px !important;margin-bottom:5px !important}
-  .login-logo-core{width:72px !important;height:72px !important;border-radius:22px !important}
-  .login-cap{transform:scale(.72) !important}
-  .tadbir-brand-main{font-size:32px}
-  .tadbir-brand-line{margin-top:5px}
-  .tadbir-brand-sub{margin-top:5px}
-  .login-subtitle{margin-top:5px !important;font-size:10px !important}
-  .login-panel > .glass-strong{padding:12px !important}
-  .login-input-wrap .glass-input{height:46px !important}
-  .login-submit{height:48px !important}
-}
-@media(prefers-reduced-motion:reduce){
-  .login-screen *, .login-screen *:before, .login-screen *:after{
-    animation-duration:.01ms !important;
-    animation-iteration-count:1 !important;
-    scroll-behavior:auto !important;
-  }
-}
-</style>
-
 </head>
 <body>
 <div id="root"></div>
@@ -3653,7 +3319,11 @@ function CircularTimerGlow({timeLeft,totalTime}){
 }
 
 function Login({onLogin}){
-  const [un,setUn]=useState('');const [pw,setPw]=useState('');const [err,setErr]=useState('');const [ld,setLd]=useState(false);
+  const [un,setUn]=useState('');
+  const [pw,setPw]=useState('');
+  const [err,setErr]=useState('');
+  const [ld,setLd]=useState(false);
+  const [showPw,setShowPw]=useState(false);
   const toast=useToast();
   const submit=async(e)=>{
     e.preventDefault();setLd(true);setErr('');
@@ -3663,44 +3333,111 @@ function Login({onLogin}){
     setLd(false);
   };
   return(
-    <div className="login-screen fade-in" dir="rtl">
-      <div className="login-space" aria-hidden="true">
-        <div className="login-nebula"></div><div className="login-nebula n2"></div>
-        <div className="login-stars"></div>
-        <div className="login-planet p1"></div><div className="login-planet p2"></div><div className="login-planet p3"></div><div className="login-planet p4"></div><div className="login-planet p5"></div><div className="login-planet p6"></div><div className="login-planet p7"></div>
-        <div className="login-saturn"></div><div className="login-saturn s2"></div>
+    <div className="login-screen login-reference-screen fade-in" dir="rtl">
+      <div className="login-space login-reference-space" aria-hidden="true">
+        <div className="login-nebula login-nebula-a"></div>
+        <div className="login-nebula login-nebula-b"></div>
+        <div className="login-stars login-stars-a"></div>
+        <div className="login-stars login-stars-b"></div>
+        <div className="login-orbit orbit-one"></div>
+        <div className="login-orbit orbit-two"></div>
+        <div className="login-orbit orbit-three"></div>
+        <div className="login-planet-ref planet-left-large"></div>
+        <div className="login-planet-ref planet-right-small"></div>
+        <div className="login-planet-ref planet-right-ring"></div>
+        <div className="login-planet-ref planet-bottom-left"></div>
+        <div className="login-planet-ref planet-bottom-right"></div>
+        <div className="login-planet-ref planet-far-right"></div>
+        <div className="login-saturn-ref saturn-left"></div>
+        <div className="login-saturn-ref saturn-bottom-right"></div>
       </div>
-      <div className="relative z-10 w-full h-full flex items-center justify-center px-4 py-3">
-        <div className="login-panel slide-up">
-          <div className="text-center mb-5">
-            <div className="login-logo">
-              <div className="login-logo-glow"></div>
-              <div className="login-logo-core"><div className="login-cap" aria-hidden="true"><span className="cap-top"></span><span className="cap-base"></span><span className="cap-tassel"></span></div></div>
-            </div>
-            <div className="tadbir-brand" aria-label="سامانه تدبیر">
-              <span className="tadbir-brand-main">تدبیر</span>
-              <span className="tadbir-brand-line"></span>
-              <span className="tadbir-brand-sub">سامانه هوشمند آموزشی</span>
-            </div>
-            <p className="login-subtitle mt-1 font-medium">دنیای رشد, یادگیری و موفقیت</p>
+
+      <div className="login-reference-content">
+        <div className="login-brand-block">
+          <div className="login-logo-reference" aria-label="لوگوی تدبیر">
+            <div className="logo-energy-ring ring-a"></div>
+            <div className="logo-energy-ring ring-b"></div>
+            <div className="logo-energy-glow"></div>
+            <svg className="tadbir-cap-svg" viewBox="0 0 260 230" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="capGoldRef" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#fff4bf"/><stop offset=".35" stopColor="#f8c95a"/><stop offset=".7" stopColor="#d99022"/><stop offset="1" stopColor="#8b4b10"/>
+                </linearGradient>
+                <linearGradient id="capTopRef" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#f5f1ff"/><stop offset=".3" stopColor="#cbb8ff"/><stop offset=".62" stopColor="#6f45bb"/><stop offset="1" stopColor="#21113f"/>
+                </linearGradient>
+                <linearGradient id="capDarkRef" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stopColor="#5e3a91"/><stop offset=".5" stopColor="#23133e"/><stop offset="1" stopColor="#090614"/>
+                </linearGradient>
+                <linearGradient id="leafRef" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor="#ffffff"/><stop offset=".45" stopColor="#ddd0ff"/><stop offset="1" stopColor="#7d58d5"/>
+                </linearGradient>
+                <filter id="capShadowRef" x="-40%" y="-40%" width="180%" height="190%">
+                  <feDropShadow dx="0" dy="12" stdDeviation="8" floodColor="#000" floodOpacity=".55"/>
+                </filter>
+                <filter id="goldGlowRef" x="-100%" y="-100%" width="300%" height="300%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <g filter="url(#capShadowRef)">
+                <path d="M67 124 C38 111 32 91 41 77 C51 62 72 62 92 77 C77 77 67 85 65 99 C63 109 68 116 80 122Z" fill="url(#leafRef)" stroke="#fff" strokeOpacity=".7" strokeWidth="2"/>
+                <path d="M193 124 C222 111 228 91 219 77 C209 62 188 62 168 77 C183 77 193 85 195 99 C197 109 192 116 180 122Z" fill="url(#leafRef)" stroke="#fff" strokeOpacity=".7" strokeWidth="2"/>
+                <path d="M61 119 C83 131 95 145 104 160 C111 171 121 179 130 184 C139 179 149 171 156 160 C165 145 177 131 199 119" fill="none" stroke="url(#leafRef)" strokeWidth="17" strokeLinecap="round"/>
+                <path d="M79 111 C93 125 102 139 107 153 C112 166 121 174 130 179 C139 174 148 166 153 153 C158 139 167 125 181 111" fill="url(#capDarkRef)" stroke="#fff" strokeOpacity=".2" strokeWidth="2"/>
+                <path d="M130 172 L130 211" stroke="url(#leafRef)" strokeWidth="7" strokeLinecap="round"/>
+                <path d="M88 48 L130 25 L172 48 L130 71 Z" fill="url(#capTopRef)" stroke="#fff8dc" strokeWidth="3"/>
+                <path d="M89 48 L130 71 L171 48" fill="none" stroke="#e9d9ff" strokeOpacity=".65" strokeWidth="2"/>
+                <path d="M99 55 L130 72 L161 55" fill="none" stroke="#fff" strokeOpacity=".18" strokeWidth="7"/>
+                <path d="M112 69 L112 93 C112 103 120 111 130 111 C140 111 148 103 148 93 L148 69" fill="url(#capDarkRef)" stroke="url(#capGoldRef)" strokeWidth="3"/>
+                <path d="M149 43 C173 47 185 57 190 73 C194 87 189 101 180 110" fill="none" stroke="url(#capGoldRef)" strokeWidth="4" strokeLinecap="round"/>
+                <circle cx="149" cy="43" r="6.5" fill="url(#capGoldRef)" filter="url(#goldGlowRef)"/>
+                <path d="M190 72 C190 93 184 108 178 119" stroke="url(#capGoldRef)" strokeWidth="4" strokeLinecap="round"/>
+                <path d="M171 115 C169 128 170 137 174 146 M181 116 C180 130 183 139 188 147 M191 113 C190 127 195 136 201 142" stroke="url(#capGoldRef)" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M172 146 C177 140 182 140 188 147 C192 141 197 140 201 142 L194 153 L179 153 Z" fill="url(#capGoldRef)"/>
+              </g>
+            </svg>
           </div>
-          <div className="glass-strong p-4 sm:p-5" style={{background:'rgba(255,255,255,.025)',borderColor:'rgba(216,180,254,.11)'}}>
-            <form onSubmit={submit} className="space-y-4">
-              {err&&<div className="bg-red-500/15 border border-red-500/25 rounded-2xl p-3 text-red-300 text-xs text-center">⚠️ {err}</div>}
-              <div>
-                <label className="text-xs text-white/65 mb-2 block font-bold">نام کاربری</label>
-                <div className="login-input-wrap"><span className="login-input-icon svg-icon"><Icon d={Icons.userCircle} size={21}/></span><input className="glass-input" placeholder="Tadbir" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username"/></div>
-              </div>
-              <div>
-                <label className="text-xs text-white/65 mb-2 block font-bold">رمز عبور</label>
-                <div className="login-input-wrap"><span className="login-input-icon svg-icon"><Icon d={Icons.lock} size={21}/></span><input className="glass-input" type="password" placeholder="رمز عبور خود را وارد کنید" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password"/></div>
-              </div>
-              <button type="submit" className="btn-glass login-submit w-full" disabled={ld}>
-                {ld?<span className="flex items-center justify-center gap-2"><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>در حال ورود...</span>:<span>ورود به سامانه</span>}
-              </button>
-            </form>
-          </div>
+          <h1 className="login-title-reference">تدبیر</h1>
+          <div className="login-subtitle-reference"><span></span><p>دنیای رشد، یادگیری و موفقیت</p><span></span></div>
+          <div className="login-title-spark">✦</div>
         </div>
+
+        <div className="login-panel login-panel-reference slide-up">
+          <div className="login-panel-highlight"></div>
+          <div className="login-welcome">
+            <h2>خوش آمدید</h2>
+            <p>برای ادامه، وارد حساب کاربری خود شوید</p>
+          </div>
+
+          <form onSubmit={submit} className="login-reference-form">
+            {err&&<div className="login-error-reference">⚠️ {err}</div>}
+            <div className="login-field-reference">
+              <div className="login-field-icon">
+                <Icon d={Icons.userCircle} size={25}/>
+              </div>
+              <input className="login-reference-input" placeholder="Tadbir" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username" aria-label="نام کاربری"/>
+            </div>
+            <div className="login-field-reference">
+              <div className="login-field-icon">
+                <Icon d={Icons.lock} size={24}/>
+              </div>
+              <input className="login-reference-input login-password-input" type={showPw?'text':'password'} placeholder="••••••••" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password" aria-label="رمز عبور"/>
+              <button type="button" className="login-eye-reference" onClick={()=>setShowPw(v=>!v)} aria-label={showPw?'پنهان کردن رمز':'نمایش رمز'}>
+                <Icon d={Icons.eye} size={24}/>
+              </button>
+            </div>
+            <button type="submit" className="login-submit-reference" disabled={ld}>
+              {ld?<><span className="login-spinner-reference"></span><span>در حال ورود...</span></>:<><span>ورود</span><Icon d={Icons.arrowLeft} size={27}/></>}
+            </button>
+          </form>
+
+          <div className="login-divider-reference"><span></span><b>یا</b><span></span></div>
+          <button type="button" className="login-forgot-reference" onClick={()=>toast('برای بازیابی رمز عبور با مدیر سامانه تماس بگیرید.','warning')}>
+            <Icon d={Icons.lock} size={19}/><span>فراموشی رمز عبور</span>
+          </button>
+        </div>
+
+        <div className="login-footer-reference">© ۱۴۰۳ تدبیر · تمامی حقوق محفوظ است.</div>
       </div>
     </div>
   );
@@ -8272,4 +8009,125 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 @keyframes trophyShowcase{0%,100%{transform:rotateY(-16deg) rotateZ(-2deg) translateY(0) scale(1)}50%{transform:rotateY(16deg) rotateZ(2deg) translateY(-10px) scale(1.045)}}
 @keyframes celebrateAura{50%{transform:scale(1.12);opacity:.75}}
 @media(max-width:520px){.trophy-row{grid-template-columns:88px 1fr auto!important;min-height:122px!important;padding:8px!important}.trophy-art{width:86px!important;height:108px!important}.trophy-info h3{font-size:13px!important}.trophy-info p{font-size:8px!important}.trophy-buy{min-width:54px!important;padding:8px!important;font-size:9px!important}.trophy-celebrate-card{min-height:470px!important}.trophy-celebrate-art{height:275px!important}.trophy-celebrate-art img{height:255px!important}}
+
+
+/* ===== FINAL LOGIN REFERENCE DESIGN — scoped only to the login screen ===== */
+.login-reference-screen{position:fixed!important;inset:0!important;width:100%!important;height:100dvh!important;min-height:100dvh!important;overflow:hidden!important;isolation:isolate;background:#070512!important;color:#fff!important;display:block!important}
+.login-reference-screen *{box-sizing:border-box}
+.login-reference-space{position:absolute!important;inset:0!important;overflow:hidden!important;background:
+ radial-gradient(ellipse at 50% 22%,rgba(139,92,246,.24) 0,rgba(78,36,130,.11) 24%,transparent 48%),
+ radial-gradient(ellipse at 12% 80%,rgba(124,58,237,.18),transparent 38%),
+ radial-gradient(ellipse at 88% 66%,rgba(168,85,247,.12),transparent 35%),
+ linear-gradient(180deg,#06030f 0%,#090518 42%,#05030e 100%)!important}
+.login-reference-space:before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse at center,transparent 34%,rgba(1,0,8,.64) 82%);pointer-events:none;z-index:7}
+.login-reference-space:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,3,24,.08),rgba(5,2,17,.12) 55%,rgba(2,1,9,.55));pointer-events:none;z-index:8}
+.login-stars-a,.login-stars-b{position:absolute;inset:0;pointer-events:none;background-repeat:no-repeat}
+.login-stars-a{opacity:.9;background-image:
+ radial-gradient(circle at 6% 10%,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle at 11% 32%,#d8c7ff 0 1px,transparent 1.7px),radial-gradient(circle at 18% 16%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 25% 6%,#f5bfff 0 1.1px,transparent 1.8px),radial-gradient(circle at 31% 20%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 38% 7%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 45% 16%,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle at 53% 5%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 61% 12%,#f5c5ff 0 1px,transparent 1.7px),radial-gradient(circle at 68% 4%,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle at 76% 14%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 83% 7%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 91% 18%,#f4b9ff 0 1px,transparent 1.7px),radial-gradient(circle at 97% 10%,#fff 0 1.1px,transparent 1.8px),
+ radial-gradient(circle at 4% 52%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 13% 62%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 23% 49%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 33% 58%,#f5c5ff 0 1px,transparent 1.7px),radial-gradient(circle at 43% 48%,#fff 0 1.1px,transparent 1.7px),radial-gradient(circle at 55% 57%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 65% 46%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 73% 60%,#f5c5ff 0 1px,transparent 1.7px),radial-gradient(circle at 84% 50%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 94% 63%,#d9c4ff 0 1px,transparent 1.7px),
+ radial-gradient(circle at 7% 91%,#fff 0 1.2px,transparent 1.8px),radial-gradient(circle at 20% 82%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 34% 94%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 49% 84%,#f5c5ff 0 1px,transparent 1.7px),radial-gradient(circle at 63% 94%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 77% 83%,#d9c4ff 0 1px,transparent 1.7px),radial-gradient(circle at 89% 94%,#fff 0 1.1px,transparent 1.8px)}
+.login-stars-b{opacity:.55;filter:blur(.15px);animation:loginStarsTwinkleRef 5s ease-in-out infinite;background-image:
+ radial-gradient(circle at 15% 24%,rgba(255,255,255,.95) 0 1.5px,transparent 2.6px),radial-gradient(circle at 36% 34%,rgba(216,180,254,.9) 0 1.4px,transparent 2.5px),radial-gradient(circle at 58% 22%,rgba(255,255,255,.9) 0 1.5px,transparent 2.6px),radial-gradient(circle at 79% 38%,rgba(244,114,182,.85) 0 1.4px,transparent 2.5px),radial-gradient(circle at 92% 73%,rgba(255,255,255,.9) 0 1.4px,transparent 2.5px),radial-gradient(circle at 47% 68%,rgba(216,180,254,.85) 0 1.3px,transparent 2.4px),radial-gradient(circle at 25% 77%,rgba(255,255,255,.8) 0 1.3px,transparent 2.4px)}
+.login-nebula{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none}
+.login-nebula-a{width:48vw;height:48vw;left:-18vw;top:55vh;background:radial-gradient(circle,rgba(116,64,202,.42),transparent 68%);opacity:.55;animation:loginNebulaRef 10s ease-in-out infinite}
+.login-nebula-b{width:52vw;height:52vw;right:-22vw;bottom:-22vw;background:radial-gradient(circle,rgba(180,65,205,.34),transparent 70%);opacity:.5;animation:loginNebulaRef 12s ease-in-out -4s infinite reverse}
+.login-orbit{position:absolute;border:1px solid rgba(201,160,255,.16);border-radius:50%;pointer-events:none;transform:rotate(-14deg);box-shadow:0 0 18px rgba(168,85,247,.04)}
+.orbit-one{width:62vw;height:62vw;left:18vw;top:-6vw}
+.orbit-two{width:76vw;height:76vw;left:10vw;top:-13vw;border-color:rgba(221,184,255,.09)}
+.orbit-three{width:96vw;height:96vw;left:1vw;top:-22vw;border-color:rgba(196,147,255,.065);transform:rotate(17deg)}
+.login-planet-ref{position:absolute;border-radius:50%;pointer-events:none;box-shadow:inset -22px -25px 48px rgba(3,1,13,.62),inset 8px 6px 18px rgba(255,255,255,.1),0 0 55px rgba(139,92,246,.14)}
+.planet-left-large{width:170px;height:170px;left:-34px;top:5.5%;background:radial-gradient(circle at 32% 25%,#c4a8ff 0 5%,#7950c9 24%,#3b1d70 58%,#110720 100%);opacity:.58}
+.planet-left-large:after{content:"";position:absolute;inset:18px;border-radius:50%;background:repeating-linear-gradient(160deg,transparent 0 15px,rgba(255,255,255,.045) 16px 19px,transparent 20px 33px);mix-blend-mode:screen;opacity:.45}
+.planet-right-small{width:66px;height:66px;right:7%;top:17%;background:radial-gradient(circle at 33% 26%,#e7d5ff,#8659d1 50%,#28103f 100%);opacity:.58}
+.planet-right-ring{width:94px;height:94px;right:-18px;top:36%;background:radial-gradient(circle at 34% 27%,#d8b8ff,#7844bd 55%,#21102f 100%);opacity:.48}
+.planet-right-ring:after{content:"";position:absolute;width:145px;height:40px;left:-27px;top:27px;border:5px solid rgba(231,207,255,.38);border-left-color:rgba(150,105,220,.16);border-right-color:rgba(210,173,255,.25);border-radius:50%;transform:rotate(13deg);box-shadow:0 0 20px rgba(199,155,255,.12)}
+.planet-bottom-left{width:178px;height:178px;left:-54px;bottom:8%;background:radial-gradient(circle at 31% 25%,#d9c2ff,#7445bd 49%,#291344 78%,#0c0618 100%);opacity:.5}
+.planet-bottom-right{width:106px;height:106px;right:7%;bottom:5%;background:radial-gradient(circle at 33% 25%,#d8b4ff,#7b43bb 55%,#21102f 100%);opacity:.47}
+.planet-far-right{width:44px;height:44px;right:28%;bottom:27%;background:radial-gradient(circle at 30% 25%,#f0dcff,#925ee0 58%,#2c1043 100%);opacity:.36}
+.login-saturn-ref{position:absolute;border-radius:50%;pointer-events:none}
+.saturn-left{width:160px;height:160px;left:-62px;top:55%;opacity:.38;transform:rotate(-15deg);background:radial-gradient(circle at 34% 28%,#d8c0ff,#7650c7 54%,#27113d 100%);box-shadow:inset -20px -25px 45px rgba(0,0,0,.55),0 0 45px rgba(139,92,246,.13)}
+.saturn-left:after{content:"";position:absolute;width:218px;height:62px;left:-30px;top:48px;border:6px solid rgba(224,202,255,.34);border-left-color:rgba(166,119,230,.15);border-right-color:rgba(213,180,255,.23);border-radius:50%;transform:rotate(-17deg)}
+.saturn-bottom-right{width:145px;height:145px;right:-65px;bottom:-14px;opacity:.35;transform:rotate(20deg);background:radial-gradient(circle at 34% 26%,#e2c9ff,#7546bd 54%,#281139 100%);box-shadow:inset -22px -24px 48px rgba(0,0,0,.6),0 0 45px rgba(139,92,246,.13)}
+.saturn-bottom-right:after{content:"";position:absolute;width:200px;height:58px;left:-27px;top:44px;border:6px solid rgba(223,196,255,.3);border-left-color:rgba(166,119,230,.12);border-right-color:rgba(213,180,255,.18);border-radius:50%;transform:rotate(-12deg)}
+.login-reference-content{position:relative;z-index:20;width:100%;height:100%;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 18px 18px;overflow:hidden}
+.login-brand-block{width:min(100%,680px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;flex:0 0 auto;margin-bottom:20px}
+.login-logo-reference{width:205px;height:205px;position:relative;display:grid;place-items:center;margin-bottom:3px}
+.login-logo-reference:before{content:"";position:absolute;inset:13px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.24),transparent 64%);filter:blur(7px);z-index:0}
+.logo-energy-ring{position:absolute;border:2px solid rgba(213,180,255,.72);border-radius:50%;z-index:0;pointer-events:none;box-shadow:0 0 18px rgba(168,85,247,.25)}
+.ring-a{width:172px;height:172px;transform:rotate(-14deg);border-left-color:rgba(255,255,255,.1);border-bottom-color:rgba(168,85,247,.34)}
+.ring-b{width:202px;height:202px;transform:rotate(24deg);border-color:rgba(192,132,252,.18);border-top-color:rgba(255,255,255,.58)}
+.logo-energy-glow{position:absolute;width:128px;height:128px;border-radius:50%;background:radial-gradient(circle,rgba(169,97,255,.34),transparent 68%);filter:blur(14px);animation:loginLogoGlowRef 3.4s ease-in-out infinite}
+.tadbir-cap-svg{position:relative;z-index:2;width:190px;height:168px;overflow:visible;filter:drop-shadow(0 12px 20px rgba(0,0,0,.42)) drop-shadow(0 0 18px rgba(158,105,255,.3))}
+.login-title-reference{position:relative;margin:0;font-family:'Vazirmatn',sans-serif;font-size:clamp(58px,8.2vw,92px);font-weight:900;line-height:.94;letter-spacing:-4px;color:#fff;text-align:center;background:linear-gradient(180deg,#ffffff 0%,#f7f2ff 34%,#d8c5ff 63%,#b28df1 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 4px 0 rgba(110,65,184,.85),0 7px 0 rgba(61,31,113,.75),0 14px 34px rgba(133,75,227,.42),0 0 24px rgba(216,180,254,.2);filter:drop-shadow(0 6px 8px rgba(10,3,22,.55));z-index:3}
+.login-title-reference:after{content:"تدبیر";position:absolute;inset:0;z-index:-1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.13);transform:translate(0,2px)}
+.login-subtitle-reference{display:flex;align-items:center;gap:17px;margin-top:17px;color:rgba(255,255,255,.92);font-size:clamp(13px,1.65vw,19px);font-weight:400;white-space:nowrap}
+.login-subtitle-reference span{display:block;width:58px;height:1px;background:linear-gradient(90deg,transparent,rgba(231,214,255,.7));position:relative}
+.login-subtitle-reference span:last-child{transform:scaleX(-1)}
+.login-subtitle-reference span:after{content:"";position:absolute;right:-2px;top:-2px;width:5px;height:5px;border-radius:50%;background:#f1d3ff;box-shadow:0 0 8px #c084fc}
+.login-title-spark{font-size:18px;color:#f8d7ff;text-shadow:0 0 14px rgba(192,132,252,.9);margin-top:8px;animation:loginSparkRef 2.8s ease-in-out infinite}
+.login-panel-reference{width:min(100%,636px)!important;max-height:none!important;overflow:visible!important;position:relative!important;border-radius:30px!important;padding:42px 43px 35px!important;background:linear-gradient(145deg,rgba(48,32,83,.82),rgba(19,13,43,.9))!important;border:1.5px solid rgba(225,207,255,.52)!important;box-shadow:0 30px 90px rgba(0,0,0,.62),0 0 75px rgba(129,70,220,.18),inset 0 1px 0 rgba(255,255,255,.2)!important;backdrop-filter:blur(28px)!important;-webkit-backdrop-filter:blur(28px)!important;flex:0 0 auto}
+.login-panel-reference:before{content:"";position:absolute;inset:1px;border-radius:29px;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.1),transparent 25%,transparent 70%,rgba(204,167,255,.06));z-index:0}
+.login-panel-reference:after{content:"";position:absolute;inset:9px;border-radius:23px;border:1px solid rgba(255,255,255,.055);pointer-events:none;z-index:0}
+.login-panel-highlight{position:absolute;left:11%;right:11%;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);filter:blur(.2px);z-index:2}
+.login-welcome{position:relative;z-index:2;text-align:center;margin-bottom:30px}
+.login-welcome h2{font-family:'Vazirmatn',sans-serif;font-size:clamp(28px,4vw,40px);line-height:1.2;font-weight:900;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.35);margin:0}
+.login-welcome p{margin:9px 0 0;color:rgba(222,211,241,.62);font-size:clamp(12px,1.55vw,16px);font-weight:400}
+.login-reference-form{position:relative;z-index:2;display:flex;flex-direction:column;gap:18px}
+.login-field-reference{height:68px;position:relative;display:flex;align-items:center;direction:ltr;border:1px solid rgba(209,188,240,.32);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.038));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 9px 25px rgba(0,0,0,.15);transition:.3s ease}
+.login-field-reference:focus-within{border-color:rgba(222,196,255,.82);box-shadow:0 0 0 4px rgba(168,85,247,.12),0 12px 34px rgba(99,56,170,.2),inset 0 1px 0 rgba(255,255,255,.1)}
+.login-field-icon{width:68px;height:100%;display:grid;place-items:center;flex:0 0 68px;color:#cdaeff;border-right:1px solid rgba(222,196,255,.12);filter:drop-shadow(0 0 9px rgba(192,132,252,.48))}
+.login-reference-input{height:100%;min-width:0;flex:1;border:0;outline:0;background:transparent;color:#fff;font-family:'Vazirmatn',sans-serif;font-size:17px;font-weight:400;direction:ltr;text-align:left;padding:0 20px}
+.login-reference-input::placeholder{color:rgba(221,211,238,.5);opacity:1}
+.login-password-input{padding-right:62px}
+.login-eye-reference{position:absolute;right:17px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;background:transparent;color:#c9b8de;display:grid;place-items:center;cursor:pointer;transition:.25s;z-index:3}
+.login-eye-reference:hover{color:#fff;transform:translateY(-50%) scale(1.08)}
+.login-submit-reference{height:68px;border:1px solid rgba(235,211,255,.72);border-radius:18px;background:linear-gradient(100deg,#7c3aed 0%,#9252e9 45%,#6e35c8 100%);color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font-family:'Vazirmatn',sans-serif;font-size:20px;font-weight:900;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 15px 36px rgba(124,58,237,.38),inset 0 1px 0 rgba(255,255,255,.35);transition:.3s ease}
+.login-submit-reference:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.18) 48%,transparent 70%);transform:translateX(-120%);transition:.7s}
+.login-submit-reference:hover:before{transform:translateX(120%)}
+.login-submit-reference:hover{transform:translateY(-2px);box-shadow:0 19px 42px rgba(124,58,237,.48),inset 0 1px 0 rgba(255,255,255,.4)}
+.login-submit-reference:active{transform:translateY(1px) scale(.99)}
+.login-submit-reference:disabled{opacity:.65;cursor:not-allowed;transform:none}
+.login-submit-reference svg{transform:rotate(180deg)}
+.login-spinner-reference{width:23px;height:23px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:loginSpinnerRef .8s linear infinite}
+.login-divider-reference{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin:28px 0 17px;color:rgba(232,220,246,.65)}
+.login-divider-reference span{height:1px;background:linear-gradient(90deg,transparent,rgba(221,205,241,.22))}
+.login-divider-reference span:last-child{transform:scaleX(-1)}
+.login-divider-reference b{font-size:14px;font-weight:500;color:rgba(231,218,245,.62)}
+.login-forgot-reference{position:relative;z-index:2;border:0;background:transparent;color:#bd8df2;font-family:'Vazirmatn',sans-serif;font-size:17px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:9px;margin:auto;cursor:pointer;transition:.25s;text-shadow:0 0 14px rgba(168,85,247,.2)}
+.login-forgot-reference:hover{color:#e2c7ff;transform:translateY(-1px)}
+.login-forgot-reference svg{filter:drop-shadow(0 0 7px rgba(192,132,252,.65))}
+.login-error-reference{padding:11px 14px;border-radius:14px;background:rgba(239,68,68,.12);border:1px solid rgba(248,113,113,.25);color:#fecaca;font-size:12px;text-align:center}
+.login-footer-reference{margin-top:25px;color:rgba(201,190,220,.43);font-size:12px;text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+@keyframes loginStarsTwinkleRef{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.75;transform:scale(1.012)}}
+@keyframes loginNebulaRef{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(22px,-13px,0) scale(1.06)}}
+@keyframes loginLogoGlowRef{0%,100%{transform:scale(.92);opacity:.62}50%{transform:scale(1.08);opacity:1}}
+@keyframes loginSparkRef{0%,100%{opacity:.5;transform:scale(.9) rotate(0)}50%{opacity:1;transform:scale(1.18) rotate(12deg)}}
+@keyframes loginSpinnerRef{to{transform:rotate(360deg)}}
+@media(max-width:720px){
+ .login-reference-content{justify-content:center;padding:18px 12px 12px}
+ .login-brand-block{margin-bottom:13px}
+ .login-logo-reference{width:150px;height:150px}
+ .tadbir-cap-svg{width:143px;height:126px}
+ .ring-a{width:128px;height:128px}.ring-b{width:149px;height:149px}
+ .login-title-reference{font-size:58px;letter-spacing:-3px}
+ .login-subtitle-reference{font-size:11px;gap:8px;margin-top:11px}.login-subtitle-reference span{width:27px}
+ .login-title-spark{font-size:14px;margin-top:5px}
+ .login-panel-reference{width:min(94vw,520px)!important;padding:27px 20px 24px!important;border-radius:25px!important}
+ .login-welcome{margin-bottom:20px}.login-welcome h2{font-size:28px}.login-welcome p{font-size:11px;margin-top:7px}
+ .login-reference-form{gap:12px}.login-field-reference,.login-submit-reference{height:56px;border-radius:15px}.login-field-icon{width:54px;flex-basis:54px}.login-reference-input{font-size:14px;padding:0 15px}.login-password-input{padding-right:53px}.login-eye-reference{right:10px}.login-submit-reference{font-size:16px}
+ .login-divider-reference{margin:20px 0 13px}.login-forgot-reference{font-size:13px}.login-footer-reference{margin-top:13px;font-size:9px}
+ .planet-left-large{width:110px;height:110px;left:-42px}.planet-bottom-left{width:120px;height:120px;left:-45px}.planet-right-ring{width:66px;height:66px;right:-20px}.saturn-left{width:105px;height:105px;left:-48px}.saturn-bottom-right{width:90px;height:90px}
+}
+@media(max-height:780px) and (min-width:721px){
+ .login-reference-content{padding-top:10px;padding-bottom:8px}
+ .login-brand-block{margin-bottom:9px}.login-logo-reference{width:145px;height:145px}.tadbir-cap-svg{width:136px;height:120px}.ring-a{width:125px;height:125px}.ring-b{width:143px;height:143px}.login-title-reference{font-size:54px}.login-subtitle-reference{margin-top:9px;font-size:12px}.login-title-spark{display:none}
+ .login-panel-reference{width:min(88vw,500px)!important;padding:23px 28px 22px!important}.login-welcome{margin-bottom:16px}.login-welcome h2{font-size:27px}.login-welcome p{font-size:11px}.login-reference-form{gap:11px}.login-field-reference,.login-submit-reference{height:52px}.login-divider-reference{margin:15px 0 10px}.login-forgot-reference{font-size:13px}.login-footer-reference{margin-top:10px;font-size:9px}
+}
+@media(max-height:650px){
+ .login-reference-content{justify-content:flex-start;overflow:hidden;padding-top:5px}
+ .login-brand-block{transform:scale(.78);transform-origin:top center;margin-bottom:-28px}
+ .login-panel-reference{transform:scale(.88);transform-origin:top center;margin-bottom:-28px;padding:20px 24px!important}
+ .login-footer-reference{margin-top:-18px;transform:scale(.9)}
+}
+@media(prefers-reduced-motion:reduce){.login-reference-screen *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
