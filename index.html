@@ -6635,7 +6635,7 @@ function Student({user,tab,setTab,onLogout}){
     }else if(activeExam&&timeLeft===0)submitExam();
   },[activeExam,timeLeft]);
 
-  const getExamHintCost=()=>globalExamHintUsed?Math.pow(2,Math.max(0,examHintUsed-1))*0.5:0;
+  const getExamHintCost=()=>Math.pow(2,examHintUsed)*0.5;
   const requestExamHint=()=>{
     const q=activeExam?.questions?.[currentQ];
     if(!q||q.q_type!=='test'||!q.correct_opt)return;
@@ -6644,26 +6644,60 @@ function Student({user,tab,setTab,onLogout}){
   const confirmExamHint=async()=>{
     const q=activeExam?.questions?.[currentQ];
     if(!q||q.q_type!=='test'||!q.correct_opt){setShowExamHintConfirm(false);return;}
+
     const cost=getExamHintCost();
+
     try{
-      if(cost>0){
-        const {data:w,error}=await SB.from('tadbir_wallets').select('*').eq('user_id',String(user.id)).maybeSingle();
-        if(error)throw error;
-        const balance=Number(w?.balance ?? 0);
-        if(!w){toast('🪙 کیف سکه برای حساب شما هنوز ساخته نشده است.','warning');setShowExamHintConfirm(false);return;}
-        if(balance<cost){toast(`🪙 برای این راهنما ${cost} سکه لازم است و موجودی کافی نیست.`,'warning');setShowExamHintConfirm(false);return;}
-        const {error:ue}=await SB.from('tadbir_wallets').update({balance:balance-cost,updated_at:new Date().toISOString()}).eq('user_id',String(user.id));
-        if(ue)throw ue;
-        if(typeof setCoinBalance==='function')setCoinBalance(balance-cost);
+      const uid=String(user.id);
+      const {data:w,error}=await SB.from('tadbir_wallets')
+        .select('*')
+        .eq('user_id',uid)
+        .maybeSingle();
+
+      if(error) throw error;
+
+      if(!w){
+        toast('🪙 کیف سکه برای حساب شما پیدا نشد.','warning');
+        setShowExamHintConfirm(false);
+        return;
       }
+
+      const balance=Number(w.balance ?? 0);
+
+      if(!Number.isFinite(balance) || balance<cost){
+        toast(`🪙 برای این راهنما ${cost} سکه لازم است و موجودی شما کافی نیست.`,'warning');
+        setShowExamHintConfirm(false);
+        return;
+      }
+
+      const newBalance=balance-cost;
+
+      const {data:updated,error:updateError}=await SB.from('tadbir_wallets')
+        .update({balance:newBalance,updated_at:new Date().toISOString()})
+        .eq('user_id',uid)
+        .eq('balance',balance)
+        .select('balance')
+        .maybeSingle();
+
+      if(updateError) throw updateError;
+
+      if(!updated){
+        toast('موجودی سکه تغییر نکرد؛ لطفاً دوباره تلاش کنید.','error');
+        setShowExamHintConfirm(false);
+        return;
+      }
+
+      if(typeof setCoinBalance==='function') setCoinBalance(Number(updated.balance));
+
       setGlobalExamHintUsed(true);
       setExamHintUsed(n=>n+1);
       setExamHintTarget(String(q.correct_opt).toUpperCase());
       localStorage.setItem('tadbir_exam_hint_used_once','1');
       setShowExamHintConfirm(false);
-      toast(cost===0?'💡 راهنمای رایگان فعال شد؛ این امکان فقط یک‌بار رایگان است.':`💡 راهنما فعال شد؛ ${cost} سکه از موجودی شما کم شد.`,'success');
+
+      toast(`💡 راهنما فعال شد؛ ${cost} سکه کسر شد.`,'success');
     }catch(err){
-      console.error('exam hint',err);
+      console.error('exam hint wallet deduction',err);
       toast('خطا در فعال‌سازی راهنما؛ سکه‌ای کسر نشد.','error');
       setShowExamHintConfirm(false);
     }
@@ -6809,7 +6843,7 @@ function Student({user,tab,setTab,onLogout}){
             {q?.q_type==='test'?(
               <>
                 <div className="exam-guide-row">
-                  <button type="button" className="exam-guide-icon-button" aria-label="راهنمای سوال" title={globalExamHintUsed?'راهنمای سوال — استفاده بعدی با سکه':'راهنمای سوال — اولین استفاده رایگان'} onClick={requestExamHint}>
+                  <button type="button" className="exam-guide-icon-button" aria-label="راهنمای سوال" title={`راهنمای سوال — ${getExamHintCost()} سکه`} onClick={requestExamHint}>
                     <span className="exam-guide-lamp">i</span>
                   </button>
                 </div>
@@ -6845,8 +6879,8 @@ function Student({user,tab,setTab,onLogout}){
             <div className="exam-hint-modal-icon">💡</div>
             <div className="exam-hint-kicker">TADBIR GUIDE</div>
             <h3>راهنمای این سوال</h3>
-            <p>{globalExamHintUsed?'دانش آموز گرامی، استفاده رایگان از این قابلیت قبلاً انجام شده است. برای استفاده دوباره، هزینه از سکه‌های شما کسر می‌شود.':'دانش آموز گرامی،امکان استفاده از این قابلیت بصورت رایگان،فقط یکبار میباشد.'}</p>
-            <div className="exam-hint-price">{globalExamHintUsed?'🪙 '+getExamHintCost()+' سکه':'رایگان — فقط یک‌بار'}</div>
+            <p>دانش آموز گرامی، برای استفاده از راهنمای این سوال، هزینه از سکه‌های شما کسر می‌شود.</p>
+            <div className="exam-hint-price">{'🪙 '+getExamHintCost()+' سکه'}</div>
             <div className="exam-hint-actions">
               <button type="button" className="btn-glass" onClick={()=>setShowExamHintConfirm(false)}>انصراف</button>
               <button type="button" className="btn-glass btn-glass-success" onClick={confirmExamHint}>تأیید و نمایش راهنما</button>
