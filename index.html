@@ -946,6 +946,342 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 
 html[data-tadbir-theme="dark-white"] .competition-wide-icon,html[data-tadbir-theme="dark-white"] .settings-icon-box{background:linear-gradient(135deg,#f5f5f5,#ffffff)!important;color:#111!important;}
 html[data-tadbir-theme="light-black"] .competition-wide-icon,html[data-tadbir-theme="light-black"] .settings-icon-box{background:linear-gradient(135deg,#111111,#000000)!important;color:#fff!important;}
+
+/* Safe password recovery UI */
+.login-recovery-safe{width:100%;max-width:380px;margin:0 auto;padding:20px 18px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(220,196,255,.14);text-align:center;animation:loginRecoveryIn .3s ease}
+.login-recovery-safe-icon{width:50px;height:50px;margin:0 auto 10px;border-radius:15px;display:grid;place-items:center;color:#d8bcff;background:rgba(124,58,237,.14);border:1px solid rgba(192,132,252,.22)}
+.login-recovery-safe h3{margin:0 0 7px;color:#fff;font-size:18px;font-weight:900}
+.login-recovery-safe p{margin:0 0 13px;color:rgba(255,255,255,.55);font-size:12px;line-height:1.8}
+.login-recovery-safe-input{box-sizing:border-box;width:100%;height:50px;border-radius:13px;border:1px solid rgba(220,196,255,.16);background:rgba(255,255,255,.05);color:#fff;padding:0 14px;outline:none;text-align:right;font-family:inherit}
+.login-recovery-safe-input:focus{border-color:rgba(168,85,247,.65);box-shadow:0 0 0 3px rgba(168,85,247,.1)}
+.login-recovery-safe-input::placeholder{color:rgba(255,255,255,.34)}
+.login-recovery-safe-submit,.login-recovery-safe-back{box-sizing:border-box;width:100%;height:46px;border-radius:13px;margin-top:10px;font-family:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.login-recovery-safe-submit{border:1px solid rgba(200,170,255,.25);background:linear-gradient(100deg,#7c3aed,#9252e9);color:#fff}
+.login-recovery-safe-submit:disabled{opacity:.4;cursor:not-allowed}
+.login-recovery-safe-back{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);color:rgba(255,255,255,.72)}
+.login-recovery-safe-message{padding:12px;border-radius:12px;background:rgba(124,58,237,.08);border:1px solid rgba(168,85,247,.16);color:rgba(255,255,255,.8)!important}
+@keyframes loginRecoveryIn{from{opacity:0;transform:translateY(7px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+
+/* Right-align username/password text and placeholders */
+.login-reference-input{
+  text-align:right !important;
+  direction:rtl !important;
+}
+.login-reference-input::placeholder{
+  text-align:right !important;
+  direction:rtl !important;
+}
+.login-password-input{
+  text-align:right !important;
+  direction:rtl !important;
+  padding-right:20px !important;
+  padding-left:62px !important;
+}
+
+
+/* Elegant Persian title */
+.login-welcome-reference h1{
+  font-family:'Vazirmatn', 'Tahoma', sans-serif !important;
+  font-weight:900 !important;
+  letter-spacing:-.7px !important;
+  font-size:clamp(25px,3vw,34px) !important;
+  line-height:1.35 !important;
+  background:linear-gradient(120deg,#ffffff 5%,#eadcff 45%,#c9a7ff 95%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent !important;
+  text-shadow:0 8px 28px rgba(156,105,255,.18);
+}
+
+
+
+
+
+.login-welcome-reference h1{
+  font-family:'Estedad','Vazirmatn',Tahoma,sans-serif !important;
+  font-weight:900 !important;
+  font-size:clamp(28px,3.3vw,38px) !important;
+  line-height:1.35 !important;
+  letter-spacing:-1px !important;
+  color:#fff !important;
+  -webkit-text-fill-color:#fff !important;
+  text-shadow:0 4px 18px rgba(124,58,237,.32),0 1px 0 rgba(255,255,255,.18);
+}
+
+
+/* Lower the Tadbir logo in the welcome area */
+.login-welcome-reference > img,
+.login-welcome-reference > svg,
+.login-welcome-reference .login-logo-reference{
+  margin-top:24px !important;
+  margin-bottom:18px !important;
+  transform:translateY(10px);
+}
+
+
+/* Thin purple luminous divider between Login and Forgot Password */
+.login-submit-reference + .login-divider-glow{
+  width:72%;
+  height:1px;
+  margin:18px auto 14px;
+  position:relative;
+  background:linear-gradient(90deg,transparent,rgba(184,128,255,.95),rgba(217,180,255,1),rgba(184,128,255,.95),transparent);
+  box-shadow:0 0 5px rgba(168,85,247,.8),0 0 13px rgba(168,85,247,.45);
+  opacity:.9;
+}
+.login-divider-glow::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:34px;
+  height:1px;
+  transform:translate(-50%,-50%);
+  background:#ead7ff;
+  box-shadow:0 0 7px #c084fc,0 0 16px rgba(192,132,252,.8);
+}
+
+
+/* Guaranteed thin purple glow line above Forgot Password */
+.login-forgot-reference{
+  position:relative !important;
+  margin-top:22px !important;
+}
+.login-forgot-reference::before{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:-13px !important;
+  transform:translateX(-50%) !important;
+  width:76% !important;
+  height:1px !important;
+  display:block !important;
+  background:linear-gradient(90deg,transparent 0%,rgba(174,107,255,.55) 18%,#d8b1ff 50%,rgba(174,107,255,.55) 82%,transparent 100%) !important;
+  box-shadow:0 0 4px rgba(192,132,252,.95),0 0 12px rgba(168,85,247,.55) !important;
+  pointer-events:none !important;
+}
+
+
+/* Premium graphical treatment for «سامانه ت<span class="tadbir-creature-dot c1" aria-hidden="true"></span>دبـــیر» */
+.login-welcome-reference h1{
+  position:relative !important;
+  display:inline-block !important;
+  font-family:'Estedad','Vazirmatn',Tahoma,sans-serif !important;
+  font-weight:900 !important;
+  font-size:clamp(29px,3.5vw,40px) !important;
+  line-height:1.35 !important;
+  letter-spacing:-1.2px !important;
+  color:#fff !important;
+  -webkit-text-fill-color:transparent !important;
+  background:linear-gradient(180deg,#ffffff 0%,#f0e5ff 42%,#c99cff 100%) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  filter:drop-shadow(0 5px 13px rgba(124,58,237,.28));
+  text-shadow:none !important;
+  padding:0 10px 7px !important;
+}
+.login-welcome-reference h1::before{
+  content:"" !important;
+  position:absolute !important;
+  left:8% !important;
+  right:8% !important;
+  bottom:0 !important;
+  height:2px !important;
+  border-radius:99px !important;
+  background:linear-gradient(90deg,transparent,#a855f7 28%,#ead7ff 50%,#a855f7 72%,transparent) !important;
+  box-shadow:0 0 7px rgba(192,132,252,.9),0 0 18px rgba(168,85,247,.45) !important;
+}
+.login-welcome-reference h1::after{
+  content:"✦" !important;
+  position:absolute !important;
+  top:-8px !important;
+  right:-2px !important;
+  font-size:11px !important;
+  color:#dfc5ff !important;
+  -webkit-text-fill-color:#dfc5ff !important;
+  text-shadow:0 0 9px rgba(192,132,252,.95) !important;
+  animation:tadbirTitleSpark 2.2s ease-in-out infinite !important;
+}
+@keyframes tadbirTitleSpark{
+  0%,100%{opacity:.45;transform:scale(.85) rotate(0deg)}
+  50%{opacity:1;transform:scale(1.12) rotate(12deg)}
+}
+
+
+/* Direct styling for the real «سامانه تدبـــیر» heading */
+.tadbir-title-real{
+  font-family:'Estedad','Vazirmatn','Tahoma',sans-serif !important;
+  font-size:38px !important;
+  font-weight:900 !important;
+  letter-spacing:-1.5px !important;
+  line-height:1.25 !important;
+  display:inline-block !important;
+  position:relative !important;
+  color:#ffffff !important;
+  -webkit-text-fill-color:#ffffff !important;
+  text-shadow:
+    0 0 2px #ffffff,
+    0 0 8px rgba(192,132,252,.75),
+    0 4px 18px rgba(124,58,237,.55) !important;
+  background:linear-gradient(180deg,#ffffff 0%,#f5eaff 48%,#c084fc 100%) !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  padding:0 12px 9px !important;
+  margin:0 auto !important;
+}
+.tadbir-title-real::after{
+  content:"" !important;
+  position:absolute !important;
+  left:10% !important;
+  right:10% !important;
+  bottom:0 !important;
+  height:2px !important;
+  border-radius:999px !important;
+  background:linear-gradient(90deg,transparent,#9b5de5,#ead7ff,#9b5de5,transparent) !important;
+  box-shadow:0 0 6px rgba(192,132,252,.95),0 0 15px rgba(168,85,247,.5) !important;
+}
+@media(max-width:600px){
+  .tadbir-title-real{font-size:31px !important}
+}
+
+
+/* Animated circular creatures replacing a title dot */
+.tadbir-creature-dot{
+  display:inline-block;
+  position:relative;
+  width:.58em;
+  height:.58em;
+  margin:0 .055em;
+  vertical-align:.02em;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#fff 0 9%,#ead7ff 10% 25%,#b56cff 48%,#7c3aed 100%);
+  box-shadow:0 0 5px #fff,0 0 12px rgba(192,132,252,.95),0 0 24px rgba(124,58,237,.62);
+  animation:tadbirCreatureFloat 2.1s ease-in-out infinite;
+}
+.tadbir-creature-dot::before,
+.tadbir-creature-dot::after{
+  content:"";
+  position:absolute;
+  top:36%;
+  width:.12em;
+  height:.12em;
+  border-radius:50%;
+  background:#24113f;
+  box-shadow:0 0 2px rgba(255,255,255,.8);
+}
+.tadbir-creature-dot::before{left:27%}
+.tadbir-creature-dot::after{right:27%}
+
+.tadbir-creature-dot.c1{
+  animation-delay:-.35s;
+}
+.tadbir-creature-dot.c1::marker{display:none}
+
+@keyframes tadbirCreatureFloat{
+  0%,100%{transform:translateY(0) scale(1);filter:brightness(1)}
+  25%{transform:translateY(-3px) scale(1.06);filter:brightness(1.08)}
+  50%{transform:translateY(1px) scale(.96);filter:brightness(1.18)}
+  75%{transform:translateY(-2px) scale(1.03);filter:brightness(1.04)}
+}
+
+
+/* Simple clean Tadbir logo */
+.login-logo{
+  width:88px !important;
+  height:88px !important;
+  margin:0 auto 18px !important;
+  display:grid !important;
+  place-items:center !important;
+}
+.login-logo-glow{
+  inset:-7px !important;
+  border-radius:50% !important;
+  background:radial-gradient(circle,rgba(168,85,247,.28),transparent 68%) !important;
+  filter:blur(9px) !important;
+  animation:none !important;
+}
+.login-logo-core{
+  width:72px !important;
+  height:72px !important;
+  border-radius:50% !important;
+  background:linear-gradient(145deg,#ffffff 0%,#eee2ff 45%,#9b5de5 100%) !important;
+  border:2px solid rgba(255,255,255,.7) !important;
+  box-shadow:0 8px 24px rgba(124,58,237,.28),0 0 18px rgba(192,132,252,.25) !important;
+  display:grid !important;
+  place-items:center !important;
+}
+.login-logo-core:after{
+  content:"" !important;
+}
+.login-logo-book{
+  display:block !important;
+  width:34px !important;
+  height:24px !important;
+  border:2px solid #6d3bb5 !important;
+  border-radius:4px 7px 5px 3px !important;
+  transform:rotate(-2deg) !important;
+  box-shadow:none !important;
+}
+.login-logo-book:before{
+  width:1.5px !important;
+  background:#6d3bb5 !important;
+}
+.login-logo-book:after{
+  content:"" !important;
+}
+
+
+/* Ultra-simple Tadbir login logo */
+.login-logo{
+  width:74px !important;
+  height:74px !important;
+  margin:0 auto 18px !important;
+  position:relative !important;
+  display:grid !important;
+  place-items:center !important;
+}
+.login-logo-glow{
+  display:none !important;
+}
+.login-logo-core{
+  width:58px !important;
+  height:58px !important;
+  border-radius:18px !important;
+  background:linear-gradient(145deg,#ffffff,#d9c1f7) !important;
+  border:1px solid rgba(255,255,255,.75) !important;
+  box-shadow:0 7px 20px rgba(124,58,237,.22) !important;
+  display:grid !important;
+  place-items:center !important;
+}
+.login-logo-book{
+  width:27px !important;
+  height:20px !important;
+  border:2px solid #7442ad !important;
+  border-radius:3px 6px 5px 3px !important;
+  transform:none !important;
+  box-shadow:none !important;
+}
+.login-logo-book:before{
+  width:2px !important;
+  background:#7442ad !important;
+}
+
+
+/* Logo artwork only — container/position unchanged */
+.tadbir-cap-svg{
+  width:190px !important;
+  height:168px !important;
+  filter:drop-shadow(0 0 10px rgba(192,132,252,.28));
+}
+@media(max-width:720px){
+  .tadbir-cap-svg{width:143px !important;height:126px !important}
+}
+@media(max-height:780px) and (min-width:721px){
+  .tadbir-cap-svg{width:136px !important;height:120px !important}
+}
+
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -3324,12 +3660,15 @@ function Login({onLogin}){
   const [err,setErr]=useState('');
   const [ld,setLd]=useState(false);
   const [showPw,setShowPw]=useState(false);
+  const [recovery,setRecovery]=useState(false);
+  const [recoveryDone,setRecoveryDone]=useState(false);
+  const [recoveryUser,setRecoveryUser]=useState('');
   const toast=useToast();
   const submit=async(e)=>{
     e.preventDefault();setLd(true);setErr('');
     const ok=await onLogin(un,pw);
     if(!ok){setErr('نام کاربری یا رمز عبور اشتباه است');toast('اطلاعات ورود نادرست است','error');}
-    else toast('خوش آمدید! 🎉','success');
+    else toast('سامانه تدبـــیر! 🎉','success');
     setLd(false);
   };
   return(
@@ -3359,85 +3698,90 @@ function Login({onLogin}){
             <div className="logo-energy-ring ring-b"></div>
             <div className="logo-energy-glow"></div>
             <svg className="tadbir-cap-svg" viewBox="0 0 260 230" role="img" aria-hidden="true">
-              <defs>
-                <linearGradient id="capGoldRef" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#fff4bf"/><stop offset=".35" stopColor="#f8c95a"/><stop offset=".7" stopColor="#d99022"/><stop offset="1" stopColor="#8b4b10"/>
-                </linearGradient>
-                <linearGradient id="capTopRef" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#f5f1ff"/><stop offset=".3" stopColor="#cbb8ff"/><stop offset=".62" stopColor="#6f45bb"/><stop offset="1" stopColor="#21113f"/>
-                </linearGradient>
-                <linearGradient id="capDarkRef" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#5e3a91"/><stop offset=".5" stopColor="#23133e"/><stop offset="1" stopColor="#090614"/>
-                </linearGradient>
-                <linearGradient id="leafRef" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#ffffff"/><stop offset=".45" stopColor="#ddd0ff"/><stop offset="1" stopColor="#7d58d5"/>
-                </linearGradient>
-                <filter id="capShadowRef" x="-40%" y="-40%" width="180%" height="190%">
-                  <feDropShadow dx="0" dy="12" stdDeviation="8" floodColor="#000" floodOpacity=".55"/>
-                </filter>
-                <filter id="goldGlowRef" x="-100%" y="-100%" width="300%" height="300%">
-                  <feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                </filter>
-              </defs>
-              <g filter="url(#capShadowRef)">
-                <path d="M67 124 C38 111 32 91 41 77 C51 62 72 62 92 77 C77 77 67 85 65 99 C63 109 68 116 80 122Z" fill="url(#leafRef)" stroke="#fff" strokeOpacity=".7" strokeWidth="2"/>
-                <path d="M193 124 C222 111 228 91 219 77 C209 62 188 62 168 77 C183 77 193 85 195 99 C197 109 192 116 180 122Z" fill="url(#leafRef)" stroke="#fff" strokeOpacity=".7" strokeWidth="2"/>
-                <path d="M61 119 C83 131 95 145 104 160 C111 171 121 179 130 184 C139 179 149 171 156 160 C165 145 177 131 199 119" fill="none" stroke="url(#leafRef)" strokeWidth="17" strokeLinecap="round"/>
-                <path d="M79 111 C93 125 102 139 107 153 C112 166 121 174 130 179 C139 174 148 166 153 153 C158 139 167 125 181 111" fill="url(#capDarkRef)" stroke="#fff" strokeOpacity=".2" strokeWidth="2"/>
-                <path d="M130 172 L130 211" stroke="url(#leafRef)" strokeWidth="7" strokeLinecap="round"/>
-                <path d="M88 48 L130 25 L172 48 L130 71 Z" fill="url(#capTopRef)" stroke="#fff8dc" strokeWidth="3"/>
-                <path d="M89 48 L130 71 L171 48" fill="none" stroke="#e9d9ff" strokeOpacity=".65" strokeWidth="2"/>
-                <path d="M99 55 L130 72 L161 55" fill="none" stroke="#fff" strokeOpacity=".18" strokeWidth="7"/>
-                <path d="M112 69 L112 93 C112 103 120 111 130 111 C140 111 148 103 148 93 L148 69" fill="url(#capDarkRef)" stroke="url(#capGoldRef)" strokeWidth="3"/>
-                <path d="M149 43 C173 47 185 57 190 73 C194 87 189 101 180 110" fill="none" stroke="url(#capGoldRef)" strokeWidth="4" strokeLinecap="round"/>
-                <circle cx="149" cy="43" r="6.5" fill="url(#capGoldRef)" filter="url(#goldGlowRef)"/>
-                <path d="M190 72 C190 93 184 108 178 119" stroke="url(#capGoldRef)" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M171 115 C169 128 170 137 174 146 M181 116 C180 130 183 139 188 147 M191 113 C190 127 195 136 201 142" stroke="url(#capGoldRef)" strokeWidth="3" strokeLinecap="round"/>
-                <path d="M172 146 C177 140 182 140 188 147 C192 141 197 140 201 142 L194 153 L179 153 Z" fill="url(#capGoldRef)"/>
-              </g>
-            </svg>
+  <defs>
+    <linearGradient id="simpleLogoPurple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stopColor="#ffffff"/>
+      <stop offset=".55" stopColor="#d9c4ff"/>
+      <stop offset="1" stopColor="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="simpleLogoGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stopColor="#fff3a8"/>
+      <stop offset=".55" stopColor="#f2c14e"/>
+      <stop offset="1" stopColor="#c88918"/>
+    </linearGradient>
+  </defs>
+  <circle cx="130" cy="115" r="79" fill="rgba(255,255,255,.035)" stroke="url(#simpleLogoPurple)" strokeWidth="3"/>
+  <path d="M75 113 130 83l55 30-55 30-55-30Z" fill="none" stroke="url(#simpleLogoPurple)" strokeWidth="7" strokeLinejoin="round"/>
+  <path d="M94 124v27c20 16 52 16 72 0v-27" fill="none" stroke="url(#simpleLogoPurple)" strokeWidth="7" strokeLinecap="round"/>
+  <path d="M130 97v37" fill="none" stroke="url(#simpleLogoGold)" strokeWidth="5" strokeLinecap="round"/>
+  <path d="M184 113v38" fill="none" stroke="url(#simpleLogoGold)" strokeWidth="5" strokeLinecap="round"/>
+  <circle cx="184" cy="158" r="6" fill="url(#simpleLogoGold)"/>
+</svg>
           </div>
-          <h1 className="login-title-reference">تدبیر</h1>
-          <div className="login-subtitle-reference"><span></span><p>دنیای رشد، یادگیری و موفقیت</p><span></span></div>
+          
+          <div className="login-subtitle-reference"><span></span><p>آینده از اینجا، آغاز میشود</p><span></span></div>
           <div className="login-title-spark">✦</div>
         </div>
 
         <div className="login-panel login-panel-reference slide-up">
           <div className="login-panel-highlight"></div>
           <div className="login-welcome">
-            <h2>خوش آمدید</h2>
+            <h2 className="tadbir-title-real">سامانه تدبـــیر</h2>
             <p>برای ادامه، وارد حساب کاربری خود شوید</p>
           </div>
 
-          <form onSubmit={submit} className="login-reference-form">
-            {err&&<div className="login-error-reference">⚠️ {err}</div>}
-            <div className="login-field-reference">
-              <div className="login-field-icon">
-                <Icon d={Icons.userCircle} size={25}/>
-              </div>
-              <input className="login-reference-input" placeholder="Tadbir" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username" aria-label="نام کاربری"/>
-            </div>
-            <div className="login-field-reference">
-              <div className="login-field-icon">
-                <Icon d={Icons.lock} size={24}/>
-              </div>
-              <input className="login-reference-input login-password-input" type={showPw?'text':'password'} placeholder="••••••••" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password" aria-label="رمز عبور"/>
-              <button type="button" className="login-eye-reference" onClick={()=>setShowPw(v=>!v)} aria-label={showPw?'پنهان کردن رمز':'نمایش رمز'}>
-                <Icon d={Icons.eye} size={24}/>
+          {!recovery ? (
+            <>
+              <form onSubmit={submit} className="login-reference-form">
+                {err&&<div className="login-error-reference">⚠️ {err}</div>}
+                <div className="login-field-reference">
+                  <div className="login-field-icon">
+                    <Icon d={Icons.userCircle} size={25}/>
+                  </div>
+                  <input className="login-reference-input" placeholder="نام کاربری" value={un} onChange={e=>setUn(e.target.value.toUpperCase())} required autoComplete="username" aria-label="نام کاربری"/>
+                </div>
+
+                <div className="login-field-reference">
+                  <div className="login-field-icon">
+                    <Icon d={Icons.lock} size={24}/>
+                  </div>
+                  <input className="login-reference-input login-password-input" type={showPw?'text':'password'} placeholder="رمز عبور" value={pw} onChange={e=>setPw(e.target.value)} required autoComplete="current-password" aria-label="رمز عبور"/>
+                  <button type="button" className="login-eye-reference" onClick={()=>setShowPw(v=>!v)} aria-label={showPw?'پنهان کردن رمز':'نمایش رمز'}>
+                    <Icon d={Icons.eye} size={24}/>
+                  </button>
+                </div>
+
+                <button type="submit" className="login-submit-reference" disabled={ld}>
+                  {ld?<><span className="login-spinner-reference"></span><span>در حال ورود...</span></>:<><span>ورود</span><Icon d={Icons.arrowLeft} size={27}/></>}
+                </button>
+              </form>
+              <button type="button" className="login-forgot-reference" onClick={()=>{setRecovery(true);setRecoveryDone(false);setRecoveryUser('');}}>
+                <Icon d={Icons.lock} size={19}/><span>فراموشی رمز</span>
+              </button>
+            </>
+          ) : (
+            <div className="login-recovery-safe" dir="rtl">
+              {!recoveryDone ? (
+                <>
+                  <div className="login-recovery-safe-icon"><Icon d={Icons.lock} size={24}/></div>
+                  <h3>بازیابی رمز عبور</h3>
+                  <p>نام کاربری خود را وارد کنید</p>
+                  <input className="login-recovery-safe-input" type="text" placeholder="نام کاربری" value={recoveryUser} onChange={e=>setRecoveryUser(e.target.value.toUpperCase())} autoComplete="username"/>
+                  <button type="button" className="login-recovery-safe-submit" disabled={!recoveryUser.trim()} onClick={()=>setRecoveryDone(true)}>ادامه</button>
+                </>
+              ) : (
+                <>
+                  <div className="login-recovery-safe-icon"><Icon d={Icons.lock} size={24}/></div>
+                  <h3>بازیابی رمز عبور</h3>
+                  <p className="login-recovery-safe-message">امکان بازیابی رمز عبور برای شما وجود ندارد.</p>
+                </>
+              )}
+              <button type="button" className="login-recovery-safe-back" onClick={()=>{setRecovery(false);setRecoveryDone(false);setRecoveryUser('');}}>
+                ← بازگشت به صفحه اصلی
               </button>
             </div>
-            <button type="submit" className="login-submit-reference" disabled={ld}>
-              {ld?<><span className="login-spinner-reference"></span><span>در حال ورود...</span></>:<><span>ورود</span><Icon d={Icons.arrowLeft} size={27}/></>}
-            </button>
-          </form>
-
-          <div className="login-divider-reference"><span></span><b>یا</b><span></span></div>
-          <button type="button" className="login-forgot-reference" onClick={()=>toast('برای بازیابی رمز عبور با مدیر سامانه تماس بگیرید.','warning')}>
-            <Icon d={Icons.lock} size={19}/><span>فراموشی رمز عبور</span>
-          </button>
+          )}
         </div>
-
-        <div className="login-footer-reference">© ۱۴۰۳ تدبیر · تمامی حقوق محفوظ است.</div>
       </div>
     </div>
   );
@@ -8073,13 +8417,13 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 .login-welcome h2{font-family:'Vazirmatn',sans-serif;font-size:clamp(28px,4vw,40px);line-height:1.2;font-weight:900;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,.35);margin:0}
 .login-welcome p{margin:9px 0 0;color:rgba(222,211,241,.62);font-size:clamp(12px,1.55vw,16px);font-weight:400}
 .login-reference-form{position:relative;z-index:2;display:flex;flex-direction:column;gap:18px}
-.login-field-reference{height:68px;position:relative;display:flex;align-items:center;direction:ltr;border:1px solid rgba(209,188,240,.32);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.038));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 9px 25px rgba(0,0,0,.15);transition:.3s ease}
+.login-field-reference{height:68px;position:relative;display:flex;align-items:center;direction:rtl;border:1px solid rgba(209,188,240,.32);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.038));box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 9px 25px rgba(0,0,0,.15);transition:.3s ease}
 .login-field-reference:focus-within{border-color:rgba(222,196,255,.82);box-shadow:0 0 0 4px rgba(168,85,247,.12),0 12px 34px rgba(99,56,170,.2),inset 0 1px 0 rgba(255,255,255,.1)}
-.login-field-icon{width:68px;height:100%;display:grid;place-items:center;flex:0 0 68px;color:#cdaeff;border-right:1px solid rgba(222,196,255,.12);filter:drop-shadow(0 0 9px rgba(192,132,252,.48))}
+.login-field-icon{width:68px;height:100%;display:grid;place-items:center;flex:0 0 68px;color:#cdaeff;border-right:0;border-left:1px solid rgba(222,196,255,.12);filter:drop-shadow(0 0 9px rgba(192,132,252,.48))}
 .login-reference-input{height:100%;min-width:0;flex:1;border:0;outline:0;background:transparent;color:#fff;font-family:'Vazirmatn',sans-serif;font-size:17px;font-weight:400;direction:ltr;text-align:left;padding:0 20px}
 .login-reference-input::placeholder{color:rgba(221,211,238,.5);opacity:1}
-.login-password-input{padding-right:62px}
-.login-eye-reference{position:absolute;right:17px;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;background:transparent;color:#c9b8de;display:grid;place-items:center;cursor:pointer;transition:.25s;z-index:3}
+.login-password-input{padding-right:20px;padding-left:62px}
+.login-eye-reference{position:absolute;left:17px;right:auto;top:50%;transform:translateY(-50%);width:34px;height:34px;border:0;background:transparent;color:#c9b8de;display:grid;place-items:center;cursor:pointer;transition:.25s;z-index:3}
 .login-eye-reference:hover{color:#fff;transform:translateY(-50%) scale(1.08)}
 .login-submit-reference{height:68px;border:1px solid rgba(235,211,255,.72);border-radius:18px;background:linear-gradient(100deg,#7c3aed 0%,#9252e9 45%,#6e35c8 100%);color:#fff;display:flex;align-items:center;justify-content:center;gap:13px;font-family:'Vazirmatn',sans-serif;font-size:20px;font-weight:900;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 15px 36px rgba(124,58,237,.38),inset 0 1px 0 rgba(255,255,255,.35);transition:.3s ease}
 .login-submit-reference:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.18) 48%,transparent 70%);transform:translateX(-120%);transition:.7s}
