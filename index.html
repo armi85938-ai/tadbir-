@@ -8533,3 +8533,80 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 }
 @media(prefers-reduced-motion:reduce){.login-reference-screen *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
+<style id="tadbir-chat-ultra-transparent-glass">
+/* ===== Ultra-transparent floating chat controls ===== */
+.social-fullscreen-overlay .telegram-conversation-header{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+/* Three floating top panels: back / person / actions */
+.social-fullscreen-overlay .telegram-conversation-header .conversation-back,
+.social-fullscreen-overlay .telegram-conversation-header .conversation-person,
+.social-fullscreen-overlay .telegram-conversation-header .telegram-header-actions{
+  background:rgba(255,255,255,.018)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+  backdrop-filter:blur(10px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header .conversation-back:hover,
+.social-fullscreen-overlay .telegram-conversation-header .conversation-person:hover,
+.social-fullscreen-overlay .telegram-conversation-header .telegram-header-actions:hover{
+  background:rgba(255,255,255,.035)!important;
+  border-color:rgba(255,255,255,.12)!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header .telegram-icon-btn{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+/* Three floating bottom panels: microphone / input / attachment */
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-pill,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-attach-wrap{
+  background:rgba(255,255,255,.018)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+  backdrop-filter:blur(10px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+}
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle:hover,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-pill:hover,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-attach-wrap:hover{
+  background:rgba(255,255,255,.032)!important;
+  border-color:rgba(255,255,255,.115)!important;
+}
+.social-fullscreen-overlay .tadbir-composer-pill:focus-within,
+.social-fullscreen-overlay .tadbir-composer-input:focus,
+.social-fullscreen-overlay .tadbir-composer-input:active{
+  background:rgba(255,255,255,.018)!important;
+  border-color:rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+}
+/* Let messages visually continue underneath the floating controls. */
+.social-fullscreen-overlay .chat-messages-scroll{
+  z-index:0!important;
+}
+.social-fullscreen-overlay .chat-messages-scroll>*{
+  z-index:0!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header,
+.social-fullscreen-overlay .tadbir-floating-composer{
+  isolation:isolate!important;
+}
+/* Remove accidental bright white surfaces from chat control descendants. */
+.social-fullscreen-overlay .telegram-conversation-header *:not(svg):not(path),
+.social-fullscreen-overlay .tadbir-floating-composer *:not(svg):not(path){
+  -webkit-tap-highlight-color:transparent;
+}
+</style>
