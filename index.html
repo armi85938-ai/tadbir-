@@ -154,9 +154,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes chartGlow{0%{background-position:0% 0%}100%{background-position:200% 0%}}
 
 /* Exam Card Enhanced */
-.exam-card-enhanced{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(236,72,153,0.08));border:1px solid rgba(129,140,248,0.15);border-radius:20px;padding:16px;margin-bottom:12px;transition:all 0.3s;position:relative;overflow:hidden}
-.exam-card-enhanced::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#818cf8,#c084fc,#f472b6);opacity:0;transition:opacity 0.3s}
-.exam-card-enhanced:hover::before{opacity:1}
+.exam-card-enhanced{background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(129,140,248,.07) 48%,rgba(236,72,153,.055));border:1px solid rgba(255,255,255,.105);border-radius:20px;padding:16px;margin-bottom:12px;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden;isolation:isolate}
 .exam-card-enhanced:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(129,140,248,0.2);border-color:rgba(129,140,248,0.3)}
 
 /* Timer Glow Animation */
@@ -941,7 +939,7 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 @media(max-width:600px){.telegram-stories-strip{top:calc(116px + env(safe-area-inset-top))!important}.telegram-contact-list{top:calc(198px + env(safe-area-inset-top))!important}.tg-story-composer{max-height:78vh;overflow:auto}}
 
 /* ===== TADBIR ACHIEVEMENTS / COINS V1 ===== */
-.coin-home-card{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.16),rgba(236,72,153,.09) 48%,rgba(99,102,241,.14));border:1px solid rgba(251,191,36,.22);box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.1);isolation:isolate}.coin-home-card:before{content:'';position:absolute;width:130px;height:130px;right:-45px;top:-70px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.26),transparent 68%);filter:blur(4px);z-index:-1}.coin-orb{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-size:25px;background:linear-gradient(145deg,#ffe38a,#f59e0b);box-shadow:inset 0 2px rgba(255,255,255,.65),0 8px 22px rgba(245,158,11,.25);animation:coinFloat 2.8s ease-in-out infinite}.coin-count{font-size:22px;font-weight:1000;color:#ffe8a8;text-shadow:0 3px 18px rgba(251,191,36,.35)}.coin-caption{font-size:9px;color:rgba(255,255,255,.45);margin-top:2px}.achievement-shell{position:relative;overflow:hidden;border-radius:28px;padding:15px;background:radial-gradient(circle at 15% 0%,rgba(251,191,36,.12),transparent 28%),radial-gradient(circle at 100% 100%,rgba(236,72,153,.12),transparent 30%),rgba(10,11,29,.82);border:1px solid rgba(255,255,255,.1);box-shadow:0 25px 70px rgba(0,0,0,.32)}.achievement-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 2px 13px}.achievement-kicker{font-size:8px;letter-spacing:3px;color:#f8d47b;font-weight:1000}.achievement-head h2{font-size:23px;font-weight:1000;background:linear-gradient(135deg,#fff1ad,#f8c65b,#c084fc);-webkit-background-clip:text;color:transparent}.wallet-big{padding:13px;border-radius:19px;background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(255,255,255,.035));border:1px solid rgba(251,191,36,.16);display:flex;align-items:center;justify-content:space-between}.wallet-big strong{font-size:28px;color:#ffe8a8}.wallet-big small{display:block;color:rgba(255,255,255,.4);font-size:9px;margin-top:2px}.trophy-list{display:flex;flex-direction:column;gap:13px;margin-top:14px}.trophy-row{position:relative;display:grid;grid-template-columns:112px 1fr auto;align-items:center;gap:12px;min-height:146px;padding:11px 12px;border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.095);overflow:hidden;transition:transform .42s cubic-bezier(.2,.85,.2,1),border-color .35s,box-shadow .35s;isolation:isolate}.trophy-row:before{content:'';position:absolute;inset:auto -25px -65px auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.16),transparent 68%);pointer-events:none;z-index:-1}.trophy-row:hover{transform:translateY(-3px) scale(1.008);border-color:rgba(251,191,36,.34);box-shadow:0 20px 45px rgba(0,0,0,.28),0 0 30px rgba(251,191,36,.07)}.trophy-row.locked{filter:grayscale(1);opacity:.46}.trophy-row.locked .trophy-art{filter:grayscale(1) brightness(.48)}.trophy-art{position:relative;width:108px;height:132px;display:grid;place-items:center;transition:transform .55s cubic-bezier(.2,.9,.2,1);filter:drop-shadow(0 15px 14px rgba(0,0,0,.48))}.trophy-art:after{content:'';position:absolute;bottom:3px;left:18px;right:18px;height:18px;border-radius:50%;background:radial-gradient(ellipse,rgba(251,191,36,.24),transparent 72%);filter:blur(4px);pointer-events:none}.trophy-art img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;transform:translateZ(0);animation:trophyIdle 3.8s ease-in-out infinite}.trophy-row:hover .trophy-art{transform:translateY(-4px) rotate(-1.5deg) scale(1.045)}.trophy-info h3{font-size:15px;font-weight:1000;color:#fff1bd;text-shadow:0 2px 16px rgba(251,191,36,.12)}.trophy-info p{font-size:9px;line-height:1.9;color:rgba(255,255,255,.43);margin-top:4px}.trophy-price{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:6px 9px;border-radius:999px;background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(245,158,11,.06));border:1px solid rgba(251,191,36,.2);font-size:9px;color:#ffe5a1}.trophy-buy{border:0;border-radius:15px;padding:10px 12px;color:#fff;font-weight:1000;font-size:10px;background:linear-gradient(135deg,#f59e0b,#ec4899);box-shadow:0 10px 24px rgba(236,72,153,.2);cursor:pointer;transition:transform .25s,box-shadow .25s}.trophy-buy:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(236,72,153,.28)}.trophy-buy:disabled{opacity:.45;cursor:not-allowed;background:rgba(255,255,255,.1);box-shadow:none}.trophy-owned{font-size:9px;color:#6ee7b7;font-weight:1000;padding:8px 10px;border-radius:12px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18)}@keyframes trophyIdle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(1deg)}}.reward-box{margin-top:14px;padding:14px;border-radius:20px;background:linear-gradient(135deg,rgba(129,140,248,.1),rgba(236,72,153,.08));border:1px solid rgba(129,140,248,.15)}.reward-box h3{font-size:13px;font-weight:1000}.reward-box p{font-size:9px;color:rgba(255,255,255,.42);margin:3px 0 9px}.reward-code-row{display:grid;grid-template-columns:1fr auto;gap:7px}.reward-code-row input{min-width:0}.reward-btn{border:0;border-radius:14px;padding:10px 13px;background:linear-gradient(135deg,#6366f1,#a855f7);color:#fff;font-weight:1000;cursor:pointer}.trophy-celebrate{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(4,5,18,.62);backdrop-filter:blur(7px);animation:achievementFade .25s ease}.trophy-celebrate-card{position:relative;width:min(90vw,410px);padding:24px 18px 20px;text-align:center;border-radius:34px;background:radial-gradient(circle at 50% 15%,rgba(251,191,36,.2),transparent 34%),linear-gradient(145deg,#211638,#0c1025);border:1px solid rgba(251,191,36,.28);box-shadow:0 35px 100px rgba(0,0,0,.65),0 0 70px rgba(251,191,36,.12);animation:trophyPop .75s cubic-bezier(.16,1.4,.35,1)}.trophy-celebrate-card:before{content:'';position:absolute;inset:8px;border:1px solid rgba(255,255,255,.06);border-radius:26px;pointer-events:none}.trophy-celebrate-art{height:280px;display:grid;place-items:center;perspective:800px}.trophy-celebrate-art img{height:100%;max-width:85%;object-fit:contain;filter:drop-shadow(0 25px 20px rgba(0,0,0,.55));animation:trophySpin 1.1s cubic-bezier(.2,.9,.2,1)}.trophy-celebrate-card h2{font-size:24px;font-weight:1000;color:#ffe9a4}.trophy-celebrate-card p{font-size:11px;color:rgba(255,255,255,.48);margin-top:5px}.confetti-piece{position:fixed;top:-24px;width:9px;height:16px;border-radius:3px;animation:confettiFall var(--d) cubic-bezier(.15,.75,.35,1) forwards;animation-delay:var(--delay);left:var(--x);background:hsl(var(--h),90%,65%);transform:rotate(var(--r));z-index:10000}.profile-achievements{margin-top:15px;padding:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(129,140,248,.07));border:1px solid rgba(251,191,36,.13)}.profile-achievements-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.profile-achievements-head b{font-size:12px}.profile-achievements-head span{font-size:9px;color:#ffe7a1}.profile-trophy-strip{display:flex;gap:7px;overflow-x:auto;padding:4px 1px 5px}.profile-trophy{min-width:66px;height:78px;border-radius:15px;background:rgba(255,255,255,.04);display:grid;place-items:center;border:1px solid rgba(255,255,255,.07)}.profile-trophy img{width:58px;height:70px;object-fit:contain;filter:drop-shadow(0 7px 5px rgba(0,0,0,.4))}.admin-achievement-grid{display:grid;grid-template-columns:1fr;gap:12px}.admin-wallet-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:17px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}.admin-wallet-avatar{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#6366f1,#ec4899);font-weight:1000}.admin-wallet-row strong{font-size:12px}.admin-wallet-row small{display:block;color:rgba(255,255,255,.35);font-size:8px;margin-top:2px}.admin-wallet-coins{margin-right:auto;font-size:18px;font-weight:1000;color:#ffe4a0}.admin-code-list{display:flex;flex-direction:column;gap:7px;margin-top:10px}.admin-code-row{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.admin-code-row code{color:#ddd6fe;font-weight:1000}.admin-code-row span{font-size:9px;color:#ffe5a1}.tool-btn.achievement-tool{background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(236,72,153,.1));border-color:rgba(251,191,36,.2)}
+.coin-home-card{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.16),rgba(236,72,153,.09) 48%,rgba(99,102,241,.14));border:1px solid rgba(251,191,36,.22);box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.1);isolation:isolate}.coin-home-card:before{content:'';position:absolute;width:130px;height:130px;right:-45px;top:-70px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.26),transparent 68%);filter:blur(4px);z-index:-1}.coin-home-balance{display:flex;align-items:center;gap:11px}.coin-orb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff7c7 0 9%,#ffd75a 28%,#f4ad22 62%,#c8790c 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.75),inset -3px -5px 8px rgba(112,62,0,.22),0 8px 22px rgba(245,158,11,.25);flex:none}.coin-real-icon svg{width:31px;height:31px;display:block}.coin-count{font-size:22px;font-weight:1000;color:#ffe8a8;text-shadow:0 3px 18px rgba(251,191,36,.35)}.trophy-count-badge{display:inline-flex;align-items:center;gap:4px}.trophy-mini{font-size:18px;line-height:1;color:#ffd85a;filter:drop-shadow(0 2px 5px rgba(251,191,36,.45))}.achievement-shell{position:relative;overflow:hidden;border-radius:28px;padding:15px;background:radial-gradient(circle at 15% 0%,rgba(251,191,36,.12),transparent 28%),radial-gradient(circle at 100% 100%,rgba(236,72,153,.12),transparent 30%),rgba(10,11,29,.82);border:1px solid rgba(255,255,255,.1);box-shadow:0 25px 70px rgba(0,0,0,.32)}.achievement-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 2px 13px}.achievement-kicker{font-size:8px;letter-spacing:3px;color:#f8d47b;font-weight:1000}.achievement-head h2{font-size:23px;font-weight:1000;background:linear-gradient(135deg,#fff1ad,#f8c65b,#c084fc);-webkit-background-clip:text;color:transparent}.wallet-big{padding:13px;border-radius:19px;background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(255,255,255,.035));border:1px solid rgba(251,191,36,.16);display:flex;align-items:center;justify-content:space-between}.wallet-big strong{font-size:28px;color:#ffe8a8}.wallet-big small{display:block;color:rgba(255,255,255,.4);font-size:9px;margin-top:2px}.trophy-list{display:flex;flex-direction:column;gap:13px;margin-top:14px}.trophy-row{position:relative;display:grid;grid-template-columns:112px 1fr auto;align-items:center;gap:12px;min-height:146px;padding:11px 12px;border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.018));border:1px solid rgba(255,255,255,.095);overflow:hidden;transition:transform .42s cubic-bezier(.2,.85,.2,1),border-color .35s,box-shadow .35s;isolation:isolate}.trophy-row:before{content:'';position:absolute;inset:auto -25px -65px auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.16),transparent 68%);pointer-events:none;z-index:-1}.trophy-row:hover{transform:translateY(-3px) scale(1.008);border-color:rgba(251,191,36,.34);box-shadow:0 20px 45px rgba(0,0,0,.28),0 0 30px rgba(251,191,36,.07)}.trophy-row.locked{filter:grayscale(1);opacity:.46}.trophy-row.locked .trophy-art{filter:grayscale(1) brightness(.48)}.trophy-art{position:relative;width:108px;height:132px;display:grid;place-items:center;transition:transform .55s cubic-bezier(.2,.9,.2,1);filter:drop-shadow(0 15px 14px rgba(0,0,0,.48))}.trophy-art:after{content:'';position:absolute;bottom:3px;left:18px;right:18px;height:18px;border-radius:50%;background:radial-gradient(ellipse,rgba(251,191,36,.24),transparent 72%);filter:blur(4px);pointer-events:none}.trophy-art img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;transform:translateZ(0);animation:trophyIdle 3.8s ease-in-out infinite}.trophy-row:hover .trophy-art{transform:translateY(-4px) rotate(-1.5deg) scale(1.045)}.trophy-info h3{font-size:15px;font-weight:1000;color:#fff1bd;text-shadow:0 2px 16px rgba(251,191,36,.12)}.trophy-info p{font-size:9px;line-height:1.9;color:rgba(255,255,255,.43);margin-top:4px}.trophy-price{display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:6px 9px;border-radius:999px;background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(245,158,11,.06));border:1px solid rgba(251,191,36,.2);font-size:9px;color:#ffe5a1}.trophy-buy{border:0;border-radius:15px;padding:10px 12px;color:#fff;font-weight:1000;font-size:10px;background:linear-gradient(135deg,#f59e0b,#ec4899);box-shadow:0 10px 24px rgba(236,72,153,.2);cursor:pointer;transition:transform .25s,box-shadow .25s}.trophy-buy:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(236,72,153,.28)}.trophy-buy:disabled{opacity:.45;cursor:not-allowed;background:rgba(255,255,255,.1);box-shadow:none}.trophy-owned{font-size:9px;color:#6ee7b7;font-weight:1000;padding:8px 10px;border-radius:12px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18)}@keyframes trophyIdle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(1deg)}}.reward-box{margin-top:14px;padding:14px;border-radius:20px;background:linear-gradient(135deg,rgba(129,140,248,.1),rgba(236,72,153,.08));border:1px solid rgba(129,140,248,.15)}.reward-box h3{font-size:13px;font-weight:1000}.reward-box p{font-size:9px;color:rgba(255,255,255,.42);margin:3px 0 9px}.reward-code-row{display:grid;grid-template-columns:1fr auto;gap:7px}.reward-code-row input{min-width:0}.reward-btn{border:0;border-radius:14px;padding:10px 13px;background:linear-gradient(135deg,#6366f1,#a855f7);color:#fff;font-weight:1000;cursor:pointer}.trophy-celebrate{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:rgba(4,5,18,.62);backdrop-filter:blur(7px);animation:achievementFade .25s ease}.trophy-celebrate-card{position:relative;width:min(90vw,410px);padding:24px 18px 20px;text-align:center;border-radius:34px;background:radial-gradient(circle at 50% 15%,rgba(251,191,36,.2),transparent 34%),linear-gradient(145deg,#211638,#0c1025);border:1px solid rgba(251,191,36,.28);box-shadow:0 35px 100px rgba(0,0,0,.65),0 0 70px rgba(251,191,36,.12);animation:trophyPop .75s cubic-bezier(.16,1.4,.35,1)}.trophy-celebrate-card:before{content:'';position:absolute;inset:8px;border:1px solid rgba(255,255,255,.06);border-radius:26px;pointer-events:none}.trophy-celebrate-art{height:280px;display:grid;place-items:center;perspective:800px}.trophy-celebrate-art img{height:100%;max-width:85%;object-fit:contain;filter:drop-shadow(0 25px 20px rgba(0,0,0,.55));animation:trophySpin 1.1s cubic-bezier(.2,.9,.2,1)}.trophy-celebrate-card h2{font-size:24px;font-weight:1000;color:#ffe9a4}.trophy-celebrate-card p{font-size:11px;color:rgba(255,255,255,.48);margin-top:5px}.confetti-piece{position:fixed;top:-24px;width:9px;height:16px;border-radius:3px;animation:confettiFall var(--d) cubic-bezier(.15,.75,.35,1) forwards;animation-delay:var(--delay);left:var(--x);background:hsl(var(--h),90%,65%);transform:rotate(var(--r));z-index:10000}.profile-achievements{margin-top:15px;padding:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(129,140,248,.07));border:1px solid rgba(251,191,36,.13)}.profile-achievements-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.profile-achievements-head b{font-size:12px}.profile-achievements-head span{font-size:9px;color:#ffe7a1}.profile-trophy-strip{display:flex;gap:7px;overflow-x:auto;padding:4px 1px 5px}.profile-trophy{min-width:66px;height:78px;border-radius:15px;background:rgba(255,255,255,.04);display:grid;place-items:center;border:1px solid rgba(255,255,255,.07)}.profile-trophy img{width:58px;height:70px;object-fit:contain;filter:drop-shadow(0 7px 5px rgba(0,0,0,.4))}.admin-achievement-grid{display:grid;grid-template-columns:1fr;gap:12px}.admin-wallet-row{display:flex;align-items:center;gap:10px;padding:10px;border-radius:17px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}.admin-wallet-avatar{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#6366f1,#ec4899);font-weight:1000}.admin-wallet-row strong{font-size:12px}.admin-wallet-row small{display:block;color:rgba(255,255,255,.35);font-size:8px;margin-top:2px}.admin-wallet-coins{margin-right:auto;font-size:18px;font-weight:1000;color:#ffe4a0}.admin-code-list{display:flex;flex-direction:column;gap:7px;margin-top:10px}.admin-code-row{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}.admin-code-row code{color:#ddd6fe;font-weight:1000}.admin-code-row span{font-size:9px;color:#ffe5a1}.tool-btn.achievement-tool{background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(236,72,153,.1));border-color:rgba(251,191,36,.2)}
 @keyframes coinFloat{50%{transform:translateY(-3px) rotate(2deg)}}@keyframes trophyPop{0%{transform:translateY(35px) scale(.72) rotateX(-20deg);opacity:0}70%{transform:translateY(-7px) scale(1.04)}100%{transform:translateY(0) scale(1);opacity:1}}@keyframes trophySpin{0%{transform:rotateY(-70deg) scale(.7);opacity:.2}55%{transform:rotateY(16deg) scale(1.08)}100%{transform:rotateY(0) scale(1);opacity:1}}@keyframes achievementFade{from{opacity:0}to{opacity:1}}@keyframes confettiFall{0%{transform:translate3d(0,0,0) rotate(var(--r));opacity:1}100%{transform:translate3d(var(--dx),110vh,0) rotate(calc(var(--r) + 720deg));opacity:0}}@media(max-width:520px){.trophy-row{grid-template-columns:78px 1fr auto;min-height:108px;padding:7px}.trophy-art{width:72px;height:92px}.trophy-info h3{font-size:11px}.trophy-buy{padding:8px 8px;font-size:9px}.trophy-celebrate-art{height:200px}.coin-home-card{padding:10px 12px}}
 
 html[data-tadbir-theme="dark-white"] .competition-wide-icon,html[data-tadbir-theme="dark-white"] .settings-icon-box{background:linear-gradient(135deg,#f5f5f5,#ffffff)!important;color:#111!important;}
@@ -1306,58 +1304,6 @@ button[title*="مخفی کردن رمز"]{
   margin:0 !important;
 }
 
-
-/* ===== Home assets card: premium glass redesign ===== */
-.coin-home-card{
-  position:relative;overflow:hidden;isolation:isolate;
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:13px 15px;margin-bottom:12px;border-radius:22px;
-  background:
-    radial-gradient(circle at 92% 18%,rgba(255,255,255,.14),transparent 20%),
-    radial-gradient(circle at 12% 100%,rgba(168,85,247,.16),transparent 34%),
-    linear-gradient(135deg,rgba(255,255,255,.115),rgba(255,255,255,.035) 48%,rgba(99,102,241,.09));
-  border:1px solid rgba(255,255,255,.16);
-  box-shadow:0 18px 55px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(255,255,255,.035);
-  backdrop-filter:blur(28px) saturate(145%);-webkit-backdrop-filter:blur(28px) saturate(145%);
-  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
-}
-.coin-home-card:hover{transform:translateY(-2px);border-color:rgba(192,132,252,.32);box-shadow:0 22px 65px rgba(0,0,0,.4),0 0 35px rgba(129,140,248,.08),inset 0 1px 0 rgba(255,255,255,.22)}
-.coin-home-card:before{content:'';position:absolute;width:180px;height:180px;right:-75px;top:-105px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.24),rgba(251,191,36,.04) 42%,transparent 70%);filter:blur(3px);z-index:-2;animation:assetAura 4.5s ease-in-out infinite}
-.coin-home-card:after{content:'';position:absolute;inset:1px;border-radius:21px;background:linear-gradient(120deg,rgba(255,255,255,.13),transparent 26%,transparent 72%,rgba(255,255,255,.06));pointer-events:none;z-index:-1}
-.coin-home-shine{position:absolute;top:-80%;left:-22%;width:34%;height:260%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);animation:assetShine 6.5s ease-in-out infinite;pointer-events:none}
-.coin-value-cluster{display:flex;align-items:center}.coin-value-cluster .coin-orb{animation:none}.coin-value-cluster .coin-count{animation:none;will-change:auto}.coin-orb{position:relative;width:47px;height:47px;flex:0 0 47px;border-radius:16px;display:grid;place-items:center;
-  background:linear-gradient(145deg,rgba(255,255,255,.23),rgba(251,191,36,.16));
-  border:1px solid rgba(255,255,255,.24);
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.42),inset 0 -7px 14px rgba(99,58,7,.16),0 9px 25px rgba(245,158,11,.18),0 0 0 5px rgba(251,191,36,.035);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:none}
-.coin-orb:after{content:'';position:absolute;inset:4px;border-radius:12px;border:1px solid rgba(255,255,255,.12);pointer-events:none}
-.coin-orb svg{filter:drop-shadow(0 3px 7px rgba(0,0,0,.25));animation:none}
-.coin-count{font-size:25px;line-height:1;font-weight:1000;color:#fff4c4;text-shadow:0 2px 20px rgba(251,191,36,.38);letter-spacing:.2px}
-.coin-home-card .text-xs{font-weight:600;letter-spacing:.1px}
-.coin-home-card .badge{background:rgba(129,140,248,.12);border-color:rgba(255,255,255,.13);box-shadow:inset 0 1px rgba(255,255,255,.08),0 5px 15px rgba(0,0,0,.12);backdrop-filter:blur(10px)}
-.trophy-progress-pill{position:relative;display:inline-flex;align-items:center;gap:7px;min-width:92px;justify-content:center;padding:7px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(129,140,248,.12) 55%,rgba(251,191,36,.12));border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 22px rgba(0,0,0,.2),0 0 22px rgba(251,191,36,.06);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px);overflow:hidden}
-.trophy-progress-pill:before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 18%,rgba(255,255,255,.13) 45%,transparent 72%);transform:translateX(-120%);animation:trophyPillShine 5.5s ease-in-out infinite;pointer-events:none}
-.trophy-progress-icon{width:25px;height:25px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#ffe8a3,#f59e0b);box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 5px 13px rgba(245,158,11,.24);position:relative;z-index:1}
-.trophy-progress-icon svg{filter:drop-shadow(0 2px 3px rgba(100,55,0,.28))}
-.trophy-progress-text{font-size:12px;font-weight:1000;color:#fff4c7;letter-spacing:.2px;position:relative;z-index:1;direction:rtl}
-@keyframes trophyPillShine{0%,24%{transform:translateX(-120%);opacity:0}35%{opacity:1}58%,100%{transform:translateX(120%);opacity:0}}
-.content>.grid.grid-cols-2>div.glass{
-  position:relative;overflow:hidden;
-  background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.028) 58%,rgba(129,140,248,.055));
-  border:1px solid rgba(255,255,255,.13);
-  box-shadow:0 15px 42px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -1px 0 rgba(255,255,255,.03);
-  backdrop-filter:blur(25px) saturate(135%);-webkit-backdrop-filter:blur(25px) saturate(135%);
-  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
-}
-.content>.grid.grid-cols-2>div.glass:before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 35%,rgba(168,85,247,.045));pointer-events:none}
-.content>.grid.grid-cols-2>div.glass:hover{transform:translateY(-3px);border-color:rgba(192,132,252,.25);box-shadow:0 20px 48px rgba(0,0,0,.34),0 0 30px rgba(129,140,248,.07),inset 0 1px 0 rgba(255,255,255,.2)}
-.content>.grid.grid-cols-2>div.glass .text-3xl{position:relative;text-shadow:0 5px 25px rgba(129,140,248,.22)}
-@keyframes assetShine{0%,18%{left:-35%;opacity:0}30%{opacity:1}55%,100%{left:120%;opacity:0}}
-@keyframes assetAura{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.14);opacity:1}}
-@keyframes coinGemSpin{0%,72%,100%{transform:rotateY(0deg) rotateZ(0deg)}82%{transform:rotateY(18deg) rotateZ(2deg)}90%{transform:rotateY(-12deg) rotateZ(-2deg)}}
-@keyframes coinAssetFloat{0%,100%{transform:translate3d(0,0,0)}25%{transform:translate3d(-3px,-2px,0)}50%{transform:translate3d(0,-5px,0)}75%{transform:translate3d(3px,-2px,0)}}
-@keyframes coinCountGlow{0%,100%{transform:translateY(0) scale(1);text-shadow:0 2px 20px rgba(251,191,36,.38)}50%{transform:translateY(-3px) scale(1.025);text-shadow:0 4px 25px rgba(251,191,36,.52)}}
-@media(max-width:520px){.coin-home-card{padding:11px 12px;border-radius:20px}.coin-orb{width:44px;height:44px;flex-basis:44px;border-radius:15px}.coin-count{font-size:23px}.content>.grid.grid-cols-2>div.glass{padding:17px!important}}
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -3453,6 +3399,44 @@ html,body{overflow-x:hidden!important}
 .exam-calc-inline-button{color:#93c5fd!important;border-color:rgba(96,165,250,.22)!important;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(59,130,246,.06))!important;box-shadow:0 0 24px rgba(59,130,246,.10),0 9px 24px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.1)!important}
 .exam-objection-button{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 .question-objection-admin-icon{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
+</style>
+
+<style id="tadbir-final-visual-polish">
+/* Final visual polish: premium round coin + truly transparent floating bottom navigation */
+.coin-medallion{
+  background:radial-gradient(circle at 28% 20%,rgba(255,255,255,.9),rgba(255,218,91,.95) 24%,rgba(244,174,34,.96) 58%,rgba(157,88,7,.98) 100%)!important;
+  border:1px solid rgba(255,241,170,.9)!important;
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.75),inset 0 -5px 9px rgba(103,55,0,.28),0 8px 24px rgba(245,158,11,.3)!important;
+  overflow:visible;
+}
+.coin-medallion svg{width:34px!important;height:34px!important;filter:drop-shadow(0 2px 3px rgba(100,55,0,.35));}
+.nav-bar{
+  background:rgba(255,255,255,.045)!important;
+  background-color:rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(155%)!important;
+  backdrop-filter:blur(28px) saturate(155%)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-top-color:rgba(255,255,255,.18)!important;
+  box-shadow:0 18px 55px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(255,255,255,.035)!important;
+  overflow:hidden;
+}
+.nav-bar:before{
+  background:linear-gradient(120deg,rgba(255,255,255,.075),rgba(255,255,255,.012) 38%,rgba(167,139,250,.045) 70%,rgba(255,255,255,.025))!important;
+}
+.nav-bar:after{
+  content:'';position:absolute;left:12%;right:12%;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  opacity:.55;pointer-events:none;
+}
+html[data-tadbir-theme] .nav-bar{
+  background:rgba(255,255,255,.045)!important;
+  background-color:rgba(255,255,255,.045)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(155%)!important;
+  backdrop-filter:blur(28px) saturate(155%)!important;
+}
+@media(max-width:420px){
+  .nav-bar{left:10px!important;right:10px!important;bottom:8px!important;border-radius:27px!important;}
+}
 </style>
 </head>
 <body>
@@ -6862,7 +6846,7 @@ function SocialChatModal({user,onClose,fullScreen=false}){
               </button>
               {showAttachMenu&&<div className="tadbir-attach-menu">
                 <button type="button" aria-label="گالری" onClick={()=>{messageImageRef.current?.click();setShowAttachMenu(false);}}><Icon d={Icons.image} size={21}/></button>
-                <button type="button" aria-label="نظرسنجی" onPointerDown={e=>e.stopPropagation()} onClick={e=>{e.preventDefault();e.stopPropagation();setShowAttachMenu(false);setShowChatMenu(false);setShowEmojiTray(false);setPollForm({mode:'poll',question:'',options:['',''],correctIndex:0});setShowPollComposer(true);}}><span className="tadbir-poll-mini-icon"><i></i><i></i><i></i></span></button>
+                <button type="button" aria-label="نظرسنجی" onClick={e=>{e.stopPropagation();openPollComposer();}}><span className="tadbir-poll-mini-icon"><i></i><i></i><i></i></span></button>
               </div>}
             </div>
           </div>
@@ -7496,19 +7480,7 @@ function Student({user,tab,setTab,onLogout}){
       <div className="content">
         {tab==='home'&&(
           <>
-            <div className="coin-home-card slide-up"><div className="coin-home-shine"></div><div className="coin-value-cluster"><div className="flex items-center gap-3"><div className="coin-orb" aria-hidden="true"><svg viewBox="0 0 48 48" width="28" height="28" fill="none"><path d="M24 5.5 39.5 14v20L24 42.5 8.5 34V14L24 5.5Z" fill="url(#coinGemFill)" stroke="rgba(255,255,255,.9)" stroke-width="1.5"/><path d="m24 10 10 5.5v11L24 32l-10-5.5v-11L24 10Z" fill="rgba(255,255,255,.18)"/><path d="M24 10v22M14 15.5l10 5.8 10-5.8" stroke="rgba(255,255,255,.72)" stroke-width="1.2" stroke-linecap="round"/><circle cx="20" cy="15" r="3" fill="rgba(255,255,255,.65)"/><defs><linearGradient id="coinGemFill" x1="9" y1="7" x2="39" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#fff7c2"/><stop offset=".35" stop-color="#f7c948"/><stop offset="1" stop-color="#b7791f"/></linearGradient></defs></svg></div><div className="coin-count">{coinBalance}</div></div></div><div className="text-left">
-              <div className="trophy-progress-pill" title="تعداد جام‌های کسب‌شده">
-                <span className="trophy-progress-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="17" height="17" fill="none">
-                    <path d="M7 4h10v4.5a5 5 0 0 1-10 0V4Z" fill="#fff3b0" stroke="#9a6507" strokeWidth="1.2"/>
-                    <path d="M7 6H4.8A1.8 1.8 0 0 0 3 7.8 4.2 4.2 0 0 0 7.2 12" stroke="#ffd76a" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M17 6h2.2A1.8 1.8 0 0 1 21 7.8a4.2 4.2 0 0 1-4.2 4.2" stroke="#ffd76a" strokeWidth="1.5" strokeLinecap="round"/>
-                    <path d="M10 13v3h4v-3M8.5 20h7M9.5 17h5" stroke="#ffe69a" strokeWidth="1.6" strokeLinecap="round"/>
-                  </svg>
-                </span>
-                <span className="trophy-progress-text">{ownedTrophyIds.length}/۱۰</span>
-              </div>
-            </div></div>
+            <div className="coin-home-card slide-up"><div className="coin-home-balance"><div className="coin-orb coin-real-icon coin-medallion" aria-label="سکه"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="coinFaceGold2" cx="32%" cy="24%" r="78%"><stop offset="0" stop-color="#fff9cf"/><stop offset=".22" stop-color="#ffe98a"/><stop offset=".52" stop-color="#f7bb32"/><stop offset=".82" stop-color="#d88b10"/><stop offset="1" stop-color="#9c5b08"/></radialGradient><linearGradient id="coinEdgeGold2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a1"/><stop offset=".38" stop-color="#f4b52d"/><stop offset=".7" stop-color="#b86c09"/><stop offset="1" stop-color="#7c4305"/></linearGradient></defs><ellipse cx="24" cy="26" rx="15.8" ry="15.8" fill="url(#coinEdgeGold2)" opacity=".95"/><ellipse cx="24" cy="23.5" rx="15.8" ry="15.8" fill="url(#coinFaceGold2)" stroke="#fff2ad" stroke-width="1.2"/><circle cx="24" cy="23.5" r="11.6" fill="none" stroke="#c9820d" stroke-width="1.15" opacity=".85"/><circle cx="24" cy="23.5" r="9.5" fill="none" stroke="#ffe78a" stroke-width=".7" opacity=".7"/><path d="M24 16.2l2.05 4.55 4.95.48-3.7 3.28 1.05 4.78L24 26.85l-4.35 2.44 1.05-4.78-3.7-3.28 4.95-.48z" fill="#fff4b8" stroke="#b66d08" stroke-width=".7"/><ellipse cx="18.2" cy="17.1" rx="4.2" ry="2" fill="#fff" opacity=".3" transform="rotate(-24 18.2 17.1)"/></svg></div><div className="coin-count">{coinBalance}</div></div><div className="text-left"><span className="badge badge-new trophy-count-badge"><span className="trophy-mini">♜</span> {ownedTrophyIds.length}/۱۰</span></div></div>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="glass p-5 text-center slide-up">
                 <Icon d={Icons.award} size={28} className="mx-auto mb-2 text-amber-400"/>
@@ -7997,58 +7969,6 @@ html,body{overscroll-behavior-y:auto!important;overscroll-behavior-x:none!import
 body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 #root{touch-action:pan-y!important;}
 .login-screen{touch-action:none!important;overflow:hidden!important;}
-</style>
-
-<style id="tadbir-ultra-glass-chat-final-fix">
-/* TADBIR FINAL CHAT ULTRA-GLASS PATCH */
-.telegram-chat-shell{
-  background:transparent!important;
-  box-shadow:none!important;
-}
-.telegram-chat-shell .social-chat-header,
-.telegram-chat-shell .telegram-list-header,
-.telegram-chat-shell .telegram-conversation-header{
-  background:rgba(255,255,255,.018)!important;
-  border:1px solid rgba(255,255,255,.105)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.09),0 8px 30px rgba(0,0,0,.08)!important;
-  backdrop-filter:blur(14px) saturate(145%)!important;
-  -webkit-backdrop-filter:blur(14px) saturate(145%)!important;
-}
-.telegram-chat-shell .telegram-stories-strip,
-.telegram-chat-shell .telegram-contact-search,
-.telegram-chat-shell .telegram-chat-search{
-  background:rgba(255,255,255,.012)!important;
-  border-color:rgba(255,255,255,.085)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.07)!important;
-  backdrop-filter:blur(11px) saturate(135%)!important;
-  -webkit-backdrop-filter:blur(11px) saturate(135%)!important;
-}
-.telegram-chat-shell .telegram-stories-strip{
-  background-color:transparent!important;
-}
-.telegram-chat-shell .chat-composer{
-  background:rgba(255,255,255,.012)!important;
-  border:1px solid rgba(255,255,255,.11)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.08),0 12px 34px rgba(0,0,0,.10)!important;
-  backdrop-filter:blur(13px) saturate(140%)!important;
-  -webkit-backdrop-filter:blur(13px) saturate(140%)!important;
-}
-.telegram-chat-shell .tadbir-attach-menu,
-.telegram-chat-shell .tadbir-emoji-tray,
-.telegram-chat-shell .telegram-chat-menu{
-  background:rgba(255,255,255,.018)!important;
-  border:1px solid rgba(255,255,255,.10)!important;
-  box-shadow:0 16px 38px rgba(0,0,0,.12),inset 0 1px rgba(255,255,255,.08)!important;
-  backdrop-filter:blur(16px) saturate(145%)!important;
-  -webkit-backdrop-filter:blur(16px) saturate(145%)!important;
-}
-.telegram-chat-shell .tadbir-attach-menu button{background:rgba(255,255,255,.018)!important;}
-.telegram-chat-shell .tadbir-attach-menu button:hover{background:rgba(255,255,255,.055)!important;}
-.telegram-chat-shell .tadbir-poll-mini-icon{pointer-events:none!important;}
-.telegram-chat-shell .tadbir-attach-menu{pointer-events:auto!important;z-index:999999!important;}
-.telegram-chat-shell .tadbir-attach-menu button{position:relative!important;z-index:1000000!important;pointer-events:auto!important;touch-action:manipulation!important;}
-.tadbir-poll-overlay{z-index:2147483646!important;}
-.tadbir-poll-builder{background:rgba(255,255,255,.035)!important;backdrop-filter:blur(24px) saturate(145%)!important;-webkit-backdrop-filter:blur(24px) saturate(145%)!important;}
 </style>
 </body>
 </html><style id="tadbir-story-final-fix">
@@ -8612,4 +8532,81 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
  .login-footer-reference{margin-top:-18px;transform:scale(.9)}
 }
 @media(prefers-reduced-motion:reduce){.login-reference-screen *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<style id="tadbir-chat-ultra-transparent-glass">
+/* ===== Ultra-transparent floating chat controls ===== */
+.social-fullscreen-overlay .telegram-conversation-header{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+/* Three floating top panels: back / person / actions */
+.social-fullscreen-overlay .telegram-conversation-header .conversation-back,
+.social-fullscreen-overlay .telegram-conversation-header .conversation-person,
+.social-fullscreen-overlay .telegram-conversation-header .telegram-header-actions{
+  background:rgba(255,255,255,.018)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+  backdrop-filter:blur(10px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header .conversation-back:hover,
+.social-fullscreen-overlay .telegram-conversation-header .conversation-person:hover,
+.social-fullscreen-overlay .telegram-conversation-header .telegram-header-actions:hover{
+  background:rgba(255,255,255,.035)!important;
+  border-color:rgba(255,255,255,.12)!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header .telegram-icon-btn{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+/* Three floating bottom panels: microphone / input / attachment */
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-pill,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-attach-wrap{
+  background:rgba(255,255,255,.018)!important;
+  border:1px solid rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+  backdrop-filter:blur(10px) saturate(120%)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(120%)!important;
+}
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-circle:hover,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-composer-pill:hover,
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer .tadbir-attach-wrap:hover{
+  background:rgba(255,255,255,.032)!important;
+  border-color:rgba(255,255,255,.115)!important;
+}
+.social-fullscreen-overlay .tadbir-composer-pill:focus-within,
+.social-fullscreen-overlay .tadbir-composer-input:focus,
+.social-fullscreen-overlay .tadbir-composer-input:active{
+  background:rgba(255,255,255,.018)!important;
+  border-color:rgba(255,255,255,.075)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.10),inset 0 1px rgba(255,255,255,.075)!important;
+}
+/* Let messages visually continue underneath the floating controls. */
+.social-fullscreen-overlay .chat-messages-scroll{
+  z-index:0!important;
+}
+.social-fullscreen-overlay .chat-messages-scroll>*{
+  z-index:0!important;
+}
+.social-fullscreen-overlay .telegram-conversation-header,
+.social-fullscreen-overlay .tadbir-floating-composer{
+  isolation:isolate!important;
+}
+/* Remove accidental bright white surfaces from chat control descendants. */
+.social-fullscreen-overlay .telegram-conversation-header *:not(svg):not(path),
+.social-fullscreen-overlay .tadbir-floating-composer *:not(svg):not(path){
+  -webkit-tap-highlight-color:transparent;
+}
 </style>
