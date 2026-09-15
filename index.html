@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a1a">
-<title>سامانه هوشمند آموزشی تدبیر</title>
+<title>تدبیر | سامانه آموزشی</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -3043,61 +3043,133 @@ html,body{overflow-x:hidden!important}
 .question-objection-admin-icon{color:#fbbf24!important;border-color:rgba(251,191,36,.22)!important}
 </style>
 
-<style id="tadbir-v29-final-patch">
-/* Floating numbered ruler */
-.tadbir-exam-ruler{position:fixed!important;z-index:2147483000!important;width:220px!important;height:58px!important;box-sizing:border-box!important;border-radius:9px!important;touch-action:none!important;user-select:none!important;cursor:grab!important;transform-origin:50% 50%!important;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.045))!important;border:1px solid rgba(255,255,255,.5)!important;box-shadow:0 18px 42px rgba(0,0,0,.42),0 0 26px rgba(255,255,255,.1),inset 0 1px rgba(255,255,255,.42)!important;backdrop-filter:blur(13px)!important;-webkit-backdrop-filter:blur(13px)!important}
-.tadbir-exam-ruler .ruler-scale{position:absolute!important;left:10px!important;right:10px!important;top:8px!important;height:20px!important;border-bottom:1px solid rgba(255,255,255,.78)!important;background:repeating-linear-gradient(to right,rgba(255,255,255,.9) 0 1px,transparent 1px 7.6px)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-major{position:absolute!important;left:10px!important;right:10px!important;top:8px!important;height:20px!important;display:flex!important;justify-content:space-between!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-major i{font-style:normal!important;font-size:8px!important;color:rgba(255,255,255,.96)!important;font-weight:900!important;transform:translateY(22px)!important;text-shadow:0 1px 2px rgba(0,0,0,.7)!important}
-.tadbir-exam-ruler .ruler-name{position:absolute!important;left:50%!important;top:17px!important;transform:translateX(-50%)!important;font-family:"Segoe Script","Brush Script MT",cursive!important;font-style:italic!important;font-weight:900!important;font-size:12px!important;letter-spacing:2px!important;color:rgba(230,230,230,.62)!important;text-shadow:0 1px 0 rgba(255,255,255,.2),0 -1px 0 rgba(0,0,0,.65),1px 0 rgba(0,0,0,.3)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-unit{position:absolute!important;right:9px!important;bottom:4px!important;font-size:6px!important;color:rgba(255,255,255,.5)!important;pointer-events:none!important}
-.tadbir-exam-ruler .ruler-rotate{position:absolute!important;right:-11px!important;top:-11px!important;width:22px!important;height:22px!important;padding:0!important;border-radius:50%!important;background:rgba(245,211,107,.18)!important;border:1px solid rgba(245,211,107,.6)!important;color:#ffe9a3!important;display:grid!important;place-items:center!important;touch-action:none!important;cursor:alias!important}
 
-/* PV header: three independent floating glass elements, no backing panel */
-.social-fullscreen-overlay .conversation-header,.social-chat-fullscreen .conversation-header{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.social-fullscreen-overlay .conversation-header:before,.social-fullscreen-overlay .conversation-header:after,.social-chat-fullscreen .conversation-header:before,.social-chat-fullscreen .conversation-header:after{display:none!important}
-.social-fullscreen-overlay .conversation-back,.social-fullscreen-overlay .conversation-person,.social-fullscreen-overlay .telegram-header-actions,.social-chat-fullscreen .conversation-back,.social-chat-fullscreen .conversation-person,.social-chat-fullscreen .telegram-header-actions{background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:0 10px 28px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important}
-.social-fullscreen-overlay .conversation-back,.social-chat-fullscreen .conversation-back{border-radius:50%!important}
-.social-fullscreen-overlay .conversation-person,.social-chat-fullscreen .conversation-person{border-radius:28px!important}
-.social-fullscreen-overlay .telegram-header-actions,.social-chat-fullscreen .telegram-header-actions{border-radius:28px!important}
-
-/* PV composer: only the floating controls, no enclosing box */
-.social-fullscreen-overlay .tadbir-floating-composer,.social-chat-fullscreen .tadbir-floating-composer{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:2147483004!important;padding:5px 8px calc(6px + env(safe-area-inset-bottom))!important;background:transparent!important;border:0!important;box-shadow:none!important;pointer-events:none!important}
-.social-fullscreen-overlay .tadbir-composer-row,.social-chat-fullscreen .tadbir-composer-row{max-width:760px!important;margin:0 auto!important}
-.social-fullscreen-overlay .tadbir-composer-circle,.social-fullscreen-overlay .tadbir-attach-wrap,.social-chat-fullscreen .tadbir-composer-circle,.social-chat-fullscreen .tadbir-attach-wrap{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.social-fullscreen-overlay .tadbir-composer-circle:after,.social-fullscreen-overlay .tadbir-attach-wrap:after,.social-chat-fullscreen .tadbir-composer-circle:after,.social-chat-fullscreen .tadbir-attach-wrap:after{content:""!important;position:absolute!important;left:9px!important;right:9px!important;bottom:-3px!important;height:8px!important;border-radius:50%!important;background:rgba(255,255,255,.18)!important;filter:blur(7px)!important;pointer-events:none!important}
-.social-fullscreen-overlay .tadbir-composer-pill,.social-chat-fullscreen .tadbir-composer-pill{background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:0 10px 28px rgba(0,0,0,.22)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
-.social-fullscreen-overlay .tadbir-composer-input,.social-chat-fullscreen .tadbir-composer-input{background:transparent!important;border:0!important;box-shadow:none!important;outline:0!important}
-.social-fullscreen-overlay .tadbir-emoji-button,.social-chat-fullscreen .tadbir-emoji-button{left:7px!important;right:auto!important}
-.social-fullscreen-overlay .chat-messages-scroll,.social-chat-fullscreen .chat-messages-scroll{padding-bottom:calc(78px + env(safe-area-inset-bottom))!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important}
-
-/* Login title only: no auth/layout changes */
-.login-logo,.login-title,.auth-logo,.brand-title{text-shadow:0 2px 0 rgba(255,255,255,.16),0 0 22px rgba(170,120,255,.28)!important;font-weight:900!important}
-</style>
-<script id="tadbir-v29-ruler">
-(function(){
-"use strict";
-function setup(){
- const r=document.querySelector(".tadbir-exam-ruler"); if(!r)return;
- if(!r.querySelector(".ruler-scale")){let x=document.createElement("div");x.className="ruler-scale";r.appendChild(x)}
- if(!r.querySelector(".ruler-major")){let x=document.createElement("div");x.className="ruler-major";for(let i=0;i<=5;i++){let n=document.createElement("i");n.textContent=i;x.appendChild(n)}r.appendChild(x)}
- if(!r.querySelector(".ruler-name")){let x=document.createElement("div");x.className="ruler-name";x.textContent="TADBIR";r.appendChild(x)}
- if(!r.querySelector(".ruler-unit")){let x=document.createElement("div");x.className="ruler-unit";x.textContent="cm";r.appendChild(x)}
- if(r.dataset.v29)return;r.dataset.v29="1";
- let p={x:Math.max(2,innerWidth/2-110),y:Math.max(90,innerHeight*.45),rot:0},d=null,rr=null;
- const draw=()=>{r.style.left=p.x+"px";r.style.top=p.y+"px";r.style.transform="rotate("+p.rot+"deg)"};
- r.addEventListener("pointerdown",e=>{if(e.target.closest(".ruler-rotate"))return;d={sx:e.clientX,sy:e.clientY,x:p.x,y:p.y};r.setPointerCapture?.(e.pointerId);e.preventDefault()});
- r.addEventListener("pointermove",e=>{if(!d)return;p.x=Math.max(2,Math.min(innerWidth-222,d.x+e.clientX-d.sx));p.y=Math.max(70,Math.min(innerHeight-75,d.y+e.clientY-d.sy));draw();e.preventDefault()});
- ["pointerup","pointercancel"].forEach(t=>r.addEventListener(t,()=>d=null));
- const b=r.querySelector(".ruler-rotate");
- if(b){b.addEventListener("pointerdown",e=>{e.stopPropagation();let q=r.getBoundingClientRect();rr={cx:q.left+q.width/2,cy:q.top+q.height/2,a:Math.atan2(e.clientY-(q.top+q.height/2),e.clientX-(q.left+q.width/2))*180/Math.PI,rot:p.rot};b.setPointerCapture?.(e.pointerId);e.preventDefault()});
- b.addEventListener("pointermove",e=>{if(!rr)return;let a=Math.atan2(e.clientY-rr.cy,e.clientX-rr.cx)*180/Math.PI;p.rot=rr.rot+a-rr.a;draw();e.preventDefault()});
- ["pointerup","pointercancel"].forEach(t=>b.addEventListener(t,()=>rr=null))}
- draw();
+<style id="tadbir-v33-android-login">
+/* V33 — Android login redesign. Logic/database untouched. */
+.login-screen{
+  background:
+    radial-gradient(circle at 50% 8%,rgba(87,62,255,.28),transparent 28%),
+    radial-gradient(circle at 78% 72%,rgba(236,72,153,.17),transparent 30%),
+    radial-gradient(circle at 16% 76%,rgba(59,130,246,.16),transparent 28%),
+    linear-gradient(145deg,#030414 0%,#08051d 43%,#10051f 72%,#02030f 100%)!important;
 }
-new MutationObserver(setup).observe(document.documentElement,{subtree:true,childList:true});setup();
-})();
-</script>
+.login-screen:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,transparent 25%,rgba(0,0,0,.38) 100%);
+  z-index:1;
+}
+.login-space{z-index:0!important}
+.login-screen > .login-panel{position:relative!important;z-index:5!important}
+.login-stars{opacity:.92!important}
+.login-planet{opacity:.24!important}
+.login-panel{
+  position:relative!important;
+  z-index:5!important;
+  width:min(92vw,438px)!important;
+  max-height:calc(100dvh - 24px)!important;
+  padding:20px 20px 18px!important;
+  border-radius:30px!important;
+  background:linear-gradient(145deg,rgba(25,24,61,.72),rgba(8,10,27,.80))!important;
+  border:1px solid rgba(188,174,255,.22)!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.58),0 0 60px rgba(84,61,255,.12),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(30px) saturate(145%)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(145%)!important;
+}
+.login-panel:before{
+  border-radius:29px!important;
+  background:linear-gradient(135deg,rgba(244,114,182,.55),rgba(129,140,248,.28),rgba(56,189,248,.42))!important;
+}
+.login-logo-v32{
+  width:min(430px,94vw)!important;
+  height:156px!important;
+  margin:0 auto 1px!important;
+}
+.login-logo-v32-svg{
+  width:min(410px,90vw)!important;
+  max-height:151px!important;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.30))!important;
+}
+.login-logo-v32-glow{inset:20px 7%!important;opacity:.95!important}
+.login-subtitle{
+  font-size:15px!important;
+  color:rgba(255,255,255,.92)!important;
+  text-shadow:0 2px 18px rgba(167,139,250,.20)!important;
+  margin-top:0!important;
+}
+.login-panel>.text-center{margin-bottom:15px!important}
+.login-panel>.glass-strong{
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.login-panel form{gap:11px!important}
+.login-panel form>div>label{
+  position:absolute!important;
+  width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+.login-input-wrap .glass-input{
+  height:58px!important;
+  border-radius:999px!important;
+  padding-right:54px!important;
+  padding-left:48px!important;
+  background:linear-gradient(100deg,rgba(255,255,255,.075),rgba(91,77,190,.12))!important;
+  border:1px solid rgba(173,158,255,.34)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.10),0 10px 28px rgba(0,0,0,.16)!important;
+  color:#fff!important;
+  font-size:15px!important;
+}
+.login-input-wrap .glass-input:focus{
+  border-color:rgba(147,197,253,.75)!important;
+  box-shadow:0 0 0 3px rgba(99,102,241,.12),inset 0 1px rgba(255,255,255,.13),0 12px 30px rgba(0,0,0,.18)!important;
+}
+.login-input-icon{
+  right:18px!important;
+  color:#fff!important;
+  opacity:.72!important;
+}
+.login-submit{
+  height:58px!important;
+  border-radius:999px!important;
+  margin-top:3px!important;
+  background:linear-gradient(100deg,#7c3aed 0%,#4f46e5 48%,#0ea5e9 100%)!important;
+  box-shadow:0 14px 35px rgba(79,70,229,.32),inset 0 1px rgba(255,255,255,.28)!important;
+  font-size:17px!important;
+  font-weight:900!important;
+}
+.login-submit:active{transform:scale(.985)!important}
+.login-badge{display:none!important}
+.login-panel .bg-red-500\/15{border-radius:999px!important}
+@media (max-width:600px){
+  .login-panel{
+    width:min(94vw,430px)!important;
+    padding:15px 14px 15px!important;
+    border-radius:27px!important;
+  }
+  .login-logo-v32{height:128px!important;margin-bottom:0!important}
+  .login-logo-v32-svg{width:min(390px,92vw)!important;max-height:126px!important}
+  .login-subtitle{font-size:13px!important}
+  .login-panel>.text-center{margin-bottom:12px!important}
+  .login-input-wrap .glass-input{height:54px!important;font-size:14px!important}
+  .login-submit{height:54px!important;font-size:16px!important}
+}
+@media (max-height:720px){
+  .login-panel{padding:11px 13px!important}
+  .login-logo-v32{height:91px!important}
+  .login-logo-v32-svg{max-height:90px!important;width:min(330px,84vw)!important}
+  .login-subtitle{font-size:11px!important}
+  .login-panel>.text-center{margin-bottom:7px!important}
+  .login-panel form{gap:7px!important}
+  .login-input-wrap .glass-input,.login-submit{height:46px!important}
+}
+@media (max-width:380px){
+  .login-panel{padding:10px!important}
+  .login-logo-v32{height:82px!important}
+  .login-logo-v32-svg{max-height:81px!important;width:300px!important}
+  .login-input-wrap .glass-input,.login-submit{height:44px!important}
+}
+</style>
 
 </head>
 <body>
@@ -3396,11 +3468,61 @@ function Login({onLogin}){
       <div className="relative z-10 w-full h-full flex items-center justify-center px-4 py-3">
         <div className="login-panel slide-up">
           <div className="text-center mb-5">
-            <div className="login-logo">
-              <div className="login-logo-glow"></div>
-              <div className="login-logo-core"><div className="login-cap" aria-hidden="true"><span className="cap-top"></span><span className="cap-base"></span><span className="cap-tassel"></span></div></div>
-            </div>
-            <h1 className="login-title font-black gradient-text leading-tight">تدبیر</h1>
+            
+<div className="login-logo-v32" aria-label="تدبیر">
+  <div className="login-logo-v32-glow"></div>
+  <svg className="login-logo-v32-svg" viewBox="0 0 530 220" role="img" aria-hidden="true">
+    <defs>
+      <linearGradient id="tdLogoGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#e07ada"/>
+        <stop offset="38%" stopColor="#c742bd"/>
+        <stop offset="68%" stopColor="#a51f9f"/>
+        <stop offset="100%" stopColor="#8b177f"/>
+      </linearGradient>
+      <linearGradient id="tdLogoShine" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="rgba(255,255,255,.78)"/>
+        <stop offset="38%" stopColor="rgba(255,255,255,.16)"/>
+        <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+      </linearGradient>
+      <filter id="tdLogoShadow" x="-30%" y="-40%" width="160%" height="190%">
+        <feDropShadow dx="0" dy="10" stdDeviation="9" floodColor="#5b0b63" floodOpacity=".42"/>
+        <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor="#df56d9" floodOpacity=".18"/>
+      </filter>
+    </defs>
+
+    <g filter="url(#tdLogoShadow)">
+      <!-- continuous main body -->
+      <rect x="18" y="98" width="494" height="46" rx="18" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- left leg -->
+      <rect x="18" y="98" width="38" height="104" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- left small stem -->
+      <rect x="101" y="56" width="40" height="88" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- tall connected stems -->
+      <rect x="232" y="12" width="38" height="132" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <rect x="309" y="13" width="38" height="131" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- right top bar -->
+      <rect x="362" y="44" width="118" height="43" rx="16" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- right leg -->
+      <rect x="477" y="43" width="40" height="101" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <!-- lower marks -->
+      <rect x="58" y="153" width="126" height="40" rx="14" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+      <rect x="184" y="153" width="45" height="40" rx="13" fill="url(#tdLogoGrad)" stroke="#7c1879" strokeWidth="2.3"/>
+
+      <!-- subtle fused bridges: visually remove the "cut into pieces" feeling -->
+      <rect x="52" y="105" width="58" height="30" rx="15" fill="url(#tdLogoGrad)"/>
+      <rect x="133" y="105" width="112" height="30" rx="15" fill="url(#tdLogoGrad)"/>
+      <rect x="260" y="105" width="62" height="30" rx="15" fill="url(#tdLogoGrad)"/>
+      <rect x="339" y="105" width="151" height="30" rx="15" fill="url(#tdLogoGrad)"/>
+
+      <!-- glossy upper highlights -->
+      <path d="M36 104 H491" stroke="rgba(255,255,255,.40)" strokeWidth="2" strokeLinecap="round" opacity=".62"/>
+      <path d="M112 63 V91" stroke="rgba(255,255,255,.42)" strokeWidth="2" strokeLinecap="round" opacity=".60"/>
+      <path d="M243 19 V79" stroke="rgba(255,255,255,.42)" strokeWidth="2" strokeLinecap="round" opacity=".60"/>
+      <path d="M320 20 V78" stroke="rgba(255,255,255,.42)" strokeWidth="2" strokeLinecap="round" opacity=".60"/>
+      <path d="M374 51 H463" stroke="rgba(255,255,255,.42)" strokeWidth="2" strokeLinecap="round" opacity=".60"/>
+    </g>
+  </svg>
+</div>
             <p className="login-subtitle mt-1 font-medium">دنیای رشد, یادگیری و موفقیت</p>
           </div>
           <div className="glass-strong p-4 sm:p-5" style={{background:'rgba(255,255,255,.025)',borderColor:'rgba(216,180,254,.11)'}}>
@@ -6953,32 +7075,58 @@ function Student({user,tab,setTab,onLogout}){
               <span className={`badge ${q?.q_type==='test'?'badge-new':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':'✍️ تشریحی'}</span>
               <span className="badge badge-new">⭐ {q?.score||1} نمره</span>
             </div>
+            <div className="exam-top-tools" aria-label="ابزارهای آزمون">
+              <button
+                type="button"
+                className={`exam-top-tool exam-top-hint ${q?.q_type!=='test'?'disabled':''}`}
+                aria-label="راهنمای سوال"
+                title={q?.q_type==='test'?`راهنمای سوال — ${getExamHintCost()} سکه`:'راهنما برای سوال تشریحی غیرفعال است'}
+                onClick={()=>q?.q_type==='test'&&requestExamHint()}
+                disabled={q?.q_type!=='test'}>
+                <svg viewBox="0 0 24 24" width="23" height="23" fill="none" aria-hidden="true">
+                  <path d="M8.7 15.4c-1.55-1.06-2.7-2.86-2.7-4.9a6 6 0 1 1 12 0c0 2.04-1.15 3.84-2.7 4.9-.74.5-1.18 1.04-1.3 1.6h-4c-.12-.56-.56-1.1-1.3-1.6Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M9.7 20h4.6M10 17.2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                  <path d="M12 2V.9M4.8 4.8l-.8-.8M19.2 4.8l.8-.8M3 11H1.9M22.1 11H21" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" opacity=".72"/>
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                className="exam-top-tool exam-top-objection"
+                aria-label="اعتراض به سوال"
+                title="اعتراض به این سوال"
+                onClick={()=>{setObjectionText('');setOpenObjection({examId:activeExam.id,questionId:q.id});}}>
+                <svg viewBox="0 0 24 24" width="23" height="23" fill="none" aria-hidden="true">
+                  <path d="M12 3.2 21 19H3L12 3.2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                  <path d="M12 8v5M12 16.2v.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                </svg>
+              </button>
+
+              {activeExam.allow_calculator&&<button
+                type="button"
+                className="exam-top-tool exam-top-calc"
+                aria-label="ماشین حساب"
+                title="ماشین حساب"
+                onClick={()=>setShowExamCalc(true)}>
+                <Icon d={Icons.calc} size={23}/>
+              </button>}
+
+              <button
+                type="button"
+                className="exam-top-tool exam-top-ruler"
+                aria-label="خط کش"
+                title="خط کش شناور"
+                onClick={()=>window.tadbirRulerToggle?.()}>
+                <svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3.2" y="7.1" width="17.6" height="9.8" rx="2"/>
+                  <path d="M6.8 7.2v4.2M10 7.2v2.7M13.2 7.2v4.2M16.4 7.2v2.7M19.5 7.2v4.2"/>
+                </svg>
+              </button>
+            </div>
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
             <p className="mb-5 font-bold leading-relaxed text-lg">{q?.q_text}</p>
             {q?.q_type==='test'?(
               <>
-                <div className="exam-guide-row">
-                  <button type="button" className="exam-guide-icon-button" aria-label="راهنمای سوال" title={`راهنمای سوال — ${getExamHintCost()} سکه`} onClick={requestExamHint}>
-                    <span className="exam-guide-lamp exam-guide-lamp-svg" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-                        <path d="M8.7 15.4c-1.55-1.06-2.7-2.86-2.7-4.9a6 6 0 1 1 12 0c0 2.04-1.15 3.84-2.7 4.9-.74.5-1.18 1.04-1.3 1.6h-4c-.12-.56-.56-1.1-1.3-1.6Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M9.7 20h4.6M10 17.2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-                        <path d="M12 2V.9M4.8 4.8l-.8-.8M19.2 4.8l.8-.8M3 11H1.9M22.1 11H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity=".7"/>
-                      </svg>
-                    </span>
-                  </button>
-                  <button type="button" className="exam-guide-icon-button exam-objection-button" aria-label="اعتراض به سوال" title="اعتراض به این سوال" onClick={()=>{setObjectionText('');setOpenObjection({examId:activeExam.id,questionId:q.id});}}>
-                    <span className="exam-objection-icon" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-                        <path d="M12 3.2 21 19H3L12 3.2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
-                        <path d="M12 8v5M12 16.2v.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-                      </svg>
-                    </span>
-                  </button>
-                  {activeExam.allow_calculator&&<button type="button" className="exam-guide-icon-button exam-calc-inline-button" aria-label="ماشین حساب" title="ماشین حساب" onClick={()=>setShowExamCalc(true)}>
-                    <Icon d={Icons.calc} size={22}/>
-                  </button>}
-                </div>
                 <div className="space-y-2">
                   {['A','B','C','D'].map(opt=>(
                     <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'} ${examHintTarget===opt?'exam-hint-target':''}`} onClick={()=>{setStudentAnswers({...studentAnswers,[q.id]:opt});if(examHintTarget===opt)setExamHintTarget(null);}}>
@@ -7037,7 +7185,7 @@ function Student({user,tab,setTab,onLogout}){
             </div>
           </div>
         </div>}
-        {activeExam.allow_calculator&&<button type="button" className="exam-calc-launcher" onClick={()=>setShowExamCalc(true)} title="ماشین‌حساب"><Icon d={Icons.calc} size={27}/></button>}
+        
         {activeExam.allow_calculator&&showExamCalc&&<div className="modal-overlay" onClick={()=>setShowExamCalc(false)}><div className="exam-calc-modal" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-3"><div><b className="gradient-text">ماشین‌حساب آزمون</b><div className="text-[9px] text-white/40 mt-1">بدون خروج از سوال محاسبه کن</div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowExamCalc(false)}><Icon d={Icons.x} size={18}/></button></div><div className="exam-calc-display">{calcDisplay||'0'}</div><div className="exam-calc-grid">{['7','8','9','÷','4','5','6','×','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`exam-calc-key ${['÷','×','-','+'].includes(b)?'op':''} ${b==='='?'eq':''} ${b==='C'?'clear':''}`}>{b}</button>)}</div></div></div>}
       </div>
     );
@@ -7550,6 +7698,415 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 #root{touch-action:pan-y!important;}
 .login-screen{touch-action:none!important;overflow:hidden!important;}
 </style>
+
+<style id="tadbir-v32-final">
+/* ---------- LOGIN LOGO ---------- */
+.login-logo-v32{
+  position:relative!important;
+  width:min(430px,92vw)!important;
+  height:150px!important;
+  margin:0 auto 9px!important;
+  display:grid!important;
+  place-items:center!important;
+}
+.login-logo-v32-glow{
+  position:absolute!important;
+  inset:24px 10%!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,rgba(209,65,197,.30),rgba(137,52,231,.12) 48%,transparent 72%)!important;
+  filter:blur(20px)!important;
+  animation:tdV32LogoGlow 3.8s ease-in-out infinite!important;
+}
+.login-logo-v32-svg{
+  width:min(420px,91vw)!important;
+  height:auto!important;
+  max-height:145px!important;
+  overflow:visible!important;
+  position:relative!important;
+  z-index:2!important;
+  animation:tdV32LogoFloat 4.8s ease-in-out infinite!important;
+}
+@keyframes tdV32LogoGlow{0%,100%{opacity:.72;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes tdV32LogoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(max-height:680px){
+  .login-logo-v32{height:105px!important;margin-bottom:3px!important}
+  .login-logo-v32-svg{max-height:105px!important;width:min(350px,84vw)!important}
+}
+
+/* ---------- MAIN APP NAV: real transparent glass ---------- */
+.nav-bar{
+  background:rgba(18,16,38,.28)!important;
+  border:1px solid rgba(255,255,255,.105)!important;
+  box-shadow:0 16px 46px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(28px) saturate(145%)!important;
+  -webkit-backdrop-filter:blur(28px) saturate(145%)!important;
+}
+.nav-bar:before{background:linear-gradient(120deg,rgba(255,255,255,.045),transparent 38%,rgba(167,139,250,.035))!important}
+.nav-item.active{
+  background:rgba(255,255,255,.055)!important;
+  box-shadow:0 5px 18px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.08)!important;
+  backdrop-filter:blur(16px)!important;-webkit-backdrop-filter:blur(16px)!important;
+}
+
+/* ---------- EXAM HEADER TOOLS ---------- */
+.exam-top-tools{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-wrap:nowrap!important;
+  gap:10px!important;
+  width:100%!important;
+  margin:4px auto 15px!important;
+  direction:ltr!important;
+  position:relative!important;
+  z-index:20!important;
+}
+.exam-top-tool{
+  width:48px!important;height:48px!important;min-width:48px!important;
+  padding:0!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;
+  color:rgba(255,255,255,.92)!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.135)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(20px) saturate(135%)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(135%)!important;
+  transition:transform .16s ease,box-shadow .16s ease!important;
+}
+.exam-top-tool:active{transform:scale(.91)!important}
+.exam-top-hint{color:#ffe985!important;border-color:rgba(250,204,21,.26)!important}
+.exam-top-objection{color:#ffcc55!important;border-color:rgba(251,191,36,.25)!important}
+.exam-top-calc,.exam-top-ruler{
+  color:#ffd95b!important;
+  border-color:rgba(250,204,21,.28)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.18),0 0 20px rgba(250,204,21,.07),inset 0 1px rgba(255,255,255,.12)!important;
+}
+.exam-top-tool.disabled{opacity:.22!important;filter:grayscale(.65)!important;cursor:default!important}
+.exam-guide-row{display:none!important}
+.exam-calc-launcher{display:none!important}
+
+/* ---------- REAL 0–5 CM GLASS RULER ---------- */
+.tadbir-v32-ruler{
+  position:fixed!important;
+  z-index:2147483400!important;
+  width:calc(5cm + 28px)!important;
+  height:68px!important;
+  box-sizing:border-box!important;
+  border-radius:11px!important;
+  touch-action:none!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+  cursor:grab!important;
+  transform-origin:center center!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.21),rgba(255,255,255,.055))!important;
+  border:1px solid rgba(255,255,255,.54)!important;
+  box-shadow:0 20px 55px rgba(0,0,0,.46),0 0 32px rgba(250,204,21,.09),inset 0 1px rgba(255,255,255,.48),inset 0 -1px rgba(0,0,0,.12)!important;
+  backdrop-filter:blur(14px) saturate(125%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(125%)!important;
+}
+.tadbir-v32-ruler:active{cursor:grabbing!important}
+.tadbir-v32-ruler .td-ruler-scale{
+  position:absolute!important;
+  left:14px!important;top:9px!important;
+  width:5cm!important;height:30px!important;
+  border-top:1px solid rgba(255,255,255,.78)!important;
+  pointer-events:none!important;
+}
+.tadbir-v32-ruler .td-ruler-tick{
+  position:absolute!important;top:0!important;width:1px!important;
+  background:rgba(255,255,255,.90)!important;
+  transform:translateX(-.5px)!important;
+}
+.tadbir-v32-ruler .td-ruler-tick.mm{height:7px!important;opacity:.68!important}
+.tadbir-v32-ruler .td-ruler-tick.half{height:12px!important}
+.tadbir-v32-ruler .td-ruler-tick.cm{height:18px!important;width:1.5px!important}
+.tadbir-v32-ruler .td-ruler-number{
+  position:absolute!important;top:19px!important;transform:translateX(-50%)!important;
+  font:900 9px/1 Arial,sans-serif!important;color:rgba(255,255,255,.97)!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.72)!important;
+}
+.tadbir-v32-ruler .td-ruler-brand{
+  position:absolute!important;left:50%!important;bottom:7px!important;transform:translateX(-50%)!important;
+  font-family:"Segoe Script","Brush Script MT",cursive!important;
+  font-style:italic!important;font-weight:900!important;font-size:12px!important;letter-spacing:2.8px!important;
+  color:rgba(225,225,230,.52)!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.18),0 -1px 1px rgba(0,0,0,.82),1px 0 0 rgba(0,0,0,.30)!important;
+  pointer-events:none!important;
+}
+.tadbir-v32-ruler .td-ruler-unit{
+  position:absolute!important;right:12px!important;bottom:8px!important;
+  font:700 6px/1 Arial,sans-serif!important;color:rgba(255,255,255,.52)!important;
+}
+.tadbir-v32-ruler .td-ruler-rotate{
+  position:absolute!important;right:-12px!important;top:-12px!important;
+  width:26px!important;height:26px!important;padding:0!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;
+  color:#ffe58b!important;background:rgba(250,204,21,.16)!important;
+  border:1px solid rgba(250,204,21,.62)!important;
+  box-shadow:0 0 15px rgba(250,204,21,.20)!important;
+  touch-action:none!important;cursor:alias!important;
+}
+
+/* ---------- PV HEADER: exactly 3 separate floating glass panels ---------- */
+.social-fullscreen-overlay .social-chat-header.conversation-header.telegram-conversation-header{
+  position:fixed!important;
+  top:0!important;left:0!important;right:0!important;
+  z-index:2147483100!important;
+  display:grid!important;
+  grid-template-columns:52px minmax(0,1fr) 108px!important;
+  gap:8px!important;
+  align-items:center!important;
+  direction:rtl!important;
+  padding:calc(8px + env(safe-area-inset-top)) 9px 8px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  pointer-events:none!important;
+}
+.social-fullscreen-overlay .social-chat-header.conversation-header.telegram-conversation-header:before,
+.social-fullscreen-overlay .social-chat-header.conversation-header.telegram-conversation-header:after{display:none!important}
+.social-fullscreen-overlay .social-chat-header>*{pointer-events:auto!important}
+
+.social-fullscreen-overlay .conversation-back{
+  width:52px!important;height:52px!important;min-width:52px!important;
+  margin:0!important;border-radius:50%!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 11px 30px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important;
+}
+.social-fullscreen-overlay .conversation-person{
+  width:100%!important;height:52px!important;min-width:0!important;margin:0!important;
+  border-radius:27px!important;padding:3px 9px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 11px 30px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important;
+  overflow:hidden!important;
+}
+.social-fullscreen-overlay .telegram-header-actions{
+  width:108px!important;height:52px!important;min-width:108px!important;margin:0!important;padding:4px!important;
+  border-radius:27px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:2px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 11px 30px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important;
+}
+.social-fullscreen-overlay .telegram-header-actions .telegram-icon-btn{
+  width:43px!important;height:43px!important;min-width:43px!important;
+  border-radius:50%!important;background:transparent!important;border:0!important;box-shadow:none!important;
+}
+
+/* ---------- PV BOTTOM: no mother/background panel, only 3 floating pieces ---------- */
+.social-fullscreen-overlay .chat-composer.tadbir-floating-composer{
+  position:fixed!important;
+  left:0!important;right:0!important;bottom:0!important;
+  z-index:2147483100!important;
+  width:100%!important;height:auto!important;min-height:0!important;
+  padding:6px 8px calc(7px + env(safe-area-inset-bottom))!important;
+  margin:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+}
+.social-fullscreen-overlay .tadbir-composer-row{
+  width:100%!important;max-width:760px!important;margin:0 auto!important;
+  display:flex!important;align-items:center!important;gap:8px!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  pointer-events:auto!important;
+}
+.social-fullscreen-overlay .tadbir-composer-circle{
+  position:relative!important;
+  width:48px!important;height:48px!important;min-width:48px!important;flex:0 0 48px!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.11)!important;
+  backdrop-filter:blur(23px) saturate(140%)!important;-webkit-backdrop-filter:blur(23px) saturate(140%)!important;
+}
+.social-fullscreen-overlay .tadbir-composer-pill{
+  height:48px!important;flex:1 1 auto!important;min-width:0!important;
+  border-radius:25px!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.11)!important;
+  backdrop-filter:blur(24px) saturate(140%)!important;-webkit-backdrop-filter:blur(24px) saturate(140%)!important;
+}
+.social-fullscreen-overlay .tadbir-attach-wrap{
+  position:relative!important;width:48px!important;height:48px!important;min-width:48px!important;flex:0 0 48px!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.social-fullscreen-overlay .tadbir-composer-input,
+.social-fullscreen-overlay .tadbir-composer-input:focus{
+  height:46px!important;background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;
+  padding-left:43px!important;padding-right:14px!important;
+}
+.social-fullscreen-overlay .tadbir-emoji-button{
+  left:7px!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;
+  width:32px!important;height:32px!important;background:transparent!important;border:0!important;box-shadow:none!important;
+  color:rgba(255,255,255,.61)!important;
+}
+.social-fullscreen-overlay .tadbir-attach-menu{
+  bottom:56px!important;right:1px!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.social-fullscreen-overlay .tadbir-attach-menu button{
+  width:44px!important;height:44px!important;border-radius:50%!important;
+  background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important;
+}
+.social-fullscreen-overlay .chat-messages-scroll.telegram-message-canvas{
+  position:relative!important;z-index:1!important;
+  padding-top:calc(80px + env(safe-area-inset-top))!important;
+  padding-bottom:calc(82px + env(safe-area-inset-bottom))!important;
+  touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;
+}
+
+@media(max-width:430px){
+  .social-fullscreen-overlay .social-chat-header.conversation-header.telegram-conversation-header{
+    grid-template-columns:47px minmax(0,1fr) 94px!important;
+    gap:5px!important;padding-left:6px!important;padding-right:6px!important;
+  }
+  .social-fullscreen-overlay .conversation-back{width:47px!important;height:47px!important;min-width:47px!important}
+  .social-fullscreen-overlay .conversation-person{height:47px!important}
+  .social-fullscreen-overlay .telegram-header-actions{width:94px!important;height:47px!important;min-width:94px!important}
+  .social-fullscreen-overlay .telegram-header-actions .telegram-icon-btn{width:38px!important;height:38px!important;min-width:38px!important}
+  .social-fullscreen-overlay .tadbir-composer-row{gap:6px!important}
+  .social-fullscreen-overlay .tadbir-composer-circle,
+  .social-fullscreen-overlay .tadbir-attach-wrap{width:44px!important;height:44px!important;min-width:44px!important;flex-basis:44px!important}
+  .social-fullscreen-overlay .tadbir-composer-pill{height:44px!important}
+  .social-fullscreen-overlay .tadbir-composer-input{height:42px!important}
+}
+</style>
+
+<script id="tadbir-v32-ruler-runtime">
+(function(){
+  "use strict";
+  const ID="tadbir-v32-ruler";
+  let state={x:null,y:null,angle:0};
+
+  function closeRuler(){
+    document.getElementById(ID)?.remove();
+    document.querySelectorAll(".exam-top-ruler").forEach(b=>b.classList.remove("active"));
+  }
+
+  function createRuler(){
+    if(document.getElementById(ID)){ closeRuler(); return; }
+
+    const r=document.createElement("div");
+    r.id=ID;
+    r.className="tadbir-v32-ruler";
+    r.setAttribute("aria-label","خط کش شناور تدبیر");
+
+    const scale=document.createElement("div");
+    scale.className="td-ruler-scale";
+
+    for(let mm=0;mm<=50;mm++){
+      const t=document.createElement("span");
+      t.className="td-ruler-tick "+(mm%10===0?"cm":mm%5===0?"half":"mm");
+      t.style.left=(mm*2)+"%";
+      scale.appendChild(t);
+
+      if(mm%10===0){
+        const n=document.createElement("span");
+        n.className="td-ruler-number";
+        n.style.left=(mm*2)+"%";
+        n.textContent=String(mm/10);
+        scale.appendChild(n);
+      }
+    }
+    r.appendChild(scale);
+
+    const brand=document.createElement("div");
+    brand.className="td-ruler-brand";
+    brand.textContent="TADBIR";
+    r.appendChild(brand);
+
+    const unit=document.createElement("div");
+    unit.className="td-ruler-unit";
+    unit.textContent="cm";
+    r.appendChild(unit);
+
+    const rotateBtn=document.createElement("button");
+    rotateBtn.type="button";
+    rotateBtn.className="td-ruler-rotate";
+    rotateBtn.setAttribute("aria-label","چرخاندن خط کش");
+    rotateBtn.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-2 5"/></svg>';
+    r.appendChild(rotateBtn);
+
+    document.body.appendChild(r);
+
+    const rect=r.getBoundingClientRect();
+    state.x=Math.max(4,(window.innerWidth-rect.width)/2);
+    state.y=Math.max(85,window.innerHeight*.44);
+    state.angle=0;
+
+    let drag=null;
+    let rotation=null;
+
+    function render(){
+      const maxX=Math.max(4,window.innerWidth-r.offsetWidth-4);
+      const maxY=Math.max(72,window.innerHeight-r.offsetHeight-10);
+      state.x=Math.max(4,Math.min(maxX,state.x));
+      state.y=Math.max(72,Math.min(maxY,state.y));
+      r.style.left=state.x+"px";
+      r.style.top=state.y+"px";
+      r.style.transform="rotate("+state.angle+"deg)";
+    }
+
+    r.addEventListener("pointerdown",e=>{
+      if(e.target.closest(".td-ruler-rotate")) return;
+      drag={sx:e.clientX,sy:e.clientY,x:state.x,y:state.y};
+      r.setPointerCapture?.(e.pointerId);
+      e.preventDefault();
+    },{passive:false});
+
+    r.addEventListener("pointermove",e=>{
+      if(!drag) return;
+      state.x=drag.x+(e.clientX-drag.sx);
+      state.y=drag.y+(e.clientY-drag.sy);
+      render();
+      e.preventDefault();
+    },{passive:false});
+
+    ["pointerup","pointercancel"].forEach(type=>r.addEventListener(type,()=>{drag=null}));
+
+    rotateBtn.addEventListener("pointerdown",e=>{
+      e.stopPropagation();
+      const q=r.getBoundingClientRect();
+      const cx=q.left+q.width/2, cy=q.top+q.height/2;
+      rotation={
+        cx,cy,
+        startPointer:Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI,
+        startAngle:state.angle
+      };
+      rotateBtn.setPointerCapture?.(e.pointerId);
+      e.preventDefault();
+    },{passive:false});
+
+    rotateBtn.addEventListener("pointermove",e=>{
+      if(!rotation) return;
+      const a=Math.atan2(e.clientY-rotation.cy,e.clientX-rotation.cx)*180/Math.PI;
+      state.angle=rotation.startAngle+(a-rotation.startPointer);
+      render();
+      e.preventDefault();
+    },{passive:false});
+
+    ["pointerup","pointercancel"].forEach(type=>rotateBtn.addEventListener(type,()=>{rotation=null}));
+
+    window.addEventListener("resize",render,{passive:true});
+    render();
+    document.querySelectorAll(".exam-top-ruler").forEach(b=>b.classList.add("active"));
+  }
+
+  window.tadbirRulerToggle=createRuler;
+})();
+</script>
+
 </body>
 </html><style id="tadbir-story-final-fix">
 /* Final story layout fix: compact glass strip, no overlap with search/contacts. */
