@@ -946,9 +946,6 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 
 html[data-tadbir-theme="dark-white"] .competition-wide-icon,html[data-tadbir-theme="dark-white"] .settings-icon-box{background:linear-gradient(135deg,#f5f5f5,#ffffff)!important;color:#111!important;}
 html[data-tadbir-theme="light-black"] .competition-wide-icon,html[data-tadbir-theme="light-black"] .settings-icon-box{background:linear-gradient(135deg,#111111,#000000)!important;color:#fff!important;}
-
-.exam-objection-launcher{position:fixed;right:78px;bottom:24px;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(245,158,11,.28);background:rgba(245,158,11,.10);color:#fbbf24;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 30px rgba(0,0,0,.18),0 0 22px rgba(245,158,11,.12);z-index:80;transition:transform .2s ease,box-shadow .2s ease}.exam-objection-launcher:active{transform:scale(.93)}
-@media(max-width:640px){.exam-objection-launcher{right:72px;bottom:18px;width:52px;height:52px}}
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -2970,6 +2967,74 @@ html,body{overflow-x:hidden!important}
 }
 </style>
 
+<style id="tadbir-v18-exam-guide">
+.exam-guide-row{display:flex;justify-content:flex-start;margin:0 0 10px}
+.exam-guide-button{min-height:48px;padding:6px 10px 6px 13px;border-radius:17px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;display:flex;align-items:center;gap:9px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.08);font-family:inherit;transition:.18s ease}
+.exam-guide-button:active{transform:scale(.97)}
+.exam-guide-button span:last-child{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.exam-guide-button b{font-size:10px}.exam-guide-button small{font-size:7px;color:rgba(255,255,255,.42)}
+.exam-guide-lamp{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#fef08a;background:radial-gradient(circle at 35% 30%,#fff9c4 0 12%,rgba(250,204,21,.55) 20%,rgba(250,204,21,.08) 62%,transparent 70%);box-shadow:0 0 20px rgba(250,204,21,.20)}
+.exam-guide-button.disabled{opacity:.30;cursor:default;filter:grayscale(.5)}
+
+.exam-hint-target{border-color:rgba(250,204,21,.82)!important;background:rgba(250,204,21,.08)!important;box-shadow:0 0 0 1px rgba(250,204,21,.22),0 0 30px rgba(250,204,21,.2)!important;position:relative;overflow:visible}
+.exam-hint-target::after{content:"";position:absolute;inset:-4px;border:2px solid rgba(255,235,90,.95);border-radius:inherit;pointer-events:none;animation:tadbirHintGlow 1.15s ease-in-out infinite;box-shadow:0 0 12px rgba(250,204,21,.8),0 0 30px rgba(250,204,21,.35)}
+@keyframes tadbirHintGlow{0%,100%{opacity:.45;transform:scale(.99)}50%{opacity:1;transform:scale(1.018);box-shadow:0 0 18px rgba(250,204,21,.95),0 0 40px rgba(250,204,21,.5)}}
+
+.exam-hint-finger-old-old{position:absolute;right:-5px;top:-15px;font-size:30px;z-index:10;filter:drop-shadow(0 5px 7px rgba(0,0,0,.45));animation:tadbirFinger .72s ease-in-out infinite alternate}
+@keyframes tadbirFinger{from{transform:translateY(3px) rotate(-7deg) scale(.96)}to{transform:translateY(-5px) rotate(3deg) scale(1.04)}}
+.exam-hint-overlay{position:fixed;inset:0;z-index:2147483640;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(2,3,12,.42);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.exam-hint-modal{width:min(92vw,360px);box-sizing:border-box;padding:22px;border-radius:30px;text-align:center;background:rgba(20,21,35,.92);border:1px solid rgba(255,255,255,.13);box-shadow:0 35px 100px rgba(0,0,0,.52),0 0 55px rgba(250,204,21,.07);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);direction:rtl}
+.exam-hint-modal-icon{font-size:40px;line-height:1;margin-bottom:7px}.exam-hint-kicker{font-size:7px;letter-spacing:3px;color:#facc15;font-weight:900}.exam-hint-modal h3{font-size:18px;font-weight:1000;margin-top:5px}.exam-hint-modal p{font-size:10px;line-height:2;color:rgba(255,255,255,.48);margin-top:8px}.exam-hint-price{margin:13px auto;width:max-content;min-width:90px;padding:8px 13px;border-radius:999px;background:rgba(250,204,21,.09);border:1px solid rgba(250,204,21,.18);color:#fde68a;font-size:10px;font-weight:900}.exam-hint-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.exam-hint-actions button{min-height:40px;font-family:inherit;font-size:9px}
+</style>
+
+<style id="tadbir-v19-polish">
+.exam-guide-icon-button{
+ width:40px;height:40px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.12);
+ background:rgba(255,255,255,.055);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+ display:grid;place-items:center;cursor:pointer;box-shadow:0 7px 20px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.08);
+}
+.exam-guide-icon-button:active{transform:scale(.94)}
+.exam-guide-icon-button .exam-guide-lamp{width:25px;height:25px;font-size:12px;font-weight:900}
+.exam-guide-icon-button.disabled{opacity:.25;cursor:default;pointer-events:none}
+.exam-guide-icon-button.used{opacity:.24;filter:grayscale(1);cursor:not-allowed}
+.tadbir-floating-composer,.bottom-nav,.floating-bottom-nav,.main-bottom-nav{
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+.tadbir-floating-composer>* ,.bottom-nav>* ,.floating-bottom-nav>* ,.main-bottom-nav>*{
+ backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;
+ background:rgba(255,255,255,.045)!important;border-color:rgba(255,255,255,.11)!important;
+}
+</style>
+
+<style id="tadbir-v24-hint-icon">
+.exam-guide-icon-button{
+  width:46px!important;height:46px!important;border-radius:16px!important;
+  display:grid!important;place-items:center!important;padding:0!important;
+  border:1px solid rgba(255,236,120,.18)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(250,204,21,.035))!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.18),0 0 24px rgba(250,204,21,.06),inset 0 1px rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;
+  color:#fde68a!important;
+}
+.exam-guide-icon-button:active{transform:scale(.94)!important}
+.exam-guide-lamp-svg{
+  width:30px!important;height:30px!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;
+  color:#fde68a!important;
+  background:radial-gradient(circle,rgba(250,204,21,.12),rgba(250,204,21,.025) 58%,transparent 72%)!important;
+  box-shadow:0 0 18px rgba(250,204,21,.10)!important;
+}
+.exam-guide-lamp-svg svg{display:block!important;filter:drop-shadow(0 0 5px rgba(250,204,21,.22))!important}
+.exam-guide-icon-button.disabled{opacity:.24!important;filter:grayscale(1)!important;pointer-events:none!important}
+</style>
+
+<style id="tadbir-exam-objection-ui">
+.exam-guide-row{display:flex!important;align-items:center!important;gap:10px!important;margin:0 0 12px!important;min-height:48px!important}
+.exam-guide-icon-button,.exam-objection-button{flex:0 0 48px!important;width:48px!important;height:48px!important;padding:0!important}
+.exam-objection-button{color:#ffcf70!important}
+.exam-objection-icon,.exam-guide-lamp-svg{display:grid;place-items:center;width:100%;height:100%}
+.exam-objection-modal-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;color:#ffcf70;background:radial-gradient(circle,rgba(255,207,112,.24),rgba(255,207,112,.04) 62%,transparent 70%);box-shadow:0 0 28px rgba(255,190,70,.22)}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -4230,7 +4295,6 @@ function Admin({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [students,setStudents]=useState([]);
   const [answers,setAnswers]=useState([]);
-  const [questionObjections,setQuestionObjections]=useState([]);
   const [modal,setModal]=useState(null);
   const [step,setStep]=useState(1);
   const [formData,setFormData]=useState({title:'',desc:'',hours:'',minutes:'',assigned:'all',allowCalculator:false});
@@ -4313,8 +4377,7 @@ function Admin({user,tab,setTab,onLogout}){
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
     const {data:s}=await SB.from('users').select('*').eq('role','student');
     const {data:a}=await SB.from('answers').select('*,users(full_name,username),exams(title),questions(q_text,q_type,correct_opt,score)');
-    const {data:qo}=await SB.from('tadbir_exam_question_objections').select('*').order('created_at',{ascending:false});
-    if(e)setExams(e);if(s)setStudents(s);if(a)setAnswers(a);if(qo)setQuestionObjections(qo);
+    if(e)setExams(e);if(s)setStudents(s);if(a)setAnswers(a);
     const {data:m}=await SB.from('messages').select('*,sender:sender_id(full_name,username),receiver:receiver_id(full_name,username)').order('created_at',{ascending:false});
     if(m)setMessages(m);
     loadAdminAchievements();
@@ -4580,7 +4643,7 @@ function Admin({user,tab,setTab,onLogout}){
         {tab==='home'&&(
           <>
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {[{icon:Icons.exam,color:'text-indigo-400',n:exams.length,l:'آزمون'},{icon:Icons.users,color:'text-sky-400',n:students.length,l:'دانش‌آموز'},{icon:Icons.grade,color:'text-emerald-400',n:answers.filter(a=>a.status==='pending').length,l:'در انتظار'},{icon:Icons.alert,color:'text-amber-400',n:objections.length+questionObjections.length,l:'اعتراض'}].map((s,i)=>(
+              {[{icon:Icons.exam,color:'text-indigo-400',n:exams.length,l:'آزمون'},{icon:Icons.users,color:'text-sky-400',n:students.length,l:'دانش‌آموز'},{icon:Icons.grade,color:'text-emerald-400',n:answers.filter(a=>a.status==='pending').length,l:'در انتظار'},{icon:Icons.alert,color:'text-amber-400',n:objections.length,l:'اعتراض'}].map((s,i)=>(
                 <div key={i} className="glass p-4 text-center slide-up" style={{animationDelay:i*0.08+'s'}}>
                   <Icon d={s.icon} size={24} className={`mx-auto mb-2 ${s.color}`}/>
                   <p className="text-2xl font-black">{s.n}</p><p className="text-[11px] text-white/40">{s.l}</p>
@@ -4633,7 +4696,6 @@ function Admin({user,tab,setTab,onLogout}){
                 </div>
               </div>
             ))}
-            {subTab==='objections'&&questionObjections.length>0&&<div className="mb-4"><div className="flex items-center gap-2 mb-3"><Icon d={Icons.alert} size={17} className="text-amber-400"/><h3 className="font-bold text-sm">اعتراض به سوالات</h3><span className="badge badge-new">{questionObjections.length}</span></div>{questionObjections.map(o=><div key={o.id} className="card border-amber-500/20 mb-3"><div className="flex justify-between items-start mb-2"><div><h4 className="font-bold text-amber-300 text-sm">{students.find(st=>String(st.id)===String(o.student_id))?.full_name||'دانش‌آموز'}</h4><p className="text-[11px] text-white/30">{exams.find(ex=>String(ex.id)===String(o.exam_id))?.title||'آزمون'}</p></div><span className="badge badge-pending">اعتراض سوال</span></div><div className="bg-white/5 rounded-xl p-3 text-sm"><p className="text-white/45 text-xs mb-1">سوال:</p><p className="text-indigo-200 mb-3">{exams.flatMap(ex=>ex.questions||[]).find(q=>String(q.id)===String(o.question_id))?.q_text||'متن سوال در دسترس نیست'}</p><p className="text-amber-300 text-xs font-bold mb-1">دلیل اعتراض:</p><p className="text-white text-sm leading-relaxed">{o.objection}</p></div></div>)}</div>}
             {subTab==='objections'&&(
               objections.length===0?<div className="card text-center py-10 text-white/30">اعتراضی نیست</div>:
               objections.map(a=>(
@@ -6344,9 +6406,6 @@ function Student({user,tab,setTab,onLogout}){
   const [totalTime,setTotalTime]=useState(0);
   const [calcDisplay,setCalcDisplay]=useState('');
   const [showObjection,setShowObjection]=useState(null);
-  const [showQuestionObjection,setShowQuestionObjection]=useState(false);
-  const [questionObjectionText,setQuestionObjectionText]=useState('');
-  const [questionObjectionBusy,setQuestionObjectionBusy]=useState(false);
   const [objectionTick,setObjectionTick]=useState(Date.now());
   const [showAdminProfile,setShowAdminProfile]=useState(false);
   const [openObjection,setOpenObjection]=useState(null);
@@ -6397,6 +6456,10 @@ function Student({user,tab,setTab,onLogout}){
   const [achievementBusy,setAchievementBusy]=useState(false);
   const [celebration,setCelebration]=useState(null);
   const [showExamCalc,setShowExamCalc]=useState(false);
+  const [examHintUsed,setExamHintUsed]=useState(0);
+  const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
+  const [examHintTarget,setExamHintTarget]=useState(null);
+  const [showExamHintConfirm,setShowExamHintConfirm]=useState(false);
   const [studentNotifications,setStudentNotifications]=useState([]);
   const [notificationUnread,setNotificationUnread]=useState(0);
   const [showNotifications,setShowNotifications]=useState(false);
@@ -6590,6 +6653,9 @@ function Student({user,tab,setTab,onLogout}){
     setHasSubmitted(false);
     setShowExamCalc(false);
     setCalcDisplay('');
+    setExamHintUsed(0);
+    setExamHintTarget(null);
+    setShowExamHintConfirm(false);
   };
 
   useEffect(()=>{
@@ -6598,6 +6664,82 @@ function Student({user,tab,setTab,onLogout}){
       return()=>clearInterval(t);
     }else if(activeExam&&timeLeft===0)submitExam();
   },[activeExam,timeLeft]);
+
+  const getExamHintCost=()=>Math.pow(2,examHintUsed)*0.5;
+  const requestExamHint=()=>{
+    const q=activeExam?.questions?.[currentQ];
+    if(!q||q.q_type!=='test'||!q.correct_opt)return;
+    setShowExamHintConfirm(true);
+  };
+  const confirmExamHint=async()=>{
+    const q=activeExam?.questions?.[currentQ];
+    if(!q||q.q_type!=='test'||!q.correct_opt){
+      setShowExamHintConfirm(false);
+      return;
+    }
+
+    const cost=Number(getExamHintCost());
+
+    try{
+      const {data,error}=await SB.rpc('tadbir_spend_hint_coins',{
+        p_user_id:String(user.id),
+        p_cost:cost
+      });
+
+      if(error)throw error;
+
+      const result=Array.isArray(data)?data[0]:data;
+
+      if(!result?.ok){
+        const msg=String(result?.message||'امکان کسر سکه وجود ندارد');
+        if(msg.includes('کافی')){
+          toast(`🪙 برای این راهنما ${cost} سکه لازم است و موجودی شما کافی نیست.`,'warning');
+        }else{
+          toast(msg,'error');
+        }
+        setShowExamHintConfirm(false);
+        return;
+      }
+
+      if(typeof setCoinBalance==='function'){
+        setCoinBalance(Number(result.balance ?? 0));
+      }
+
+      setExamHintUsed(n=>n+1);
+      setExamHintTarget(String(q.correct_opt).toUpperCase());
+      setShowExamHintConfirm(false);
+      toast(`💡 راهنما فعال شد؛ ${cost} سکه کسر شد.`,'success');
+
+    }catch(err){
+      console.error('exam hint rpc error:',err);
+      toast('خطا در فعال‌سازی راهنما؛ سکه‌ای کسر نشد.','error');
+      setShowExamHintConfirm(false);
+    }
+  };
+
+  const submitQuestionObjection=async()=>{
+    const q=activeExam?.questions?.[currentQ];
+    const text=String(objectionText||'').trim();
+    if(!q||!activeExam){setOpenObjection(null);return;}
+    if(!text){toast('لطفاً دلیل اعتراض را بنویسید.','warning');return;}
+    try{
+      const {data,error}=await SB.rpc('tadbir_submit_question_objection',{
+        p_exam_id:String(activeExam.id),
+        p_question_id:String(q.id),
+        p_student_id:String(user.id),
+        p_objection:text
+      });
+      if(error)throw error;
+      const result=Array.isArray(data)?data[0]:data;
+      if(result && result.ok===false)throw new Error(result.message||'ثبت اعتراض انجام نشد');
+      setOpenObjection(null);
+      setObjectionText('');
+      toast('⚠️ اعتراض شما برای مدیر ارسال شد.','success');
+    }catch(err){
+      console.error('question objection:',err);
+      toast('خطا در ثبت اعتراض؛ لطفاً دوباره تلاش کنید.','error');
+    }
+  };
 
   const submitExam=async()=>{
     if(!activeExam||hasSubmitted)return;
@@ -6629,15 +6771,6 @@ function Student({user,tab,setTab,onLogout}){
       }catch{setCalcDisplay('خطا');}
     }
     else setCalcDisplay(calcDisplay+v);
-  };
-
-  const submitQuestionObjection=async()=>{
-    const q=activeExam?.questions?.[currentQ]; const text=questionObjectionText.trim();
-    if(!q||!text){toast('لطفاً دلیل اعتراض را بنویسید','warning');return;}
-    setQuestionObjectionBusy(true);
-    try{const {error}=await SB.from('tadbir_exam_question_objections').insert({exam_id:activeExam.id,question_id:q.id,student_id:user.id,objection:text,status:'pending'});if(error)throw error;toast('⚠️ اعتراض شما برای مدیر ارسال شد','success');setQuestionObjectionText('');setShowQuestionObjection(false);}
-    catch(err){console.error('question objection:',err);toast('خطا در ثبت اعتراض سوال: '+(err?.message||'خطای نامشخص'),'error');}
-    finally{setQuestionObjectionBusy(false);}
   };
 
   const submitObjection=async()=>{
@@ -6746,27 +6879,85 @@ function Student({user,tab,setTab,onLogout}){
             {q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
             <p className="mb-5 font-bold leading-relaxed text-lg">{q?.q_text}</p>
             {q?.q_type==='test'?(
-              <div className="space-y-2">
-                {['A','B','C','D'].map(opt=>(
-                  <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'}`} onClick={()=>setStudentAnswers({...studentAnswers,[q.id]:opt})}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
-                      <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
-                      {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
+              <>
+                <div className="exam-guide-row">
+                  <button type="button" className="exam-guide-icon-button" aria-label="راهنمای سوال" title={`راهنمای سوال — ${getExamHintCost()} سکه`} onClick={requestExamHint}>
+                    <span className="exam-guide-lamp exam-guide-lamp-svg" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                        <path d="M8.7 15.4c-1.55-1.06-2.7-2.86-2.7-4.9a6 6 0 1 1 12 0c0 2.04-1.15 3.84-2.7 4.9-.74.5-1.18 1.04-1.3 1.6h-4c-.12-.56-.56-1.1-1.3-1.6Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M9.7 20h4.6M10 17.2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                        <path d="M12 2V.9M4.8 4.8l-.8-.8M19.2 4.8l.8-.8M3 11H1.9M22.1 11H21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity=".7"/>
+                      </svg>
+                    </span>
+                  </button>
+                  <button type="button" className="exam-guide-icon-button exam-objection-button" aria-label="اعتراض به سوال" title="اعتراض به این سوال" onClick={()=>{setObjectionText('');setOpenObjection({examId:activeExam.id,questionId:q.id});}}>
+                    <span className="exam-objection-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                        <path d="M12 3.2 21 19H3L12 3.2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                        <path d="M12 8v5M12 16.2v.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {['A','B','C','D'].map(opt=>(
+                    <div key={opt} className={`glass p-3 cursor-pointer transition-all ${studentAnswers[q.id]===opt?'border-indigo-500 bg-indigo-500/15 scale-[1.02]':'hover:bg-white/5'} ${examHintTarget===opt?'exam-hint-target':''}`} onClick={()=>{setStudentAnswers({...studentAnswers,[q.id]:opt});if(examHintTarget===opt)setExamHintTarget(null);}}>
+                      <div className="flex items-center gap-3 relative">
+                        <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-sm transition-all ${studentAnswers[q.id]===opt?'bg-gradient-to-br from-indigo-500 to-purple-500 border-transparent text-white scale-110':'border-white/20'}`}>{opt}</div>
+                        <span className="flex-1 text-sm">{q[`opt_${opt.toLowerCase()}`]}</span>
+                        {studentAnswers[q.id]===opt&&<Icon d={Icons.check} size={20} className="text-indigo-400"/>}
+                        {examHintTarget===opt&&<span className="exam-hint-finger-old" aria-label="گزینه راهنمایی‌شده"></span>}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            ):(<textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>)}
+                  ))}
+                </div>
+              </>
+            ):(
+              <>
+                <div className="exam-guide-row">
+                  <div className="exam-guide-icon-button disabled" aria-label="راهنما غیرفعال"><span className="exam-guide-lamp exam-guide-lamp-svg" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M8.7 15.4c-1.55-1.06-2.7-2.86-2.7-4.9a6 6 0 1 1 12 0c0 2.04-1.15 3.84-2.7 4.9-.74.5-1.18 1.04-1.3 1.6h-4c-.12-.56-.56-1.1-1.3-1.6Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M9.7 20h4.6M10 17.2h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg></span></div>
+                </div>
+                <textarea className="glass-input" placeholder="پاسخ خود را بنویسید..." value={studentAnswers[q.id]||''} onChange={e=>setStudentAnswers({...studentAnswers,[q.id]:e.target.value})} rows="5"/>
+              </>
+            )}
           </div>
           <div className="flex gap-2 mt-4">
             {currentQ>0&&<button onClick={()=>setCurrentQ(currentQ-1)} className="btn-glass bg-white/5 flex-1">← قبلی</button>}
             {currentQ<activeExam.questions.length-1?<button onClick={()=>setCurrentQ(currentQ+1)} className="btn-glass flex-1">بعدی →</button>:<button onClick={()=>{if(confirm('ثبت نهایی آزمون؟'))submitExam();}} className="btn-glass btn-glass-success flex-1">✓ ثبت نهایی</button>}
           </div>
         </div>
+        {openObjection&&<div className="exam-hint-overlay" onClick={()=>setOpenObjection(null)}>
+          <div className="exam-hint-modal" onClick={e=>e.stopPropagation()}>
+            <div className="exam-objection-modal-icon">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
+                <path d="M12 3.2 21 19H3L12 3.2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+                <path d="M12 8v5M12 16.2v.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="exam-hint-kicker">TADBIR • QUESTION REPORT</div>
+            <h3>اعتراض به سوال</h3>
+            <p>دلیل اعتراض خود را برای مدیر بنویسید.</p>
+            <textarea className="glass-input" rows="4" value={objectionText} onChange={e=>setObjectionText(e.target.value)} placeholder="مثلاً متن سوال یا گزینه‌ها ایراد دارد..."/>
+            <div className="exam-hint-actions">
+              <button type="button" className="btn-glass" onClick={()=>setOpenObjection(null)}>انصراف</button>
+              <button type="button" className="btn-glass btn-glass-success" onClick={submitQuestionObjection}>ارسال اعتراض</button>
+            </div>
+          </div>
+        </div>}
+        {showExamHintConfirm&&<div className="exam-hint-overlay" onClick={()=>setShowExamHintConfirm(false)}>
+          <div className="exam-hint-modal" onClick={e=>e.stopPropagation()}>
+            <div className="exam-hint-modal-icon">💡</div>
+            <div className="exam-hint-kicker">TADBIR GUIDE</div>
+            <h3>راهنمای این سوال</h3>
+            <p>دانش آموز گرامی، برای استفاده از راهنمای این سوال، هزینه از سکه‌های شما کسر می‌شود.</p>
+            <div className="exam-hint-price">{'🪙 '+getExamHintCost()+' سکه'}</div>
+            <div className="exam-hint-actions">
+              <button type="button" className="btn-glass" onClick={()=>setShowExamHintConfirm(false)}>انصراف</button>
+              <button type="button" className="btn-glass btn-glass-success" onClick={confirmExamHint}>تأیید و نمایش راهنما</button>
+            </div>
+          </div>
+        </div>}
         {activeExam.allow_calculator&&<button type="button" className="exam-calc-launcher" onClick={()=>setShowExamCalc(true)} title="ماشین‌حساب"><Icon d={Icons.calc} size={27}/></button>}
-        <button type="button" className="exam-objection-launcher" onClick={()=>{setQuestionObjectionText('');setShowQuestionObjection(true)}} title="اعتراض به سوال" aria-label="اعتراض به سوال"><Icon d={Icons.alert} size={25}/></button>
-        {showQuestionObjection&&<div className="modal-overlay" onClick={()=>!questionObjectionBusy&&setShowQuestionObjection(false)}><div className="glass-strong w-full max-w-md p-5 slide-up" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-4"><div><h3 className="font-black gradient-text">اعتراض به سوال</h3><p className="text-[10px] text-white/40 mt-1">سوال {currentQ+1} از {activeExam.questions.length}</p></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowQuestionObjection(false)} disabled={questionObjectionBusy}><Icon d={Icons.x} size={18}/></button></div><div className="glass p-3 mb-4 border-amber-500/20"><div className="flex items-center gap-2 mb-2 text-amber-300"><Icon d={Icons.alert} size={16}/><span className="text-xs font-bold">اعتراض به محتوای این سوال</span></div><p className="text-sm leading-relaxed">{activeExam.questions[currentQ]?.q_text||'سوال فعلی'}</p></div><textarea className="glass-input w-full mb-4" rows="5" placeholder="دلیل اعتراض خود را بنویسید..." value={questionObjectionText} onChange={e=>setQuestionObjectionText(e.target.value)} disabled={questionObjectionBusy}/><div className="flex gap-2"><button className="btn-glass flex-1" onClick={()=>setShowQuestionObjection(false)} disabled={questionObjectionBusy}>انصراف</button><button className="btn-glass btn-glass-danger flex-1" onClick={submitQuestionObjection} disabled={questionObjectionBusy||!questionObjectionText.trim()}><Icon d={Icons.alert} size={16}/>{questionObjectionBusy?'در حال ارسال...':'ارسال اعتراض'}</button></div></div></div>}
         {activeExam.allow_calculator&&showExamCalc&&<div className="modal-overlay" onClick={()=>setShowExamCalc(false)}><div className="exam-calc-modal" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-3"><div><b className="gradient-text">ماشین‌حساب آزمون</b><div className="text-[9px] text-white/40 mt-1">بدون خروج از سوال محاسبه کن</div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowExamCalc(false)}><Icon d={Icons.x} size={18}/></button></div><div className="exam-calc-display">{calcDisplay||'0'}</div><div className="exam-calc-grid">{['7','8','9','÷','4','5','6','×','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`exam-calc-key ${['÷','×','-','+'].includes(b)?'op':''} ${b==='='?'eq':''} ${b==='C'?'clear':''}`}>{b}</button>)}</div></div></div>}
       </div>
     );
