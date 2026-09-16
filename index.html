@@ -947,57 +947,98 @@ html[data-tadbir-theme="light-black"] .competition-wide-icon,html[data-tadbir-th
 
 
 /* BLOSSOM SAFE ADDITION */
-/* BLOSSOM FULLSCREEN TAB */
-.blossom-safe-open{pointer-events:auto!important;position:relative!important;z-index:30!important}
-.blossom-safe-room-overlay{pointer-events:auto!important}
-
-.blossom-safe-room-overlay{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;padding:0!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;border-radius:0!important;background:rgba(4,7,20,.94)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
-.blossom-safe-room{width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;border:0!important;border-radius:0!important;box-shadow:none!important}
-.blossom-safe-close{top:18px!important;left:18px!important;right:auto!important;width:46px!important;height:46px!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 1px rgba(255,255,255,.12)!important;font-size:0!important;transition:transform .2s ease,background .2s ease,box-shadow .2s ease!important}
-.blossom-safe-close:before,.blossom-safe-close:after{content:'';position:absolute;width:19px;height:2px;border-radius:99px;background:rgba(255,255,255,.92);box-shadow:0 0 8px rgba(255,255,255,.15)}
-.blossom-safe-close:before{transform:rotate(45deg)}.blossom-safe-close:after{transform:rotate(-45deg)}
-.blossom-safe-close:hover{transform:scale(1.06);background:rgba(255,255,255,.10)!important;box-shadow:0 12px 34px rgba(0,0,0,.34),0 0 22px rgba(167,243,208,.10)!important}
-.blossom-safe-title{top:22px!important}
-.blossom-safe-window{left:10%!important;right:10%!important;top:10%!important;height:53%!important}
-.blossom-safe-table{left:8%!important;right:8%!important;bottom:2%!important;height:40%!important}
-
+/* V11: exact-reference inspired mobile blossom room, built entirely in code */
 .blossom-safe-card{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important}
 .blossom-safe-card>.blossom-safe-coin,.blossom-safe-card>.blossom-safe-open{min-width:0;min-height:62px;border-radius:16px}
 .blossom-safe-coin{display:flex;align-items:center;gap:10px;padding:8px 12px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09)}
-.blossom-safe-open{position:relative;display:flex;align-items:center;width:100%;padding:8px 10px 8px 12px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);color:#fff;cursor:pointer}
-.blossom-safe-arrow{position:absolute;left:8px;top:50%;width:32px;height:32px;transform:translateY(-50%);display:grid;place-items:center;background:transparent;border:0;box-shadow:none;color:transparent;font-size:0;overflow:visible;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.blossom-safe-open{position:relative!important;display:flex!important;align-items:center!important;width:100%!important;padding:8px 10px 8px 12px!important;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;border:1px solid rgba(255,255,255,.09)!important;color:#fff!important;cursor:pointer!important;pointer-events:auto!important;z-index:30!important}
+.blossom-safe-arrow{position:absolute;left:8px;top:50%;width:32px;height:32px;transform:translateY(-50%);display:grid;place-items:center;background:transparent;border:0;color:transparent;font-size:0}
 .blossom-safe-arrow:before{content:'';width:12px;height:12px;border-top:2.4px solid rgba(255,255,255,.94);border-right:2.4px solid rgba(255,255,255,.94);border-radius:1px;transform:rotate(45deg);filter:drop-shadow(0 0 4px rgba(255,255,255,.18)) drop-shadow(0 0 8px rgba(52,211,153,.28));animation:blossomArrowPulse 2.4s ease-in-out infinite}
 .blossom-safe-arrow:after{content:'';position:absolute;right:5px;top:50%;width:18px;height:2px;margin-top:-1px;border-radius:99px;background:linear-gradient(90deg,rgba(110,231,183,.15),rgba(255,255,255,.86));transform:scaleX(.68);transform-origin:right center;opacity:.78;box-shadow:0 0 7px rgba(110,231,183,.25);animation:blossomArrowLine 2.4s ease-in-out infinite}
 @keyframes blossomArrowPulse{0%,100%{opacity:.78;transform:rotate(45deg) translateX(0)}50%{opacity:1;transform:rotate(45deg) translateX(1px)}}
 @keyframes blossomArrowLine{0%,100%{transform:scaleX(.62);opacity:.48}50%{transform:scaleX(.88);opacity:.9}}
-.blossom-safe-open:hover .blossom-safe-arrow{transform:translateY(-50%) translateX(-3px) scale(1.08)}
-.blossom-safe-open:hover .blossom-safe-arrow:before{animation:none;filter:drop-shadow(0 0 6px rgba(255,255,255,.45)) drop-shadow(0 0 11px rgba(52,211,153,.55));transform:rotate(45deg) translateX(1px)}
-.blossom-safe-open:hover .blossom-safe-arrow:after{animation:none;transform:scaleX(1);opacity:1}
 .blossom-safe-count{font-size:22px;font-weight:1000;color:#9ff7c9;text-shadow:0 3px 18px rgba(16,185,129,.28)}
 .blossom-safe-label{font-size:9px;color:rgba(255,255,255,.42);margin-top:1px}
 .blossom-safe-icon{width:45px;height:45px;flex:none;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 30% 22%,rgba(236,253,245,.38),rgba(110,231,183,.20) 27%,rgba(16,185,129,.17) 58%,rgba(3,78,58,.34) 100%);border:1px solid rgba(167,243,208,.42);box-shadow:inset 0 2px 3px rgba(255,255,255,.28),inset 0 -5px 12px rgba(0,0,0,.17),0 7px 22px rgba(16,185,129,.24);position:relative;overflow:hidden}
-.blossom-safe-icon:before{content:'';position:absolute;inset:5px;border-radius:50%;border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 0 9px rgba(255,255,255,.08)}.blossom-safe-icon svg{width:34px;height:34px;position:relative;z-index:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.18))}.blossom-safe-open:hover .blossom-safe-icon{box-shadow:inset 0 2px 3px rgba(255,255,255,.30),inset 0 -5px 12px rgba(0,0,0,.17),0 9px 28px rgba(16,185,129,.34)}.blossom-safe-open:hover .blossom-safe-arrow{transform:translateY(-50%) scale(1.06)}
-.blossom-safe-room-overlay{position:fixed;inset:0;z-index:10020;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(3,5,18,.70);backdrop-filter:blur(12px)}
-.blossom-safe-room{position:relative;width:min(94vw,760px);height:min(82vh,590px);overflow:hidden;border-radius:34px;background:linear-gradient(180deg,#1b2940,#111b2b 48%,#0a111d);border:1px solid rgba(255,255,255,.16);box-shadow:0 35px 110px rgba(0,0,0,.62),0 0 80px rgba(52,211,153,.10)}
-.blossom-safe-window{position:absolute;left:8%;right:8%;top:9%;height:50%;border-radius:24px 24px 12px 12px;border:9px solid rgba(70,83,100,.90);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10),0 22px 50px rgba(0,0,0,.35);overflow:hidden;background:linear-gradient(180deg,#86d7ff 0%,#d3f4ff 47%,#a7d7a5 48%,#4f7855 100%)}
-.blossom-safe-window:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.24),transparent 21%,transparent 73%,rgba(255,255,255,.10));z-index:5}
-.blossom-safe-window:after{content:'';position:absolute;left:50%;top:0;bottom:0;width:10px;transform:translateX(-50%);background:linear-gradient(90deg,#46505e,#a6adb6 48%,#303844);z-index:4}
-.blossom-safe-hill{position:absolute;left:-5%;right:-5%;bottom:0;height:46%;background:linear-gradient(160deg,#618f63,#2d5940);clip-path:polygon(0 67%,12% 52%,24% 62%,38% 35%,53% 59%,68% 43%,81% 61%,100% 37%,100% 100%,0 100%)}
-.blossom-safe-curtain{position:absolute;top:4%;width:16%;height:58%;z-index:6;background:linear-gradient(90deg,rgba(60,36,66,.88),rgba(132,82,116,.48),rgba(42,25,49,.90))}
-.blossom-safe-curtain.left{left:5%;border-radius:0 0 55% 25%}.blossom-safe-curtain.right{right:5%;border-radius:0 0 25% 55%}
-.blossom-safe-table{position:absolute;left:4%;right:4%;bottom:-3%;height:41%;z-index:8}
-.blossom-safe-table-top{position:absolute;left:0;right:0;top:18%;height:30px;border-radius:50%;background:linear-gradient(180deg,#a1714d,#5c3825 75%);border:2px solid rgba(255,220,177,.18);box-shadow:0 13px 25px rgba(0,0,0,.42),inset 0 3px 4px rgba(255,255,255,.12)}
-.blossom-safe-table-front{position:absolute;left:4%;right:4%;top:31%;height:70%;background:linear-gradient(180deg,#72452f,#39231a 75%);clip-path:polygon(5% 0,95% 0,82% 100%,18% 100%)}
-.blossom-safe-table-edge{position:absolute;left:4%;right:4%;top:26%;height:13px;border-radius:999px;background:linear-gradient(180deg,#b67e51,#543320);z-index:2}
-.blossom-safe-shadow{position:absolute;left:50%;top:10%;width:175px;height:34px;transform:translateX(-50%);border-radius:50%;background:rgba(0,0,0,.35);filter:blur(10px)}
-.blossom-safe-vase{position:absolute;left:50%;top:-1%;width:122px;height:135px;transform:translateX(-50%);z-index:10}
-.blossom-safe-vase-neck{position:absolute;left:35%;top:0;width:30%;height:42px;border-radius:8px 8px 15px 15px;background:linear-gradient(90deg,#d3ac85,#f1d3ab 42%,#986647);border:1px solid rgba(255,255,255,.20)}
-.blossom-safe-vase-body{position:absolute;left:8%;right:8%;top:30px;height:101px;border-radius:24px 24px 39px 39px;background:radial-gradient(circle at 33% 20%,rgba(255,255,255,.38),transparent 14%),linear-gradient(105deg,#b77e53,#e5bd90 38%,#996547 77%,#65402e);border:1px solid rgba(255,255,255,.20);box-shadow:inset 7px 0 13px rgba(255,255,255,.15),inset -10px -9px 17px rgba(52,31,18,.25),0 15px 20px rgba(0,0,0,.25)}
-.blossom-safe-vase-rim{position:absolute;left:31%;top:-3px;width:38%;height:11px;border-radius:50%;background:linear-gradient(180deg,#f1d5b0,#986345);z-index:2}
-.blossom-safe-close{position:absolute;top:15px;right:15px;z-index:20;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.24);color:#fff;font-size:22px;cursor:pointer}
-.blossom-safe-title{position:absolute;top:17px;left:50%;transform:translateX(-50%);z-index:15;text-align:center;white-space:nowrap}
-.blossom-safe-title b{font-size:15px;font-weight:1000;color:#e8fff5;text-shadow:0 4px 18px rgba(0,0,0,.35)}
-.blossom-safe-title span{display:block;margin-top:3px;font-size:8px;color:rgba(255,255,255,.42);letter-spacing:2px}
+.blossom-safe-icon svg{width:34px;height:34px;position:relative;z-index:1}
+
+/* full-screen Android layout */
+.blossom-safe-room-overlay{position:fixed!important;inset:0!important;z-index:10020!important;width:100vw!important;height:100dvh!important;padding:0!important;display:flex!important;align-items:stretch!important;justify-content:stretch!important;background:#0d0f0d!important;overflow:hidden!important}
+.blossom-safe-room{position:relative!important;width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;border:0!important;border-radius:0!important;overflow:hidden!important;background:#10120f!important;box-shadow:none!important;isolation:isolate!important}
+.blossom-room-world{position:absolute;inset:0;z-index:1;overflow:hidden;background:linear-gradient(180deg,#8ed6f7 0%,#d2efff 35%,#afcf99 55%,#34562f 100%)}
+.blossom-room-world:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 74% 11%,rgba(255,249,206,.95) 0 2.3%,rgba(255,240,168,.34) 3%,transparent 12%),linear-gradient(115deg,rgba(255,255,255,.21),transparent 20%,transparent 68%,rgba(255,255,255,.08));z-index:6;pointer-events:none}
+
+.blossom-cloud{position:absolute;height:34px;border-radius:999px;background:rgba(255,255,255,.82);filter:blur(3px);opacity:.88;box-shadow:28px 6px 0 7px rgba(255,255,255,.63),60px 0 0 3px rgba(255,255,255,.73)}
+.blossom-cloud.c1{width:88px;top:16%;left:-30%;animation:blossomCloudA 22s linear infinite}.blossom-cloud.c2{width:72px;top:31%;left:58%;opacity:.62;animation:blossomCloudB 28s linear infinite}.blossom-cloud.c3{width:58px;top:8%;left:24%;opacity:.45;animation:blossomCloudA 35s linear infinite reverse}
+@keyframes blossomCloudA{from{transform:translateX(0)}to{transform:translateX(150vw)}}@keyframes blossomCloudB{from{transform:translateX(0) scale(.82)}to{transform:translateX(-150vw) scale(.82)}}
+
+.blossom-mountains{position:absolute;left:-8%;right:-8%;bottom:34%;height:38%;background:linear-gradient(165deg,#98b4aa,#648b79 52%,#466b57);clip-path:polygon(0 85%,7% 67%,15% 72%,24% 45%,34% 75%,45% 26%,55% 69%,65% 46%,75% 78%,85% 36%,94% 67%,100% 56%,100% 100%,0 100%);animation:blossomMountains 9s ease-in-out infinite alternate}
+@keyframes blossomMountains{from{transform:scale(1)}to{transform:scale(1.015) translateY(2px)}}
+.blossom-lake{position:absolute;left:-10%;right:-10%;bottom:21%;height:27%;background:linear-gradient(180deg,rgba(210,240,247,.92),rgba(98,176,191,.88) 52%,rgba(48,103,111,.92));clip-path:polygon(0 18%,20% 7%,45% 20%,66% 4%,100% 15%,100% 100%,0 100%);box-shadow:inset 0 10px 25px rgba(255,255,255,.25)}
+.blossom-lake:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.14) 0 1px,transparent 1px 8px);opacity:.42;animation:blossomWater 4s linear infinite}@keyframes blossomWater{to{background-position:0 16px}}
+.blossom-garden{position:absolute;left:-8%;right:-8%;bottom:0;height:34%;background:radial-gradient(circle at 15% 40%,#6c984f 0 8%,transparent 9%),radial-gradient(circle at 34% 65%,#537b3b 0 10%,transparent 11%),radial-gradient(circle at 72% 38%,#789e5a 0 11%,transparent 12%),radial-gradient(circle at 88% 68%,#4c7136 0 12%,transparent 13%),linear-gradient(180deg,#739c58,#36502e)}
+
+.blossom-frame-top{position:absolute;left:0;right:0;top:0;height:58px;background:linear-gradient(180deg,#5e3b24,#8b5835 47%,#492c1b);z-index:12;box-shadow:0 8px 24px rgba(0,0,0,.27)}
+.blossom-frame-arch{position:absolute;left:-6%;right:-6%;top:14px;height:190px;border:16px solid rgba(102,63,38,.96);border-bottom:0;border-radius:55% 55% 0 0/75% 75% 0 0;z-index:11;pointer-events:none;box-shadow:inset 0 8px 10px rgba(255,255,255,.08),0 10px 30px rgba(0,0,0,.22)}
+.blossom-frame-h{position:absolute;left:0;right:0;top:205px;height:18px;background:linear-gradient(180deg,#6e452b,#9c6842 48%,#4a2e1d);z-index:13;box-shadow:0 8px 18px rgba(0,0,0,.2)}
+.blossom-frame-v{position:absolute;top:54px;bottom:38%;left:50%;width:15px;transform:translateX(-50%);background:linear-gradient(90deg,#50301e,#93603d 45%,#4a2b1b);z-index:13;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+.blossom-curtain{position:absolute;top:0;width:22%;height:68%;z-index:18;filter:drop-shadow(0 14px 20px rgba(0,0,0,.24));opacity:.94}
+.blossom-curtain.left{left:0;background:linear-gradient(90deg,#d9d1c7,#f9f5ed 45%,#c8c0b8);clip-path:polygon(0 0,100% 0,77% 100%,0 92%)}.blossom-curtain.right{right:0;background:linear-gradient(270deg,#d9d1c7,#f9f5ed 45%,#c8c0b8);clip-path:polygon(0 0,100% 0,100% 92%,23% 100%)}
+.blossom-curtain:after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.32) 0 10%,rgba(70,54,45,.06) 10% 18%,transparent 18% 28%);animation:blossomCurtain 5s ease-in-out infinite alternate}@keyframes blossomCurtain{from{transform:skewX(0deg)}to{transform:skewX(1.2deg)}}
+
+.blossom-hanging{position:absolute;z-index:22;width:120px;height:155px;top:145px;pointer-events:none}.blossom-hanging.left{left:-20px}.blossom-hanging.right{right:-20px}
+.blossom-hanging-rope{position:absolute;left:50%;top:0;width:2px;height:72px;background:#6a5035;box-shadow:-15px 0 #6a5035,15px 0 #6a5035}
+.blossom-hanging-pot{position:absolute;left:27px;top:62px;width:68px;height:48px;border-radius:8px 8px 28px 28px;background:linear-gradient(105deg,#7d5235,#a87851 46%,#5b3926);box-shadow:inset 5px 0 10px rgba(255,255,255,.11),0 9px 15px rgba(0,0,0,.24)}
+.blossom-hanging-leaves{position:absolute;left:2px;top:68px;width:116px;height:82px;background:radial-gradient(ellipse at 20% 35%,#386739 0 13%,transparent 14%),radial-gradient(ellipse at 38% 20%,#4e7d45 0 15%,transparent 16%),radial-gradient(ellipse at 58% 35%,#315d35 0 16%,transparent 17%),radial-gradient(ellipse at 76% 18%,#5b8751 0 13%,transparent 14%),radial-gradient(ellipse at 86% 49%,#2f5c34 0 14%,transparent 15%);filter:drop-shadow(0 7px 7px rgba(0,0,0,.25));animation:blossomLeaves 4.6s ease-in-out infinite alternate;transform-origin:50% 10%}@keyframes blossomLeaves{from{transform:rotate(-1deg)}to{transform:rotate(1.7deg)}}
+
+.blossom-top-ui{position:absolute;left:0;right:0;top:0;z-index:60;padding:calc(16px + env(safe-area-inset-top)) 18px 0;display:flex;align-items:flex-start;justify-content:space-between;direction:ltr}
+.blossom-safe-close{position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:50px!important;height:50px!important;border-radius:50%!important;display:grid!important;place-items:center!important;border:1px solid rgba(255,255,255,.31)!important;background:rgba(28,25,20,.42)!important;backdrop-filter:blur(18px)!important;box-shadow:0 10px 28px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.15)!important;font-size:0!important}
+.blossom-safe-close:before,.blossom-safe-close:after{content:'';position:absolute;width:23px;height:3px;border-radius:99px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.25)}.blossom-safe-close:before{transform:rotate(45deg)}.blossom-safe-close:after{transform:rotate(-45deg)}
+.blossom-wallet-pill{direction:rtl;display:flex;align-items:center;gap:10px;min-width:178px;height:64px;padding:8px 14px 8px 10px;border-radius:24px;background:linear-gradient(135deg,rgba(19,59,74,.64),rgba(24,88,111,.52));border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(18px);box-shadow:0 12px 34px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.14)}
+.blossom-wallet-flower{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 36% 30%,#f7ffca 0 10%,#77d661 12% 50%,#2a7c45 72%);border:3px solid #f4d76b;box-shadow:0 0 0 2px rgba(255,255,255,.22),0 6px 16px rgba(0,0,0,.18)}.blossom-wallet-flower:before{content:'✿';font-size:28px;color:#ddf88d;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+.blossom-wallet-copy{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}.blossom-wallet-copy strong{font-size:28px;font-weight:1000}.blossom-wallet-copy span{font-size:11px;color:rgba(255,255,255,.82);margin-top:4px}
+
+.blossom-desk{position:absolute;left:-5%;right:-5%;bottom:-2%;height:42%;z-index:30;background:linear-gradient(90deg,rgba(255,255,255,.05),transparent 12% 88%,rgba(0,0,0,.06)),repeating-linear-gradient(90deg,#aa754c 0 78px,#9a6743 79px 82px,#b27e53 83px 155px);box-shadow:inset 0 12px 18px rgba(255,255,255,.08),0 -20px 45px rgba(46,28,16,.12);transform:perspective(900px) rotateX(2deg);transform-origin:bottom center}
+.blossom-desk:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 15%,rgba(255,218,157,.26),transparent 43%),linear-gradient(180deg,rgba(255,255,255,.08),transparent 35%,rgba(31,18,11,.19))}
+.blossom-pot-shadow{position:absolute;left:50%;bottom:22%;width:215px;height:45px;transform:translateX(-50%);border-radius:50%;background:rgba(31,19,11,.40);filter:blur(13px);z-index:34}
+.blossom-pot{position:absolute;left:50%;bottom:23%;width:168px;height:176px;transform:translateX(-50%);z-index:38;filter:drop-shadow(0 19px 19px rgba(0,0,0,.33))}
+.blossom-pot-rim{position:absolute;left:3px;right:3px;top:17px;height:31px;border-radius:50% 50% 22% 22%;background:linear-gradient(180deg,#7f8773 0%,#576052 43%,#373e35 54%,#8e957f 56%,#495145 100%);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 4px 6px rgba(255,255,255,.13),0 6px 7px rgba(0,0,0,.22);z-index:5}
+.blossom-pot-soil{position:absolute;left:12px;right:12px;top:21px;height:20px;border-radius:50%;background:radial-gradient(circle at 30% 35%,#815c3a 0 4%,transparent 5%),radial-gradient(circle at 65% 58%,#9a7048 0 4%,transparent 5%),linear-gradient(180deg,#6b492f,#38261c);box-shadow:inset 0 4px 8px rgba(0,0,0,.45);z-index:4}
+.blossom-pot-body{position:absolute;left:13px;right:13px;top:40px;bottom:8px;border-radius:13px 13px 44px 44px/12px 12px 65px 65px;background:radial-gradient(ellipse at 31% 20%,rgba(255,255,255,.19),transparent 19%),linear-gradient(105deg,#30352f 0%,#555c50 23%,#777d69 43%,#4a5046 68%,#252a26 100%);border:1px solid rgba(255,255,255,.13);box-shadow:inset 11px 0 18px rgba(255,255,255,.08),inset -14px -12px 20px rgba(0,0,0,.28)}
+.blossom-pot-saucer{position:absolute;left:15px;right:15px;bottom:0;height:18px;border-radius:50%;background:linear-gradient(180deg,#9b5b42,#5f3329);box-shadow:0 4px 6px rgba(0,0,0,.25)}
+
+.blossom-info-panel{position:absolute;left:7%;right:7%;bottom:4.5%;z-index:55;padding:17px 16px 16px;border-radius:26px;background:linear-gradient(180deg,rgba(37,26,21,.72),rgba(23,19,17,.80));border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);box-shadow:0 18px 40px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.08);text-align:center}
+.blossom-info-panel h2{font-size:21px;font-weight:1000;margin:0 0 7px;color:#fff}.blossom-info-panel p{font-size:11px;line-height:1.95;color:rgba(255,255,255,.78);margin:0}
+.blossom-info-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:13px}.blossom-action-card{min-height:92px;border-radius:22px;padding:10px 7px;background:rgba(16,16,15,.54);border:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.blossom-action-card.water{border-color:rgba(244,188,79,.42)}.blossom-action-card.food{border-color:rgba(122,190,79,.36)}.blossom-action-card.clean{border-color:rgba(178,104,224,.38)}
+.blossom-action-icon{width:42px;height:42px;display:grid;place-items:center}.blossom-action-icon svg{width:38px;height:38px}.blossom-action-card b{font-size:13px}.blossom-action-card small{font-size:9px;color:rgba(255,255,255,.50)}
+.blossom-bottom-note{margin-top:11px;padding:9px 12px;border-radius:17px;background:rgba(10,12,12,.50);border:1px solid rgba(255,255,255,.10);font-size:9px;color:rgba(255,255,255,.72)}
+@media(min-width:600px){.blossom-safe-room{max-width:520px!important;left:50%!important;transform:translateX(-50%)!important;box-shadow:0 0 0 9999px #080a09!important}}
+@media(max-height:760px){.blossom-info-panel{bottom:2.5%;padding:13px}.blossom-info-actions{margin-top:9px}.blossom-action-card{min-height:76px}.blossom-pot{bottom:21%;transform:translateX(-50%) scale(.88);transform-origin:bottom center}.blossom-frame-h{top:185px}.blossom-hanging{top:128px;transform:scale(.85);transform-origin:top center}}
+
+
+
+/* V12 FINAL MOBILE LAYOUT FIX — keeps the blossom room complete on Android */
+html:has(.blossom-safe-room-overlay),body:has(.blossom-safe-room-overlay){overflow:hidden!important;overscroll-behavior:none!important}
+.blossom-safe-room-overlay{height:100svh!important;min-height:100svh!important;max-height:100svh!important;overflow:hidden!important;overscroll-behavior:none!important}
+.blossom-safe-room{height:100svh!important;min-height:100svh!important;max-height:100svh!important;min-width:100vw!important;overflow:hidden!important}
+.blossom-room-world{height:100%;min-height:100%;overflow:hidden!important}
+.blossom-top-ui{padding-top:max(14px,calc(10px + env(safe-area-inset-top)))!important;padding-left:max(14px,calc(14px + env(safe-area-inset-left)))!important;padding-right:max(14px,calc(14px + env(safe-area-inset-right)))!important}
+.blossom-safe-close{flex:0 0 46px!important;width:46px!important;height:46px!important}
+.blossom-wallet-pill{min-width:158px!important;width:auto!important;height:58px!important;padding:6px 10px 6px 8px!important;border-radius:21px!important}
+.blossom-wallet-flower{width:44px!important;height:44px!important}.blossom-wallet-copy strong{font-size:25px!important}.blossom-wallet-copy span{font-size:10px!important}
+.blossom-frame-top{height:46px!important}.blossom-frame-arch{top:10px!important;height:150px!important;border-width:12px!important}.blossom-frame-h{top:168px!important;height:14px!important}.blossom-frame-v{top:43px!important;width:12px!important}
+.blossom-curtain{height:61%!important}
+.blossom-hanging{top:112px!important;transform:scale(.72)!important;transform-origin:top center!important}
+.blossom-desk{height:38%!important;bottom:-1%!important}
+.blossom-pot-shadow{bottom:31%!important;width:175px!important;height:34px!important}
+.blossom-pot{width:142px!important;height:150px!important;bottom:30%!important}
+.blossom-info-panel{left:5%!important;right:5%!important;bottom:max(10px,calc(8px + env(safe-area-inset-bottom)))!important;padding:11px 11px 10px!important;border-radius:22px!important}
+.blossom-info-panel h2{font-size:18px!important;margin-bottom:4px!important}.blossom-info-panel p{font-size:9px!important;line-height:1.7!important}
+.blossom-info-actions{gap:7px!important;margin-top:8px!important}.blossom-action-card{min-height:67px!important;padding:7px 4px!important;border-radius:17px!important}.blossom-action-icon{width:30px!important;height:30px!important}.blossom-action-icon svg{width:29px!important;height:29px!important}.blossom-action-card b{font-size:10px!important}.blossom-action-card small{font-size:8px!important}.blossom-bottom-note{margin-top:7px!important;padding:6px 8px!important;font-size:8px!important}
+@media(max-width:380px){.blossom-wallet-pill{min-width:142px!important}.blossom-wallet-flower{width:40px!important;height:40px!important}.blossom-wallet-copy strong{font-size:22px!important}.blossom-safe-close{width:43px!important;height:43px!important}.blossom-pot{transform:translateX(-50%) scale(.90)!important;bottom:31%!important}.blossom-info-panel{left:3.5%!important;right:3.5%!important}.blossom-action-card{min-height:62px!important}.blossom-info-panel p{font-size:8.5px!important}}
+@media(min-width:600px){.blossom-safe-room{max-width:520px!important;left:50%!important;transform:translateX(-50%)!important}.blossom-safe-room-overlay{background:#080a09!important}.blossom-room-world{width:100%!important}}
+@media(orientation:landscape) and (max-height:520px){.blossom-info-panel{left:3%!important;right:3%!important;bottom:5px!important;padding:7px!important}.blossom-info-panel p{display:none!important}.blossom-info-actions{margin-top:4px!important}.blossom-action-card{min-height:48px!important}.blossom-pot{bottom:34%!important;transform:translateX(-50%) scale(.72)!important}.blossom-desk{height:34%!important}}
 
 /* Safe password recovery UI */
 .login-recovery-safe{width:100%;max-width:380px;margin:0 auto;padding:20px 18px;border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(220,196,255,.14);text-align:center;animation:loginRecoveryIn .3s ease}
@@ -7513,27 +7554,7 @@ function Student({user,tab,setTab,onLogout}){
             </div>
           </div>
         </div>}
-        {showBlossomRoom ? (
-          <div className="blossom-safe-room-overlay" onMouseDown={()=>setShowBlossomRoom(false)}>
-            <div className="blossom-safe-room" onMouseDown={(e)=>e.stopPropagation()}>
-              <div className="blossom-safe-window"><div className="blossom-safe-hill"></div></div>
-              <div className="blossom-safe-curtain left"></div><div className="blossom-safe-curtain right"></div>
-              <div className="blossom-safe-title"><b>اتاق شکوفه‌ها</b><span>YOUR BLOSSOM SPACE</span></div>
-              <button type="button" className="blossom-safe-close" onClick={()=>setShowBlossomRoom(false)} aria-label="بستن">×</button>
-              <div className="blossom-safe-table">
-                <div className="blossom-safe-shadow"></div>
-                <div className="blossom-safe-vase" aria-label="گلدان خالی">
-                  <div className="blossom-safe-vase-neck"></div>
-                  <div className="blossom-safe-vase-body"></div>
-                  <div className="blossom-safe-vase-rim"></div>
-                </div>
-                <div className="blossom-safe-table-top"></div>
-                <div className="blossom-safe-table-edge"></div>
-                <div className="blossom-safe-table-front"></div>
-              </div>
-            </div>
-          </div>
-        ) : null}
+
         {activeExam.allow_calculator&&<button type="button" className="exam-calc-launcher" onClick={()=>setShowExamCalc(true)} title="ماشین‌حساب"><Icon d={Icons.calc} size={27}/></button>}
         {activeExam.allow_calculator&&showExamCalc&&<div className="modal-overlay" onClick={()=>setShowExamCalc(false)}><div className="exam-calc-modal" onClick={e=>e.stopPropagation()}><div className="flex items-center justify-between mb-3"><div><b className="gradient-text">ماشین‌حساب آزمون</b><div className="text-[9px] text-white/40 mt-1">بدون خروج از سوال محاسبه کن</div></div><button className="p-2 bg-white/5 rounded-xl" onClick={()=>setShowExamCalc(false)}><Icon d={Icons.x} size={18}/></button></div><div className="exam-calc-display">{calcDisplay||'0'}</div><div className="exam-calc-grid">{['7','8','9','÷','4','5','6','×','1','2','3','-','C','0','=','+'].map(b=><button key={b} onClick={()=>calcPress(b)} className={`exam-calc-key ${['÷','×','-','+'].includes(b)?'op':''} ${b==='='?'eq':''} ${b==='C'?'clear':''}`}>{b}</button>)}</div></div></div>}
       </div>
@@ -7562,7 +7583,7 @@ function Student({user,tab,setTab,onLogout}){
                 <div className="coin-orb coin-real-icon coin-medallion" aria-label="سکه"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16" fill="#a96209"/><circle cx="24" cy="22.5" r="16" fill="#f7c94c" stroke="#fff2ad" stroke-width="1.2"/><circle cx="24" cy="22.5" r="11.5" fill="none" stroke="#c9820d" stroke-width="1.1"/><path d="M24 15.8l2.1 4.6 5 .5-3.7 3.3 1 4.7-4.4 2.4-4.4-2.4 1-4.7-3.7-3.3 5-.5z" fill="#fff4b8"/></svg></div>
                 <div><div className="coin-count">{coinBalance}</div><div className="blossom-safe-label">سکه</div></div>
               </div>
-              <button type="button" className="blossom-safe-open" onClick={openBlossomRoom} aria-label="باز کردن پنل شکوفه">
+              <button type="button" className="blossom-safe-open" onClick={(e)=>{e.stopPropagation();openBlossomRoom();}} aria-label="باز کردن پنل شکوفه">
                 <span className="blossom-safe-arrow" aria-hidden="true"></span>
                 <div className="coin-home-balance" style={{paddingLeft:'27px',gap:'9px'}}>
                   <div className="blossom-safe-icon"><svg viewBox="0 0 48 48"><defs><radialGradient id="bsPetal" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#d1fae5"/><stop offset=".45" stop-color="#6ee7b7"/><stop offset="1" stop-color="#059669"/></radialGradient><radialGradient id="bsCore"><stop offset="0" stop-color="#fff7ae"/><stop offset=".55" stop-color="#facc15"/><stop offset="1" stop-color="#d97706"/></radialGradient></defs><g fill="url(#bsPetal)"><ellipse cx="24" cy="11.5" rx="6.2" ry="10"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(72 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(144 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(216 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(288 24 24)"/></g><circle cx="24" cy="24" r="6.2" fill="url(#bsCore)"/></svg></div>
@@ -7759,6 +7780,53 @@ function Student({user,tab,setTab,onLogout}){
         )}
       </div>
       {celebration&&<div className="trophy-celebrate"><div className="trophy-celebrate-card" onClick={e=>e.stopPropagation()}><div className="trophy-celebrate-art"><img src={celebration.image} alt=""/></div><h2>🏆 جام جدید!</h2><p>{celebration.name} با موفقیت به مجموعه شما اضافه شد.</p>{Array.from({length:34}).map((_,i)=><i key={i} className="confetti-piece" style={{'--x':`${Math.random()*100}%`,'--dx':`${(Math.random()*220-110)}px`,'--d':`${1.7+Math.random()*1.7}s`,'--delay':`${Math.random()*.35}s`,'--h':`${Math.floor(Math.random()*360)}`,'--r':`${Math.floor(Math.random()*180)}deg`}}/>)}<button className="btn-glass mt-5" onClick={()=>setCelebration(null)}>ایول! ✨</button></div></div>}
+        {showBlossomRoom ? (
+          <div className="blossom-safe-room-overlay">
+            <div className="blossom-safe-room">
+              <div className="blossom-room-world" aria-hidden="true">
+                <div className="blossom-cloud c1"></div><div className="blossom-cloud c2"></div><div className="blossom-cloud c3"></div>
+                <div className="blossom-mountains"></div>
+                <div className="blossom-lake"></div>
+                <div className="blossom-garden"></div>
+                <div className="blossom-frame-top"></div>
+                <div className="blossom-frame-arch"></div>
+                <div className="blossom-frame-h"></div>
+                <div className="blossom-frame-v"></div>
+                <div className="blossom-curtain left"></div>
+                <div className="blossom-curtain right"></div>
+                <div className="blossom-hanging left"><div className="blossom-hanging-rope"></div><div className="blossom-hanging-pot"></div><div className="blossom-hanging-leaves"></div></div>
+                <div className="blossom-hanging right"><div className="blossom-hanging-rope"></div><div className="blossom-hanging-pot"></div><div className="blossom-hanging-leaves"></div></div>
+                <div className="blossom-desk"></div>
+                <div className="blossom-pot-shadow"></div>
+                <div className="blossom-pot">
+                  <div className="blossom-pot-rim"></div>
+                  <div className="blossom-pot-soil"></div>
+                  <div className="blossom-pot-body"></div>
+                  <div className="blossom-pot-saucer"></div>
+                </div>
+              </div>
+
+              <div className="blossom-top-ui">
+                <button type="button" className="blossom-safe-close" onClick={()=>setShowBlossomRoom(false)} aria-label="بستن"></button>
+                <div className="blossom-wallet-pill">
+                  <div className="blossom-wallet-flower"></div>
+                  <div className="blossom-wallet-copy"><strong>0</strong><span>شکوفه های من</span></div>
+                </div>
+              </div>
+
+              <div className="blossom-info-panel">
+                <h2>🌿 اتاق شکوفه ها 🌿</h2>
+                <p>شکوفه ها نشانه رشد، تلاش و موفقیت تو هستند.<br/>با کسب فعالیت های بیشتر، گلدونت کم کم پر از زندگی میشه!</p>
+                <div className="blossom-info-actions">
+                  <div className="blossom-action-card water"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M17 18h17l3 21H14z" fill="#c98738"/><path d="M19 17c1-7 10-7 11 0" fill="none" stroke="#f1c06b" stroke-width="3"/><path d="M14 24L4 30l2 4 10-4" fill="#d79b4c"/><path d="M7 30l-4-2 1-3 6 2" fill="#efc777"/></svg></div><b>آبیاری</b><small>به زودی</small></div>
+                  <div className="blossom-action-card food"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M13 9h22l-3 31H16z" fill="#78a94a"/><path d="M14 12h20" stroke="#bde77e" stroke-width="3"/><circle cx="24" cy="25" r="8" fill="#dff4ac"/><path d="M24 30v-9m0 5c-5-1-7-4-7-7 5 0 7 2 7 5m0 0c5-1 7-4 7-7-5 0-7 2-7 5" fill="none" stroke="#4f8b44" stroke-width="2"/></svg></div><b>کود دهی</b><small>به زودی</small></div>
+                  <div className="blossom-action-card clean"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M18 9h16v8l-4 3v19H17V20l5-3V9z" fill="#9f6ccd"/><path d="M22 9V5h13l5 4-4 4h-9" fill="#c795ef"/><path d="M12 21l7-4" stroke="#e4c4ff" stroke-width="3"/><circle cx="10" cy="24" r="2" fill="#d4b0f2"/></svg></div><b>تمیز کردن</b><small>به زودی</small></div>
+                </div>
+                <div className="blossom-bottom-note">• هر شکوفه، نتیجه یک قدم به سوی بهتر شدن توست •<br/>🌸 به زودی گلدونت پر از شکوفه های زیبا خواهد شد...</div>
+              </div>
+            </div>
+          </div>
+        ) : null}
       <div className="nav-bar">
         <div className={`nav-item ${tab==='home'?'active':''}`} onClick={()=>setTab('home')}><Icon d={Icons.home}/><span>خانه</span></div>
         <div className={`nav-item ${tab==='messages'?'active':''}`} onClick={()=>{setTab('messages');setShowChat(false);}}><span className="relative"><Icon d={Icons.message}/>{unreadCount>0&&<span className="message-home-badge">{unreadCount>99?'99+':unreadCount}</span>}</span><span>پیام‌رسان</span></div>
@@ -8698,4 +8766,31 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 .social-fullscreen-overlay .tadbir-floating-composer *:not(svg):not(path){
   -webkit-tap-highlight-color:transparent;
 }
+\n/* V13 — natural cinematic finish for the blossom room; additive only */
+.blossom-safe-room{background:#111!important}
+.blossom-room-world{background:linear-gradient(180deg,#79c9ee 0%,#b8e5f4 28%,#dce6c5 47%,#7e9d61 62%,#304a2d 100%)!important}
+.blossom-room-world:after{content:"";position:absolute;inset:0;z-index:9;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,transparent 0 34%,rgba(17,27,20,.08) 67%,rgba(5,10,7,.28) 100%),linear-gradient(106deg,rgba(255,255,255,.13),transparent 22%,transparent 72%,rgba(255,255,255,.06));mix-blend-mode:soft-light}
+.blossom-room-world:before{background:radial-gradient(circle at 77% 12%,rgba(255,249,209,.98) 0 1.6%,rgba(255,243,189,.38) 2.2%,transparent 11%),linear-gradient(112deg,rgba(255,255,255,.22),transparent 17%,transparent 69%,rgba(255,255,255,.09))!important;animation:blossomSunBreath 8s ease-in-out infinite alternate}
+@keyframes blossomSunBreath{from{opacity:.72}to{opacity:1}}
+.blossom-mountains{background:linear-gradient(165deg,#a7bbb0 0%,#769788 38%,#4e705d 70%,#36533e 100%)!important;filter:saturate(.82) contrast(1.02);box-shadow:inset 0 18px 32px rgba(255,255,255,.08)}
+.blossom-lake{background:linear-gradient(180deg,rgba(216,239,242,.95),rgba(105,174,184,.92) 48%,rgba(55,109,113,.95))!important;opacity:.96}
+.blossom-lake:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(175deg,transparent 0 17px,rgba(255,255,255,.15) 18px,transparent 20px 34px);opacity:.45;animation:blossomWaterGlint 7s linear infinite}
+@keyframes blossomWaterGlint{from{transform:translateX(-5%)}to{transform:translateX(5%)}}
+.blossom-garden{background:radial-gradient(ellipse at 7% 45%,#6f9a54 0 9%,transparent 10%),radial-gradient(ellipse at 21% 74%,#486f3a 0 11%,transparent 12%),radial-gradient(ellipse at 48% 58%,#6e914f 0 12%,transparent 13%),radial-gradient(ellipse at 71% 43%,#7c9f5e 0 10%,transparent 11%),radial-gradient(ellipse at 91% 66%,#3f6334 0 14%,transparent 15%),linear-gradient(180deg,#769e5d,#354e2d 100%)!important}
+.blossom-frame-arch{border-color:#68432a!important;box-shadow:inset 0 9px 12px rgba(255,255,255,.09),inset 0 -8px 16px rgba(0,0,0,.12),0 12px 30px rgba(0,0,0,.24)!important}
+.blossom-frame-top,.blossom-frame-h,.blossom-frame-v{background:linear-gradient(90deg,#4b2c1c,#7b5033 42%,#a16a43 55%,#4d2e1d)!important}
+.blossom-curtain{opacity:.9!important;background-color:#eee!important;box-shadow:inset -14px 0 22px rgba(120,100,84,.08)}
+.blossom-desk{background:linear-gradient(180deg,#c08a5b 0%,#a36d48 15%,#7d4d31 100%)!important;box-shadow:inset 0 11px 18px rgba(255,255,255,.13),inset 0 -28px 36px rgba(52,28,15,.19),0 -20px 45px rgba(46,28,16,.15)!important}
+.blossom-desk:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(5deg,transparent 0 26px,rgba(74,42,25,.16) 27px,transparent 29px),repeating-linear-gradient(92deg,transparent 0 115px,rgba(255,231,196,.07) 117px,transparent 120px);opacity:.7;mix-blend-mode:multiply}
+.blossom-pot{width:182px;height:188px;filter:drop-shadow(0 21px 21px rgba(0,0,0,.36))!important}
+.blossom-pot-rim{background:linear-gradient(180deg,#9a9f8b,#62695b 39%,#333a31 55%,#8b9280 60%,#4a5146)!important;box-shadow:inset 0 5px 8px rgba(255,255,255,.18),inset 0 -4px 7px rgba(0,0,0,.35),0 7px 8px rgba(0,0,0,.22)!important}
+.blossom-pot-soil{background:radial-gradient(circle at 18% 36%,#9b7048 0 4%,transparent 4.8%),radial-gradient(circle at 43% 64%,#704b2e 0 5%,transparent 5.8%),radial-gradient(circle at 75% 36%,#a37b50 0 4%,transparent 4.8%),linear-gradient(180deg,#62432d,#2d2018)!important}
+.blossom-pot-body{background:radial-gradient(ellipse at 27% 17%,rgba(255,255,255,.24),transparent 19%),radial-gradient(ellipse at 63% 38%,rgba(255,255,255,.08),transparent 25%),linear-gradient(105deg,#252a26 0%,#4b5147 20%,#747b69 43%,#596052 61%,#282d28 100%)!important;box-shadow:inset 13px 0 20px rgba(255,255,255,.09),inset -17px -13px 24px rgba(0,0,0,.31),inset 0 0 0 1px rgba(255,255,255,.08)!important}
+.blossom-pot-saucer{height:20px;background:linear-gradient(180deg,#a96c4b,#69392c 52%,#47251e)!important;box-shadow:0 5px 8px rgba(0,0,0,.29),inset 0 2px 3px rgba(255,255,255,.11)!important}
+.blossom-pot-shadow{width:240px;height:48px;background:rgba(26,15,9,.43)!important;filter:blur(15px)!important}
+.blossom-info-panel{background:linear-gradient(180deg,rgba(29,24,20,.67),rgba(15,15,14,.78))!important;border-color:rgba(255,255,255,.18)!important;box-shadow:0 22px 50px rgba(0,0,0,.31),inset 0 1px 0 rgba(255,255,255,.12)!important}
+.blossom-info-panel:before{content:"";position:absolute;left:10%;right:10%;top:-18px;height:35px;border-radius:50%;background:rgba(255,229,177,.08);filter:blur(16px);pointer-events:none}
+.blossom-action-card{background:rgba(12,14,13,.45)!important;backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 8px 20px rgba(0,0,0,.12)}
+.blossom-wallet-pill{background:linear-gradient(135deg,rgba(18,53,63,.62),rgba(26,87,101,.48))!important;box-shadow:0 14px 35px rgba(0,0,0,.21),inset 0 1px 0 rgba(255,255,255,.18)!important}
+@media(max-width:430px){.blossom-pot{width:158px;height:165px}.blossom-info-panel{left:5%;right:5%;padding:14px 12px}.blossom-info-panel h2{font-size:19px}.blossom-action-card{min-height:82px}.blossom-wallet-pill{min-width:154px;height:58px}.blossom-wallet-flower{width:43px;height:43px}.blossom-wallet-copy strong{font-size:25px}.blossom-safe-close{width:46px!important;height:46px!important}}
 </style>
