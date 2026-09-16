@@ -939,7 +939,7 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 @media(max-width:600px){.telegram-stories-strip{top:calc(116px + env(safe-area-inset-top))!important}.telegram-contact-list{top:calc(198px + env(safe-area-inset-top))!important}.tg-story-composer{max-height:78vh;overflow:auto}}
 
 /* ===== TADBIR ACHIEVEMENTS / COINS V1 ===== */
-.coin-home-card{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:stretch;gap:10px;padding:10px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(99,102,241,.10) 48%,rgba(16,185,129,.10));border:1px solid rgba(255,255,255,.10);box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.1);isolation:isolate}.coin-home-card:before{content:'';position:absolute;width:130px;height:130px;right:-45px;top:-70px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.26),transparent 68%);filter:blur(4px);z-index:-1}.coin-home-balance{display:flex;align-items:center;gap:10px;min-width:0}.coin-home-panel{min-width:0;min-height:62px;display:flex;align-items:center;position:relative;border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 8px 20px rgba(0,0,0,.12);overflow:hidden}.coin-home-panel:after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.055),transparent 42%,rgba(255,255,255,.018));pointer-events:none}.coin-home-panel-gold{justify-content:flex-start;padding:8px 12px}.coin-home-panel-blossom{justify-content:flex-start;padding:8px 10px 8px 12px}.coin-home-panel-arrow{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:25px;height:25px;border-radius:50%;display:grid;place-items:center;color:rgba(255,255,255,.75);font-size:20px;font-weight:500;line-height:1;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);z-index:3}.coin-home-balance-blossom{padding-left:25px;gap:9px}.blossom-count{font-size:22px;font-weight:1000;color:#9ff7c9;text-shadow:0 3px 18px rgba(16,185,129,.28)}.blossom-label{font-size:9px;color:rgba(255,255,255,.40);margin-top:1px}.blossom-icon{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:14px;background:radial-gradient(circle at 30% 25%,rgba(167,243,208,.32),rgba(16,185,129,.13) 52%,rgba(6,78,59,.20));border:1px solid rgba(110,231,183,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 7px 20px rgba(16,185,129,.20)}.blossom-icon svg{width:34px;height:34px;display:block;filter:drop-shadow(0 3px 5px rgba(5,150,105,.35))}.coin-home-card .coin-medallion,.coin-home-card .blossom-icon{animation:none!important;transform:none!important}.coin-orb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff7c7 0 9%,#ffd75a 28%,#f4ad22 62%,#c8790c 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.75),inset -3px -5px 8px rgba(112,62,0,.22),0 8px 22px rgba(245,158,11,.25);flex:none}.coin-real-icon svg{width:31px;height:31px;display:block}.coin-count{font-size:22px;font-weight:1000;color:#ffe8a8;text-shadow:0 3px 18px rgba(251,191,36,.35)}.trophy-count-badge{display:inline-flex;align-items:center;gap:4px}.trophy-mini{font-size:18px;line-height:1;color:#ffd85a;filter:drop-shadow(0 2px 5px rgba(251,191,36,.45))}
+.coin-home-card{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin-bottom:12px;border-radius:20px;background:linear-gradient(135deg,rgba(251,191,36,.16),rgba(236,72,153,.09) 48%,rgba(99,102,241,.14));border:1px solid rgba(251,191,36,.22);box-shadow:0 16px 40px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.1);isolation:isolate}.coin-home-card:before{content:'';position:absolute;width:130px;height:130px;right:-45px;top:-70px;border-radius:50%;background:radial-gradient(circle,rgba(251,191,36,.26),transparent 68%);filter:blur(4px);z-index:-1}.coin-home-balance{display:flex;align-items:center;gap:11px}.coin-orb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff7c7 0 9%,#ffd75a 28%,#f4ad22 62%,#c8790c 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.75),inset -3px -5px 8px rgba(112,62,0,.22),0 8px 22px rgba(245,158,11,.25);flex:none}.coin-real-icon svg{width:31px;height:31px;display:block}.coin-count{font-size:22px;font-weight:1000;color:#ffe8a8;text-shadow:0 3px 18px rgba(251,191,36,.35)}.trophy-count-badge{display:inline-flex;align-items:center;gap:4px}.trophy-mini{font-size:18px;line-height:1;color:#ffd85a;filter:drop-shadow(0 2px 5px rgba(251,191,36,.45))}
 /* Home dual-wallet cards — first step: split the coin card and add the green blossom coin card */
 .home-wallet-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .home-wallet-pair .coin-home-card{margin-bottom:0;min-width:0;height:100%;padding:10px 12px}
@@ -951,9 +951,9 @@ body:has(.social-fullscreen-overlay){overflow:hidden!important;overscroll-behavi
 .home-green-coin-card:active{transform:scale(.985)}
 .home-green-coin-card:hover{border-color:rgba(52,211,153,.42);box-shadow:0 18px 45px rgba(0,0,0,.25),0 0 28px rgba(16,185,129,.1)}
 .home-green-coin-content{display:flex;align-items:center;gap:8px;min-width:0}
-.home-green-coin-orb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:radial-gradient(circle at 30% 25%,#ecfff7 0 8%,#86efac 28%,#22c55e 60%,#15803d 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.78),inset -3px -5px 8px rgba(3,79,42,.24),0 8px 22px rgba(16,185,129,.3);animation:greenBlossomFloat 3s ease-in-out infinite}
+.home-green-coin-orb{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;background:radial-gradient(circle at 30% 25%,#ecfff7 0 8%,#86efac 28%,#22c55e 60%,#15803d 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.78),inset -3px -5px 8px rgba(3,79,42,.24),0 8px 22px rgba(16,185,129,.3);animation:none!important}
 .home-green-coin-orb svg{width:32px;height:32px;display:block;filter:drop-shadow(0 2px 4px rgba(3,79,42,.3))}
-.home-green-coin-label{font-size:10px;font-weight:900;color:#bbf7d0;line-height:1.6}
+.home-green-coin-label{font-size:10px;font-weight:900;color:#bbf7d0;line-height:1.6}.home-green-coin-count-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0}.home-green-coin-count{font-size:22px;line-height:1;color:#a7f3d0;font-weight:1000;text-shadow:0 3px 16px rgba(16,185,129,.3)}
 .home-green-coin-arrow{width:27px;height:27px;border-radius:10px;display:grid;place-items:center;flex:none;color:#d1fae5;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09);font-size:18px;font-weight:900;line-height:1;box-shadow:inset 0 1px rgba(255,255,255,.08)}
 @keyframes greenBlossomFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2deg)}}
 @media(max-width:420px){.home-wallet-pair{gap:7px}.home-wallet-pair .coin-home-card{padding:9px 8px}.home-green-coin-card{padding:9px 8px}.home-green-coin-orb{width:39px;height:39px}.home-green-coin-orb svg{width:28px;height:28px}.home-green-coin-label{font-size:9px}.home-green-coin-arrow{width:24px;height:24px;font-size:16px}}
@@ -7499,52 +7499,13 @@ function Student({user,tab,setTab,onLogout}){
         {tab==='home'&&(
           <>
             <div className="home-wallet-pair">
-              <div className="coin-home-card">
-              <div className="coin-home-panel coin-home-panel-gold">
-                <div className="coin-home-balance">
-                  <div className="coin-orb coin-real-icon coin-medallion" aria-label="سکه">
-                    <svg viewBox="0 0 48 48" aria-hidden="true">
-                      <defs>
-                        <radialGradient id="coinFaceGold2" cx="32%" cy="24%" r="78%"><stop offset="0" stop-color="#fff9cf"/><stop offset=".22" stop-color="#ffe98a"/><stop offset=".52" stop-color="#f7bb32"/><stop offset=".82" stop-color="#d88b10"/><stop offset="1" stop-color="#9c5b08"/></radialGradient>
-                        <linearGradient id="coinEdgeGold2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a1"/><stop offset=".38" stop-color="#f4b52d"/><stop offset=".7" stop-color="#b86c09"/><stop offset="1" stop-color="#7c4305"/></linearGradient>
-                      </defs>
-                      <ellipse cx="24" cy="26" rx="15.8" ry="15.8" fill="url(#coinEdgeGold2)" opacity=".95"/>
-                      <ellipse cx="24" cy="23.5" rx="15.8" ry="15.8" fill="url(#coinFaceGold2)" stroke="#fff2ad" stroke-width="1.2"/>
-                      <circle cx="24" cy="23.5" r="11.6" fill="none" stroke="#c9820d" stroke-width="1.15" opacity=".85"/>
-                      <circle cx="24" cy="23.5" r="9.5" fill="none" stroke="#ffe78a" stroke-width=".7" opacity=".7"/>
-                      <path d="M24 16.2l2.05 4.55 4.95.48-3.7 3.28 1.05 4.78L24 26.85l-4.35 2.44 1.05-4.78-3.7-3.28 4.95-.48z" fill="#fff4b8" stroke="#b66d08" stroke-width=".7"/>
-                      <ellipse cx="18.2" cy="17.1" rx="4.2" ry="2" fill="#fff" opacity=".3" transform="rotate(-24 18.2 17.1)"/>
-                    </svg>
-                  </div>
-                  <div className="coin-count">{coinBalance}</div>
+              <div className="coin-home-card slide-up"><div className="coin-home-balance"><div className="coin-orb coin-real-icon coin-medallion" aria-label="سکه"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><radialGradient id="coinFaceGold2" cx="32%" cy="24%" r="78%"><stop offset="0" stop-color="#fff9cf"/><stop offset=".22" stop-color="#ffe98a"/><stop offset=".52" stop-color="#f7bb32"/><stop offset=".82" stop-color="#d88b10"/><stop offset="1" stop-color="#9c5b08"/></radialGradient><linearGradient id="coinEdgeGold2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0a1"/><stop offset=".38" stop-color="#f4b52d"/><stop offset=".7" stop-color="#b86c09"/><stop offset="1" stop-color="#7c4305"/></linearGradient></defs><ellipse cx="24" cy="26" rx="15.8" ry="15.8" fill="url(#coinEdgeGold2)" opacity=".95"/><ellipse cx="24" cy="23.5" rx="15.8" ry="15.8" fill="url(#coinFaceGold2)" stroke="#fff2ad" stroke-width="1.2"/><circle cx="24" cy="23.5" r="11.6" fill="none" stroke="#c9820d" stroke-width="1.15" opacity=".85"/><circle cx="24" cy="23.5" r="9.5" fill="none" stroke="#ffe78a" stroke-width=".7" opacity=".7"/><path d="M24 16.2l2.05 4.55 4.95.48-3.7 3.28 1.05 4.78L24 26.85l-4.35 2.44 1.05-4.78-3.7-3.28 4.95-.48z" fill="#fff4b8" stroke="#b66d08" stroke-width=".7"/><ellipse cx="18.2" cy="17.1" rx="4.2" ry="2" fill="#fff" opacity=".3" transform="rotate(-24 18.2 17.1)"/></svg></div><div className="coin-count">{coinBalance}</div></div><div className="text-left"><span className="badge badge-new trophy-count-badge"><span className="trophy-mini">♜</span> {ownedTrophyIds.length}/۱۰</span></div></div>
+              <div className="home-green-coin-card slide-up" role="button" tabIndex="0" aria-label="سکه‌های شکوفه‌ای">
+                <div className="home-green-coin-content">
+                  <div className="home-green-coin-orb" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><defs><radialGradient id="greenBlossomCoin" cx="32%" cy="25%" r="78%"><stop offset="0" stop-color="#f0fff7"/><stop offset=".22" stop-color="#bbf7d0"/><stop offset=".55" stop-color="#4ade80"/><stop offset=".82" stop-color="#16a34a"/><stop offset="1" stop-color="#166534"/></radialGradient></defs><circle cx="24" cy="24" r="16.5" fill="url(#greenBlossomCoin)" stroke="#dcfce7" stroke-width="1.1"/><g fill="#ecfdf5" stroke="#15803d" stroke-width=".8"><ellipse cx="24" cy="15.1" rx="4.1" ry="7.1"/><ellipse cx="32.3" cy="20" rx="7.1" ry="4.1" transform="rotate(35 32.3 20)"/><ellipse cx="30.7" cy="29.1" rx="4.1" ry="7.1" transform="rotate(72 30.7 29.1)"/><ellipse cx="17.7" cy="29.1" rx="4.1" ry="7.1" transform="rotate(-72 17.7 29.1)"/><ellipse cx="15.7" cy="20" rx="7.1" ry="4.1" transform="rotate(-35 15.7 20)"/></g><circle cx="24" cy="24" r="5.1" fill="#bbf7d0" stroke="#15803d" stroke-width=".9"/><circle cx="22.2" cy="22.1" r="1.7" fill="#fff" opacity=".7"/></svg></div>
+                  <div className="home-green-coin-count-wrap"><strong className="home-green-coin-count">{earnedStars}</strong><span className="home-green-coin-label">شکوفه</span></div>
                 </div>
-              </div>
-              <div className="coin-home-panel coin-home-panel-blossom">
-                <span className="coin-home-panel-arrow" aria-hidden="true">&gt;</span>
-                <div className="coin-home-balance coin-home-balance-blossom">
-                  <div className="blossom-icon" aria-label="شکوفه">
-                    <svg viewBox="0 0 48 48" aria-hidden="true">
-                      <defs>
-                        <radialGradient id="blossomPetal" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#d1fae5"/><stop offset=".45" stop-color="#6ee7b7"/><stop offset="1" stop-color="#059669"/></radialGradient>
-                        <radialGradient id="blossomCore" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#fff7ae"/><stop offset=".45" stop-color="#facc15"/><stop offset="1" stop-color="#d97706"/></radialGradient>
-                      </defs>
-                      <g fill="url(#blossomPetal)" stroke="#a7f3d0" stroke-width=".75">
-                        <ellipse cx="24" cy="11.5" rx="6.2" ry="10"/>
-                        <ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(72 24 24)"/>
-                        <ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(144 24 24)"/>
-                        <ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(216 24 24)"/>
-                        <ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(288 24 24)"/>
-                      </g>
-                      <circle cx="24" cy="24" r="6.2" fill="url(#blossomCore)" stroke="#fde68a" stroke-width="1"/>
-                      <circle cx="21.8" cy="21.8" r="1.7" fill="#fff" opacity=".55"/>
-                      <circle cx="31.5" cy="31.5" r="2.2" fill="#d1fae5" opacity=".8"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="blossom-count">{earnedStars}</div>
-                    <div className="blossom-label">شکوفه</div>
-                  </div>
-                </div>
+                <span className="home-green-coin-arrow" aria-hidden="true">&gt;</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3 mb-4">
