@@ -8794,3 +8794,220 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 .blossom-wallet-pill{background:linear-gradient(135deg,rgba(18,53,63,.62),rgba(26,87,101,.48))!important;box-shadow:0 14px 35px rgba(0,0,0,.21),inset 0 1px 0 rgba(255,255,255,.18)!important}
 @media(max-width:430px){.blossom-pot{width:158px;height:165px}.blossom-info-panel{left:5%;right:5%;padding:14px 12px}.blossom-info-panel h2{font-size:19px}.blossom-action-card{min-height:82px}.blossom-wallet-pill{min-width:154px;height:58px}.blossom-wallet-flower{width:43px;height:43px}.blossom-wallet-copy strong{font-size:25px}.blossom-safe-close{width:46px!important;height:46px!important}}
 </style>
+
+<style id="tadbir-blossom-mobile-cinematic-final">
+/* =========================================================
+   TADBIR — BLOSSOM ROOM MOBILE CINEMATIC LAYER
+   Additive + fully scoped to .blossom-* only.
+   Login / authentication UI is intentionally untouched.
+   ========================================================= */
+.blossom-safe-room-overlay,
+.blossom-safe-room{
+  -webkit-user-select:none;
+  user-select:none;
+  touch-action:none;
+}
+.blossom-room-world{
+  width:100%;
+  height:100%;
+  min-height:100%;
+  contain:layout paint;
+  isolation:isolate;
+}
+/* A subtle living atmosphere: haze + drifting light. */
+.blossom-room-world:after{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  z-index:10;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 28%,rgba(255,255,255,.16) 0 1px,transparent 2px),
+    radial-gradient(circle at 72% 33%,rgba(255,247,191,.22) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 43% 18%,rgba(255,255,255,.13) 0 1px,transparent 2px),
+    radial-gradient(ellipse at 50% 48%,transparent 0 35%,rgba(255,255,255,.045) 58%,rgba(0,0,0,.22) 100%);
+  background-size:auto,auto,auto,100% 100%;
+  mix-blend-mode:screen;
+  opacity:.72;
+  animation:blossomAtmosphere 9s ease-in-out infinite alternate;
+}
+@keyframes blossomAtmosphere{
+  0%{transform:translate3d(-1%,0,0) scale(1);opacity:.58}
+  50%{opacity:.78}
+  100%{transform:translate3d(1%,1%,0) scale(1.025);opacity:.68}
+}
+/* Mobile depth: distant light bands move independently. */
+.blossom-mountains{transform-origin:50% 100%;will-change:transform}
+.blossom-lake{will-change:transform}
+.blossom-garden{transform-origin:50% 100%;will-change:transform}
+.blossom-garden:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 12% 22%,rgba(255,255,214,.24),transparent 13%),
+    radial-gradient(ellipse at 82% 15%,rgba(255,255,255,.12),transparent 16%);
+  opacity:.7;
+  animation:blossomGardenLight 7s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.blossom-garden:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;height:42%;
+  background:
+    radial-gradient(circle at 8% 65%,rgba(246,194,93,.55) 0 2px,transparent 3px),
+    radial-gradient(circle at 24% 34%,rgba(255,224,130,.48) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 41% 74%,rgba(255,238,160,.42) 0 2px,transparent 3px),
+    radial-gradient(circle at 63% 42%,rgba(255,224,130,.5) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 79% 68%,rgba(255,239,170,.44) 0 2px,transparent 3px),
+    radial-gradient(circle at 94% 30%,rgba(255,220,120,.48) 0 1.5px,transparent 3px);
+  filter:blur(.15px);
+  animation:blossomFireflies 4.8s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes blossomGardenLight{from{transform:translateX(-1.5%);opacity:.45}to{transform:translateX(1.5%);opacity:.85}}
+@keyframes blossomFireflies{from{opacity:.22;transform:translateY(2px)}to{opacity:.72;transform:translateY(-5px)}}
+/* Hanging plants feel suspended rather than static. */
+.blossom-hanging{will-change:transform}
+.blossom-hanging.left{animation:blossomHangLeft 6.5s ease-in-out infinite alternate}
+.blossom-hanging.right{animation:blossomHangRight 7.2s ease-in-out infinite alternate}
+@keyframes blossomHangLeft{from{transform:rotate(-1.4deg) translateY(0)}to{transform:rotate(1.8deg) translateY(2px)}}
+@keyframes blossomHangRight{from{transform:rotate(1.3deg) translateY(1px)}to{transform:rotate(-1.6deg) translateY(-1px)}}
+.blossom-hanging-leaves{animation-duration:3.8s!important}
+/* Richer ceramic pot highlight without changing its existing geometry. */
+.blossom-pot{will-change:transform;transform-origin:50% 100%}
+.blossom-pot-body:after{
+  content:"";
+  position:absolute;
+  left:12%;right:16%;top:9%;height:28%;
+  border-radius:50%;
+  background:linear-gradient(105deg,rgba(255,255,255,.16),rgba(255,255,255,0) 65%);
+  filter:blur(3px);
+  opacity:.62;
+  transform:rotate(-8deg);
+  pointer-events:none;
+}
+.blossom-pot-body{position:absolute}
+/* Soft contact glow makes the pot sit naturally on the desk. */
+.blossom-pot-shadow{animation:blossomShadowBreath 4.2s ease-in-out infinite alternate}
+@keyframes blossomShadowBreath{from{transform:translateX(-50%) scale(.96);opacity:.34}to{transform:translateX(-50%) scale(1.04);opacity:.52}}
+/* Desk gets a very slow light sweep. */
+.blossom-desk:before{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;
+  width:38%;
+  left:-45%;
+  background:linear-gradient(90deg,transparent,rgba(255,244,210,.14),transparent);
+  transform:skewX(-12deg);
+  animation:blossomDeskSweep 8.5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes blossomDeskSweep{0%,45%{left:-45%;opacity:0}58%{opacity:.8}100%{left:115%;opacity:0}}
+/* Top controls: compact, thumb-friendly and safe-area aware. */
+.blossom-top-ui{padding-top:max(14px,calc(14px + env(safe-area-inset-top)))!important;padding-left:max(12px,calc(12px + env(safe-area-inset-left)))!important;padding-right:max(12px,calc(12px + env(safe-area-inset-right)))!important}
+.blossom-safe-close{flex:0 0 auto;touch-action:manipulation}
+.blossom-wallet-pill{max-width:52vw;overflow:hidden}
+.blossom-wallet-copy{min-width:0}
+.blossom-wallet-copy span{white-space:nowrap}
+/* Information panel behaves like a mobile bottom sheet, not a desktop card. */
+.blossom-info-panel{
+  max-height:42svh;
+  overflow:hidden;
+  box-sizing:border-box;
+  backdrop-filter:blur(20px) saturate(125%)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(125%)!important;
+}
+.blossom-info-actions{min-width:0}
+.blossom-action-card{min-width:0;overflow:hidden;touch-action:manipulation}
+.blossom-action-card b,.blossom-action-card small{white-space:nowrap}
+.blossom-bottom-note{overflow:hidden;text-overflow:ellipsis}
+
+@media (max-width:600px){
+  .blossom-safe-room-overlay{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important}
+  .blossom-safe-room{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;width:100vw!important}
+  .blossom-frame-top{height:52px}
+  .blossom-frame-arch{top:10px;height:154px;border-width:12px}
+  .blossom-frame-h{top:174px;height:14px}
+  .blossom-frame-v{top:50px;width:11px}
+  .blossom-curtain{width:19%;height:61%}
+  .blossom-hanging{top:116px;transform:scale(.82);transform-origin:top center}
+  .blossom-desk{height:38%}
+  .blossom-pot{width:min(42vw,182px)!important;height:min(44vw,188px)!important;bottom:30%!important}
+  .blossom-pot-shadow{width:min(56vw,240px)!important;height:42px}
+  .blossom-info-panel{
+    left:3.2%!important;right:3.2%!important;
+    bottom:max(8px,calc(6px + env(safe-area-inset-bottom)))!important;
+    padding:12px 10px 10px!important;
+    border-radius:23px!important;
+    max-height:39svh;
+  }
+  .blossom-info-panel h2{font-size:clamp(17px,5vw,20px)!important;margin-bottom:4px!important}
+  .blossom-info-panel p{font-size:clamp(8.5px,2.55vw,10.5px)!important;line-height:1.7!important}
+  .blossom-info-actions{gap:6px!important;margin-top:8px!important}
+  .blossom-action-card{min-height:64px!important;padding:6px 3px!important;border-radius:16px!important;gap:2px!important}
+  .blossom-action-icon{width:30px!important;height:30px!important}
+  .blossom-action-icon svg{width:28px!important;height:28px!important}
+  .blossom-action-card b{font-size:clamp(8px,2.7vw,10px)!important}
+  .blossom-action-card small{font-size:7.5px!important}
+  .blossom-bottom-note{margin-top:6px!important;padding:6px 7px!important;font-size:7.5px!important;line-height:1.7}
+  .blossom-wallet-pill{min-width:0!important;width:auto!important;height:54px!important;padding:6px 10px 6px 8px!important;border-radius:20px!important;gap:7px!important}
+  .blossom-wallet-flower{width:40px!important;height:40px!important;border-width:2px!important}
+  .blossom-wallet-flower:before{font-size:24px}
+  .blossom-wallet-copy strong{font-size:23px!important}
+  .blossom-wallet-copy span{font-size:9px!important;margin-top:2px}
+  .blossom-safe-close{width:44px!important;height:44px!important}
+  .blossom-safe-close:before,.blossom-safe-close:after{width:20px;height:2.5px}
+}
+
+@media (max-width:390px){
+  .blossom-frame-arch{height:140px}
+  .blossom-frame-h{top:160px}
+  .blossom-curtain{height:57%;width:18%}
+  .blossom-hanging{top:105px;transform:scale(.70)}
+  .blossom-pot{bottom:31%!important;width:40vw!important;height:42vw!important}
+  .blossom-info-panel{left:2.7%!important;right:2.7%!important;padding:10px 8px 8px!important;max-height:40svh}
+  .blossom-info-panel h2{font-size:16px!important}
+  .blossom-info-panel p{font-size:8px!important}
+  .blossom-action-card{min-height:58px!important;border-radius:14px!important}
+  .blossom-action-icon{width:27px!important;height:27px!important}
+  .blossom-action-icon svg{width:25px!important;height:25px!important}
+  .blossom-action-card b{font-size:8px!important}
+  .blossom-action-card small{display:none!important}
+  .blossom-bottom-note{font-size:7px!important}
+  .blossom-wallet-pill{height:50px!important}
+  .blossom-wallet-flower{width:36px!important;height:36px!important}
+  .blossom-wallet-copy strong{font-size:21px!important}
+  .blossom-wallet-copy span{font-size:8px!important}
+  .blossom-safe-close{width:41px!important;height:41px!important}
+}
+
+@media (max-height:700px) and (max-width:600px){
+  .blossom-frame-arch{height:128px}
+  .blossom-frame-h{top:148px}
+  .blossom-hanging{top:96px;transform:scale(.66)}
+  .blossom-pot{bottom:32%!important}
+  .blossom-info-panel{max-height:43svh}
+  .blossom-info-panel p{display:none!important}
+  .blossom-info-actions{margin-top:6px!important}
+}
+
+@media (orientation:landscape) and (max-width:900px){
+  .blossom-top-ui{padding-top:max(8px,calc(8px + env(safe-area-inset-top)))!important}
+  .blossom-frame-arch{height:116px}
+  .blossom-frame-h{top:136px}
+  .blossom-hanging{top:84px;transform:scale(.58)}
+  .blossom-curtain{height:70%;width:15%}
+  .blossom-desk{height:31%}
+  .blossom-pot{bottom:25%!important;transform:translateX(-50%) scale(.68)!important}
+  .blossom-info-panel{left:16%!important;right:16%!important;bottom:5px!important;max-height:38svh;padding:8px!important}
+  .blossom-info-panel p{display:none!important}
+  .blossom-action-card{min-height:47px!important}
+  .blossom-bottom-note{display:none!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .blossom-safe-room *,.blossom-safe-room:before,.blossom-safe-room:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
