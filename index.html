@@ -7610,12 +7610,18 @@ function Student({user,tab,setTab,onLogout}){
           return;
         }
         const addedCoins=amount*2;
-        const nextBalance=Number(coinBalance||0)+addedCoins;
-        const {error}=await SB.from('tadbir_wallets')
-          .update({balance:nextBalance,updated_at:new Date().toISOString()})
-          .eq('user_id',String(user.id));
+        const current=Number(coinBalance||0);
+        const nextBalance=current+addedCoins;
+        const {data,error}=await SB.from('tadbir_wallets')
+          .update({balance:nextBalance})
+          .eq('user_id',String(user.id))
+          .select('balance')
+          .maybeSingle();
         if(error)throw error;
-        setCoinBalance(nextBalance);
+        if(!data)throw new Error('wallet_update_not_allowed');
+        const savedBalance=Number(data.balance);
+        if(!Number.isFinite(savedBalance)||savedBalance!==nextBalance)throw new Error('wallet_balance_mismatch');
+        setCoinBalance(savedBalance);
         setBlossomSpent(v=>v+amount);
         toast(`${amount} شکوفه به ${addedCoins} سکه تبدیل شد`,'success');
       }else if(exchangeMode==='coin_to_star'){
@@ -7624,18 +7630,29 @@ function Student({user,tab,setTab,onLogout}){
           toast('سکه کافی برای این تبدیل ندارید','warning');
           return;
         }
-        const nextBalance=Number(coinBalance||0)-cost;
-        const {error}=await SB.from('tadbir_wallets')
-          .update({balance:nextBalance,updated_at:new Date().toISOString()})
-          .eq('user_id',String(user.id));
+        /* This RPC already exists in the healthy Tadbir build and performs
+           the protected wallet debit server-side, avoiding client-side RLS
+           failures when coins are spent. */
+        const {data,error}=await SB.rpc('tadbir_spend_hint_coins_v3',{
+          p_user_id:String(user.id),
+          p_cost:cost
+        });
         if(error)throw error;
-        setCoinBalance(nextBalance);
+        const result=Array.isArray(data)?data[0]:data;
+        if(!result?.ok)throw new Error(result?.message||'coin_debit_failed');
+        const savedBalance=Number(result.balance);
+        if(!Number.isFinite(savedBalance))throw new Error('invalid_wallet_balance');
+        setCoinBalance(savedBalance);
         setConvertedStars(v=>v+amount);
         toast(`${cost} سکه به ${amount} ستاره تبدیل شد`,'success');
       }
     }catch(err){
-      console.warn('blossom exchange:',err);
-      toast('تبدیل انجام نشد؛ دوباره تلاش کنید','error');
+      console.error('blossom exchange error:',err);
+      const msg=String(err?.message||err);
+      if(msg.includes('permission')||msg.includes('row-level')||msg.includes('RLS'))
+        toast('دسترسی کیف پول در دیتابیس اجازه این تبدیل را نمی‌دهد','error');
+      else
+        toast('تبدیل انجام نشد؛ موجودی شما تغییر نکرد','error');
     }finally{
       setExchangeBusy(false);
     }
@@ -8460,8 +8477,8 @@ function Student({user,tab,setTab,onLogout}){
                     <div className="blossom-exchange-head">
                       <div>
                         <span className="blossom-exchange-kicker">TADBIR EXCHANGE</span>
-                        <h3>صرافی شکوفه</h3>
-                        <p>تبدیل دارایی‌های اتاق شکوفه با نرخ ثابت</p>
+                        <h3>صرافی تدبیر</h3>
+                        <p>اینجا دارایی هاتو بهم تبدیل کن</p>
                       </div>
                       <button type="button" className="blossom-exchange-close" disabled={exchangeBusy} onClick={()=>setShowBlossomExchange(false)}>×</button>
                     </div>
@@ -8515,7 +8532,7 @@ function Student({user,tab,setTab,onLogout}){
                     <button type="button" className="blossom-exchange-submit" disabled={exchangeBusy} onClick={executeBlossomExchange}>
                       {exchangeBusy?'در حال تبدیل...':'تأیید تبدیل'}
                     </button>
-                    <div className="blossom-exchange-locknote">تبدیل معکوس فعال نیست؛ ستاره به سکه و سکه به شکوفه تبدیل نمی‌شود.</div>
+                    
                   </div>
                 </div>
               )}
@@ -10364,5 +10381,60 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
   .exchange-side{min-height:68px!important;padding:10px!important}
   .exchange-side strong{font-size:24px!important}
 }
+
+
+/* =========================================================
+   V29 — precise botanical layering + refined exchange UI
+   ========================================================= */
+.blossom-growth-plant{
+  z-index:39!important;
+  pointer-events:none!important;
+}
+.blossom-pot{z-index:38!important}
+.blossom-pot-body{z-index:40!important}
+.blossom-pot-saucer{z-index:37!important}
+.blossom-pot-soil{z-index:46!important}
+.blossom-pot-rim{z-index:47!important}
+/* Stem is visually anchored under the soil ellipse. */
+.blossom-growth-plant svg{overflow:visible!important}
+.blossom-growth-plant .blossom-stem-main,
+.blossom-growth-plant .blossom-branch{stroke-linecap:round!important}
+
+.blossom-exchange-shell{width:min(455px,94vw)!important}
+.blossom-exchange-head h3{font-size:24px!important;letter-spacing:-.3px!important}
+.blossom-exchange-head p{font-size:10px!important;color:rgba(255,255,255,.58)!important}
+.blossom-exchange-wallet{margin-top:4px!important;margin-bottom:15px!important}
+.blossom-exchange-wallet>div{min-height:62px!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+.blossom-exchange-wallet strong{font-size:20px!important}
+.blossom-exchange-route{gap:10px!important;margin-bottom:15px!important}
+.blossom-exchange-route button{
+  min-height:76px!important;
+  grid-template-columns:42px 1fr auto!important;
+  border-radius:21px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.blossom-exchange-route button.active{
+  background:linear-gradient(145deg,rgba(93,210,164,.19),rgba(218,170,94,.08))!important;
+  border-color:rgba(137,236,194,.45)!important;
+}
+.exchange-route-icon{
+  width:42px!important;height:42px!important;border-radius:15px!important;
+  font-size:22px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 7px 17px rgba(0,0,0,.12)!important;
+}
+.blossom-exchange-box{
+  min-height:125px!important;
+  padding:14px!important;
+  border-radius:27px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025))!important;
+}
+.exchange-side{min-height:88px!important;border-radius:21px!important}
+.exchange-side strong{font-size:31px!important}
+.exchange-arrow span{font-size:31px!important}
+.blossom-exchange-amount{margin-top:12px!important}
+.blossom-exchange-submit{margin-top:12px!important;min-height:49px!important}
+/* The explanatory reverse-conversion note is intentionally absent. */
+.blossom-exchange-locknote{display:none!important}
 
 </style>
