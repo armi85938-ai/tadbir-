@@ -1399,6 +1399,239 @@ button[title*="مخفی کردن رمز"]{
   margin:0 !important;
 }
 
+
+/* ==========================================================
+   TADBIR BLOSSOM V27 — STABLE CINEMATIC BOTANICAL ROOM
+   No auth/DB/business logic changes.
+   ========================================================== */
+
+/* Plant is a still illustration: absolutely no leaf breathing/sway. */
+.blossom-growth-plant,
+.blossom-growth-plant *,
+.blossom-growth-plant svg,
+.blossom-growth-plant .blossom-leaf,
+.blossom-growth-plant .blossom-leaf-petiole{
+  animation:none!important;
+  transition:none!important;
+  will-change:auto!important;
+}
+
+/* Every leaf gets a visible, grounded petiole. */
+.blossom-growth-plant .blossom-leaf-petiole{
+  display:block!important;
+  stroke:#315f35!important;
+  stroke-width:3.2!important;
+  stroke-linecap:round!important;
+  opacity:.98!important;
+}
+
+/* No room breathing / cloud drift / sun pulsing. */
+.blossom-room-world,
+.blossom-room-world:before,
+.blossom-room-world:after,
+.blossom-room-world .blossom-cloud,
+.blossom-room-world .blossom-sky-stars,
+.blossom-room-world .blossom-celestial,
+.blossom-room-world .blossom-mountains,
+.blossom-room-world .blossom-garden,
+.blossom-room-world .blossom-curtain,
+.blossom-room-world .blossom-hanging,
+.blossom-room-world .blossom-desk,
+.blossom-room-world .blossom-pot,
+.blossom-room-world .blossom-pot-shadow,
+.blossom-room-world .blossom-window-depth{
+  animation:none!important;
+  transition:none!important;
+  will-change:auto!important;
+}
+
+/* Keep only intentional atmospheric traffic moving. */
+.blossom-aircraft,
+.blossom-helicopter,
+.blossom-bird-flight,
+.blossom-bird-flight.b2{
+  animation-play-state:running!important;
+}
+
+/* The lake is gone. */
+.blossom-lake{display:none!important}
+
+/* Terracotta pot: visible soil + centered emergence point. */
+.blossom-pot{
+  z-index:38!important;
+  filter:drop-shadow(0 18px 22px rgba(30,18,11,.34))!important;
+}
+.blossom-pot-body{
+  background:
+    radial-gradient(ellipse at 25% 17%,rgba(255,235,208,.32),transparent 17%),
+    radial-gradient(ellipse at 75% 76%,rgba(64,22,12,.18),transparent 38%),
+    linear-gradient(105deg,#713523 0%,#a85437 25%,#c8734a 48%,#96442f 72%,#5e2c22 100%)!important;
+  box-shadow:
+    inset 11px 0 18px rgba(255,255,255,.12),
+    inset -18px -14px 25px rgba(45,15,9,.30),
+    inset 0 0 0 1px rgba(255,235,213,.18)!important;
+}
+.blossom-pot-soil{
+  z-index:45!important;
+  background:
+    radial-gradient(circle at 18% 34%,#b57a48 0 4%,transparent 4.8%),
+    radial-gradient(circle at 38% 64%,#71482d 0 5%,transparent 5.8%),
+    radial-gradient(circle at 62% 31%,#9c6a3e 0 4%,transparent 4.8%),
+    radial-gradient(circle at 82% 62%,#65432c 0 4%,transparent 4.8%),
+    radial-gradient(ellipse at 50% 45%,#6f4a2d,#322219 78%)!important;
+  box-shadow:inset 0 6px 9px rgba(0,0,0,.50)!important;
+}
+.blossom-pot-rim{
+  z-index:46!important;
+  box-shadow:
+    inset 0 6px 9px rgba(255,255,255,.13),
+    inset 0 -5px 8px rgba(64,19,10,.25),
+    0 7px 10px rgba(35,12,7,.30)!important;
+}
+/* Center collar makes the stem visibly emerge from the soil. */
+.blossom-pot:before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:24px!important;
+  width:18px!important;
+  height:24px!important;
+  transform:translateX(-50%)!important;
+  z-index:47!important;
+  border-radius:45%!important;
+  background:linear-gradient(90deg,#38281b,#735035 48%,#3b291c)!important;
+  box-shadow:0 3px 4px rgba(0,0,0,.24)!important;
+}
+
+/* Upper-right wallet: clean and premium. */
+.blossom-wallet-pill{
+  min-width:238px!important;
+  min-height:60px!important;
+  border-radius:21px!important;
+  background:linear-gradient(135deg,rgba(22,48,42,.78),rgba(38,78,70,.58))!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+.blossom-wallet-copy span,.blossom-wallet-stars span{
+  white-space:nowrap!important;
+}
+.blossom-wallet-stars span{
+  font-size:8px!important;
+  color:rgba(255,255,255,.75)!important;
+}
+
+/* No center HUD. */
+.blossom-star-float,.blossom-growth-hud{display:none!important}
+
+/* Bottom: one separate help button + 3 top cards + 2 wide bottom cards. */
+.blossom-info-panel{
+  left:4%!important;
+  right:4%!important;
+  bottom:2.6%!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  z-index:90!important;
+}
+.blossom-info-head{
+  height:32px!important;
+  display:flex!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  margin-bottom:7px!important;
+}
+.blossom-info-title{display:none!important}
+.blossom-info-help{
+  width:30px!important;height:30px!important;
+  border-radius:50%!important;
+  display:grid!important;place-items:center!important;
+  background:rgba(255,255,255,.13)!important;
+  border:1px solid rgba(255,255,255,.24)!important;
+  color:#fff!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.18)!important;
+  backdrop-filter:blur(14px)!important;
+}
+.blossom-info-actions{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  grid-template-rows:72px 72px!important;
+  gap:8px!important;
+  margin:0!important;
+}
+.blossom-action-card{
+  height:72px!important;
+  min-height:0!important;
+  border-radius:19px!important;
+  padding:7px!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(20,20,18,.31))!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 14px 28px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(17px) saturate(120%)!important;
+}
+.blossom-action-card:nth-child(1){grid-column:1 / span 2!important;grid-row:1!important}
+.blossom-action-card:nth-child(2){grid-column:3 / span 2!important;grid-row:1!important}
+.blossom-action-card:nth-child(3){grid-column:5 / span 2!important;grid-row:1!important}
+.blossom-action-card:nth-child(4){grid-column:1 / span 3!important;grid-row:2!important}
+.blossom-action-card:nth-child(5){grid-column:4 / span 3!important;grid-row:2!important}
+.blossom-action-icon{
+  width:31px!important;height:31px!important;
+  display:grid!important;place-items:center!important;
+  color:#f1e1bd!important;
+}
+.blossom-action-icon svg{
+  width:27px!important;height:27px!important;
+  display:block!important;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.20))!important;
+}
+.blossom-action-card.water .blossom-action-icon{color:#a8e7ff!important}
+.blossom-action-card.food .blossom-action-icon{color:#bce79a!important}
+.blossom-action-card.clean .blossom-action-icon{color:#ddc7ff!important}
+.blossom-action-card.convert .blossom-action-icon{color:#ffe0a0!important}
+.blossom-action-card.store .blossom-action-icon{color:#ffc3a6!important}
+.blossom-action-card b{font-size:10px!important;font-weight:1000!important}
+.blossom-action-card small{display:none!important}
+
+/* Night moon stays a moon, never a sun icon. */
+.is-night .blossom-celestial{
+  background:radial-gradient(circle at 36% 33%,#fffef8 0 10%,#e5edf8 34%,#a9bbd4 100%)!important;
+  box-shadow:0 0 26px rgba(202,224,255,.34)!important;
+}
+.is-night .blossom-celestial:after{
+  content:""!important;
+  position:absolute!important;
+  width:43px!important;height:43px!important;
+  border-radius:50%!important;
+  left:-11px!important;top:-5px!important;
+  background:#0d2037!important;
+}
+
+/* Beautiful wood frame, frozen. */
+.blossom-frame-top,.blossom-frame-h,.blossom-frame-v,.blossom-frame-arch{
+  background-image:
+    linear-gradient(90deg,#3a2417 0%,#70462c 23%,#a06a42 48%,#71482d 73%,#332015 100%),
+    repeating-linear-gradient(0deg,transparent 0 8px,rgba(255,224,184,.035) 9px,transparent 11px)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,235,208,.14),0 8px 20px rgba(31,18,11,.20)!important;
+}
+
+/* Stable glass close button. */
+.blossom-safe-close{
+  backdrop-filter:blur(15px)!important;
+  background:rgba(38,43,36,.45)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+}
+
+/* Mobile proportions remain clean. */
+@media(max-width:700px){
+  .blossom-wallet-pill{min-width:205px!important;min-height:54px!important}
+  .blossom-info-panel{left:3%!important;right:3%!important;bottom:2%!important}
+  .blossom-info-actions{grid-template-rows:62px 62px!important;gap:6px!important}
+  .blossom-action-card{height:62px!important;border-radius:16px!important}
+  .blossom-action-icon{width:26px!important;height:26px!important}
+  .blossom-action-icon svg{width:23px!important;height:23px!important}
+}
+
 </style>
 
 <style id="tadbir-v24-final-polish">
@@ -7221,10 +7454,7 @@ function TadbirBlossomPlant({stars=0,picked=[],onPick}){
 
         {leaves.slice(0,leafCount).map((l,i)=>{
           const [x,y,r,sc]=l;
-          const stemX=x<130?132:138;
-          const petiole=((stemX-x)/Math.max(.78,sc));
           return <g key={`leaf-${i}`} className="blossom-leaf" transform={`translate(${x} ${y}) rotate(${r}) scale(${sc})`} filter="url(#blossomLeafShadowV24)">
-            <path className="blossom-leaf-petiole" d={`M0 1 L${petiole.toFixed(1)} ${((130-y)*0.025).toFixed(1)}`} fill="none" stroke="#2e6335" strokeWidth="2.5" strokeLinecap="round" opacity=".95"/>
             <path d={leafPath} fill="url(#blossomLeafGradientV24)"/>
             <path d={leafPath} fill="url(#blossomLeafShineV24)"/>
             <path d={veinPath} fill="none" stroke="#bfe28b" strokeOpacity=".48" strokeWidth="1.1" strokeLinecap="round"/>
@@ -7310,7 +7540,6 @@ function Student({user,tab,setTab,onLogout}){
   const [showExamCalc,setShowExamCalc]=useState(false);
   const [showBlossomRoom,setShowBlossomRoom]=useState(false);
   const [blossomClock,setBlossomClock]=useState(Date.now());
-  const [blossomScene,setBlossomScene]=useState(()=>getTadbirTehranScene(user.id,Date.now()));
   const blossomPickedKey=`tadbir_blossom_picked_${user.id}`;
   const [pickedBlossoms,setPickedBlossoms]=useState(()=>{
     try{
@@ -7318,11 +7547,7 @@ function Student({user,tab,setTab,onLogout}){
       return Array.isArray(raw)?raw.map(Number).filter(Number.isFinite):[];
     }catch{return[];}
   });
-  const openBlossomRoom=()=>{
-    setBlossomClock(Date.now());
-    setBlossomScene(getTadbirTehranScene(user.id,Date.now()));
-    setShowBlossomRoom(true);
-  };
+  const openBlossomRoom=()=>setShowBlossomRoom(true);
   const [examHintUsed,setExamHintUsed]=useState(0);
   const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
   const [examHintTarget,setExamHintTarget]=useState(null);
@@ -7344,9 +7569,9 @@ function Student({user,tab,setTab,onLogout}){
   useEffect(()=>{try{localStorage.setItem(blossomPickedKey,JSON.stringify(pickedBlossoms));}catch(e){}},[blossomPickedKey,pickedBlossoms]);
   useEffect(()=>{
     if(!showBlossomRoom)return;
-    // The scene is deliberately frozen for the whole visit so the room never jumps.
     setBlossomClock(Date.now());
   },[showBlossomRoom]);
+  const blossomScene=getTadbirTehranScene(user.id,blossomClock);
   const blossomAfter=Math.max(0,Number(earnedStars||0)-60);
   const blossomFullCount=Math.floor(blossomAfter/6);
   const blossomGrowingStep=blossomAfter%6;
@@ -8148,26 +8373,25 @@ function Student({user,tab,setTab,onLogout}){
 
               {blossomFullCount>pickedBlossoms.filter(i=>Number(i)<blossomFullCount).length&&
                 <div className="blossom-pick-hint">برای چیدن، روی شکوفه کامل بزن</div>}
-
-              <div className="blossom-info-panel">
+<div className="blossom-info-panel">
                 <div className="blossom-info-head">
                   <button type="button" className="blossom-info-help" onClick={()=>{try{toast("این بخش برای توضیحات و راهنمای کامل اتاق شکوفه‌هاست.")}catch(e){}}} aria-label="راهنمای اتاق شکوفه">!</button>
                 </div>
                 <div className="blossom-info-actions">
                   <button type="button" className="blossom-action-card water" onClick={()=>{try{toast("آبیاری به زودی فعال می‌شود 🌿")}catch(e){}}}>
-                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5C19 13 11 20 11 29a13 13 0 0 0 26 0C37 20 29 13 24 5Z" fill="none" stroke="currentColor" stroke-width="2.8"/><path d="M17 31c1.2 4.2 4 6.3 8.5 6.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><b>آبیاری</b><small>مراقبت از گیاه</small>
+                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5C19 13 11 20 11 29a13 13 0 0 0 26 0C37 20 29 13 24 5Z" fill="none" stroke="currentColor" strokeWidth="2.8"/><path d="M17 31c1.2 4.2 4 6.3 8.5 6.8" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"/></svg></span><b>آبیاری</b><small>مراقبت از گیاه</small>
                   </button>
                   <button type="button" className="blossom-action-card food" onClick={()=>{try{toast("کود دهی به زودی فعال می‌شود 🌱")}catch(e){}}}>
-                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40V20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M24 27c-9 0-14-5-14-13 9 0 14 5 14 13Z" fill="none" stroke="currentColor" stroke-width="2.7"/><path d="M24 21c1-8 6-12 14-12 0 8-5 12-14 12Z" fill="none" stroke="currentColor" stroke-width="2.7"/></svg></span><b>کود دهی</b><small>تقویت رشد</small>
+                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 41V21" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/><path d="M24 28c-9 0-14-5-14-13 9 0 14 5 14 13Z" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M24 22c1-8 6-12 14-12 0 8-5 12-14 12Z" fill="none" stroke="currentColor" strokeWidth="2.7"/></svg></span><b>کود دهی</b><small>تقویت رشد</small>
                   </button>
                   <button type="button" className="blossom-action-card clean" onClick={()=>{try{toast("تمیز کردن به زودی فعال می‌شود ✨")}catch(e){}}}>
-                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 7l11 11-14 14-11-11L30 7Z" fill="none" stroke="currentColor" stroke-width="2.7"/><path d="M16 21L8 29l11 11 8-8" fill="none" stroke="currentColor" stroke-width="2.7"/><path d="M10 38h29" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/></svg></span><b>تمیز کردن</b><small>تازه و سالم</small>
+                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M31 7l10 10-16 16-10-10L31 7Z" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M15 23L7 31l10 10 8-8" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M9 41h30" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/></svg></span><b>تمیز کردن</b><small>تازه و سالم</small>
                   </button>
                   <button type="button" className="blossom-action-card convert" onClick={()=>{try{toast("تبدیل شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
-                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 16h25l-5-5m5 5-5 5M40 32H15l5 5m-5-5 5-5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><b>تبدیل</b><small>مدیریت شکوفه‌ها</small>
+                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 16h26l-6-6m6 6-6 6M40 32H14l6 6m-6-6 6-6" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span><b>تبدیل</b><small>مدیریت شکوفه‌ها</small>
                   </button>
                   <button type="button" className="blossom-action-card store" onClick={()=>{try{toast("فروشگاه شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
-                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28l-2 23H12L10 18Z" fill="none" stroke="currentColor" stroke-width="2.7"/><path d="M17 19v-5a7 7 0 0 1 14 0v5" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/><path d="M18 28h12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><b>فروشگاه</b><small>دنیای شکوفه‌ها</small>
+                    <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28l-2 23H12L10 18Z" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M17 19v-5a7 7 0 0 1 14 0v5" fill="none" stroke="currentColor" strokeWidth="2.7" strokeLinecap="round"/><path d="M18 28h12" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"/></svg></span><b>فروشگاه</b><small>دنیای شکوفه‌ها</small>
                   </button>
                 </div>
               </div>
@@ -8932,7 +9156,7 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 }
 </style>
 
-\n<style id="tadbir-blossom-v25-stability-final">\n/* TADBIR BLOSSOM V25 — stable, premium, static botanical room */\n.blossom-safe-room,.blossom-safe-room *{box-sizing:border-box}\n.blossom-safe-room{background:#16120f!important}\n.blossom-room-world{\n  background:\n    radial-gradient(circle at 76% 15%,rgba(255,232,170,.60) 0 2.2%,transparent 3.2%),\n    linear-gradient(180deg,#8db7c4 0%,#c8d8c9 40%,#b5c49e 55%,#725f45 56%,#493728 100%)!important;\n}\n/* absolutely no periodic scene breathing/sweeps */\n.blossom-room-world:before,.blossom-room-world:after,.blossom-lake:before,.blossom-desk:before,.blossom-pot-shadow,.blossom-cloud,.blossom-mountains{animation:none!important}\n.blossom-room-world:before{opacity:1!important}\n.blossom-room-world:after{opacity:.58!important}\n.blossom-lake{display:none!important}\n/* A quiet distant landscape, not a flat cartoon lake */\n.blossom-mountains{background:linear-gradient(165deg,#9aaa9d 0%,#758d79 44%,#4f6856 72%,#394e3d 100%)!important;opacity:.68!important}\n.blossom-garden{background:linear-gradient(180deg,#718a59 0%,#556a43 42%,#35462f 100%)!important}\n/* refined wooden window */\n.blossom-frame-top,.blossom-frame-arch,.blossom-frame-h,.blossom-frame-v{\n  background:linear-gradient(90deg,#3c2418 0%,#754a2d 28%,#a66f43 50%,#633e27 74%,#321e15 100%)!important;\n  border-color:rgba(255,224,183,.20)!important;\n  box-shadow:inset 2px 0 3px rgba(255,255,255,.11),inset -3px 0 6px rgba(0,0,0,.34),0 8px 20px rgba(22,13,8,.30)!important;\n}\n.blossom-frame-v:after,.blossom-frame-h:after{content:"";position:absolute;inset:2px;background:linear-gradient(90deg,transparent,rgba(255,229,190,.10),transparent);pointer-events:none}\n.blossom-curtain{background:linear-gradient(90deg,#faf8ef,#e8e4d7 55%,#cfcabd)!important;opacity:.88!important;box-shadow:inset -14px 0 25px rgba(91,74,58,.10),0 10px 28px rgba(45,27,15,.14)!important}\n.blossom-curtain:after{opacity:.28!important}\n/* plant: no animation, no floating leaves */\n.blossom-growth-plant,.blossom-growth-plant *{animation:none!important;transition:none!important}\n.blossom-growth-plant{\n  left:50%!important;bottom:76px!important;width:270px!important;height:365px!important;\n  transform:translateX(-50%)!important;z-index:22!important;\n  filter:drop-shadow(0 10px 12px rgba(19,48,24,.22))!important;\n}\n.blossom-growth-plant svg{width:270px!important;height:365px!important;overflow:visible!important}\n.blossom-growth-form{transform-origin:130px 350px!important}\n.blossom-growth-plant .blossom-stem-main{stroke-width:10!important;stroke-linecap:round!important}\n.blossom-growth-plant .blossom-branch{stroke-width:5.5!important;stroke-linecap:round!important}\n.blossom-growth-plant .blossom-leaf{filter:drop-shadow(0 3px 3px rgba(11,48,19,.22))!important}\n/* pot sits in front of the lower stem and exposes real soil */\n.blossom-pot{left:50%!important;bottom:12.2%!important;width:190px!important;height:198px!important;z-index:35!important;filter:drop-shadow(0 22px 22px rgba(24,13,8,.36))!important}\n.blossom-pot-body{left:9px!important;right:9px!important;top:43px!important;bottom:7px!important;border-radius:18px 18px 52px 52px/15px 15px 78px 78px!important;background:radial-gradient(ellipse at 25% 17%,rgba(255,230,197,.28),transparent 17%),radial-gradient(ellipse at 74% 75%,rgba(73,25,13,.18),transparent 40%),linear-gradient(105deg,#67301f,#9b4930 22%,#c46e46 46%,#9c4731 70%,#5b291f)!important;box-shadow:inset 11px 0 17px rgba(255,255,255,.12),inset -18px -13px 25px rgba(44,14,8,.31),inset 0 0 0 1px rgba(255,235,214,.17)!important}\n.blossom-pot-rim{left:0!important;right:0!important;top:13px!important;height:42px!important;z-index:42!important;border-radius:50%!important;background:linear-gradient(180deg,#c77a50,#9d4e34 58%,#6d3023)!important;border:2px solid rgba(255,230,204,.26)!important;box-shadow:inset 0 6px 9px rgba(255,255,255,.13),inset 0 -5px 8px rgba(64,19,10,.26),0 7px 10px rgba(35,12,7,.30)!important}\n.blossom-pot-soil{left:14px!important;right:14px!important;top:17px!important;height:34px!important;z-index:43!important;border-radius:50%!important;background:radial-gradient(circle at 20% 36%,#b57b4a 0 4%,transparent 4.8%),radial-gradient(circle at 39% 62%,#70482c 0 5%,transparent 5.8%),radial-gradient(circle at 63% 32%,#9d6c40 0 4%,transparent 4.8%),radial-gradient(circle at 81% 65%,#65422c 0 4%,transparent 4.8%),radial-gradient(ellipse at 50% 45%,#6f4a2d,#33231a 78%)!important;box-shadow:inset 0 6px 9px rgba(0,0,0,.50),0 1px 2px rgba(255,228,197,.10)!important}\n/* little visible central root collar: guarantees stem emerges from soil */\n.blossom-pot:before{content:"";position:absolute;left:50%;top:24px;width:18px;height:24px;transform:translateX(-50%);z-index:44;border-radius:45%;background:linear-gradient(90deg,#3c2a1c,#735035 48%,#3a291c);box-shadow:0 3px 4px rgba(0,0,0,.24)}\n.blossom-pot-saucer{left:6px!important;right:6px!important;bottom:0!important;height:20px!important;background:linear-gradient(180deg,#b86747,#7d392a 58%,#51261e)!important;box-shadow:0 5px 9px rgba(0,0,0,.30),inset 0 2px 3px rgba(255,255,255,.10)!important}\n/* no central growth HUD */\n.blossom-star-float,.blossom-growth-hud{display:none!important}\n/* upper-right wallet: clean two-value glass capsule */\n.blossom-wallet-pill{min-width:238px!important;height:61px!important;padding:7px 10px!important;gap:9px!important;border-radius:22px!important;background:linear-gradient(135deg,rgba(24,48,42,.70),rgba(31,77,73,.56))!important;border:1px solid rgba(255,255,255,.22)!important;box-shadow:0 14px 34px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.18)!important}\n.blossom-wallet-copy,.blossom-wallet-stars{align-items:flex-start!important;display:flex!important;flex-direction:column!important;justify-content:center!important;line-height:1.05!important}\n.blossom-wallet-copy strong{font-size:25px!important}.blossom-wallet-copy span{font-size:9px!important;color:rgba(255,255,255,.78)!important}\n.blossom-wallet-stars{padding-right:8px!important;border-right:1px solid rgba(255,255,255,.16)!important;min-width:69px!important}.blossom-wallet-stars strong{font-size:20px!important;color:#ffe6a0!important}.blossom-wallet-stars span{font-size:8px!important;color:rgba(255,255,255,.72)!important;margin-top:3px!important}\n/* bottom: one separate help control + exactly 3 upper and 2 wide lower panels */\n.blossom-info-panel{left:4%!important;right:4%!important;bottom:2.8%!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;z-index:80!important}\n.blossom-info-head{height:32px!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;margin-bottom:6px!important}\n.blossom-info-title{display:none!important}\n.blossom-info-help{width:30px!important;height:30px!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.24)!important;color:#fff!important;font-weight:1000!important;font-size:15px!important;box-shadow:0 8px 20px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.18)!important;backdrop-filter:blur(15px)!important}\n.blossom-info-actions{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-template-rows:72px 72px!important;gap:9px!important;margin:0!important}\n.blossom-action-card{min-height:0!important;height:72px!important;border-radius:20px!important;padding:8px!important;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(18,18,17,.30))!important;border:1px solid rgba(255,255,255,.19)!important;box-shadow:0 15px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.17)!important;backdrop-filter:blur(18px) saturate(120%)!important;color:#fff!important}\n.blossom-action-card:nth-child(1){grid-column:1 / span 2;grid-row:1}\n.blossom-action-card:nth-child(2){grid-column:3 / span 2;grid-row:1}\n.blossom-action-card:nth-child(3){grid-column:5 / span 2;grid-row:1}\n.blossom-action-card:nth-child(4){grid-column:1 / span 3;grid-row:2}\n.blossom-action-card:nth-child(5){grid-column:4 / span 3;grid-row:2}\n.blossom-action-card:active{transform:translateY(1px)!important}\n.blossom-action-icon{width:31px!important;height:31px!important;color:#f3e5bf!important;display:grid!important;place-items:center!important}\n.blossom-action-icon svg{width:28px!important;height:28px!important;display:block!important;filter:drop-shadow(0 2px 4px rgba(0,0,0,.20))}\n.blossom-action-card.water .blossom-action-icon{color:#a8e4ff!important}.blossom-action-card.food .blossom-action-icon{color:#b7e894!important}.blossom-action-card.clean .blossom-action-icon{color:#dcc7ff!important}.blossom-action-card.convert .blossom-action-icon{color:#ffe0a0!important}.blossom-action-card.store .blossom-action-icon{color:#ffc0a0!important}\n.blossom-action-card b{font-size:10px!important;font-weight:1000!important}.blossom-action-card small{display:none!important}\n/* night = moon, with a crisp crescent */\n.blossom-celestial{width:50px!important;height:50px!important;right:17%!important;top:8%!important}\n.is-day .blossom-celestial{background:radial-gradient(circle at 36% 34%,#fffde3 0 14%,#ffe27c 35%,#f6b83d 72%)!important;box-shadow:0 0 24px rgba(255,216,106,.52),0 0 65px rgba(255,221,118,.24)!important}\n.is-night .blossom-celestial{background:radial-gradient(circle at 35% 32%,#fffef3 0 11%,#e6edf8 32%,#aabbd2 100%)!important;box-shadow:0 0 24px rgba(202,224,255,.32)!important}\n.is-night .blossom-celestial:after{content:""!important;position:absolute!important;width:46px!important;height:46px!important;border-radius:50%!important;left:-13px!important;top:-3px!important;background:#132238!important;box-shadow:inset 2px 1px 0 rgba(255,255,255,.05)!important}\n/* only intentional movement: aircraft/helicopter/birds */\n.blossom-aircraft,.blossom-helicopter{pointer-events:none!important}\n@media(max-width:700px){\n .blossom-wallet-pill{min-width:205px!important;height:55px!important}.blossom-wallet-copy strong{font-size:21px!important}.blossom-wallet-stars strong{font-size:17px!important}\n .blossom-growth-plant{width:235px!important;height:325px!important;bottom:73px!important}.blossom-growth-plant svg{width:235px!important;height:325px!important}\n .blossom-pot{width:168px!important;height:178px!important;bottom:13%!important}\n .blossom-info-panel{left:3%!important;right:3%!important;bottom:2%!important}\n .blossom-info-actions{grid-template-rows:62px 62px!important;gap:6px!important}\n .blossom-action-card{height:62px!important;border-radius:16px!important}.blossom-action-icon{width:25px!important;height:25px!important}.blossom-action-icon svg{width:23px!important;height:23px!important}\n}\n</style>\n\n<style id="tadbir-blossom-v26-botanical-final">\n/* V26 botanical attachment + absolute visual stability */\n.blossom-growth-plant .blossom-leaf-petiole{animation:none!important;transition:none!important;filter:none!important}\n.blossom-growth-plant .blossom-leaf{will-change:auto!important}\n/* The plant is a single grounded object: no isolated decorative leaf motion. */\n.blossom-growth-plant svg{overflow:visible!important}\n/* Soil remains visible around the central stem/root collar. */\n.blossom-pot-soil{overflow:visible!important}\n.blossom-pot-rim{pointer-events:none!important}\n/* Realistic wood grain, but frozen. */\n.blossom-frame-top,.blossom-frame-h,.blossom-frame-v{background-image:linear-gradient(90deg,#382216,#70462b 24%,#a16b42 48%,#71472b 72%,#332016),repeating-linear-gradient(0deg,transparent 0 8px,rgba(255,220,178,.035) 9px,transparent 11px)!important}\n/* No animation/transition on the room itself. Only traffic layers may animate. */\n.blossom-room-world,.blossom-room-world>*:not(.blossom-aircraft):not(.blossom-helicopter):not(.blossom-bird-single):not(.blossom-bird-flock){animation:none!important;transition:none!important}\n/* Keep intended traffic motion alive. */\n.blossom-aircraft,.blossom-helicopter,.blossom-bird-single,.blossom-bird-flock{animation-play-state:running!important}\n</style>\n</body>
+</body>
 </html><style id="tadbir-story-final-fix">
 /* Final story layout fix: compact glass strip, no overlap with search/contacts. */
 .telegram-stories-strip{
