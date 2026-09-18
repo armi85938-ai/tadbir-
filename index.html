@@ -5389,133 +5389,6 @@ function Admin({user,tab,setTab,onLogout}){
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
-  useEffect(()=>{
-    plantCareRef.current=plantCare;
-    try{localStorage.setItem(plantCareKey,JSON.stringify(plantCare));}catch(e){}
-  },[plantCareKey,plantCare]);
-  useEffect(()=>{
-    let alive=true;
-    (async()=>{
-      try{
-        const {data,error}=await SB.from('tadbir_plant_states').select('*').eq('user_id',String(user.id)).maybeSingle();
-        if(error)throw error;
-        if(data){
-          const loaded={
-            thirst:Number(data.thirst ?? 100),
-            lastWateredAt:new Date(data.last_watered_at||Date.now()).getTime(),
-            zeroSince:data.zero_since?new Date(data.zero_since).getTime():null,
-            lastPenaltyAt:data.last_penalty_at?new Date(data.last_penalty_at).getTime():null,
-            deadLeaves:Math.max(0,Number(data.dead_leaves)||0),
-            stage:Math.max(1,Math.min(5,Number(data.plant_stage)||5)),
-            wateringCount:Math.max(0,Number(data.watering_count)||0)
-          };
-          if(alive){
-            plantCareLoaded.current=true;plantCareRef.current=loaded;setPlantCare(loaded);
-            if(Array.isArray(data.picked_blossoms)){
-              const dbPicked=data.picked_blossoms.map(Number).filter(Number.isFinite);
-              setPickedBlossoms(dbPicked);
-              setBlossomSpent(Math.max(0,Number(data.blossom_spent)||0));
-            }
-          }
-        }else{
-          const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');
-          if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}
-        }
-      }catch(err){
-        console.warn('plant care load:',err);
-        try{const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}}catch(e){}
-      }
-    })();
-    return()=>{alive=false};
-  },[user.id]);
-
-  const persistPlantCare=useCallback(async(next)=>{
-    const normalized={
-      user_id:String(user.id),
-      thirst:Math.max(0,Math.min(100,Number(next.thirst)||0)),
-      last_watered_at:new Date(next.lastWateredAt||Date.now()).toISOString(),
-      zero_since:next.zeroSince?new Date(next.zeroSince).toISOString():null,
-      last_penalty_at:next.lastPenaltyAt?new Date(next.lastPenaltyAt).toISOString():null,
-      dead_leaves:Math.max(0,Number(next.deadLeaves)||0),
-      plant_stage:Math.max(1,Math.min(5,Number(next.stage)||1)),
-      watering_count:Math.max(0,Number(next.wateringCount)||0),
-      blossom_count:Math.max(0,Number(pickedBlossoms?.length)||0),
-      blossom_spent:Math.max(0,Number(blossomSpent)||0),
-      picked_blossoms:Array.isArray(pickedBlossoms)?pickedBlossoms.map(Number).filter(Number.isFinite):[],
-      updated_at:new Date().toISOString()
-    };
-    try{
-      const {error}=await SB.from('tadbir_plant_states').upsert(normalized,{onConflict:'user_id'});
-      if(error)throw error;
-    }catch(err){console.warn('plant care save:',err);}
-  },[user.id,pickedBlossoms,blossomSpent]);
-
-  const currentThirst=(()=>{
-    const c=plantCareRef.current||plantCare;
-    const elapsed=Math.max(0,Date.now()-Number(c.lastWateredAt||Date.now()));
-    return Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
-  })();
-
-  const processPlantCare=useCallback(async(now=Date.now())=>{
-    const c={...(plantCareRef.current||plantCare)};
-    const elapsed=Math.max(0,now-Number(c.lastWateredAt||now));
-    const zeroAt=elapsed>=172800000?(Number(c.lastWateredAt||now)+172800000):null;
-    const thirst=Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
-    if(!zeroAt){
-      const next={...c,thirst,zeroSince:null,lastPenaltyAt:null};
-      plantCareRef.current=next;setPlantCare(next);return;
-    }
-    let zeroSince=Number(c.zeroSince||zeroAt);
-    let lastPenaltyAt=Number(c.lastPenaltyAt||0)||null;
-    let deadLeaves=Math.max(0,Number(c.deadLeaves)||0);
-    let stage=Math.max(1,Number(c.stage)||5);
-    let changed=false;
-    if(!c.zeroSince){zeroSince=zeroAt;changed=true;}
-    if(now-zeroSince>=86400000 && (!lastPenaltyAt || now-lastPenaltyAt>=86400000)){
-      const before=Math.max(0,Math.min(24,4));
-      const available=Math.max(0,24-deadLeaves);
-      const removed=Math.min(before,available);
-      if(removed>0){
-        const leafStart=deadLeaves;
-        setYellowingLeaves(Array.from({length:removed},(_,i)=>leafStart+i));
-        setTimeout(()=>setYellowingLeaves([]),1800);
-        deadLeaves+=removed;
-        stage=Math.max(1,stage-1);
-        toast(`🌿 گیاه به‌خاطر تشنگی یک مرحله عقب رفت و ${removed} برگش زرد و حذف شد.`,'warning');
-      }
-      lastPenaltyAt=now;changed=true;
-    }
-    const next={...c,thirst,zeroSince,lastPenaltyAt,deadLeaves,stage};
-    plantCareRef.current=next;
-    if(changed){setPlantCare(next);await persistPlantCare(next);}
-    else setPlantCare(next);
-  },[persistPlantCare,toast]);
-
-  useEffect(()=>{
-    if(!showBlossomRoom)return;
-    const timer=setInterval(()=>{setBlossomClock(Date.now());processPlantCare(Date.now());},1000);
-    return()=>clearInterval(timer);
-  },[showBlossomRoom,processPlantCare]);
-
-  const waterPlant=useCallback(async()=>{
-    const now=Date.now();
-    const c={...(plantCareRef.current||plantCare)};
-    const next={...c,thirst:100,lastWateredAt:now,zeroSince:null,lastPenaltyAt:null,wateringCount:Math.max(0,Number(c.wateringCount)||0)+1};
-    plantCareRef.current=next;setPlantCare(next);
-    await persistPlantCare(next);
-  },[persistPlantCare]);
-
-  const saveBlossomCount=useCallback(async(nextPicked,nextSpent=blossomSpent)=>{
-    try{
-      await SB.from('tadbir_plant_states').upsert({
-        user_id:String(user.id),
-        blossom_count:Math.max(0,Number(nextPicked?.length)||0),
-        blossom_spent:Math.max(0,Number(nextSpent)||0),
-        picked_blossoms:Array.isArray(nextPicked)?nextPicked.map(Number).filter(Number.isFinite):[],
-        updated_at:new Date().toISOString()
-      },{onConflict:'user_id'});
-    }catch(err){console.warn('blossom count save:',err);}
-  },[user.id,blossomSpent]);
   const loadAdminNotifications=async()=>{
     try{
       const {data,error}=await SB.rpc('tadbir_admin_notifications',{p_admin_id:String(user.id)});
@@ -7842,6 +7715,7 @@ function Student({user,tab,setTab,onLogout}){
   const [exchangeAmount,setExchangeAmount]=useState(1);
   const [exchangeBusy,setExchangeBusy]=useState(false);
   const [showWateringCan,setShowWateringCan]=useState(false);
+  const [showBlossomGuide,setShowBlossomGuide]=useState(false);
   const [plantCare,setPlantCare]=useState(()=>({
     thirst:100,lastWateredAt:Date.now(),zeroSince:null,lastPenaltyAt:null,
     deadLeaves:0,stage:5,wateringCount:0
@@ -7851,7 +7725,7 @@ function Student({user,tab,setTab,onLogout}){
   const plantCareSaveTimer=useRef(null);
   const plantCareLoaded=useRef(false);
   const plantCareKey=`tadbir_plant_care_${user.id}`;
-  const openBlossomRoom=()=>{setShowWateringCan(false);setShowBlossomRoom(true);};
+  const openBlossomRoom=()=>{setShowWateringCan(false);setShowBlossomGuide(false);setShowBlossomRoom(true);};
   const [examHintUsed,setExamHintUsed]=useState(0);
   const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
   const [examHintTarget,setExamHintTarget]=useState(null);
@@ -7877,6 +7751,133 @@ function Student({user,tab,setTab,onLogout}){
     if(!showBlossomRoom)return;
     setBlossomClock(Date.now());
   },[showBlossomRoom]);
+  useEffect(()=>{
+    plantCareRef.current=plantCare;
+    try{localStorage.setItem(plantCareKey,JSON.stringify(plantCare));}catch(e){}
+  },[plantCareKey,plantCare]);
+  useEffect(()=>{
+    let alive=true;
+    (async()=>{
+      try{
+        const {data,error}=await SB.from('tadbir_plant_states').select('*').eq('user_id',String(user.id)).maybeSingle();
+        if(error)throw error;
+        if(data){
+          const loaded={
+            thirst:Number(data.thirst ?? 100),
+            lastWateredAt:new Date(data.last_watered_at||Date.now()).getTime(),
+            zeroSince:data.zero_since?new Date(data.zero_since).getTime():null,
+            lastPenaltyAt:data.last_penalty_at?new Date(data.last_penalty_at).getTime():null,
+            deadLeaves:Math.max(0,Number(data.dead_leaves)||0),
+            stage:Math.max(1,Math.min(5,Number(data.plant_stage)||5)),
+            wateringCount:Math.max(0,Number(data.watering_count)||0)
+          };
+          if(alive){
+            plantCareLoaded.current=true;plantCareRef.current=loaded;setPlantCare(loaded);
+            if(Array.isArray(data.picked_blossoms)){
+              const dbPicked=data.picked_blossoms.map(Number).filter(Number.isFinite);
+              setPickedBlossoms(dbPicked);
+              setBlossomSpent(Math.max(0,Number(data.blossom_spent)||0));
+            }
+          }
+        }else{
+          const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');
+          if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}
+        }
+      }catch(err){
+        console.warn('plant care load:',err);
+        try{const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}}catch(e){}
+      }
+    })();
+    return()=>{alive=false};
+  },[user.id]);
+
+  const persistPlantCare=useCallback(async(next)=>{
+    const normalized={
+      user_id:String(user.id),
+      thirst:Math.max(0,Math.min(100,Number(next.thirst)||0)),
+      last_watered_at:new Date(next.lastWateredAt||Date.now()).toISOString(),
+      zero_since:next.zeroSince?new Date(next.zeroSince).toISOString():null,
+      last_penalty_at:next.lastPenaltyAt?new Date(next.lastPenaltyAt).toISOString():null,
+      dead_leaves:Math.max(0,Number(next.deadLeaves)||0),
+      plant_stage:Math.max(1,Math.min(5,Number(next.stage)||1)),
+      watering_count:Math.max(0,Number(next.wateringCount)||0),
+      blossom_count:Math.max(0,Number(pickedBlossoms?.length)||0),
+      blossom_spent:Math.max(0,Number(blossomSpent)||0),
+      picked_blossoms:Array.isArray(pickedBlossoms)?pickedBlossoms.map(Number).filter(Number.isFinite):[],
+      updated_at:new Date().toISOString()
+    };
+    try{
+      const {error}=await SB.from('tadbir_plant_states').upsert(normalized,{onConflict:'user_id'});
+      if(error)throw error;
+    }catch(err){console.warn('plant care save:',err);}
+  },[user.id,pickedBlossoms,blossomSpent]);
+
+  const currentThirst=(()=>{
+    const c=plantCareRef.current||plantCare;
+    const elapsed=Math.max(0,Date.now()-Number(c.lastWateredAt||Date.now()));
+    return Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
+  })();
+
+  const processPlantCare=useCallback(async(now=Date.now())=>{
+    const c={...(plantCareRef.current||plantCare)};
+    const elapsed=Math.max(0,now-Number(c.lastWateredAt||now));
+    const zeroAt=elapsed>=172800000?(Number(c.lastWateredAt||now)+172800000):null;
+    const thirst=Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
+    if(!zeroAt){
+      const next={...c,thirst,zeroSince:null,lastPenaltyAt:null};
+      plantCareRef.current=next;setPlantCare(next);return;
+    }
+    let zeroSince=Number(c.zeroSince||zeroAt);
+    let lastPenaltyAt=Number(c.lastPenaltyAt||0)||null;
+    let deadLeaves=Math.max(0,Number(c.deadLeaves)||0);
+    let stage=Math.max(1,Number(c.stage)||5);
+    let changed=false;
+    if(!c.zeroSince){zeroSince=zeroAt;changed=true;}
+    if(now-zeroSince>=86400000 && (!lastPenaltyAt || now-lastPenaltyAt>=86400000)){
+      const before=Math.max(0,Math.min(24,4));
+      const available=Math.max(0,24-deadLeaves);
+      const removed=Math.min(before,available);
+      if(removed>0){
+        const leafStart=deadLeaves;
+        setYellowingLeaves(Array.from({length:removed},(_,i)=>leafStart+i));
+        setTimeout(()=>setYellowingLeaves([]),1800);
+        deadLeaves+=removed;
+        stage=Math.max(1,stage-1);
+        toast(`🌿 گیاه به‌خاطر تشنگی یک مرحله عقب رفت و ${removed} برگش زرد و حذف شد.`,'warning');
+      }
+      lastPenaltyAt=now;changed=true;
+    }
+    const next={...c,thirst,zeroSince,lastPenaltyAt,deadLeaves,stage};
+    plantCareRef.current=next;
+    if(changed){setPlantCare(next);await persistPlantCare(next);}
+    else setPlantCare(next);
+  },[persistPlantCare,toast]);
+
+  useEffect(()=>{
+    if(!showBlossomRoom)return;
+    const timer=setInterval(()=>{setBlossomClock(Date.now());processPlantCare(Date.now());},1000);
+    return()=>clearInterval(timer);
+  },[showBlossomRoom,processPlantCare]);
+
+  const waterPlant=useCallback(async()=>{
+    const now=Date.now();
+    const c={...(plantCareRef.current||plantCare)};
+    const next={...c,thirst:100,lastWateredAt:now,zeroSince:null,lastPenaltyAt:null,wateringCount:Math.max(0,Number(c.wateringCount)||0)+1};
+    plantCareRef.current=next;setPlantCare(next);
+    await persistPlantCare(next);
+  },[persistPlantCare]);
+
+  const saveBlossomCount=useCallback(async(nextPicked,nextSpent=blossomSpent)=>{
+    try{
+      await SB.from('tadbir_plant_states').upsert({
+        user_id:String(user.id),
+        blossom_count:Math.max(0,Number(nextPicked?.length)||0),
+        blossom_spent:Math.max(0,Number(nextSpent)||0),
+        picked_blossoms:Array.isArray(nextPicked)?nextPicked.map(Number).filter(Number.isFinite):[],
+        updated_at:new Date().toISOString()
+      },{onConflict:'user_id'});
+    }catch(err){console.warn('blossom count save:',err);}
+  },[user.id,blossomSpent]);
   const availableBlossoms=Math.max(0,pickedBlossoms.length-blossomSpent);
   const totalDisplayStars=Math.max(0,Number(earnedStars||0)+Number(convertedStars||0));
   const blossomScene=getTadbirTehranScene(user.id,blossomClock);
@@ -8754,10 +8755,10 @@ function Student({user,tab,setTab,onLogout}){
 
 <div className="blossom-info-panel">
                 <div className="blossom-info-head">
-                  <button type="button" className="blossom-info-help" onClick={()=>{try{toast("این بخش برای توضیحات و راهنمای کامل اتاق شکوفه‌هاست.")}catch(e){}}} aria-label="راهنمای اتاق شکوفه">!</button>
+                  <button type="button" className="blossom-info-help" onClick={()=>setShowBlossomGuide(true)} aria-label="راهنمای اتاق شکوفه">!</button>
                 </div>
                 <div className="blossom-info-actions">
-                  <button type="button" className="blossom-action-card water" onClick={()=>{try{toast("آبیاری به زودی فعال می‌شود 🌿")}catch(e){}}}>
+                  <button type="button" className="blossom-action-card water" onClick={()=>{if(currentThirst<50){setShowWateringCan(true);setBlossomClock(Date.now());}}}>
                     <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 5C19 13 11 20 11 29a13 13 0 0 0 26 0C37 20 29 13 24 5Z" fill="none" stroke="currentColor" strokeWidth="2.8"/><path d="M17 31c1.2 4.2 4 6.3 8.5 6.8" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"/></svg></span><b>آبیاری</b><small>مراقبت از گیاه</small>
                   </button>
                   <button type="button" className="blossom-action-card food" onClick={()=>{try{toast("کود دهی به زودی فعال می‌شود 🌱")}catch(e){}}}>
@@ -8774,6 +8775,24 @@ function Student({user,tab,setTab,onLogout}){
                   </button>
                 </div>
               </div>
+
+              {showBlossomGuide&&(
+                <div className="blossom-guide-overlay" onClick={()=>setShowBlossomGuide(false)}>
+                  <div className="blossom-guide-modal" onClick={e=>e.stopPropagation()}>
+                    <div className="blossom-guide-head">
+                      <div><span className="blossom-guide-kicker">راهنمای مراقبت</span><h3>راهنمای گیاه 🌿</h3></div>
+                      <button type="button" className="blossom-guide-close" onClick={()=>setShowBlossomGuide(false)}>×</button>
+                    </div>
+                    <div className="blossom-guide-list" dir="rtl">
+                      <section><div className="blossom-guide-icon water">💧</div><div><h4>آبیاری:</h4><p>گیاه شما هر دو روز یکبار نیاز به آبیاری مجدد دارد و شما میتوانید از نمودار تشنگی،تشنگی گیاه خود را رصد کنید و در صورتی که تشنگی گیاه شما ۱ روز صفر بماند،گیاه شما رفته رفته خشک شده و برگ های آن ریزش میکند.</p></div></section>
+                      <section><div className="blossom-guide-icon food">🧪</div><div><h4>کود دهی:</h4><p>در این قسمت کود هایی را که از فروشگاه خریداری کرده اید میتوانید مشاهده و در صورت نیاز استفاده نمایید.(استفاده از کود برای گیاه کاملا اختیاری میباشد و در صورتی که از کود برای گیاه خود استفاده نکنید،خطری گیاه شما را تهدید نمیکند)</p></div></section>
+                      <section><div className="blossom-guide-icon clean">🧹</div><div><h4>تمیزکردن:</h4><p>بهداشت برای گیاه شما الزامیست!هر بار باید با وسایلی که در اختیار دارید،فضای رشد گیاه خود را تمیز کنید و حشرات را از او دور کنید.</p></div></section>
+                      <section><div className="blossom-guide-icon store">🛍️</div><div><h4>فروشگاه:</h4><p>در این قسمت میتوانید وارد فروشگاه گیاه خود شوید و برای آن بر اساس نیازی که دارید،کالا تهیه کنید.</p></div></section>
+                      <section><div className="blossom-guide-icon convert">🔄</div><div><h4>تبدیل:</h4><p>در این قسمت شما میتوانید دارایی هایی را که دارید بهم تبدیل کنید و از مزایای آن دارایی استفاده نمایید.</p></div></section>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {showBlossomExchange&&(
                 <div className="blossom-exchange-overlay" onClick={()=>!exchangeBusy&&setShowBlossomExchange(false)}>
@@ -10775,3 +10794,11 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
   border:1px solid rgba(255,214,117,.24)!important;
 }
 </style>
+<style id="tadbir-blossom-guide-fix-v26">
+.blossom-guide-overlay{position:fixed!important;inset:0!important;z-index:10080!important;background:rgba(5,8,6,.72)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:18px!important;direction:rtl!important}
+.blossom-guide-modal{width:min(760px,94vw)!important;max-height:min(82vh,760px)!important;overflow:auto!important;border-radius:24px!important;background:linear-gradient(180deg,rgba(29,35,28,.97),rgba(13,17,14,.98))!important;border:1px solid rgba(255,255,255,.16)!important;box-shadow:0 30px 80px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.10)!important;padding:18px!important;color:#fff!important}
+.blossom-guide-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.blossom-guide-kicker{font-size:9px;color:#9ee6b0;display:block;margin-bottom:3px}.blossom-guide-head h3{font-size:21px;font-weight:1000;margin:0}.blossom-guide-close{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;font-size:24px;cursor:pointer}
+.blossom-guide-list{display:grid;gap:9px}.blossom-guide-list section{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;padding:11px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}.blossom-guide-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:20px;background:rgba(255,255,255,.08)}.blossom-guide-list h4{font-size:14px;margin:0 0 4px;font-weight:1000}.blossom-guide-list p{font-size:11px;line-height:1.9;margin:0;color:rgba(255,255,255,.78)}
+@media(max-width:600px){.blossom-guide-overlay{padding:10px}.blossom-guide-modal{max-height:88vh;border-radius:20px;padding:13px}.blossom-guide-head h3{font-size:18px}.blossom-guide-list section{grid-template-columns:38px 1fr;padding:9px}.blossom-guide-icon{width:36px;height:36px;font-size:18px}.blossom-guide-list h4{font-size:12px}.blossom-guide-list p{font-size:9.5px;line-height:1.8}}
+</style>
+
