@@ -3533,6 +3533,125 @@ html[data-tadbir-theme] .nav-bar{
   .nav-bar{left:10px!important;right:10px!important;bottom:8px!important;border-radius:27px!important;}
 }
 </style>
+
+<style id="tadbir-blossom-growth-v20">
+/* ===== TADBIR BLOSSOM GROWTH + IRAN DAY/NIGHT + WEATHER =====
+   Scoped only to the Blossom room. Login and the rest of the site are untouched. */
+.blossom-room-world{
+  transition:background 1.4s ease,filter 1.4s ease!important;
+}
+.blossom-room-world.is-day{
+  background:
+    radial-gradient(circle at 72% 11%,rgba(255,245,179,.68),transparent 14%),
+    linear-gradient(180deg,#79c9f4 0%,#ccefff 36%,#afcf99 61%,#4e7442 100%)!important;
+}
+.blossom-room-world.is-night{
+  background:
+    radial-gradient(circle at 76% 12%,rgba(225,235,255,.18),transparent 15%),
+    linear-gradient(180deg,#071326 0%,#102b45 39%,#234330 64%,#263626 100%)!important;
+}
+.blossom-room-world.is-night:before{
+  background:linear-gradient(115deg,rgba(182,214,255,.06),transparent 26%,transparent 66%,rgba(166,194,255,.04))!important;
+}
+.blossom-room-world.is-night .blossom-mountains{filter:brightness(.48) saturate(.75) hue-rotate(8deg)}
+.blossom-room-world.is-night .blossom-garden{filter:brightness(.40) saturate(.74)}
+/* Requested: remove the river/lake completely. */
+.blossom-lake{display:none!important}
+
+/* deeper, cleaner window */
+.blossom-window-depth{position:absolute;inset:0;z-index:7;pointer-events:none}
+.blossom-window-depth:before{
+  content:'';position:absolute;left:5.5%;right:5.5%;top:3.2%;height:53%;
+  border-radius:48% 48% 7% 7%/30% 30% 7% 7%;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.17),inset 0 0 42px rgba(170,225,255,.12),0 17px 40px rgba(0,0,0,.10);
+  background:linear-gradient(112deg,rgba(255,255,255,.08),transparent 23%,transparent 62%,rgba(255,255,255,.045));
+}
+.blossom-window-depth:after{
+  content:'';position:absolute;left:7%;right:7%;top:5%;height:48%;
+  border-radius:48% 48% 5% 5%/30% 30% 5% 5%;
+  background:linear-gradient(104deg,transparent 0 17%,rgba(255,255,255,.11) 18%,transparent 22% 74%,rgba(255,255,255,.05) 75%,transparent 80%);
+  opacity:.72;mix-blend-mode:screen;
+}
+.blossom-sky-stars{position:absolute;inset:0 0 42% 0;z-index:3;opacity:0;transition:opacity 1.2s}
+.is-night .blossom-sky-stars{opacity:1}
+.blossom-sky-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;box-shadow:0 0 7px rgba(214,230,255,.85);animation:blossomTwinkle 2.4s ease-in-out infinite alternate}
+.blossom-sky-stars i:nth-child(1){left:16%;top:16%}.blossom-sky-stars i:nth-child(2){left:27%;top:29%;animation-delay:.4s}.blossom-sky-stars i:nth-child(3){left:42%;top:13%;animation-delay:1s}.blossom-sky-stars i:nth-child(4){left:60%;top:25%;animation-delay:.7s}.blossom-sky-stars i:nth-child(5){left:82%;top:19%;animation-delay:1.3s}.blossom-sky-stars i:nth-child(6){left:72%;top:37%;animation-delay:.2s}
+@keyframes blossomTwinkle{from{opacity:.28;transform:scale(.72)}to{opacity:1;transform:scale(1.5)}}
+.blossom-celestial{position:absolute;z-index:4;right:17%;top:8.5%;width:46px;height:46px;border-radius:50%;pointer-events:none}
+.is-day .blossom-celestial{background:radial-gradient(circle at 36% 34%,#fffbd5 0 16%,#ffe479 31%,#ffbf38 70%);box-shadow:0 0 25px rgba(255,217,91,.58),0 0 70px rgba(255,222,106,.28)}
+.is-night .blossom-celestial{background:radial-gradient(circle at 36% 33%,#fff 0 9%,#dfeaff 35%,#9eb7d8 100%);box-shadow:0 0 24px rgba(196,220,255,.34)}
+.is-night .blossom-celestial:after{content:'';position:absolute;width:43px;height:43px;border-radius:50%;left:-11px;top:-5px;background:#0b1d32}
+
+/* weather */
+.blossom-weather-layer{position:absolute;inset:0;z-index:9;overflow:hidden;pointer-events:none}
+.blossom-rain-drop{position:absolute;top:-12%;width:1.5px;height:32px;border-radius:99px;background:linear-gradient(180deg,transparent,rgba(220,245,255,.75));transform:rotate(12deg);animation:blossomRain .72s linear infinite}
+.blossom-rain-drop:nth-child(1){left:9%;animation-delay:-.1s}.blossom-rain-drop:nth-child(2){left:20%;animation-delay:-.48s}.blossom-rain-drop:nth-child(3){left:34%;animation-delay:-.25s}.blossom-rain-drop:nth-child(4){left:48%;animation-delay:-.58s}.blossom-rain-drop:nth-child(5){left:61%;animation-delay:-.33s}.blossom-rain-drop:nth-child(6){left:74%;animation-delay:-.65s}.blossom-rain-drop:nth-child(7){left:88%;animation-delay:-.19s}
+@keyframes blossomRain{to{transform:translate3d(-48px,118vh,0) rotate(12deg)}}
+.blossom-snow-flake{position:absolute;top:-8%;font-size:13px;color:rgba(255,255,255,.88);text-shadow:0 0 8px rgba(255,255,255,.5);animation:blossomSnow 6.8s linear infinite}
+.blossom-snow-flake:nth-child(1){left:8%;animation-delay:-1s}.blossom-snow-flake:nth-child(2){left:22%;animation-delay:-4.1s}.blossom-snow-flake:nth-child(3){left:37%;animation-delay:-2.2s}.blossom-snow-flake:nth-child(4){left:51%;animation-delay:-5s}.blossom-snow-flake:nth-child(5){left:68%;animation-delay:-3.3s}.blossom-snow-flake:nth-child(6){left:82%;animation-delay:-.5s}.blossom-snow-flake:nth-child(7){left:93%;animation-delay:-4.8s}
+@keyframes blossomSnow{0%{transform:translate3d(0,-8vh,0) rotate(0)}50%{transform:translate3d(22px,53vh,0) rotate(160deg)}100%{transform:translate3d(-14px,112vh,0) rotate(340deg)}}
+
+/* realistic-ish bird silhouettes with independent wing joints */
+.blossom-bird-flight{position:absolute;z-index:8;top:18%;left:-90px;width:54px;height:28px;animation:blossomBirdFly 13s linear infinite;filter:drop-shadow(0 2px 2px rgba(0,0,0,.22))}
+.blossom-bird-flight.b2{top:25%;animation-duration:16s;animation-delay:-6s;transform:scale(.72)}
+.blossom-bird-body{position:absolute;left:21px;top:12px;width:22px;height:8px;border-radius:60% 72% 55% 60%;background:#26323a;transform:rotate(-4deg)}
+.blossom-bird-body:after{content:'';position:absolute;right:-6px;top:1px;border-left:8px solid #26323a;border-top:3px solid transparent;border-bottom:3px solid transparent}
+.blossom-bird-wing{position:absolute;top:11px;width:25px;height:8px;background:linear-gradient(180deg,#3c4a53,#1e2b33);border-radius:80% 12% 70% 20%;transform-origin:100% 50%}
+.blossom-bird-wing.w1{left:7px;animation:blossomWingUp .38s ease-in-out infinite alternate}
+.blossom-bird-wing.w2{left:17px;transform-origin:0 50%;animation:blossomWingDown .38s ease-in-out infinite alternate}
+@keyframes blossomWingUp{from{transform:rotate(18deg) skewX(-12deg)}to{transform:rotate(-52deg) skewX(9deg)}}
+@keyframes blossomWingDown{from{transform:rotate(-12deg) skewX(8deg)}to{transform:rotate(48deg) skewX(-10deg)}}
+@keyframes blossomBirdFly{0%{transform:translate3d(-90px,0,0) scale(.88)}45%{transform:translate3d(58vw,-22px,0) scale(.93)}100%{transform:translate3d(calc(100vw + 120px),12px,0) scale(.86)}}
+
+.blossom-plane{position:absolute;z-index:8;left:-150px;top:13%;width:86px;height:32px;animation:blossomPlaneFly 22s linear infinite;filter:drop-shadow(0 4px 5px rgba(0,0,0,.18))}
+.blossom-plane svg{width:100%;height:100%;display:block}
+@keyframes blossomPlaneFly{from{transform:translateX(-150px) translateY(0) scale(.8)}to{transform:translateX(calc(100vw + 220px)) translateY(-18px) scale(.84)}}
+
+/* living plant */
+.blossom-growth-plant{
+  position:absolute;left:50%;bottom:118px;width:270px;height:350px;z-index:3;
+  transform:translateX(-50%);transform-origin:50% 100%;
+  pointer-events:none;overflow:visible;
+  filter:drop-shadow(0 12px 9px rgba(17,45,21,.22));
+}
+.blossom-growth-plant svg{width:100%;height:100%;overflow:visible}
+.blossom-growth-form{transform-box:fill-box;transform-origin:50% 100%;transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
+.blossom-stem-main{fill:none;stroke:#356a38;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 1px rgba(15,56,23,.2))}
+.blossom-branch{fill:none;stroke:#3f7741;stroke-width:5.2;stroke-linecap:round}
+.blossom-leaf{transform-box:fill-box;transform-origin:center;animation:blossomLeafBreathe 3.7s ease-in-out infinite alternate}
+.blossom-leaf:nth-of-type(3n){animation-delay:-1.2s}.blossom-leaf:nth-of-type(4n){animation-delay:-2.1s}
+@keyframes blossomLeafBreathe{from{transform:rotate(-1.3deg) scale(.985)}to{transform:rotate(1.8deg) scale(1.025)}}
+.blossom-flower-node{pointer-events:auto;cursor:pointer;transform-box:fill-box;transform-origin:center;transition:transform .35s ease,filter .35s ease}
+.blossom-flower-node.ready{filter:drop-shadow(0 0 8px rgba(255,158,187,.48));animation:blossomReadyPulse 2s ease-in-out infinite}
+.blossom-flower-node.ready:hover{transform:scale(1.12)}
+@keyframes blossomReadyPulse{0%,100%{filter:drop-shadow(0 0 5px rgba(255,158,187,.38))}50%{filter:drop-shadow(0 0 15px rgba(255,187,210,.82))}}
+.blossom-petal{fill:url(#blossomPetalGradient);stroke:rgba(255,255,255,.55);stroke-width:.7}
+.blossom-core{fill:url(#blossomCoreGradient)}
+.blossom-bud{fill:#ef9fbc;stroke:#ffe5ef;stroke-width:1}
+.blossom-bud-sepal{fill:#4f8b4f}
+.blossom-growth-hud{position:absolute;z-index:54;left:50%;top:max(84px,calc(70px + env(safe-area-inset-top)));transform:translateX(-50%);display:flex;gap:6px;align-items:center;pointer-events:none}
+.blossom-growth-chip{padding:6px 9px;border-radius:999px;background:rgba(18,33,27,.42);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(13px);font-size:8px;font-weight:900;color:rgba(255,255,255,.84);box-shadow:0 7px 20px rgba(0,0,0,.12);white-space:nowrap}
+.is-night ~ .blossom-growth-hud .blossom-growth-chip{background:rgba(7,16,28,.55)}
+.blossom-pick-hint{position:absolute;z-index:54;left:50%;top:130px;transform:translateX(-50%);padding:6px 10px;border-radius:999px;background:rgba(255,238,245,.88);color:#8a3759;font-size:8px;font-weight:1000;box-shadow:0 7px 20px rgba(0,0,0,.12);animation:blossomHintFloat 2s ease-in-out infinite;pointer-events:none;white-space:nowrap}
+@keyframes blossomHintFloat{50%{transform:translate(-50%,-4px)}}
+
+/* keep mobile room balanced with the taller living plant */
+@media(max-width:599px){
+  .blossom-growth-plant{width:245px;height:320px;bottom:108px}
+  .blossom-growth-hud{top:max(78px,calc(66px + env(safe-area-inset-top)))}
+  .blossom-pick-hint{top:118px}
+}
+@media(max-width:380px){
+  .blossom-growth-plant{width:228px;height:300px;bottom:104px}
+  .blossom-growth-chip{font-size:7px;padding:5px 7px}
+}
+@media(orientation:landscape) and (max-height:520px){
+  .blossom-growth-plant{width:190px;height:230px;bottom:90px}
+  .blossom-growth-hud{top:62px}
+  .blossom-pick-hint{display:none}
+}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -6988,6 +7107,144 @@ function SocialChatModal({user,onClose,fullScreen=false}){
   </div>;
   return ReactDOM.createPortal(chatUI,document.body);
 }
+
+/* ===== Blossom growth helpers: isolated from login/auth ===== */
+const tadbirBlossomHash=(value)=>{
+  let h=2166136261;
+  const s=String(value??'');
+  for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}
+  return h>>>0;
+};
+const getTadbirTehranScene=(userId,stamp=Date.now())=>{
+  const d=new Date(stamp);
+  const parts=new Intl.DateTimeFormat('en-CA',{
+    timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'
+  }).formatToParts(d).reduce((a,p)=>{if(p.type!=='literal')a[p.type]=p.value;return a;},{});
+  const hour=Number(parts.hour||0);
+  const minute=Number(parts.minute||0);
+  const second=Number(parts.second||0);
+  const day=hour>=3&&hour<18;
+  const block=Math.floor(hour/2);
+  const seed=tadbirBlossomHash(`${userId}-${parts.year}-${parts.month}-${parts.day}-${block}`);
+  const weatherRoll=seed%100;
+  const weather=weatherRoll<15?'rain':weatherRoll<24?'snow':'clear';
+  const showBird=(second<12);
+  const showBirdGroup=(minute%2===0&&second<16);
+  const showPlane=(minute%6===0&&second<14);
+  const showHelicopter=(minute%8===0&&second<14);
+  return{
+    day,hour,minute,second,weather,
+    birds:showBird,plane:showPlane,
+    showBird,showBirdGroup,showPlane,showHelicopter,
+    dateKey:`${parts.year}-${parts.month}-${parts.day}`
+  };
+};
+const TADBIR_BLOSSOM_SLOTS=[
+  {x:82,y:112},{x:174,y:102},{x:50,y:157},{x:205,y:153},{x:109,y:65},{x:148,y:58},
+  {x:76,y:204},{x:191,y:207},{x:126,y:151},{x:156,y:178},{x:37,y:215},{x:224,y:218},
+  {x:101,y:235},{x:168,y:241},{x:60,y:258},{x:209,y:266},{x:133,y:92},{x:151,y:121}
+];
+const TADBIR_BLOSSOM_LEAVES=[
+  {x:124,y:272,r:-28,s:1.00},{x:149,y:255,r:31,s:.95},{x:105,y:239,r:-42,s:1.04},{x:162,y:225,r:35,s:1.02},
+  {x:88,y:214,r:-30,s:1.10},{x:179,y:201,r:29,s:1.05},{x:112,y:190,r:-45,s:.96},{x:155,y:176,r:41,s:1.03},
+  {x:67,y:173,r:-29,s:1.05},{x:197,y:162,r:28,s:1.00},{x:99,y:151,r:-44,s:.94},{x:169,y:142,r:42,s:1.03},
+  {x:80,y:128,r:-30,s:.96},{x:188,y:119,r:28,s:.96},{x:116,y:107,r:-45,s:.9},{x:153,y:96,r:42,s:.92},
+  {x:101,y:83,r:-31,s:.86},{x:169,y:75,r:30,s:.88},{x:129,y:61,r:-20,s:.82},{x:146,y:48,r:24,s:.78},
+  {x:55,y:226,r:-18,s:.92},{x:211,y:232,r:18,s:.92},{x:73,y:95,r:-18,s:.83},{x:200,y:92,r:18,s:.83}
+];
+function TadbirBlossomPlant({stars=0,picked=[],onPick}){
+  const safeStars=Math.max(0,Number(stars)||0);
+  const pre=Math.min(60,safeStars);
+  const growth=.30+.70*(pre/60);
+  const thickness=1+Math.min(.24,Math.max(0,safeStars-60)/110);
+  const leafCount=Math.max(4,Math.min(24,4+Math.floor(pre/3)));
+  const branchCount=Math.max(2,Math.min(10,2+Math.floor(pre/7)));
+  const after=Math.max(0,safeStars-60);
+  const full=Math.floor(after/6);
+  const partial=after%6;
+  const pickedSet=new Set((picked||[]).map(Number));
+  const visible=[];
+  for(let i=0;i<full;i++)if(!pickedSet.has(i))visible.push({index:i,progress:6,ready:true});
+  if(partial>0)visible.push({index:full,progress:partial,ready:false});
+
+  const leaves=[
+    [129,296,-25,1.06],[153,278,25,1.02],[108,265,-43,1.12],[174,248,38,1.10],
+    [91,239,-31,1.16],[190,219,31,1.12],[119,213,-47,1.10],[164,198,42,1.08],
+    [73,193,-28,1.18],[202,180,28,1.12],[103,172,-44,1.05],[179,157,39,1.10],
+    [81,151,-27,1.08],[194,137,28,1.04],[112,133,-45,1.00],[166,119,41,1.02],
+    [94,113,-28,.98],[186,104,27,.96],[124,91,-42,.93],[157,82,40,.92],
+    [105,69,-24,.88],[174,64,28,.87],[128,54,-12,.84],[151,45,22,.78]
+  ];
+  const branches=[
+    "M132 330 C121 291 132 258 118 224",
+    "M137 301 C158 273 177 244 191 212",
+    "M130 268 C108 242 92 216 78 188",
+    "M140 249 C163 224 180 196 198 168",
+    "M129 220 C111 197 102 173 99 145",
+    "M143 205 C160 184 173 159 181 130",
+    "M132 178 C119 157 115 132 116 106",
+    "M143 163 C155 142 162 118 166 91",
+    "M134 138 C126 117 126 94 128 70",
+    "M142 126 C149 108 151 87 150 64"
+  ];
+
+  const leafPath="M0 0 C-13 -10 -27 -7 -36 1 C-27 12 -12 15 0 7 C12 15 27 12 36 1 C27 -7 13 -10 0 0 Z";
+  const veinPath="M-31 1 C-15 1 -7 2 0 3 C12 2 23 1 31 1 M-10 2 L-20 -6 M-7 3 L-18 10 M8 3 L19 -6 M7 3 L18 10";
+  return <div className="blossom-growth-plant" aria-label={`گیاه با ${safeStars} ستاره`}>
+    <svg viewBox="0 0 260 360" role="img">
+      <defs>
+        <linearGradient id="blossomStemGradientV24" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#193f25"/><stop offset=".42" stopColor="#4d8a43"/><stop offset=".72" stopColor="#6ca653"/><stop offset="1" stopColor="#234e2d"/>
+        </linearGradient>
+        <linearGradient id="blossomLeafGradientV24" x1="0" y1="0" x2=".8" y2="1">
+          <stop offset="0" stopColor="#b6df76"/><stop offset=".20" stopColor="#71ad55"/><stop offset=".58" stopColor="#347544"/><stop offset="1" stopColor="#173f2b"/>
+        </linearGradient>
+        <radialGradient id="blossomLeafShineV24" cx=".25" cy=".15" r=".8">
+          <stop offset="0" stopColor="#e7f6b1" stopOpacity=".55"/><stop offset=".35" stopColor="#8bc96b" stopOpacity=".15"/><stop offset="1" stopColor="#173c29" stopOpacity="0"/>
+        </radialGradient>
+        <radialGradient id="blossomPetalGradientV24" cx=".28" cy=".22" r=".82">
+          <stop offset="0" stopColor="#fffafd"/><stop offset=".28" stopColor="#ffd8e8"/><stop offset=".66" stopColor="#f184ad"/><stop offset="1" stopColor="#b93e72"/>
+        </radialGradient>
+        <radialGradient id="blossomCoreGradientV24">
+          <stop offset="0" stopColor="#fff5ad"/><stop offset=".48" stopColor="#ffd34f"/><stop offset="1" stopColor="#c77912"/>
+        </radialGradient>
+        <filter id="blossomLeafShadowV24" x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="3" stdDeviation="2.2" floodColor="#102f1c" floodOpacity=".28"/>
+        </filter>
+      </defs>
+
+      <g className="blossom-growth-form" style={{transform:`translate(0 4px) scale(${thickness},${growth})`,transformOrigin:"130px 350px"}}>
+        <path className="blossom-stem-main" d="M132 348 C125 309 139 278 130 244 C122 210 143 180 135 148 C129 119 141 90 137 47"
+          stroke="url(#blossomStemGradientV24)" strokeWidth={9+Math.min(4.8,safeStars/18)} fill="none" strokeLinecap="round"/>
+        {branches.slice(0,branchCount).map((d,i)=><path key={`branch-${i}`} className="blossom-branch" d={d} stroke="url(#blossomStemGradientV24)" strokeWidth={4.4+Math.min(1.8,safeStars/30)} fill="none" strokeLinecap="round" opacity={.9-.035*i}/>)}
+
+        {leaves.slice(0,leafCount).map((l,i)=>{
+          const [x,y,r,sc]=l;
+          return <g key={`leaf-${i}`} className="blossom-leaf" transform={`translate(${x} ${y}) rotate(${r}) scale(${sc})`} filter="url(#blossomLeafShadowV24)">
+            <path d={leafPath} fill="url(#blossomLeafGradientV24)"/>
+            <path d={leafPath} fill="url(#blossomLeafShineV24)"/>
+            <path d={veinPath} fill="none" stroke="#bfe28b" strokeOpacity=".48" strokeWidth="1.1" strokeLinecap="round"/>
+            <path d="M0 0 L0 10" stroke="#214f2f" strokeWidth="2" strokeLinecap="round"/>
+          </g>
+        })}
+
+        {visible.map(f=>{
+          const slot=TADBIR_BLOSSOM_SLOTS[f.index%TADBIR_BLOSSOM_SLOTS.length];
+          const size=f.ready?1:(.10+(f.progress/6)*.82);
+          return <g key={`flower-${f.index}`} className={`blossom-flower-node ${f.ready?'ready':''}`}
+            transform={`translate(${slot.x} ${slot.y}) scale(${size})`}
+            onClick={f.ready?()=>onPick?.(f.index):undefined}>
+            {f.ready
+              ? <>{[0,72,144,216,288].map(a=><ellipse key={a} className="blossom-petal" cx="0" cy="-10" rx="7" ry="13" transform={`rotate(${a})`}/>)}
+                  <circle className="blossom-core" cx="0" cy="0" r="6.2"/></>
+              : <><ellipse className="blossom-bud-sepal" cx="0" cy="6" rx="8.5" ry="6.5"/><ellipse className="blossom-bud" cx="0" cy="0" rx={6+f.progress*.55} ry={8+f.progress*.7}/></>}
+          </g>
+        })}
+      </g>
+    </svg>
+  </div>;
+}
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
@@ -7049,6 +7306,14 @@ function Student({user,tab,setTab,onLogout}){
   const [celebration,setCelebration]=useState(null);
   const [showExamCalc,setShowExamCalc]=useState(false);
   const [showBlossomRoom,setShowBlossomRoom]=useState(false);
+  const [blossomClock,setBlossomClock]=useState(Date.now());
+  const blossomPickedKey=`tadbir_blossom_picked_${user.id}`;
+  const [pickedBlossoms,setPickedBlossoms]=useState(()=>{
+    try{
+      const raw=JSON.parse(localStorage.getItem(`tadbir_blossom_picked_${user.id}`)||'[]');
+      return Array.isArray(raw)?raw.map(Number).filter(Number.isFinite):[];
+    }catch{return[];}
+  });
   const openBlossomRoom=()=>setShowBlossomRoom(true);
   const [examHintUsed,setExamHintUsed]=useState(0);
   const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
@@ -7068,6 +7333,24 @@ function Student({user,tab,setTab,onLogout}){
 
   useEffect(()=>{const theme=siteTheme||'dark-purple';localStorage.setItem(`tadbir_theme_${user.id}`,theme);document.documentElement.dataset.tadbirTheme=theme;},[siteTheme,user.id]);
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{try{localStorage.setItem(blossomPickedKey,JSON.stringify(pickedBlossoms));}catch(e){}},[blossomPickedKey,pickedBlossoms]);
+  useEffect(()=>{
+    if(!showBlossomRoom)return;
+    setBlossomClock(Date.now());
+    const t=setInterval(()=>setBlossomClock(Date.now()),60000);
+    return()=>clearInterval(t);
+  },[showBlossomRoom]);
+  const blossomScene=getTadbirTehranScene(user.id,blossomClock);
+  const blossomAfter=Math.max(0,Number(earnedStars||0)-60);
+  const blossomFullCount=Math.floor(blossomAfter/6);
+  const blossomGrowingStep=blossomAfter%6;
+  const blossomOnPlant=Math.max(0,blossomFullCount-pickedBlossoms.filter(i=>Number(i)<blossomFullCount).length)+(blossomGrowingStep>0?1:0);
+  const pickBlossom=(index)=>{
+    const i=Number(index);
+    if(!Number.isFinite(i)||i>=blossomFullCount||pickedBlossoms.includes(i))return;
+    setPickedBlossoms(v=>[...v,i].sort((a,b)=>a-b));
+    toast('🌸 شکوفه با موفقیت چیده شد!','success');
+  };
 
   const loadAll=async()=>{
     const {data:e}=await SB.from('exams').select('*,questions(*)').order('created_at',{ascending:false});
@@ -7587,7 +7870,7 @@ function Student({user,tab,setTab,onLogout}){
                 <span className="blossom-safe-arrow" aria-hidden="true"></span>
                 <div className="coin-home-balance" style={{paddingLeft:'27px',gap:'9px'}}>
                   <div className="blossom-safe-icon"><svg viewBox="0 0 48 48"><defs><radialGradient id="bsPetal" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#d1fae5"/><stop offset=".45" stop-color="#6ee7b7"/><stop offset="1" stop-color="#059669"/></radialGradient><radialGradient id="bsCore"><stop offset="0" stop-color="#fff7ae"/><stop offset=".55" stop-color="#facc15"/><stop offset="1" stop-color="#d97706"/></radialGradient></defs><g fill="url(#bsPetal)"><ellipse cx="24" cy="11.5" rx="6.2" ry="10"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(72 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(144 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(216 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(288 24 24)"/></g><circle cx="24" cy="24" r="6.2" fill="url(#bsCore)"/></svg></div>
-                  <div><div className="blossom-safe-count">{0}</div><div className="blossom-safe-label">شکوفه</div></div>
+                  <div><div className="blossom-safe-count">{pickedBlossoms.length}</div><div className="blossom-safe-label">شکوفه چیده‌شده</div></div>
                 </div>
               </button>
             </div>
@@ -7783,11 +8066,52 @@ function Student({user,tab,setTab,onLogout}){
         {showBlossomRoom ? (
           <div className="blossom-safe-room-overlay">
             <div className="blossom-safe-room">
-              <div className="blossom-room-world" aria-hidden="true">
+              <div className={`blossom-room-world ${blossomScene.day?'is-day':'is-night'} weather-${blossomScene.weather}`} aria-hidden="true">
+                <div className="blossom-sky-stars">{Array.from({length:6}).map((_,i)=><i key={i}></i>)}</div>
+                <div className="blossom-celestial"></div>
                 <div className="blossom-cloud c1"></div><div className="blossom-cloud c2"></div><div className="blossom-cloud c3"></div>
                 <div className="blossom-mountains"></div>
                 <div className="blossom-lake"></div>
                 <div className="blossom-garden"></div>
+
+                {blossomScene.weather!=='clear'&&<div className="blossom-weather-layer">
+                  {blossomScene.weather==='rain'
+                    ? Array.from({length:7}).map((_,i)=><i className="blossom-rain-drop" key={i}></i>)
+                    : Array.from({length:7}).map((_,i)=><i className="blossom-snow-flake" key={i}>✦</i>)}
+                </div>}
+
+                {blossomScene.birds&&<div className="blossom-bird-flight"><i className="blossom-bird-wing w1"></i><i className="blossom-bird-wing w2"></i><i className="blossom-bird-body"></i></div>}
+                {blossomScene.birds&&<div className="blossom-bird-flight b2"><i className="blossom-bird-wing w1"></i><i className="blossom-bird-wing w2"></i><i className="blossom-bird-body"></i></div>}
+                {false&&<div className="blossom-plane"><svg viewBox="0 0 110 42"><path d="M4 23l42-6L63 3h10l-7 14 30 3c8 1 11 6 3 9l-33 2 8 9H63L47 31 5 27z" fill={blossomScene.day?'#eef6fb':'#aebccc'} stroke="rgba(35,55,68,.45)" strokeWidth="1.2"/><circle cx="84" cy="24" r="2" fill="#88c9ef"/></svg></div>}
+
+                <div className="blossom-window-depth"></div>
+                {blossomScene.showPlane&&<div className="blossom-aircraft" aria-hidden="true">
+                  <svg viewBox="0 0 160 58">
+                    <defs><linearGradient id="planeMetalV24" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff"/><stop offset=".48" stopColor="#cbd5dc"/><stop offset="1" stopColor="#66727c"/></linearGradient></defs>
+                    <path d="M8 31L62 24 78 7h10l-7 18 39 3c16 1 24 6 24 10 0 4-8 7-24 8l-39 2 7 15H78L62 47 8 40c-7-1-10-4-10-5s3-3 10-4Z" fill="url(#planeMetalV24)" stroke="#52606a" strokeWidth="1.2"/>
+                    <path d="M64 25L36 16 31 18l29 11m4 7-31 11 5 2 29-9" fill="#8d99a3"/>
+                    <circle cx="119" cy="39" r="2.2" fill="#79c9ef"/>
+                    <path d="M101 33h8" stroke="#eaf4f8" strokeWidth="1.5" opacity=".8"/>
+                  </svg>
+                </div>}
+                {blossomScene.showHelicopter&&<div className="blossom-helicopter" aria-hidden="true">
+                  <svg viewBox="0 0 150 72">
+                    <defs><linearGradient id="heliBodyV24" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#eef3ed"/><stop offset=".5" stopColor="#788b7d"/><stop offset="1" stopColor="#34443a"/></linearGradient></defs>
+                    <path d="M47 38c0-13 12-21 29-21h19c12 0 20 7 20 17v9H62c-8 0-15-1-15-5Z" fill="url(#heliBodyV24)" stroke="#44574a" strokeWidth="1.2"/>
+                    <path d="M108 38l31-8 7 4-37 10Z" fill="#52665a"/>
+                    <path d="M74 17L79 8h23l2 4H80l-2 5Z" fill="#68796d"/>
+                    <path d="M72 8h35" stroke="#34483c" strokeWidth="2.2" strokeLinecap="round"/>
+                    <path d="M56 52l-8 9m51-9 8 9" stroke="#3b4d42" strokeWidth="2"/>
+                    <circle cx="68" cy="33" r="7" fill="#b9d9e0" opacity=".82"/>
+                    <circle cx="89" cy="33" r="7" fill="#b9d9e0" opacity=".68"/>
+                  </svg>
+                </div>}
+                {blossomScene.showBird&&<div className="blossom-bird-single" aria-hidden="true"><i className="wing left"></i><i className="wing right"></i></div>}
+                {blossomScene.showBirdGroup&&<div className="blossom-bird-flock" aria-hidden="true">
+                  <i style={{left:'5%',top:'30%',animationDelay:'-.2s'}}></i><i style={{left:'26%',top:'9%',animationDelay:'-.7s'}}></i>
+                  <i style={{left:'48%',top:'38%',animationDelay:'-.4s'}}></i><i style={{left:'68%',top:'16%',animationDelay:'-1s'}}></i>
+                  <i style={{left:'84%',top:'44%',animationDelay:'-.6s'}}></i>
+                </div>}
                 <div className="blossom-frame-top"></div>
                 <div className="blossom-frame-arch"></div>
                 <div className="blossom-frame-h"></div>
@@ -7799,6 +8123,7 @@ function Student({user,tab,setTab,onLogout}){
                 <div className="blossom-desk"></div>
                 <div className="blossom-pot-shadow"></div>
                 <div className="blossom-pot">
+                  <TadbirBlossomPlant stars={earnedStars} picked={pickedBlossoms} onPick={pickBlossom}/>
                   <div className="blossom-pot-rim"></div>
                   <div className="blossom-pot-soil"></div>
                   <div className="blossom-pot-body"></div>
@@ -7810,19 +8135,42 @@ function Student({user,tab,setTab,onLogout}){
                 <button type="button" className="blossom-safe-close" onClick={()=>setShowBlossomRoom(false)} aria-label="بستن"></button>
                 <div className="blossom-wallet-pill">
                   <div className="blossom-wallet-flower"></div>
-                  <div className="blossom-wallet-copy"><strong>0</strong><span>شکوفه های من</span></div>
+                  <div className="blossom-wallet-copy"><strong>{pickedBlossoms.length}</strong><span>شکوفه های من</span></div>
+                  <div className="blossom-wallet-stars"><strong>{earnedStars}</strong><span>ستاره</span></div>
                 </div>
               </div>
 
+              {blossomFullCount>pickedBlossoms.filter(i=>Number(i)<blossomFullCount).length&&
+                <div className="blossom-pick-hint">برای چیدن، روی شکوفه کامل بزن</div>}
+
+              <div className="blossom-star-float">
+                <span className="star-orb">★</span>
+                <strong>{earnedStars}</strong>
+                <small>ستاره رشد گیاه</small>
+              </div>
+
               <div className="blossom-info-panel">
-                <h2>🌿 اتاق شکوفه ها 🌿</h2>
-                <p>شکوفه ها نشانه رشد، تلاش و موفقیت تو هستند.<br/>با کسب فعالیت های بیشتر، گلدونت کم کم پر از زندگی میشه!</p>
-                <div className="blossom-info-actions">
-                  <div className="blossom-action-card water"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M17 18h17l3 21H14z" fill="#c98738"/><path d="M19 17c1-7 10-7 11 0" fill="none" stroke="#f1c06b" stroke-width="3"/><path d="M14 24L4 30l2 4 10-4" fill="#d79b4c"/><path d="M7 30l-4-2 1-3 6 2" fill="#efc777"/></svg></div><b>آبیاری</b><small>به زودی</small></div>
-                  <div className="blossom-action-card food"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M13 9h22l-3 31H16z" fill="#78a94a"/><path d="M14 12h20" stroke="#bde77e" stroke-width="3"/><circle cx="24" cy="25" r="8" fill="#dff4ac"/><path d="M24 30v-9m0 5c-5-1-7-4-7-7 5 0 7 2 7 5m0 0c5-1 7-4 7-7-5 0-7 2-7 5" fill="none" stroke="#4f8b44" stroke-width="2"/></svg></div><b>کود دهی</b><small>به زودی</small></div>
-                  <div className="blossom-action-card clean"><div className="blossom-action-icon"><svg viewBox="0 0 48 48"><path d="M18 9h16v8l-4 3v19H17V20l5-3V9z" fill="#9f6ccd"/><path d="M22 9V5h13l5 4-4 4h-9" fill="#c795ef"/><path d="M12 21l7-4" stroke="#e4c4ff" stroke-width="3"/><circle cx="10" cy="24" r="2" fill="#d4b0f2"/></svg></div><b>تمیز کردن</b><small>به زودی</small></div>
+                <div className="blossom-info-head">
+                  <div className="blossom-info-title"><span>شکوفه</span><small>{blossomScene.day?'روز':'شب'} · ساعت ایران</small></div>
+                  <button type="button" className="blossom-info-help" onClick={()=>{try{toast("این بخش برای توضیحات و راهنمای کامل اتاق شکوفه‌هاست.")}catch(e){}}} aria-label="راهنما">!</button>
                 </div>
-                <div className="blossom-bottom-note">• هر شکوفه، نتیجه یک قدم به سوی بهتر شدن توست •<br/>🌸 به زودی گلدونت پر از شکوفه های زیبا خواهد شد...</div>
+                <div className="blossom-info-actions">
+                  <button type="button" className="blossom-action-card water" onClick={()=>{try{toast("آبیاری به زودی فعال می‌شود 🌿")}catch(e){}}}>
+                    <span className="blossom-action-icon"><span>💧</span></span><b>آبیاری</b><small>مراقبت از گیاه</small>
+                  </button>
+                  <button type="button" className="blossom-action-card food" onClick={()=>{try{toast("کود دهی به زودی فعال می‌شود 🌱")}catch(e){}}}>
+                    <span className="blossom-action-icon"><span>🌱</span></span><b>کود دهی</b><small>تقویت رشد</small>
+                  </button>
+                  <button type="button" className="blossom-action-card clean" onClick={()=>{try{toast("تمیز کردن به زودی فعال می‌شود ✨")}catch(e){}}}>
+                    <span className="blossom-action-icon"><span>🧹</span></span><b>تمیز کردن</b><small>تازه و سالم</small>
+                  </button>
+                  <button type="button" className="blossom-action-card convert" onClick={()=>{try{toast("تبدیل شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
+                    <span className="blossom-action-icon"><span>⇄</span></span><b>تبدیل</b><small>مدیریت شکوفه‌ها</small>
+                  </button>
+                  <button type="button" className="blossom-action-card store" onClick={()=>{try{toast("فروشگاه شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
+                    <span className="blossom-action-icon"><span>🛍</span></span><b>فروشگاه</b><small>دنیای شکوفه‌ها</small>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -8127,6 +8475,464 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 #root{touch-action:pan-y!important;}
 .login-screen{touch-action:none!important;overflow:hidden!important;}
 </style>
+
+<style id="tadbir-v24-cinematic-garden">
+/* =========================================================
+   TADBIR BLOSSOM V24 — CINEMATIC BOTANICAL ROOM
+   Visual-only layer. Auth, Supabase and exam logic untouched.
+   ========================================================= */
+
+.blossom-safe-room-overlay{
+  background:#090c0a!important;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.blossom-safe-room{
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:#d9c9b5!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  box-shadow:0 34px 110px rgba(0,0,0,.58)!important;
+}
+.blossom-room-world{
+  background:
+    linear-gradient(180deg,#9ec6cf 0%,#d7e5d2 46%,#93a77d 69%,#3f4f35 100%)!important;
+}
+.blossom-room-world:before{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(circle at 76% 17%,rgba(255,248,203,.92) 0 2.5%,transparent 3.1%),
+    radial-gradient(circle at 76% 17%,rgba(255,232,155,.22) 0 9%,transparent 23%),
+    linear-gradient(115deg,rgba(255,255,255,.12),transparent 30%,transparent 72%,rgba(255,255,255,.05));
+}
+.blossom-room-world:after{
+  content:"";position:absolute;inset:0;z-index:75;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.07),transparent 28%,rgba(14,24,14,.13) 100%),
+    radial-gradient(ellipse at center,transparent 43%,rgba(7,12,8,.26) 100%);
+}
+
+/* The lake is gone: a layered distant garden replaces it. */
+.blossom-lake{display:none!important}
+.blossom-mountains{
+  left:-8%!important;right:-8%!important;bottom:36%!important;height:25%!important;
+  opacity:.72!important;
+  background:
+    linear-gradient(170deg,transparent 0 35%,rgba(78,107,73,.42) 36% 100%),
+    linear-gradient(154deg,transparent 0 49%,rgba(101,130,88,.50) 50% 100%)!important;
+  clip-path:polygon(0 76%,12% 58%,23% 72%,34% 47%,45% 70%,56% 42%,68% 70%,80% 53%,91% 68%,100% 51%,100% 100%,0 100%)!important;
+  filter:blur(.25px)!important;
+}
+.blossom-garden{
+  bottom:0!important;height:39%!important;z-index:6!important;
+  background:
+    radial-gradient(ellipse at 18% 34%,rgba(172,191,121,.44),transparent 15%),
+    radial-gradient(ellipse at 42% 63%,rgba(116,150,79,.50),transparent 19%),
+    radial-gradient(ellipse at 79% 37%,rgba(173,188,112,.34),transparent 18%),
+    linear-gradient(180deg,#708c59 0%,#536e45 58%,#34472f 100%)!important;
+}
+.blossom-garden:before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 12% 70%,rgba(235,226,160,.55) 0 1.4px,transparent 2.8px),
+    radial-gradient(circle at 31% 48%,rgba(238,229,164,.40) 0 1.2px,transparent 2.5px),
+    radial-gradient(circle at 57% 72%,rgba(240,231,171,.46) 0 1.4px,transparent 2.8px),
+    radial-gradient(circle at 84% 51%,rgba(239,230,166,.42) 0 1.3px,transparent 2.6px);
+  opacity:.65;
+}
+
+/* A proper rectangular architectural window. */
+.blossom-window-depth{
+  position:absolute!important;left:7.5%!important;right:7.5%!important;top:4.5%!important;bottom:40%!important;
+  z-index:9!important;overflow:hidden!important;clip-path:none!important;
+  border-radius:4px!important;
+  background:
+    linear-gradient(180deg,#8fc4d1 0%,#d8e6d2 56%,#b2c590 100%)!important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.30),
+    inset 0 0 45px rgba(49,82,73,.18),
+    0 13px 36px rgba(37,28,20,.20)!important;
+}
+.blossom-window-depth:before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(255,246,187,.72) 0 2.5%,transparent 3.3%),
+    linear-gradient(180deg,rgba(255,255,255,.08),transparent 35%),
+    linear-gradient(108deg,transparent 0 21%,rgba(255,255,255,.12) 22%,transparent 25% 71%,rgba(255,255,255,.06) 72%,transparent 76%);
+  z-index:3;
+}
+.blossom-window-depth:after{
+  content:"";position:absolute;left:-5%;right:-5%;bottom:0;height:34%;
+  background:
+    radial-gradient(ellipse at 17% 55%,#688553 0 12%,transparent 13%),
+    radial-gradient(ellipse at 39% 68%,#78945e 0 13%,transparent 14%),
+    radial-gradient(ellipse at 63% 48%,#607e50 0 12%,transparent 13%),
+    radial-gradient(ellipse at 86% 66%,#718b58 0 14%,transparent 15%),
+    linear-gradient(180deg,rgba(92,124,74,.50),rgba(50,72,43,.88));
+  z-index:2;
+}
+
+/* Wood window frame: no arch/trapezoid. */
+.blossom-frame-top{
+  left:0!important;right:0!important;top:0!important;height:38px!important;z-index:25!important;
+  background:linear-gradient(180deg,#5a3926,#8b5a38 50%,#4b2e1e)!important;
+  box-shadow:0 8px 20px rgba(30,17,10,.26)!important;
+}
+.blossom-frame-arch{
+  left:6.5%!important;right:6.5%!important;top:4%!important;height:57%!important;
+  border:11px solid #65422b!important;border-bottom:11px solid #65422b!important;border-radius:5px!important;
+  background:transparent!important;box-shadow:inset 0 0 0 1px rgba(255,231,196,.18),0 10px 30px rgba(34,20,12,.22)!important;
+}
+.blossom-frame-h{
+  left:7%!important;right:7%!important;top:31%!important;height:9px!important;z-index:28!important;
+  background:linear-gradient(180deg,#5a3926,#9a6842 48%,#4b2e1e)!important;
+  box-shadow:0 4px 13px rgba(27,16,10,.24)!important;
+}
+.blossom-frame-v{
+  top:4%!important;bottom:40%!important;left:50%!important;width:9px!important;z-index:28!important;
+  background:linear-gradient(90deg,#4b2d1e,#99633d 48%,#482b1c)!important;
+  box-shadow:0 4px 14px rgba(26,15,9,.24)!important;
+}
+
+/* Linen curtains, straight and fabric-like rather than triangular. */
+.blossom-curtain{
+  top:0!important;width:18%!important;height:66%!important;z-index:35!important;opacity:.96!important;
+  filter:drop-shadow(0 13px 20px rgba(40,24,15,.18))!important;
+}
+.blossom-curtain.left{
+  left:0!important;
+  clip-path:polygon(0 0,100% 0,94% 89%,76% 100%,0 96%)!important;
+  background:
+    repeating-linear-gradient(90deg,rgba(150,137,121,.16) 0 8px,rgba(255,255,255,.55) 8px 17px),
+    linear-gradient(90deg,#c7bdb0,#f5f0e8 55%,#cfc5b8)!important;
+}
+.blossom-curtain.right{
+  right:0!important;
+  clip-path:polygon(0 0,100% 0,100% 96%,24% 100%,6% 89%)!important;
+  background:
+    repeating-linear-gradient(90deg,rgba(150,137,121,.16) 0 8px,rgba(255,255,255,.55) 8px 17px),
+    linear-gradient(270deg,#c7bdb0,#f5f0e8 55%,#cfc5b8)!important;
+}
+
+/* Desk: warm walnut, with a believable edge. */
+.blossom-desk{
+  left:-4%!important;right:-4%!important;bottom:-3%!important;height:37%!important;z-index:30!important;
+  transform:none!important;
+  background:
+    linear-gradient(180deg,rgba(255,225,183,.18),transparent 13%,rgba(55,28,15,.15) 100%),
+    repeating-linear-gradient(90deg,#8b5b3c 0 84px,#7d5035 85px 88px,#976343 89px 168px)!important;
+  box-shadow:inset 0 12px 19px rgba(255,245,215,.10),0 -17px 40px rgba(37,22,13,.16)!important;
+}
+.blossom-desk:after{
+  content:"";position:absolute;left:0;right:0;top:0;height:10px;
+  background:linear-gradient(180deg,rgba(255,232,192,.22),rgba(55,30,17,.13));
+  box-shadow:0 3px 8px rgba(31,18,10,.16);
+}
+
+/* Plant is physically anchored to the soil: plant behind the rim, body below it. */
+.blossom-pot{
+  left:50%!important;bottom:19.2%!important;width:188px!important;height:196px!important;z-index:45!important;
+  filter:drop-shadow(0 22px 22px rgba(21,15,10,.36))!important;
+  overflow:visible!important;
+}
+.blossom-growth-plant{
+  position:absolute!important;left:50%!important;
+  bottom:calc(100% - 28px)!important;
+  width:270px!important;height:374px!important;
+  transform:translateX(-50%)!important;
+  z-index:6!important;pointer-events:auto!important;
+  filter:drop-shadow(0 9px 10px rgba(18,55,25,.24))!important;
+  overflow:visible!important;
+}
+.blossom-growth-plant svg{width:270px!important;height:374px!important;overflow:visible!important}
+.blossom-growth-form{transform-origin:130px 350px!important}
+.blossom-growth-plant .blossom-stem-main{
+  filter:drop-shadow(1px 2px 2px rgba(17,53,22,.28))!important;
+}
+.blossom-growth-plant .blossom-leaf{
+  transform-box:fill-box!important;transform-origin:center!important;
+}
+.blossom-growth-plant .blossom-leaf:nth-of-type(3n){animation:blossomLeafSwayV24 6.2s ease-in-out infinite}
+.blossom-growth-plant .blossom-leaf:nth-of-type(4n){animation:blossomLeafSwayV24 7.5s ease-in-out infinite reverse}
+@keyframes blossomLeafSwayV24{
+  0%,100%{rotate:-.8deg;translate:0 0}
+  50%{rotate:1.8deg;translate:1px -1px}
+}
+
+/* Terracotta pot, not gray plastic. */
+.blossom-pot-body{
+  left:9px!important;right:9px!important;top:43px!important;bottom:8px!important;z-index:3!important;
+  border-radius:17px 17px 52px 52px/14px 14px 78px 78px!important;
+  background:
+    radial-gradient(ellipse at 27% 17%,rgba(255,244,222,.36),transparent 16%),
+    radial-gradient(ellipse at 71% 74%,rgba(77,25,12,.20),transparent 38%),
+    linear-gradient(105deg,#67301f 0%,#9f4e31 22%,#c86f45 44%,#98432e 68%,#5b291f 100%)!important;
+  border:1px solid rgba(255,232,208,.25)!important;
+  box-shadow:inset 12px 0 18px rgba(255,255,255,.11),inset -18px -14px 25px rgba(49,16,9,.30),inset 0 -7px 12px rgba(57,19,10,.18)!important;
+}
+.blossom-pot-body:after{
+  content:"";position:absolute;left:12%;right:16%;top:9%;height:28%;border-radius:50%;
+  background:linear-gradient(105deg,rgba(255,245,225,.17),transparent 67%);filter:blur(3px);
+}
+.blossom-pot-soil{
+  left:12px!important;right:12px!important;top:14px!important;height:31px!important;z-index:10!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(circle at 16% 45%,#a87848 0 3%,transparent 4%),
+    radial-gradient(circle at 35% 65%,#6f482d 0 4%,transparent 5%),
+    radial-gradient(circle at 57% 38%,#99683d 0 3.5%,transparent 4.5%),
+    radial-gradient(circle at 79% 62%,#68452d 0 4%,transparent 5%),
+    radial-gradient(ellipse at center,#704a2e,#302117 77%)!important;
+  box-shadow:inset 0 6px 9px rgba(0,0,0,.50)!important;
+}
+.blossom-pot-rim{
+  left:0!important;right:0!important;top:9px!important;height:41px!important;z-index:14!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(ellipse at center,transparent 0 50%,rgba(58,21,12,.18) 51% 56%,transparent 57%),
+    linear-gradient(180deg,#c97a4d,#a55236 53%,#6e3025)!important;
+  border:2px solid rgba(255,231,208,.27)!important;
+  box-shadow:inset 0 5px 8px rgba(255,255,255,.12),0 8px 10px rgba(35,13,7,.30)!important;
+}
+.blossom-pot-saucer{
+  left:4px!important;right:4px!important;bottom:0!important;height:19px!important;z-index:2!important;
+  background:linear-gradient(180deg,#b96a49,#7b3829 58%,#54261e)!important;
+  box-shadow:0 5px 8px rgba(0,0,0,.30),inset 0 2px 3px rgba(255,255,255,.10)!important;
+}
+.blossom-pot-shadow{width:235px!important;height:45px!important;bottom:18%!important;z-index:34!important;filter:blur(15px)!important}
+
+/* Keep old traffic from ever becoming a giant static background object. */
+.blossom-room-world .blossom-plane{display:none!important}
+.blossom-aircraft,.blossom-helicopter{
+  pointer-events:none!important;opacity:.68!important;max-width:115px!important;max-height:55px!important;
+}
+.blossom-aircraft svg{width:108px!important}
+.blossom-helicopter svg{width:84px!important}
+.blossom-aircraft{animation:blossomPlaneCrossV24 17s linear forwards!important}
+.blossom-helicopter{animation:blossomHeliCrossV24 15s linear forwards!important}
+@keyframes blossomPlaneCrossV24{
+  0%{transform:translate3d(-14vw,0,0) scale(.58) rotate(-2deg)}
+  100%{transform:translate3d(118vw,-4vh,0) scale(.58) rotate(-1deg)}
+}
+@keyframes blossomHeliCrossV24{
+  0%{transform:translate3d(118vw,1vh,0) scaleX(-1) scale(.58)}
+  100%{transform:translate3d(-20vw,-2vh,0) scaleX(-1) scale(.58)}
+}
+
+/* Star count: elegant, separate from the controls. */
+.blossom-star-float{
+  position:absolute!important;left:50%!important;top:12%!important;transform:translateX(-50%)!important;
+  z-index:83!important;display:flex!important;align-items:center!important;gap:7px!important;
+  padding:7px 12px!important;border-radius:999px!important;
+  background:rgba(31,39,28,.30)!important;border:1px solid rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(15px)!important;-webkit-backdrop-filter:blur(15px)!important;
+  box-shadow:0 10px 25px rgba(16,25,14,.12),inset 0 1px rgba(255,255,255,.14)!important;
+  direction:rtl!important;
+}
+.blossom-star-float .star-orb{
+  width:25px;height:25px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 25%,#fff4a7,#eab94c 52%,#a56d17);
+  color:#fff8ce;font-size:14px;box-shadow:0 4px 10px rgba(167,112,20,.28);
+}
+.blossom-star-float strong{font-size:19px;color:#fff2b5}
+.blossom-star-float small{font-size:8px;color:rgba(255,255,255,.62);margin-right:2px}
+
+/* Top wallet */
+.blossom-top-ui{z-index:100!important}
+.blossom-wallet-pill{
+  min-width:230px!important;height:58px!important;padding:7px 9px 7px 11px!important;gap:8px!important;
+  background:rgba(28,39,30,.42)!important;border:1px solid rgba(255,255,255,.20)!important;
+  backdrop-filter:blur(20px) saturate(125%)!important;-webkit-backdrop-filter:blur(20px) saturate(125%)!important;
+  box-shadow:0 15px 35px rgba(14,22,13,.18),inset 0 1px rgba(255,255,255,.17)!important;
+}
+.blossom-wallet-flower{width:42px!important;height:42px!important}
+.blossom-wallet-copy strong{font-size:23px!important}
+.blossom-wallet-copy span{font-size:8px!important}
+.blossom-wallet-stars{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  min-width:39px!important;padding:4px 7px!important;border-radius:13px!important;
+  background:rgba(255,210,85,.12)!important;border:1px solid rgba(255,215,100,.18)!important;
+}
+.blossom-wallet-stars strong{font-size:17px!important;color:#ffe59a!important;line-height:1}
+.blossom-wallet-stars span{font-size:7px!important;color:rgba(255,255,255,.62)!important;margin-top:2px}
+
+/* The help mark is ONE separate guide button, never attached to every card. */
+.blossom-info-panel{
+  left:5%!important;right:5%!important;bottom:3.2%!important;z-index:92!important;
+  padding:10px!important;border-radius:24px!important;
+  background:rgba(30,25,20,.43)!important;border:1px solid rgba(255,255,255,.16)!important;
+  backdrop-filter:blur(20px) saturate(125%)!important;-webkit-backdrop-filter:blur(20px) saturate(125%)!important;
+  box-shadow:0 22px 50px rgba(22,14,9,.25),inset 0 1px rgba(255,255,255,.12)!important;
+}
+.blossom-info-panel h2,.blossom-info-panel>p,.blossom-bottom-note{display:none!important}
+.blossom-info-head{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  direction:rtl!important;margin:0 2px 7px!important;
+}
+.blossom-info-title{display:flex;align-items:baseline;gap:7px}
+.blossom-info-title span{font-size:14px;font-weight:1000;color:#fff7e9}
+.blossom-info-title small{font-size:8px;color:rgba(255,255,255,.46)}
+.blossom-info-help{
+  width:25px!important;height:25px!important;border-radius:50%!important;display:grid!important;place-items:center!important;
+  border:1px solid rgba(255,255,255,.25)!important;background:rgba(255,255,255,.10)!important;
+  color:#fff!important;font-weight:1000!important;font-size:12px!important;cursor:pointer!important;
+}
+.blossom-info-actions{
+  display:grid!important;grid-template-columns:repeat(6,1fr)!important;grid-auto-rows:64px!important;
+  gap:7px!important;margin:0!important;
+}
+.blossom-action-card{
+  min-width:0!important;min-height:0!important;height:64px!important;padding:5px 5px!important;
+  border-radius:18px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;
+  color:#fff!important;background:rgba(255,255,255,.085)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 9px 22px rgba(10,15,9,.14),inset 0 1px rgba(255,255,255,.13)!important;
+  backdrop-filter:blur(14px)!important;cursor:pointer!important;
+}
+.blossom-action-card:nth-child(1),.blossom-action-card:nth-child(2),.blossom-action-card:nth-child(3){grid-column:span 2}
+.blossom-action-card:nth-child(4){grid-column:2 / span 2}
+.blossom-action-card:nth-child(5){grid-column:4 / span 2}
+.blossom-action-card.water{border-color:rgba(130,204,232,.30)!important}
+.blossom-action-card.food{border-color:rgba(132,190,101,.30)!important}
+.blossom-action-card.clean{border-color:rgba(199,165,232,.30)!important}
+.blossom-action-card.convert{border-color:rgba(230,190,100,.28)!important}
+.blossom-action-card.store{border-color:rgba(238,157,115,.30)!important}
+.blossom-action-icon{width:25px!important;height:25px!important;display:grid!important;place-items:center!important}
+.blossom-action-icon span{font-size:18px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.20))}
+.blossom-action-card b{font-size:10px!important;font-weight:1000!important;white-space:nowrap!important}
+.blossom-action-card small{font-size:7px!important;color:rgba(255,255,255,.43)!important;white-space:nowrap!important}
+
+/* Guide hint, separate from cards. */
+.blossom-pick-hint{
+  position:absolute!important;left:50%!important;top:19%!important;transform:translateX(-50%)!important;
+  z-index:84!important;padding:7px 12px!important;border-radius:999px!important;
+  background:rgba(31,26,20,.45)!important;border:1px solid rgba(255,224,172,.17)!important;
+  color:rgba(255,247,229,.82)!important;font-size:8px!important;
+  backdrop-filter:blur(12px)!important;white-space:nowrap!important;
+}
+
+/* Night */
+.blossom-room-world.is-night{
+  background:
+    radial-gradient(circle at 76% 15%,rgba(215,230,255,.22),transparent 13%),
+    linear-gradient(180deg,#081626 0%,#142e43 43%,#304632 70%,#1d2b1d 100%)!important;
+}
+.blossom-room-world.is-night .blossom-window-depth{
+  background:linear-gradient(180deg,#0d2033,#173149 54%,#29432d)!important;
+}
+.blossom-room-world.is-night .blossom-garden{filter:brightness(.43) saturate(.75)!important}
+.blossom-room-world.is-night .blossom-mountains{filter:brightness(.40)!important}
+.blossom-room-world.is-night .blossom-celestial{display:block!important}
+
+/* Mobile */
+@media(max-width:600px){
+  .blossom-window-depth{left:6%!important;right:6%!important;top:5%!important;bottom:41%!important}
+  .blossom-frame-arch{left:5%!important;right:5%!important;height:55%!important;border-width:8px!important}
+  .blossom-frame-h{left:6%!important;right:6%!important;top:30%!important;height:7px!important}
+  .blossom-frame-v{width:7px!important;bottom:41%!important}
+  .blossom-curtain{width:17%!important;height:64%!important}
+  .blossom-desk{height:36%!important}
+  .blossom-pot{width:166px!important;height:176px!important;bottom:20%!important}
+  .blossom-growth-plant{width:242px!important;height:336px!important;bottom:calc(100% - 25px)!important}
+  .blossom-growth-plant svg{width:242px!important;height:336px!important}
+  .blossom-pot-shadow{width:205px!important;bottom:19%!important}
+  .blossom-star-float{top:13%!important}
+  .blossom-info-panel{left:3%!important;right:3%!important;bottom:2%!important;padding:8px!important}
+  .blossom-info-actions{grid-auto-rows:57px!important;gap:5px!important}
+  .blossom-action-card{height:57px!important;border-radius:15px!important}
+  .blossom-action-icon{width:22px!important;height:22px!important}
+  .blossom-action-icon span{font-size:16px}
+  .blossom-action-card b{font-size:8.5px!important}
+  .blossom-action-card small{font-size:6.5px!important}
+  .blossom-wallet-pill{min-width:0!important;height:51px!important}
+  .blossom-wallet-flower{width:37px!important;height:37px!important}
+  .blossom-wallet-copy strong{font-size:20px!important}
+  .blossom-wallet-stars{min-width:34px!important}
+  .blossom-wallet-stars strong{font-size:15px!important}
+  .blossom-wallet-stars span{font-size:6px!important}
+}
+@media(max-width:390px){
+  .blossom-star-float{top:14%!important;transform:translateX(-50%) scale(.9)!important}
+  .blossom-info-panel{left:2.5%!important;right:2.5%!important}
+  .blossom-info-title span{font-size:12px}
+  .blossom-info-title small{font-size:7px}
+  .blossom-action-card small{display:none!important}
+  .blossom-action-card{height:53px!important}
+  .blossom-info-actions{grid-auto-rows:53px!important}
+  .blossom-growth-plant{width:225px!important;height:312px!important}
+  .blossom-growth-plant svg{width:225px!important;height:312px!important}
+}
+@media(max-height:700px) and (max-width:600px){
+  .blossom-star-float{top:10%!important}
+  .blossom-info-panel{bottom:1.2%!important}
+  .blossom-info-title{display:none!important}
+  .blossom-info-actions{margin-top:0!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .blossom-safe-room *,.blossom-safe-room:before,.blossom-safe-room:after{animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+</style>
+
+
+<style id="tadbir-v24-traffic-final">
+.blossom-aircraft,.blossom-helicopter{
+  position:absolute!important;display:block!important;z-index:17!important;
+  pointer-events:none!important;will-change:transform!important;
+}
+.blossom-aircraft{top:18%!important;left:-14%!important;width:112px!important;height:auto!important}
+.blossom-helicopter{top:27%!important;left:114%!important;width:88px!important;height:auto!important}
+.blossom-aircraft svg{display:block;width:100%!important;height:auto!important}
+.blossom-helicopter svg{display:block;width:100%!important;height:auto!important}
+.blossom-aircraft{animation:blossomPlaneCrossV24 17s linear forwards!important}
+.blossom-helicopter{animation:blossomHeliCrossV24 15s linear forwards!important}
+@keyframes blossomPlaneCrossV24{
+  0%{transform:translate3d(0,0,0) scale(.55) rotate(-2deg)}
+  100%{transform:translate3d(122vw,-5vh,0) scale(.55) rotate(-1deg)}
+}
+@keyframes blossomHeliCrossV24{
+  0%{transform:translate3d(0,0,0) scale(.55) scaleX(-1)}
+  100%{transform:translate3d(-130vw,-3vh,0) scale(.55) scaleX(-1)}
+}
+.blossom-bird-single{
+  position:absolute!important;z-index:18!important;left:-7%!important;top:16%!important;
+  width:30px!important;height:20px!important;pointer-events:none!important;
+  animation:blossomBirdCrossV24 9s linear forwards!important;
+}
+.blossom-bird-single:after{
+  content:"";position:absolute;left:12px;top:8px;width:8px;height:5px;border-radius:50%;
+  background:#34433d;box-shadow:0 1px 2px rgba(0,0,0,.18);
+}
+.blossom-bird-single .wing{
+  position:absolute!important;top:7px!important;width:13px!important;height:8px!important;
+  border-top:3px solid #34433d!important;border-radius:50% 50% 0 0!important;
+  transform-origin:bottom center!important;
+}
+.blossom-bird-single .wing.left{left:0!important;animation:birdWingL 0.52s ease-in-out infinite alternate!important}
+.blossom-bird-single .wing.right{right:0!important;animation:birdWingR 0.52s ease-in-out infinite alternate!important}
+@keyframes birdWingL{from{transform:rotate(18deg) scaleY(.55)}to{transform:rotate(-24deg) scaleY(1.15)}}
+@keyframes birdWingR{from{transform:rotate(-18deg) scaleY(.55)}to{transform:rotate(24deg) scaleY(1.15)}}
+@keyframes blossomBirdCrossV24{
+  0%{transform:translate3d(0,0,0) scale(.72)}
+  100%{transform:translate3d(120vw,-7vh,0) scale(.72)}
+}
+.blossom-bird-flock{
+  position:absolute!important;z-index:18!important;left:15%!important;top:21%!important;
+  width:95px!important;height:45px!important;pointer-events:none!important;
+  animation:blossomFlockDriftV24 12s linear forwards!important;
+}
+.blossom-bird-flock i{
+  position:absolute!important;width:15px!important;height:8px!important;
+  border-top:3px solid #3c4b45!important;border-radius:50% 50% 0 0!important;
+  transform-origin:center bottom!important;
+  animation:flockWingV24 .7s ease-in-out infinite alternate!important;
+}
+@keyframes flockWingV24{from{transform:rotate(18deg) scaleY(.45)}to{transform:rotate(-18deg) scaleY(1)}}
+@keyframes blossomFlockDriftV24{
+  0%{transform:translate3d(0,0,0) scale(.58)}
+  100%{transform:translate3d(100vw,-4vh,0) scale(.58)}
+}
+</style>
+
 </body>
 </html><style id="tadbir-story-final-fix">
 /* Final story layout fix: compact glass strip, no overlap with search/contacts. */
