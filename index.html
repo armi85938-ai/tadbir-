@@ -7541,12 +7541,24 @@ function Student({user,tab,setTab,onLogout}){
   const [showBlossomRoom,setShowBlossomRoom]=useState(false);
   const [blossomClock,setBlossomClock]=useState(Date.now());
   const blossomPickedKey=`tadbir_blossom_picked_${user.id}`;
+  const blossomSpentKey=`tadbir_blossom_spent_${user.id}`;
+  const blossomConvertedStarsKey=`tadbir_blossom_converted_stars_${user.id}`;
   const [pickedBlossoms,setPickedBlossoms]=useState(()=>{
     try{
       const raw=JSON.parse(localStorage.getItem(`tadbir_blossom_picked_${user.id}`)||'[]');
       return Array.isArray(raw)?raw.map(Number).filter(Number.isFinite):[];
     }catch{return[];}
   });
+  const [blossomSpent,setBlossomSpent]=useState(()=>{
+    try{return Math.max(0,Number(localStorage.getItem(`tadbir_blossom_spent_${user.id}`)||0)||0);}catch{return 0;}
+  });
+  const [convertedStars,setConvertedStars]=useState(()=>{
+    try{return Math.max(0,Number(localStorage.getItem(`tadbir_blossom_converted_stars_${user.id}`)||0)||0);}catch{return 0;}
+  });
+  const [showBlossomExchange,setShowBlossomExchange]=useState(false);
+  const [exchangeMode,setExchangeMode]=useState('blossom_to_coin');
+  const [exchangeAmount,setExchangeAmount]=useState(1);
+  const [exchangeBusy,setExchangeBusy]=useState(false);
   const openBlossomRoom=()=>setShowBlossomRoom(true);
   const [examHintUsed,setExamHintUsed]=useState(0);
   const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
@@ -7567,12 +7579,16 @@ function Student({user,tab,setTab,onLogout}){
   useEffect(()=>{const theme=siteTheme||'dark-purple';localStorage.setItem(`tadbir_theme_${user.id}`,theme);document.documentElement.dataset.tadbirTheme=theme;},[siteTheme,user.id]);
   useEffect(()=>{loadAll();},[]);
   useEffect(()=>{try{localStorage.setItem(blossomPickedKey,JSON.stringify(pickedBlossoms));}catch(e){}},[blossomPickedKey,pickedBlossoms]);
+  useEffect(()=>{try{localStorage.setItem(blossomSpentKey,String(blossomSpent));}catch(e){}},[blossomSpentKey,blossomSpent]);
+  useEffect(()=>{try{localStorage.setItem(blossomConvertedStarsKey,String(convertedStars));}catch(e){}},[blossomConvertedStarsKey,convertedStars]);
   useEffect(()=>{
     if(!showBlossomRoom)return;
     setBlossomClock(Date.now());
   },[showBlossomRoom]);
+  const availableBlossoms=Math.max(0,pickedBlossoms.length-blossomSpent);
+  const totalDisplayStars=Math.max(0,Number(earnedStars||0)+Number(convertedStars||0));
   const blossomScene=getTadbirTehranScene(user.id,blossomClock);
-  const blossomAfter=Math.max(0,Number(earnedStars||0)-60);
+  const blossomAfter=Math.max(0,totalDisplayStars-60);
   const blossomFullCount=Math.floor(blossomAfter/6);
   const blossomGrowingStep=blossomAfter%6;
   const blossomOnPlant=Math.max(0,blossomFullCount-pickedBlossoms.filter(i=>Number(i)<blossomFullCount).length)+(blossomGrowingStep>0?1:0);
@@ -7581,6 +7597,48 @@ function Student({user,tab,setTab,onLogout}){
     if(!Number.isFinite(i)||i>=blossomFullCount||pickedBlossoms.includes(i))return;
     setPickedBlossoms(v=>[...v,i].sort((a,b)=>a-b));
     toast('🌸 شکوفه با موفقیت چیده شد!','success');
+  };
+
+  const executeBlossomExchange=async()=>{
+    if(exchangeBusy)return;
+    const amount=Math.max(1,Math.floor(Number(exchangeAmount)||1));
+    setExchangeBusy(true);
+    try{
+      if(exchangeMode==='blossom_to_coin'){
+        if(availableBlossoms<amount){
+          toast('شکوفه کافی برای این تبدیل ندارید','warning');
+          return;
+        }
+        const addedCoins=amount*2;
+        const nextBalance=Number(coinBalance||0)+addedCoins;
+        const {error}=await SB.from('tadbir_wallets')
+          .update({balance:nextBalance,updated_at:new Date().toISOString()})
+          .eq('user_id',String(user.id));
+        if(error)throw error;
+        setCoinBalance(nextBalance);
+        setBlossomSpent(v=>v+amount);
+        toast(`${amount} شکوفه به ${addedCoins} سکه تبدیل شد`,'success');
+      }else if(exchangeMode==='coin_to_star'){
+        const cost=amount*2;
+        if(Number(coinBalance||0)<cost){
+          toast('سکه کافی برای این تبدیل ندارید','warning');
+          return;
+        }
+        const nextBalance=Number(coinBalance||0)-cost;
+        const {error}=await SB.from('tadbir_wallets')
+          .update({balance:nextBalance,updated_at:new Date().toISOString()})
+          .eq('user_id',String(user.id));
+        if(error)throw error;
+        setCoinBalance(nextBalance);
+        setConvertedStars(v=>v+amount);
+        toast(`${cost} سکه به ${amount} ستاره تبدیل شد`,'success');
+      }
+    }catch(err){
+      console.warn('blossom exchange:',err);
+      toast('تبدیل انجام نشد؛ دوباره تلاش کنید','error');
+    }finally{
+      setExchangeBusy(false);
+    }
   };
 
   const loadAll=async()=>{
@@ -8101,7 +8159,7 @@ function Student({user,tab,setTab,onLogout}){
                 <span className="blossom-safe-arrow" aria-hidden="true"></span>
                 <div className="coin-home-balance" style={{paddingLeft:'27px',gap:'9px'}}>
                   <div className="blossom-safe-icon"><svg viewBox="0 0 48 48"><defs><radialGradient id="bsPetal" cx="35%" cy="25%" r="75%"><stop offset="0" stop-color="#d1fae5"/><stop offset=".45" stop-color="#6ee7b7"/><stop offset="1" stop-color="#059669"/></radialGradient><radialGradient id="bsCore"><stop offset="0" stop-color="#fff7ae"/><stop offset=".55" stop-color="#facc15"/><stop offset="1" stop-color="#d97706"/></radialGradient></defs><g fill="url(#bsPetal)"><ellipse cx="24" cy="11.5" rx="6.2" ry="10"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(72 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(144 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(216 24 24)"/><ellipse cx="24" cy="11.5" rx="6.2" ry="10" transform="rotate(288 24 24)"/></g><circle cx="24" cy="24" r="6.2" fill="url(#bsCore)"/></svg></div>
-                  <div><div className="blossom-safe-count">{pickedBlossoms.length}</div><div className="blossom-safe-label">شکوفه</div></div>
+                  <div><div className="blossom-safe-count">{availableBlossoms}</div><div className="blossom-safe-label">شکوفه</div></div>
                 </div>
               </button>
             </div>
@@ -8239,7 +8297,7 @@ function Student({user,tab,setTab,onLogout}){
                   </div>
                 )}
                 {toolsTab==='profile'&&(<div className="slide-up"><ProfileEditor user={user} onSaved={()=>{}}/></div>)}
-                {toolsTab==='achievements'&&(<div className="achievement-shell slide-up"><div className="achievement-head"><div><span className="achievement-kicker">TADBIR REWARDS</span><h2>🏆 دستاوردها</h2></div><div className="coin-orb">🪙</div></div><div className="wallet-big"><div><small>موجودی سکه</small><strong>{coinBalance}</strong></div><div className="text-right"><small>ستاره‌های کسب‌شده</small><strong>{earnedStars} ⭐</strong></div></div><div className="trophy-list">{TADBIR_TROPHIES.map(t=>{const owned=ownedTrophyIds.includes(t.id);const next=(Math.max(0,...ownedTrophyIds,0)+1);const locked=!owned&&t.id!==next;return <div key={t.id} className={`trophy-row ${locked?'locked':''}`}><div className="trophy-art"><img src={t.image} alt={t.name}/></div><div className="trophy-info"><h3>{t.name}</h3><p>{owned?'این جام در مجموعه شما ثبت شده است.':locked?`برای باز شدن، ابتدا جام ${next} را بگیرید.`:`جام بعدی شماست؛ با خرید آن یک مرحله دیگر از مجموعه تدبیر کامل می‌شود.`}</p><span className="trophy-price">🪙 {t.price} سکه</span></div><div>{owned?<div className="trophy-owned">✓ کسب شد</div>:<button className="trophy-buy" disabled={locked||achievementBusy||coinBalance<t.price} onClick={()=>purchaseTrophy(t)}>{locked?'🔒 قفل':'خرید'}</button>}</div></div>})}</div><div className="reward-box"><h3>🎁 کد جایزه</h3><p>کد دریافت‌شده را وارد کن تا سکه‌های جایزه مستقیم به حساب شما اضافه شود.</p><div className="reward-code-row"><input className="glass-input" value={rewardCode} onChange={e=>setRewardCode(e.target.value.toUpperCase())} placeholder="کد جایزه را وارد کنید"/><button className="reward-btn" disabled={achievementBusy||!rewardCode.trim()} onClick={redeemRewardCode}>دریافت</button></div></div></div>)}
+                {toolsTab==='achievements'&&(<div className="achievement-shell slide-up"><div className="achievement-head"><div><span className="achievement-kicker">TADBIR REWARDS</span><h2>🏆 دستاوردها</h2></div><div className="coin-orb">🪙</div></div><div className="wallet-big"><div><small>موجودی سکه</small><strong>{coinBalance}</strong></div><div className="text-right"><small>ستاره‌های من</small><strong>{totalDisplayStars} ⭐</strong></div></div><div className="trophy-list">{TADBIR_TROPHIES.map(t=>{const owned=ownedTrophyIds.includes(t.id);const next=(Math.max(0,...ownedTrophyIds,0)+1);const locked=!owned&&t.id!==next;return <div key={t.id} className={`trophy-row ${locked?'locked':''}`}><div className="trophy-art"><img src={t.image} alt={t.name}/></div><div className="trophy-info"><h3>{t.name}</h3><p>{owned?'این جام در مجموعه شما ثبت شده است.':locked?`برای باز شدن، ابتدا جام ${next} را بگیرید.`:`جام بعدی شماست؛ با خرید آن یک مرحله دیگر از مجموعه تدبیر کامل می‌شود.`}</p><span className="trophy-price">🪙 {t.price} سکه</span></div><div>{owned?<div className="trophy-owned">✓ کسب شد</div>:<button className="trophy-buy" disabled={locked||achievementBusy||coinBalance<t.price} onClick={()=>purchaseTrophy(t)}>{locked?'🔒 قفل':'خرید'}</button>}</div></div>})}</div><div className="reward-box"><h3>🎁 کد جایزه</h3><p>کد دریافت‌شده را وارد کن تا سکه‌های جایزه مستقیم به حساب شما اضافه شود.</p><div className="reward-code-row"><input className="glass-input" value={rewardCode} onChange={e=>setRewardCode(e.target.value.toUpperCase())} placeholder="کد جایزه را وارد کنید"/><button className="reward-btn" disabled={achievementBusy||!rewardCode.trim()} onClick={redeemRewardCode}>دریافت</button></div></div></div>)}
                 {toolsTab==='planner'&&(
                   <div className="space-y-3 slide-up">
                     <div className="glass p-4 space-y-3">
@@ -8354,7 +8412,7 @@ function Student({user,tab,setTab,onLogout}){
                 <div className="blossom-desk"></div>
                 <div className="blossom-pot-shadow"></div>
                 <div className="blossom-pot">
-                  <TadbirBlossomPlant stars={earnedStars} picked={pickedBlossoms} onPick={pickBlossom}/>
+                  <TadbirBlossomPlant stars={totalDisplayStars} picked={pickedBlossoms} onPick={pickBlossom}/>
                   <div className="blossom-pot-rim"></div>
                   <div className="blossom-pot-soil"></div>
                   <div className="blossom-pot-body"></div>
@@ -8366,8 +8424,8 @@ function Student({user,tab,setTab,onLogout}){
                 <button type="button" className="blossom-safe-close" onClick={()=>setShowBlossomRoom(false)} aria-label="بستن"></button>
                 <div className="blossom-wallet-pill">
                   <div className="blossom-wallet-flower"></div>
-                  <div className="blossom-wallet-copy"><strong>{pickedBlossoms.length}</strong><span>شکوفه های من</span></div>
-                  <div className="blossom-wallet-stars"><strong>{earnedStars}</strong><span>ستاره های من</span></div>
+                  <div className="blossom-wallet-copy"><strong>{availableBlossoms}</strong><span>شکوفه های من</span></div>
+                  <div className="blossom-wallet-stars"><strong>{totalDisplayStars}</strong><span>ستاره های من</span></div>
                 </div>
               </div>
 
@@ -8387,7 +8445,7 @@ function Student({user,tab,setTab,onLogout}){
                   <button type="button" className="blossom-action-card clean" onClick={()=>{try{toast("تمیز کردن به زودی فعال می‌شود ✨")}catch(e){}}}>
                     <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M31 7l10 10-16 16-10-10L31 7Z" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M15 23L7 31l10 10 8-8" fill="none" stroke="currentColor" strokeWidth="2.7"/><path d="M9 41h30" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/></svg></span><b>تمیز کردن</b><small>تازه و سالم</small>
                   </button>
-                  <button type="button" className="blossom-action-card convert" onClick={()=>{try{toast("تبدیل شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
+                  <button type="button" className="blossom-action-card convert" onClick={()=>{setExchangeAmount(1);setExchangeMode('blossom_to_coin');setShowBlossomExchange(true);}}>
                     <span className="blossom-action-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 16h26l-6-6m6 6-6 6M40 32H14l6 6m-6-6 6-6" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/></svg></span><b>تبدیل</b><small>مدیریت شکوفه‌ها</small>
                   </button>
                   <button type="button" className="blossom-action-card store" onClick={()=>{try{toast("فروشگاه شکوفه‌ها به زودی فعال می‌شود")}catch(e){}}}>
@@ -8395,6 +8453,72 @@ function Student({user,tab,setTab,onLogout}){
                   </button>
                 </div>
               </div>
+
+              {showBlossomExchange&&(
+                <div className="blossom-exchange-overlay" onClick={()=>!exchangeBusy&&setShowBlossomExchange(false)}>
+                  <div className="blossom-exchange-shell" onClick={e=>e.stopPropagation()}>
+                    <div className="blossom-exchange-head">
+                      <div>
+                        <span className="blossom-exchange-kicker">TADBIR EXCHANGE</span>
+                        <h3>صرافی شکوفه</h3>
+                        <p>تبدیل دارایی‌های اتاق شکوفه با نرخ ثابت</p>
+                      </div>
+                      <button type="button" className="blossom-exchange-close" disabled={exchangeBusy} onClick={()=>setShowBlossomExchange(false)}>×</button>
+                    </div>
+
+                    <div className="blossom-exchange-wallet">
+                      <div><span>شکوفه</span><strong>{availableBlossoms}</strong></div>
+                      <div><span>سکه</span><strong>{coinBalance}</strong></div>
+                      <div><span>ستاره</span><strong>{totalDisplayStars}</strong></div>
+                    </div>
+
+                    <div className="blossom-exchange-route">
+                      <button type="button" className={exchangeMode==='blossom_to_coin'?'active':''} onClick={()=>{setExchangeMode('blossom_to_coin');setExchangeAmount(1);}}>
+                        <span className="exchange-route-icon flower">✿</span>
+                        <span><b>شکوفه</b><small>به سکه</small></span>
+                        <em>1 → 2</em>
+                      </button>
+                      <button type="button" className={exchangeMode==='coin_to_star'?'active':''} onClick={()=>{setExchangeMode('coin_to_star');setExchangeAmount(1);}}>
+                        <span className="exchange-route-icon coin">●</span>
+                        <span><b>سکه</b><small>به ستاره</small></span>
+                        <em>2 → 1</em>
+                      </button>
+                    </div>
+
+                    <div className="blossom-exchange-box">
+                      <div className="exchange-side">
+                        <span>{exchangeMode==='blossom_to_coin'?'شکوفه':'سکه'}</span>
+                        <strong>{exchangeMode==='blossom_to_coin'?exchangeAmount:Number(exchangeAmount||1)*2}</strong>
+                      </div>
+                      <div className="exchange-arrow">
+                        <span>←</span>
+                        <small>تبدیل</small>
+                      </div>
+                      <div className="exchange-side receive">
+                        <span>{exchangeMode==='blossom_to_coin'?'سکه':'ستاره'}</span>
+                        <strong>{exchangeMode==='blossom_to_coin'?Number(exchangeAmount||1)*2:exchangeAmount}</strong>
+                      </div>
+                    </div>
+
+                    <div className="blossom-exchange-amount">
+                      <button type="button" onClick={()=>setExchangeAmount(v=>Math.max(1,Number(v||1)-1))}>−</button>
+                      <div><span>تعداد تبدیل</span><strong>{exchangeAmount}</strong></div>
+                      <button type="button" onClick={()=>setExchangeAmount(v=>Math.max(1,Number(v||1)+1))}>+</button>
+                    </div>
+
+                    <div className="blossom-exchange-rule">
+                      {exchangeMode==='blossom_to_coin'
+                        ? 'هر ۱ شکوفه = ۲ سکه'
+                        : 'هر ۲ سکه = ۱ ستاره'}
+                    </div>
+
+                    <button type="button" className="blossom-exchange-submit" disabled={exchangeBusy} onClick={executeBlossomExchange}>
+                      {exchangeBusy?'در حال تبدیل...':'تأیید تبدیل'}
+                    </button>
+                    <div className="blossom-exchange-locknote">تبدیل معکوس فعال نیست؛ ستاره به سکه و سکه به شکوفه تبدیل نمی‌شود.</div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : null}
@@ -10039,4 +10163,206 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 @media (prefers-reduced-motion:reduce){
   .blossom-safe-room *,.blossom-safe-room:before,.blossom-safe-room:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* =========================================================
+   TADBIR BLOSSOM V28 — POT + EXCHANGE ONLY
+   Keeps the stable V27 room intact.
+   ========================================================= */
+
+/* Premium hand-fired terracotta pot */
+.blossom-pot{
+  filter:drop-shadow(0 24px 26px rgba(26,14,8,.38))!important;
+}
+.blossom-pot-body{
+  border-radius:18px 18px 56px 56px/15px 15px 78px 78px!important;
+  background:
+    radial-gradient(ellipse at 26% 15%,rgba(255,242,220,.34),transparent 16%),
+    radial-gradient(ellipse at 73% 72%,rgba(73,27,15,.24),transparent 35%),
+    repeating-linear-gradient(9deg,rgba(255,255,255,.018) 0 2px,rgba(82,31,18,.018) 2px 5px),
+    linear-gradient(108deg,#713620 0%,#9b4b2e 18%,#c87348 42%,#b45d3b 58%,#87402a 78%,#5f2b20 100%)!important;
+  border:1px solid rgba(255,226,197,.26)!important;
+  box-shadow:
+    inset 14px 0 20px rgba(255,255,255,.10),
+    inset -20px -15px 26px rgba(52,19,10,.31),
+    inset 0 -8px 14px rgba(57,20,11,.16),
+    0 1px 0 rgba(255,245,232,.10)!important;
+}
+.blossom-pot-body:before{
+  content:""!important;
+  position:absolute!important;
+  left:18%!important;right:18%!important;top:22%!important;height:3px!important;
+  border-radius:50%!important;
+  background:rgba(255,230,203,.11)!important;
+  box-shadow:
+    0 15px 0 rgba(96,37,21,.08),
+    0 30px 0 rgba(255,225,198,.05),
+    0 45px 0 rgba(89,32,20,.05)!important;
+}
+.blossom-pot-rim{
+  height:40px!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(ellipse at 50% 48%,#342217 0 39%,#54331f 40% 46%,transparent 47%),
+    linear-gradient(180deg,#d07d50 0%,#b05a37 42%,#873e29 72%,#6b3023 100%)!important;
+  border:2px solid rgba(255,227,202,.24)!important;
+  box-shadow:
+    inset 0 7px 9px rgba(255,255,255,.12),
+    inset 0 -8px 10px rgba(68,22,12,.28),
+    0 8px 10px rgba(33,13,7,.30)!important;
+}
+.blossom-pot-soil{
+  left:15px!important;right:15px!important;top:15px!important;height:29px!important;
+  border-radius:50%!important;
+  background:
+    radial-gradient(circle at 17% 38%,#b47a49 0 3.4%,transparent 4.1%),
+    radial-gradient(circle at 29% 63%,#5b3825 0 3.8%,transparent 4.6%),
+    radial-gradient(circle at 46% 34%,#8f5c37 0 4.2%,transparent 5%),
+    radial-gradient(circle at 64% 62%,#69422a 0 3.6%,transparent 4.4%),
+    radial-gradient(circle at 81% 34%,#a86d3f 0 3.2%,transparent 4%),
+    radial-gradient(ellipse at 50% 45%,#765033 0%,#4b3021 62%,#2e1d16 100%)!important;
+  box-shadow:
+    inset 0 7px 10px rgba(0,0,0,.50),
+    0 1px 0 rgba(255,255,255,.05)!important;
+}
+.blossom-pot-saucer{
+  height:20px!important;
+  border-radius:50%!important;
+  background:linear-gradient(180deg,#b6603f,#783526 64%,#52231c)!important;
+  box-shadow:inset 0 4px 5px rgba(255,255,255,.07),0 6px 10px rgba(30,12,8,.28)!important;
+}
+/* little soil mound at the exact stem origin */
+.blossom-pot:before{
+  width:23px!important;height:13px!important;top:25px!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse at 50% 35%,#725035,#352319 75%)!important;
+  box-shadow:inset 0 3px 4px rgba(0,0,0,.38)!important;
+}
+
+/* Exchange overlay */
+.blossom-exchange-overlay{
+  position:absolute!important;inset:0!important;z-index:150!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:18px!important;
+  background:rgba(7,14,12,.48)!important;
+  backdrop-filter:blur(12px) saturate(115%)!important;
+}
+.blossom-exchange-shell{
+  width:min(440px,94vw)!important;
+  max-height:90vh!important;
+  overflow:auto!important;
+  border-radius:30px!important;
+  padding:20px!important;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(120,220,183,.13),transparent 34%),
+    linear-gradient(145deg,rgba(19,39,35,.91),rgba(15,24,23,.91))!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  box-shadow:0 30px 80px rgba(0,0,0,.44),inset 0 1px 0 rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(28px) saturate(135%)!important;
+  color:#fff!important;
+}
+.blossom-exchange-head{
+  display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:14px!important;
+  margin-bottom:14px!important;
+}
+.blossom-exchange-kicker{
+  display:block!important;font-size:8px!important;letter-spacing:2.2px!important;
+  color:rgba(190,255,228,.48)!important;font-weight:900!important;
+}
+.blossom-exchange-head h3{
+  margin:4px 0 3px!important;font-size:22px!important;font-weight:1000!important;
+  background:linear-gradient(90deg,#eafff6,#9be6c5,#f9d6a4)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;
+}
+.blossom-exchange-head p{font-size:9px!important;color:rgba(255,255,255,.44)!important}
+.blossom-exchange-close{
+  width:38px!important;height:38px!important;border-radius:14px!important;border:1px solid rgba(255,255,255,.12)!important;
+  background:rgba(255,255,255,.06)!important;color:#fff!important;font-size:25px!important;line-height:1!important;
+}
+.blossom-exchange-wallet{
+  display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:7px!important;margin-bottom:12px!important;
+}
+.blossom-exchange-wallet>div{
+  padding:10px 8px!important;border-radius:17px!important;text-align:center!important;
+  background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.09)!important;
+}
+.blossom-exchange-wallet span{display:block!important;font-size:8px!important;color:rgba(255,255,255,.46)!important}
+.blossom-exchange-wallet strong{display:block!important;font-size:18px!important;margin-top:2px!important}
+
+.blossom-exchange-route{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-bottom:12px!important}
+.blossom-exchange-route button{
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:rgba(255,255,255,.045)!important;color:white!important;
+  border-radius:20px!important;padding:10px!important;
+  display:grid!important;grid-template-columns:36px 1fr auto!important;align-items:center!important;gap:8px!important;
+  text-align:right!important;transition:.2s!important;
+}
+.blossom-exchange-route button.active{
+  border-color:rgba(139,233,191,.38)!important;
+  background:linear-gradient(135deg,rgba(79,184,137,.18),rgba(255,195,118,.08))!important;
+  box-shadow:0 0 0 1px rgba(118,220,176,.06),0 10px 25px rgba(0,0,0,.14)!important;
+}
+.exchange-route-icon{
+  width:36px!important;height:36px!important;border-radius:13px!important;display:grid!important;place-items:center!important;
+  background:rgba(255,255,255,.07)!important;font-size:20px!important;
+}
+.exchange-route-icon.flower{color:#9be6c5!important}
+.exchange-route-icon.coin{color:#f6cf70!important}
+.blossom-exchange-route b{display:block!important;font-size:10px!important}
+.blossom-exchange-route small{display:block!important;font-size:8px!important;color:rgba(255,255,255,.40)!important}
+.blossom-exchange-route em{font-style:normal!important;font-size:9px!important;color:#d9f9ea!important}
+
+.blossom-exchange-box{
+  display:grid!important;grid-template-columns:1fr 64px 1fr!important;align-items:center!important;
+  gap:8px!important;padding:12px!important;border-radius:24px!important;
+  background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.085)!important;
+}
+.exchange-side{
+  min-height:76px!important;border-radius:18px!important;padding:12px!important;text-align:center!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.exchange-side.receive{background:linear-gradient(145deg,rgba(102,219,168,.12),rgba(255,196,119,.055))!important}
+.exchange-side span{display:block!important;font-size:9px!important;color:rgba(255,255,255,.47)!important}
+.exchange-side strong{display:block!important;font-size:28px!important;margin-top:4px!important}
+.exchange-arrow{text-align:center!important;color:rgba(255,255,255,.65)!important}
+.exchange-arrow span{display:block!important;font-size:27px!important}
+.exchange-arrow small{font-size:7px!important;color:rgba(255,255,255,.35)!important}
+
+.blossom-exchange-amount{
+  display:grid!important;grid-template-columns:48px 1fr 48px!important;align-items:center!important;gap:8px!important;
+  margin-top:10px!important;padding:7px!important;border-radius:18px!important;
+  background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.075)!important;
+}
+.blossom-exchange-amount button{
+  height:42px!important;border-radius:13px!important;border:1px solid rgba(255,255,255,.10)!important;
+  background:rgba(255,255,255,.07)!important;color:#fff!important;font-size:22px!important;
+}
+.blossom-exchange-amount div{text-align:center!important}
+.blossom-exchange-amount span{display:block!important;font-size:8px!important;color:rgba(255,255,255,.42)!important}
+.blossom-exchange-amount strong{font-size:18px!important}
+
+.blossom-exchange-rule{
+  margin-top:9px!important;padding:9px 12px!important;border-radius:15px!important;text-align:center!important;
+  background:rgba(236,194,112,.07)!important;border:1px solid rgba(236,194,112,.14)!important;
+  color:#f5dfb0!important;font-size:10px!important;font-weight:800!important;
+}
+.blossom-exchange-submit{
+  width:100%!important;margin-top:10px!important;padding:13px 14px!important;border-radius:17px!important;border:0!important;
+  background:linear-gradient(135deg,#66c69b,#4cae82 55%,#d3aa63)!important;
+  color:#10231c!important;font-weight:1000!important;font-size:12px!important;
+  box-shadow:0 12px 28px rgba(56,150,109,.20)!important;
+}
+.blossom-exchange-submit:disabled{opacity:.55!important}
+.blossom-exchange-locknote{
+  margin-top:8px!important;text-align:center!important;font-size:7.5px!important;line-height:1.7!important;
+  color:rgba(255,255,255,.34)!important;
+}
+@media(max-width:560px){
+  .blossom-exchange-shell{padding:15px!important;border-radius:24px!important}
+  .blossom-exchange-route{grid-template-columns:1fr!important}
+  .blossom-exchange-box{grid-template-columns:1fr 48px 1fr!important}
+  .exchange-side{min-height:68px!important;padding:10px!important}
+  .exchange-side strong{font-size:24px!important}
+}
+
 </style>
