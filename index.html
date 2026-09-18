@@ -3870,18 +3870,102 @@ html[data-tadbir-theme] .nav-bar{
 
 /* keep mobile room balanced with the taller living plant */
 @media(max-width:599px){
-  .blossom-growth-plant{width:245px;height:320px;bottom:108px}
+  .blossom-growth-plant{width:245px;height:320px;bottom:calc(100% - 34px)}
   .blossom-growth-hud{top:max(78px,calc(66px + env(safe-area-inset-top)))}
   .blossom-pick-hint{top:118px}
 }
 @media(max-width:380px){
-  .blossom-growth-plant{width:228px;height:300px;bottom:104px}
+  .blossom-growth-plant{width:228px;height:300px;bottom:calc(100% - 31px)}
   .blossom-growth-chip{font-size:7px;padding:5px 7px}
 }
 @media(orientation:landscape) and (max-height:520px){
-  .blossom-growth-plant{width:190px;height:230px;bottom:90px}
+  .blossom-growth-plant{width:190px;height:230px;bottom:calc(100% - 28px)}
   .blossom-growth-hud{top:62px}
   .blossom-pick-hint{display:none}
+}
+</style>
+
+
+<style>
+/* TADBIR BLOSSOM STEM ANCHOR V25 */
+.blossom-pot{overflow:visible!important;isolation:isolate!important}
+.blossom-growth-plant{
+  left:50%!important;bottom:calc(100% - 35px)!important;
+  z-index:7!important;transform:translateX(-50%)!important;
+}
+.blossom-growth-plant svg{overflow:visible!important}
+.blossom-growth-plant .blossom-growth-form{transform-origin:130px 350px!important}
+.blossom-pot-soil{z-index:6!important}
+.blossom-pot-rim{z-index:9!important}
+.blossom-pot-body{z-index:4!important}
+.blossom-pot-saucer{z-index:3!important}
+.blossom-growth-plant .blossom-stem-main{stroke-width:11px!important}
+.blossom-growth-plant .blossom-branch{stroke-width:5px!important}
+
+/* TADBIR BLOSSOM CARE V25 */
+.blossom-care-gauge{
+  position:absolute;right:10px;top:47%;z-index:82;width:46px;height:166px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.28));
+}
+.blossom-care-gauge .care-glass{
+  position:relative;width:26px;height:128px;border-radius:18px 18px 15px 15px;
+  border:2px solid rgba(255,255,255,.58);background:rgba(255,255,255,.13);
+  box-shadow:inset 0 0 10px rgba(255,255,255,.16),0 0 0 4px rgba(255,255,255,.04);
+  overflow:hidden;
+}
+.blossom-care-gauge .care-fill{
+  position:absolute;left:4px;right:4px;bottom:4px;height:var(--care-fill,100%);
+  border-radius:12px 12px 10px 10px;background:linear-gradient(180deg,#67e8f9,#34d399 55%,#22c55e);
+  box-shadow:0 0 14px rgba(52,211,153,.48);transition:height .7s ease,background .4s;
+}
+.blossom-care-gauge.low .care-fill{background:linear-gradient(180deg,#fbbf24,#fb7185);box-shadow:0 0 14px rgba(251,113,133,.55)}
+.blossom-care-gauge.empty .care-fill{background:#fb7185;box-shadow:0 0 13px rgba(251,113,133,.45)}
+.blossom-care-gauge .care-bulb{position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);width:38px;height:38px;border-radius:50%;border:2px solid rgba(255,255,255,.58);background:rgba(255,255,255,.12);z-index:3}
+.blossom-care-gauge .care-bulb:after{content:'';position:absolute;inset:7px;border-radius:50%;background:var(--care-color,#34d399);box-shadow:0 0 15px var(--care-color,#34d399)}
+.blossom-care-gauge.low .care-bulb:after{--care-color:#fb7185}
+.blossom-care-gauge .care-value{font-size:11px;font-weight:1000;color:#fff;line-height:1}
+.blossom-care-gauge .care-label{font-size:8px;font-weight:900;color:rgba(255,255,255,.72);white-space:nowrap}
+.blossom-care-gauge .care-ticks{position:absolute;right:-5px;top:7px;bottom:7px;display:flex;flex-direction:column;justify-content:space-between;font-size:6px;color:rgba(255,255,255,.38)}
+.blossom-water-tool{
+  position:absolute;z-index:90;width:76px;height:76px;touch-action:none;cursor:grab;
+  user-select:none;-webkit-user-select:none;transform:translate(-50%,-50%);
+  transition:filter .2s;filter:drop-shadow(0 12px 18px rgba(0,0,0,.35));
+}
+.blossom-water-tool.dragging{cursor:grabbing;filter:drop-shadow(0 16px 24px rgba(14,116,144,.45))}
+.blossom-water-tool.near-pot{animation:waterCanFloat .8s ease-in-out infinite}
+.blossom-water-tool .can-svg{width:100%;height:100%;overflow:visible}
+.blossom-water-tool .can-body{fill:url(#wateringCanGradientV25);stroke:rgba(255,255,255,.72);stroke-width:1.4}
+.blossom-water-tool .can-handle{fill:none;stroke:#dbeafe;stroke-width:5;stroke-linecap:round}
+.blossom-water-tool .can-spout{fill:url(#wateringSpoutGradientV25);stroke:rgba(255,255,255,.55);stroke-width:1}
+.blossom-water-tool.near-pot .can-svg{transform:rotate(27deg);transform-origin:45px 42px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.blossom-water-drops{position:absolute;left:-8px;bottom:8px;width:54px;height:62px;pointer-events:none;transform:rotate(18deg)}
+.blossom-water-drops i{position:absolute;width:5px;height:11px;border-radius:80% 20% 65% 35%;background:linear-gradient(180deg,#e0f7ff,#38bdf8);box-shadow:0 0 7px rgba(56,189,248,.65);opacity:0}
+.blossom-water-tool.near-pot .blossom-water-drops i{animation:wateringDropV25 .8s linear infinite}
+.blossom-water-drops i:nth-child(1){left:7px;top:2px}.blossom-water-drops i:nth-child(2){left:18px;top:15px;animation-delay:.16s!important}.blossom-water-drops i:nth-child(3){left:30px;top:6px;animation-delay:.32s!important}.blossom-water-drops i:nth-child(4){left:40px;top:23px;animation-delay:.48s!important}.blossom-water-drops i:nth-child(5){left:23px;top:34px;animation-delay:.64s!important}
+@keyframes wateringDropV25{0%{transform:translateY(-5px) scale(.55);opacity:0}18%{opacity:1}100%{transform:translate(12px,36px) scale(.9);opacity:0}}
+@keyframes waterCanFloat{50%{translate:0 -4px}}
+.blossom-water-hint{position:absolute;z-index:91;pointer-events:none;right:72px;top:52%;padding:6px 9px;border-radius:999px;background:rgba(9,44,57,.75);border:1px solid rgba(125,211,252,.28);font-size:8px;font-weight:900;color:#dff8ff;white-space:nowrap;backdrop-filter:blur(12px);animation:waterHintV25 1.8s ease-in-out infinite}
+@keyframes waterHintV25{50%{transform:translateX(-4px);opacity:.72}}
+.blossom-water-btn-wrap{position:absolute;right:10px;top:calc(47% + 177px);z-index:83;width:112px}
+.blossom-water-btn{width:100%;border:1px solid rgba(125,211,252,.34);border-radius:14px;padding:8px 7px;background:linear-gradient(135deg,rgba(14,165,233,.28),rgba(16,185,129,.22));color:#fff;font-size:10px;font-weight:1000;box-shadow:0 8px 24px rgba(0,0,0,.18);cursor:pointer;transition:.25s}
+.blossom-water-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 11px 28px rgba(14,165,233,.24)}
+.blossom-water-btn:disabled{opacity:.48;cursor:not-allowed}
+.blossom-water-btn small{display:block;font-size:7px;color:rgba(255,255,255,.6);margin-top:2px}
+.blossom-care-stage{position:absolute;left:50%;top:calc(47% + 173px);transform:translateX(-50%);z-index:83;font-size:7px;color:rgba(255,255,255,.52);white-space:nowrap;pointer-events:none}
+.blossom-growth-plant .blossom-leaf.yellowing path:first-child{fill:#d9b83e!important}
+.blossom-growth-plant .blossom-leaf.yellowing path:nth-child(2){fill:#f2dc69!important}
+.blossom-growth-plant .blossom-leaf.yellowing{animation:yellowLeafV25 .65s ease-in-out infinite alternate!important}
+@keyframes yellowLeafV25{to{filter:drop-shadow(0 0 8px rgba(250,204,21,.65));opacity:.72}}
+.blossom-growth-plant .blossom-leaf.removing{animation:leafFallV25 .8s ease-in forwards!important}
+@keyframes leafFallV25{to{opacity:0;transform:translate(10px,30px) rotate(35deg) scale(.2)}}
+.blossom-flower-node.ready{min-width:30px;min-height:30px}
+.blossom-flower-node.ready:hover{filter:drop-shadow(0 0 15px rgba(255,158,187,.9));cursor:pointer}
+@media(max-width:599px){
+  .blossom-care-gauge{right:5px;top:45%;transform:scale(.82);transform-origin:top right}
+  .blossom-water-btn-wrap{right:5px;top:calc(45% + 150px);transform:scale(.9);transform-origin:top right}
+  .blossom-care-stage{top:calc(45% + 151px)}
+  .blossom-water-tool{width:68px;height:68px}
 }
 </style>
 
@@ -5305,6 +5389,133 @@ function Admin({user,tab,setTab,onLogout}){
   const toast=useToast();
 
   useEffect(()=>{loadAll();},[]);
+  useEffect(()=>{
+    plantCareRef.current=plantCare;
+    try{localStorage.setItem(plantCareKey,JSON.stringify(plantCare));}catch(e){}
+  },[plantCareKey,plantCare]);
+  useEffect(()=>{
+    let alive=true;
+    (async()=>{
+      try{
+        const {data,error}=await SB.from('tadbir_plant_states').select('*').eq('user_id',String(user.id)).maybeSingle();
+        if(error)throw error;
+        if(data){
+          const loaded={
+            thirst:Number(data.thirst ?? 100),
+            lastWateredAt:new Date(data.last_watered_at||Date.now()).getTime(),
+            zeroSince:data.zero_since?new Date(data.zero_since).getTime():null,
+            lastPenaltyAt:data.last_penalty_at?new Date(data.last_penalty_at).getTime():null,
+            deadLeaves:Math.max(0,Number(data.dead_leaves)||0),
+            stage:Math.max(1,Math.min(5,Number(data.plant_stage)||5)),
+            wateringCount:Math.max(0,Number(data.watering_count)||0)
+          };
+          if(alive){
+            plantCareLoaded.current=true;plantCareRef.current=loaded;setPlantCare(loaded);
+            if(Array.isArray(data.picked_blossoms)){
+              const dbPicked=data.picked_blossoms.map(Number).filter(Number.isFinite);
+              setPickedBlossoms(dbPicked);
+              setBlossomSpent(Math.max(0,Number(data.blossom_spent)||0));
+            }
+          }
+        }else{
+          const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');
+          if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}
+        }
+      }catch(err){
+        console.warn('plant care load:',err);
+        try{const raw=JSON.parse(localStorage.getItem(plantCareKey)||'null');if(raw&&alive){plantCareLoaded.current=true;plantCareRef.current=raw;setPlantCare(raw);}}catch(e){}
+      }
+    })();
+    return()=>{alive=false};
+  },[user.id]);
+
+  const persistPlantCare=useCallback(async(next)=>{
+    const normalized={
+      user_id:String(user.id),
+      thirst:Math.max(0,Math.min(100,Number(next.thirst)||0)),
+      last_watered_at:new Date(next.lastWateredAt||Date.now()).toISOString(),
+      zero_since:next.zeroSince?new Date(next.zeroSince).toISOString():null,
+      last_penalty_at:next.lastPenaltyAt?new Date(next.lastPenaltyAt).toISOString():null,
+      dead_leaves:Math.max(0,Number(next.deadLeaves)||0),
+      plant_stage:Math.max(1,Math.min(5,Number(next.stage)||1)),
+      watering_count:Math.max(0,Number(next.wateringCount)||0),
+      blossom_count:Math.max(0,Number(pickedBlossoms?.length)||0),
+      blossom_spent:Math.max(0,Number(blossomSpent)||0),
+      picked_blossoms:Array.isArray(pickedBlossoms)?pickedBlossoms.map(Number).filter(Number.isFinite):[],
+      updated_at:new Date().toISOString()
+    };
+    try{
+      const {error}=await SB.from('tadbir_plant_states').upsert(normalized,{onConflict:'user_id'});
+      if(error)throw error;
+    }catch(err){console.warn('plant care save:',err);}
+  },[user.id,pickedBlossoms,blossomSpent]);
+
+  const currentThirst=(()=>{
+    const c=plantCareRef.current||plantCare;
+    const elapsed=Math.max(0,Date.now()-Number(c.lastWateredAt||Date.now()));
+    return Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
+  })();
+
+  const processPlantCare=useCallback(async(now=Date.now())=>{
+    const c={...(plantCareRef.current||plantCare)};
+    const elapsed=Math.max(0,now-Number(c.lastWateredAt||now));
+    const zeroAt=elapsed>=172800000?(Number(c.lastWateredAt||now)+172800000):null;
+    const thirst=Math.max(0,Math.min(100,100-(elapsed/172800000)*100));
+    if(!zeroAt){
+      const next={...c,thirst,zeroSince:null,lastPenaltyAt:null};
+      plantCareRef.current=next;setPlantCare(next);return;
+    }
+    let zeroSince=Number(c.zeroSince||zeroAt);
+    let lastPenaltyAt=Number(c.lastPenaltyAt||0)||null;
+    let deadLeaves=Math.max(0,Number(c.deadLeaves)||0);
+    let stage=Math.max(1,Number(c.stage)||5);
+    let changed=false;
+    if(!c.zeroSince){zeroSince=zeroAt;changed=true;}
+    if(now-zeroSince>=86400000 && (!lastPenaltyAt || now-lastPenaltyAt>=86400000)){
+      const before=Math.max(0,Math.min(24,4));
+      const available=Math.max(0,24-deadLeaves);
+      const removed=Math.min(before,available);
+      if(removed>0){
+        const leafStart=deadLeaves;
+        setYellowingLeaves(Array.from({length:removed},(_,i)=>leafStart+i));
+        setTimeout(()=>setYellowingLeaves([]),1800);
+        deadLeaves+=removed;
+        stage=Math.max(1,stage-1);
+        toast(`🌿 گیاه به‌خاطر تشنگی یک مرحله عقب رفت و ${removed} برگش زرد و حذف شد.`,'warning');
+      }
+      lastPenaltyAt=now;changed=true;
+    }
+    const next={...c,thirst,zeroSince,lastPenaltyAt,deadLeaves,stage};
+    plantCareRef.current=next;
+    if(changed){setPlantCare(next);await persistPlantCare(next);}
+    else setPlantCare(next);
+  },[persistPlantCare,toast]);
+
+  useEffect(()=>{
+    if(!showBlossomRoom)return;
+    const timer=setInterval(()=>{setBlossomClock(Date.now());processPlantCare(Date.now());},1000);
+    return()=>clearInterval(timer);
+  },[showBlossomRoom,processPlantCare]);
+
+  const waterPlant=useCallback(async()=>{
+    const now=Date.now();
+    const c={...(plantCareRef.current||plantCare)};
+    const next={...c,thirst:100,lastWateredAt:now,zeroSince:null,lastPenaltyAt:null,wateringCount:Math.max(0,Number(c.wateringCount)||0)+1};
+    plantCareRef.current=next;setPlantCare(next);
+    await persistPlantCare(next);
+  },[persistPlantCare]);
+
+  const saveBlossomCount=useCallback(async(nextPicked,nextSpent=blossomSpent)=>{
+    try{
+      await SB.from('tadbir_plant_states').upsert({
+        user_id:String(user.id),
+        blossom_count:Math.max(0,Number(nextPicked?.length)||0),
+        blossom_spent:Math.max(0,Number(nextSpent)||0),
+        picked_blossoms:Array.isArray(nextPicked)?nextPicked.map(Number).filter(Number.isFinite):[],
+        updated_at:new Date().toISOString()
+      },{onConflict:'user_id'});
+    }catch(err){console.warn('blossom count save:',err);}
+  },[user.id,blossomSpent]);
   const loadAdminNotifications=async()=>{
     try{
       const {data,error}=await SB.rpc('tadbir_admin_notifications',{p_admin_id:String(user.id)});
@@ -7386,13 +7597,17 @@ const TADBIR_BLOSSOM_LEAVES=[
   {x:101,y:83,r:-31,s:.86},{x:169,y:75,r:30,s:.88},{x:129,y:61,r:-20,s:.82},{x:146,y:48,r:24,s:.78},
   {x:55,y:226,r:-18,s:.92},{x:211,y:232,r:18,s:.92},{x:73,y:95,r:-18,s:.83},{x:200,y:92,r:18,s:.83}
 ];
-function TadbirBlossomPlant({stars=0,picked=[],onPick}){
+function TadbirBlossomPlant({stars=0,picked=[],onPick,deadLeaves=0,stage=1,yellowingLeaves=[]}){
   const safeStars=Math.max(0,Number(stars)||0);
   const pre=Math.min(60,safeStars);
-  const growth=.30+.70*(pre/60);
-  const thickness=1+Math.min(.24,Math.max(0,safeStars-60)/110);
-  const leafCount=Math.max(4,Math.min(24,4+Math.floor(pre/3)));
-  const branchCount=Math.max(2,Math.min(10,2+Math.floor(pre/7)));
+  const stageNum=Math.max(1,Number(stage)||1);
+  const stageFactor=Math.max(.62,1-(5-stageNum)*.085);
+  const growth=(.30+.70*(pre/60))*stageFactor;
+  const thickness=1+Math.min(.24,Math.max(0,safeStars-60)/110)*stageFactor;
+  const permanentDead=Math.max(0,Math.floor(Number(deadLeaves)||0));
+  const leafCount=Math.max(4,Math.min(24,4+Math.floor(pre/3)-permanentDead));
+  const branchCount=Math.max(2,Math.min(10,2+Math.floor(pre/7)-Math.floor(permanentDead/3)));
+  const yellowSet=new Set((yellowingLeaves||[]).map(Number));
   const after=Math.max(0,safeStars-60);
   const full=Math.floor(after/6);
   const partial=after%6;
@@ -7454,7 +7669,7 @@ function TadbirBlossomPlant({stars=0,picked=[],onPick}){
 
         {leaves.slice(0,leafCount).map((l,i)=>{
           const [x,y,r,sc]=l;
-          return <g key={`leaf-${i}`} className="blossom-leaf" transform={`translate(${x} ${y}) rotate(${r}) scale(${sc})`} filter="url(#blossomLeafShadowV24)">
+          return <g key={`leaf-${i}`} className={`blossom-leaf ${yellowSet.has(i)?'yellowing':''}`} transform={`translate(${x} ${y}) rotate(${r}) scale(${sc})`} filter="url(#blossomLeafShadowV24)">
             <path d={leafPath} fill="url(#blossomLeafGradientV24)"/>
             <path d={leafPath} fill="url(#blossomLeafShineV24)"/>
             <path d={veinPath} fill="none" stroke="#bfe28b" strokeOpacity=".48" strokeWidth="1.1" strokeLinecap="round"/>
@@ -7469,7 +7684,8 @@ function TadbirBlossomPlant({stars=0,picked=[],onPick}){
             transform={`translate(${slot.x} ${slot.y}) scale(${size})`}
             onClick={f.ready?()=>onPick?.(f.index):undefined}>
             {f.ready
-              ? <>{[0,72,144,216,288].map(a=><ellipse key={a} className="blossom-petal" cx="0" cy="-10" rx="7" ry="13" transform={`rotate(${a})`}/>)}
+              ? <><circle cx="0" cy="0" r="18" fill="transparent"/>
+                {[0,72,144,216,288].map(a=><ellipse key={a} className="blossom-petal" cx="0" cy="-10" rx="7" ry="13" transform={`rotate(${a})`}/>)}
                   <circle className="blossom-core" cx="0" cy="0" r="6.2"/></>
               : <><ellipse className="blossom-bud-sepal" cx="0" cy="6" rx="8.5" ry="6.5"/><ellipse className="blossom-bud" cx="0" cy="0" rx={6+f.progress*.55} ry={8+f.progress*.7}/></>}
           </g>
@@ -7478,6 +7694,72 @@ function TadbirBlossomPlant({stars=0,picked=[],onPick}){
     </svg>
   </div>;
 }
+
+function TadbirThirstGauge({value=100}){
+  const v=Math.max(0,Math.min(100,Number(value)||0));
+  const cls=v<=0?'empty':v<50?'low':'';
+  return <div className={`blossom-care-gauge ${cls}`} style={{'--care-fill':`${Math.max(3,v)}%`}}>
+    <div className="care-value">{Math.round(v)}</div>
+    <div className="care-glass">
+      <div className="care-fill"></div>
+      <div className="care-bulb"></div>
+      <div className="care-ticks"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>
+    </div>
+    <div className="care-label">💧 تشنگی</div>
+  </div>;
+}
+function TadbirWateringCan({active=false,onWatering}){
+  const [pos,setPos]=useState({x:79,y:67});
+  const [dragging,setDragging]=useState(false);
+  const [near,setNear]=useState(false);
+  const lastWater=useRef(0);
+  const parentRef=useRef(null);
+  const move=(e)=>{
+    const el=parentRef.current;
+    if(!el)return;
+    const r=el.getBoundingClientRect();
+    const x=Math.max(9,Math.min(91,((e.clientX-r.left)/r.width)*100));
+    const y=Math.max(13,Math.min(87,((e.clientY-r.top)/r.height)*100));
+    setPos({x,y});
+    const isNear=x>34&&x<66&&y>45&&y<80;
+    setNear(isNear);
+    if(isNear && Date.now()-lastWater.current>1400){
+      lastWater.current=Date.now();
+      onWatering?.();
+    }
+  };
+  const down=(e)=>{
+    if(!active)return;
+    e.preventDefault();
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    parentRef.current=e.currentTarget.parentElement;
+    setDragging(true);
+    move(e);
+  };
+  const up=(e)=>{
+    try{e.currentTarget.releasePointerCapture?.(e.pointerId);}catch{}
+    setDragging(false);
+    setNear(false);
+  };
+  if(!active)return null;
+  return <div className={`blossom-water-tool ${dragging?'dragging':''} ${near?'near-pot':''}`}
+    style={{left:`${pos.x}%`,top:`${pos.y}%`}} onPointerDown={down} onPointerMove={dragging?move:undefined}
+    onPointerUp={up} onPointerCancel={up} aria-label="آبپاش شناور">
+    <svg className="can-svg" viewBox="0 0 90 90" aria-hidden="true">
+      <defs>
+        <linearGradient id="wateringCanGradientV25" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#e0f2fe"/><stop offset=".45" stopColor="#67e8f9"/><stop offset="1" stopColor="#0ea5e9"/></linearGradient>
+        <linearGradient id="wateringSpoutGradientV25" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#38bdf8"/><stop offset="1" stopColor="#0284c7"/></linearGradient>
+      </defs>
+      <path className="can-handle" d="M25 32C18 8 57 5 60 30"/>
+      <path className="can-body" d="M22 31c0-6 5-10 11-10h22c8 0 14 6 14 14v21c0 7-5 12-12 12H33c-7 0-11-5-11-12V31Z"/>
+      <path className="can-spout" d="M66 40L84 28l3 6-17 15Z"/>
+      <circle cx="33" cy="32" r="3" fill="#fff" opacity=".65"/>
+      <path d="M29 57c9 5 22 5 32 0" fill="none" stroke="#fff" strokeOpacity=".28" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+    <div className="blossom-water-drops">{[1,2,3,4,5].map(i=><i key={i}></i>)}</div>
+  </div>;
+}
+
 function Student({user,tab,setTab,onLogout}){
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
@@ -7559,7 +7841,17 @@ function Student({user,tab,setTab,onLogout}){
   const [exchangeMode,setExchangeMode]=useState('blossom_to_coin');
   const [exchangeAmount,setExchangeAmount]=useState(1);
   const [exchangeBusy,setExchangeBusy]=useState(false);
-  const openBlossomRoom=()=>setShowBlossomRoom(true);
+  const [showWateringCan,setShowWateringCan]=useState(false);
+  const [plantCare,setPlantCare]=useState(()=>({
+    thirst:100,lastWateredAt:Date.now(),zeroSince:null,lastPenaltyAt:null,
+    deadLeaves:0,stage:5,wateringCount:0
+  }));
+  const [yellowingLeaves,setYellowingLeaves]=useState([]);
+  const plantCareRef=useRef(plantCare);
+  const plantCareSaveTimer=useRef(null);
+  const plantCareLoaded=useRef(false);
+  const plantCareKey=`tadbir_plant_care_${user.id}`;
+  const openBlossomRoom=()=>{setShowWateringCan(false);setShowBlossomRoom(true);};
   const [examHintUsed,setExamHintUsed]=useState(0);
   const [globalExamHintUsed,setGlobalExamHintUsed]=useState(()=>localStorage.getItem('tadbir_exam_hint_used_once')==='1');
   const [examHintTarget,setExamHintTarget]=useState(null);
@@ -7595,8 +7887,10 @@ function Student({user,tab,setTab,onLogout}){
   const pickBlossom=(index)=>{
     const i=Number(index);
     if(!Number.isFinite(i)||i>=blossomFullCount||pickedBlossoms.includes(i))return;
-    setPickedBlossoms(v=>[...v,i].sort((a,b)=>a-b));
-    toast('🌸 شکوفه با موفقیت چیده شد!','success');
+    const next=[...pickedBlossoms,i].sort((a,b)=>a-b);
+    setPickedBlossoms(next);
+    saveBlossomCount(next,blossomSpent);
+    toast('🌸 شکوفه چیده شد!','success');
   };
 
   const executeBlossomExchange=async()=>{
@@ -7622,7 +7916,7 @@ function Student({user,tab,setTab,onLogout}){
         const savedBalance=Number(data.balance);
         if(!Number.isFinite(savedBalance)||savedBalance!==nextBalance)throw new Error('wallet_balance_mismatch');
         setCoinBalance(savedBalance);
-        setBlossomSpent(v=>v+amount);
+        setBlossomSpent(v=>{const nv=v+amount;saveBlossomCount(pickedBlossoms,nv);return nv;});
         toast(`${amount} شکوفه به ${addedCoins} سکه تبدیل شد`,'success');
       }else if(exchangeMode==='coin_to_star'){
         const requestedCoins=Math.max(2,Math.floor(Number(amount)||2));
@@ -8429,12 +8723,24 @@ function Student({user,tab,setTab,onLogout}){
                 <div className="blossom-desk"></div>
                 <div className="blossom-pot-shadow"></div>
                 <div className="blossom-pot">
-                  <TadbirBlossomPlant stars={totalDisplayStars} picked={pickedBlossoms} onPick={pickBlossom}/>
+                  <TadbirBlossomPlant stars={totalDisplayStars} picked={pickedBlossoms} onPick={pickBlossom}
+                    deadLeaves={plantCare.deadLeaves} stage={plantCare.stage} yellowingLeaves={yellowingLeaves}/>
                   <div className="blossom-pot-rim"></div>
                   <div className="blossom-pot-soil"></div>
                   <div className="blossom-pot-body"></div>
                   <div className="blossom-pot-saucer"></div>
                 </div>
+                <TadbirThirstGauge value={currentThirst}/>
+                {currentThirst<50&&<div className="blossom-water-hint">آبپاش را بکش و نزدیک گلدان ببر 💧</div>}
+                {currentThirst<50&&showWateringCan&&<TadbirWateringCan active={currentThirst<50} onWatering={waterPlant}/>} 
+                <div className="blossom-water-btn-wrap">
+                  <button type="button" className="blossom-water-btn" disabled={currentThirst>=50}
+                    onClick={()=>{if(currentThirst<50){setShowWateringCan(true);setBlossomClock(Date.now());}}}>
+                    💧 آبیاری
+                    <small>{currentThirst>=50?'گیاه فعلاً تشنه نیست':'آبپاش را نزدیک گلدان ببر'}</small>
+                  </button>
+                </div>
+                <div className="blossom-care-stage">مرحله {plantCare.stage} · {plantCare.wateringCount} آبیاری</div>
               </div>
 
               <div className="blossom-top-ui">
@@ -8446,8 +8752,6 @@ function Student({user,tab,setTab,onLogout}){
                 </div>
               </div>
 
-              {blossomFullCount>pickedBlossoms.filter(i=>Number(i)<blossomFullCount).length&&
-                <div className="blossom-pick-hint">برای چیدن، روی شکوفه کامل بزن</div>}
 <div className="blossom-info-panel">
                 <div className="blossom-info-head">
                   <button type="button" className="blossom-info-help" onClick={()=>{try{toast("این بخش برای توضیحات و راهنمای کامل اتاق شکوفه‌هاست.")}catch(e){}}} aria-label="راهنمای اتاق شکوفه">!</button>
