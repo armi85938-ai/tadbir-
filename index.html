@@ -7606,7 +7606,7 @@ function Student({user,tab,setTab,onLogout}){
     try{
       if(exchangeMode==='blossom_to_coin'){
         if(availableBlossoms<amount){
-          toast('شکوفه کافی برای این تبدیل ندارید','warning');
+          toast('موجودی شما کافی نمیباشد','warning');
           return;
         }
         const addedCoins=amount*2;
@@ -7625,14 +7625,14 @@ function Student({user,tab,setTab,onLogout}){
         setBlossomSpent(v=>v+amount);
         toast(`${amount} شکوفه به ${addedCoins} سکه تبدیل شد`,'success');
       }else if(exchangeMode==='coin_to_star'){
-        const cost=amount*2;
+        const requestedCoins=Math.max(2,Math.floor(Number(amount)||2));
+        const cost=requestedCoins%2===0?requestedCoins:requestedCoins-1;
+        const starsToAdd=Math.floor(cost/2);
         if(Number(coinBalance||0)<cost){
-          toast('سکه کافی برای این تبدیل ندارید','warning');
+          toast('موجودی شما کافی نمیباشد','warning');
           return;
         }
-        /* This RPC already exists in the healthy Tadbir build and performs
-           the protected wallet debit server-side, avoiding client-side RLS
-           failures when coins are spent. */
+        /* Existing protected RPC performs the wallet debit server-side. */
         const {data,error}=await SB.rpc('tadbir_spend_hint_coins_v3',{
           p_user_id:String(user.id),
           p_cost:cost
@@ -7643,8 +7643,8 @@ function Student({user,tab,setTab,onLogout}){
         const savedBalance=Number(result.balance);
         if(!Number.isFinite(savedBalance))throw new Error('invalid_wallet_balance');
         setCoinBalance(savedBalance);
-        setConvertedStars(v=>v+amount);
-        toast(`${cost} سکه به ${amount} ستاره تبدیل شد`,'success');
+        setConvertedStars(v=>v+starsToAdd);
+        toast(`${cost} سکه به ${starsToAdd} ستاره تبدیل شد`,'success');
       }
     }catch(err){
       console.error('blossom exchange error:',err);
@@ -8495,17 +8495,17 @@ function Student({user,tab,setTab,onLogout}){
                         <span><b>شکوفه</b><small>به سکه</small></span>
                         <em>1 → 2</em>
                       </button>
-                      <button type="button" className={exchangeMode==='coin_to_star'?'active':''} onClick={()=>{setExchangeMode('coin_to_star');setExchangeAmount(1);}}>
+                      <button type="button" className={exchangeMode==='coin_to_star'?'active':''} onClick={()=>{setExchangeMode('coin_to_star');setExchangeAmount(2);}}>
                         <span className="exchange-route-icon coin">●</span>
                         <span><b>سکه</b><small>به ستاره</small></span>
-                        <em>2 → 1</em>
+                        <em>۲ سکه ← ۱ ستاره</em>
                       </button>
                     </div>
 
                     <div className="blossom-exchange-box">
                       <div className="exchange-side">
                         <span>{exchangeMode==='blossom_to_coin'?'شکوفه':'سکه'}</span>
-                        <strong>{exchangeMode==='blossom_to_coin'?exchangeAmount:Number(exchangeAmount||1)*2}</strong>
+                        <strong>{exchangeMode==='blossom_to_coin'?exchangeAmount:Number(exchangeAmount||2)}</strong>
                       </div>
                       <div className="exchange-arrow">
                         <span>←</span>
@@ -8513,23 +8513,16 @@ function Student({user,tab,setTab,onLogout}){
                       </div>
                       <div className="exchange-side receive">
                         <span>{exchangeMode==='blossom_to_coin'?'سکه':'ستاره'}</span>
-                        <strong>{exchangeMode==='blossom_to_coin'?Number(exchangeAmount||1)*2:exchangeAmount}</strong>
+                        <strong>{exchangeMode==='blossom_to_coin'?Number(exchangeAmount||1)*2:Math.floor(Number(exchangeAmount||2)/2)}</strong>
                       </div>
                     </div>
 
                     <div className="blossom-exchange-amount">
-                      <button type="button" onClick={()=>setExchangeAmount(v=>Math.max(1,Number(v||1)-1))}>−</button>
-                      <div><span>تعداد تبدیل</span><strong>{exchangeAmount}</strong></div>
-                      <button type="button" onClick={()=>setExchangeAmount(v=>Math.max(1,Number(v||1)+1))}>+</button>
+                      <button type="button" onClick={()=>setExchangeAmount(v=>exchangeMode==='coin_to_star'?Math.max(2,Number(v||2)-2):Math.max(1,Number(v||1)-1))}>−</button>
+                      <div><span>{exchangeMode==='coin_to_star'?'تعداد سکه برای خرج':'تعداد شکوفه برای تبدیل'}</span><strong>{exchangeAmount}</strong></div>
+                      <button type="button" onClick={()=>setExchangeAmount(v=>exchangeMode==='coin_to_star'?Math.max(2,Number(v||2)+2):Math.max(1,Number(v||1)+1))}>+</button>
                     </div>
-
-                    <div className="blossom-exchange-rule">
-                      {exchangeMode==='blossom_to_coin'
-                        ? 'هر ۱ شکوفه = ۲ سکه'
-                        : 'هر ۲ سکه = ۱ ستاره'}
-                    </div>
-
-                    <button type="button" className="blossom-exchange-submit" disabled={exchangeBusy} onClick={executeBlossomExchange}>
+<button type="button" className="blossom-exchange-submit" disabled={exchangeBusy} onClick={executeBlossomExchange}>
                       {exchangeBusy?'در حال تبدیل...':'تأیید تبدیل'}
                     </button>
                     
@@ -10358,11 +10351,7 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 .blossom-exchange-amount span{display:block!important;font-size:8px!important;color:rgba(255,255,255,.42)!important}
 .blossom-exchange-amount strong{font-size:18px!important}
 
-.blossom-exchange-rule{
-  margin-top:9px!important;padding:9px 12px!important;border-radius:15px!important;text-align:center!important;
-  background:rgba(236,194,112,.07)!important;border:1px solid rgba(236,194,112,.14)!important;
-  color:#f5dfb0!important;font-size:10px!important;font-weight:800!important;
-}
+
 .blossom-exchange-submit{
   width:100%!important;margin-top:10px!important;padding:13px 14px!important;border-radius:17px!important;border:0!important;
   background:linear-gradient(135deg,#66c69b,#4cae82 55%,#d3aa63)!important;
@@ -10437,4 +10426,48 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 /* The explanatory reverse-conversion note is intentionally absent. */
 .blossom-exchange-locknote{display:none!important}
 
+</style>
+<style>
+/* V30 — centered stem / soil opening */
+.blossom-pot{position:absolute!important;isolation:isolate!important;overflow:visible!important}
+.blossom-growth-plant{
+  left:50%!important;
+  bottom:calc(100% - 29px)!important;
+  z-index:11!important;
+}
+.blossom-pot-soil{z-index:10!important}
+.blossom-pot-rim{z-index:14!important}
+.blossom-pot-body{z-index:3!important}
+.blossom-pot-saucer{z-index:2!important}
+.blossom-pot-soil:after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;top:50%!important;
+  width:18px!important;height:9px!important;
+  transform:translate(-50%,-50%)!important;
+  border-radius:50%!important;
+  background:radial-gradient(ellipse,#1a110c 0%,#3b2618 55%,#6b452b 100%)!important;
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.55)!important;
+}
+.blossom-growth-plant,
+.blossom-growth-plant *,
+.blossom-growth-plant .blossom-leaf{
+  animation:none!important;
+  transition:none!important;
+}
+
+/* Premium top warning notification */
+.toast.warning{
+  min-width:260px!important;
+  max-width:min(92vw,420px)!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,rgba(84,61,27,.96),rgba(42,35,25,.96))!important;
+  border:1px solid rgba(255,210,116,.34)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.30),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:blur(20px)!important;
+}
+.toast.warning .toast-icon{
+  background:rgba(246,190,74,.18)!important;
+  border:1px solid rgba(255,214,117,.24)!important;
+}
 </style>
