@@ -3963,11 +3963,25 @@ function Login({onLogin}){
   const [recoveryUser,setRecoveryUser]=useState('');
   const toast=useToast();
   const submit=async(e)=>{
-    e.preventDefault();setLd(true);setErr('');
-    const ok=await onLogin(un,pw);
-    if(!ok){setErr('نام کاربری یا رمز عبور اشتباه است');toast('اطلاعات ورود نادرست است','error');}
-    else toast('سامانه تدبـــیر! 🎉','success');
-    setLd(false);
+    e.preventDefault();
+    if(ld)return;
+    setLd(true);
+    setErr('');
+    try{
+      const ok=await onLogin(String(un||'').trim(),pw);
+      if(!ok){
+        setErr('نام کاربری یا رمز عبور اشتباه است');
+        toast('اطلاعات ورود نادرست است','error');
+      }else{
+        toast('سامانه تدبـــیر! 🎉','success');
+      }
+    }catch(error){
+      console.error('Login submit error:',error);
+      setErr('ورود انجام نشد؛ اتصال سامانه را بررسی کنید و دوباره تلاش کنید.');
+      toast('ورود انجام نشد','error');
+    }finally{
+      setLd(false);
+    }
   };
   return(
     <div className="login-screen login-reference-screen fade-in" dir="rtl">
@@ -6915,18 +6929,17 @@ function NameFamilyGameHub({user,onClose}){
   const fmt=(n)=>`${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
   const scoreFor=(ans)=>Number(ans?.total_score||0);
   const finalSorted=[...finalResults].sort((a,b)=>Number(b.score)-Number(a.score));
-  const nfCategories=[['name','اسم'],['family','فامیل'],['color','رنگ'],['place','شهر'],['body','میوه/غذا']];
-  const getAnswerMap=(a)=>{
-    const raw=a?.answers||a?.answer||a?.draft||{};
-    if(typeof raw==='string'){try{return JSON.parse(raw)||{}}catch{return {}}}
-    return raw&&typeof raw==='object'?raw:{};
-  };
-  const getWord=(a,key)=>{const m=getAnswerMap(a);return String(m?.[key]??a?.[key]??'').trim()};
-  const getCategoryScore=(a,key)=>{
-    const m=a?.category_scores||a?.scores||a?.score_by_category||{};
-    if(typeof m==='string'){try{return Number(JSON.parse(m)?.[key]||0)}catch{return 0}}
-    return Number(m?.[key]||0);
-  };
+  const nfCategories=[
+    ['name','اسم'],
+    ['family','فامیل'],
+    ['color','رنگ'],
+    ['place','شهر'],
+    ['body','میوه/غذا']
+  ];
+  // پاسخ‌های جدول tadbir_nf_answers با نام ستون‌های *_answer ذخیره می‌شوند.
+  // امتیاز هر دسته نیز در ستون *_score قرار دارد.
+  const getWord=(a,key)=>String(a?.[`${key}_answer`]??'').trim();
+  const getCategoryScore=(a,key)=>Number(a?.[`${key}_score`]??0);
   const finalAnswerRows=finalResults.map(p=>{
     const rows=roundAnswers.filter(a=>String(a.user_id)===String(p.user_id));
     return {...p,answerRows:rows};
@@ -8360,9 +8373,44 @@ function App(){
     return()=>clearInterval(timer);
   },[user?.id]);
   const login=async(un,pw)=>{
-    const {data,error}=await SB.from('users').select('*').eq('username',un.toUpperCase()).eq('password',pw).limit(1);const account=Array.isArray(data)?data[0]:data;if(error){console.error(error);return false;}
-    if(account){const seen=new Date().toISOString();SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});account.last_seen_at=seen;setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));const role=String(account.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');return true;}
-    return false;
+    try{
+      const username=String(un||'').trim().toUpperCase();
+      const password=String(pw??'');
+      if(!username||!password)return false;
+
+      const {data,error}=await SB
+        .from('users')
+        .select('*')
+        .eq('username',username)
+        .eq('password',password)
+        .limit(1);
+
+      if(error){
+        console.error('Tadbir login error:',error);
+        return false;
+      }
+
+      const account=Array.isArray(data)?data[0]:data;
+      if(!account)return false;
+
+      const seen=new Date().toISOString();
+      // ثبت آخرین بازدید نباید مانع ورود شود.
+      SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});
+      account.last_seen_at=seen;
+
+      setUser(account);
+      sessionStorage.setItem('edu_user',JSON.stringify(account));
+      const role=String(account.role||'').trim().toLowerCase();
+      setView(
+        (role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')
+          ? 'admin'
+          : 'student'
+      );
+      return true;
+    }catch(error){
+      console.error('Tadbir login exception:',error);
+      return false;
+    }
   };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
   if(view==='login') return <Login onLogin={login}/>;
