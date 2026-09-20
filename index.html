@@ -6699,8 +6699,25 @@ function NameFamilyGameHub({user,onClose}){
     try{const {data,error}=await SB.rpc('tadbir_nf_admin_dictionary',{p_admin_id:String(user.id)});if(error)throw error;setNfDictionary(Array.isArray(data)?data:[])}catch(e){console.error('name-family dictionary:',e);toastLocal('دریافت فرهنگ واژه‌ها انجام نشد. SQL بازی را بررسی کن.')}finally{setNfDictionaryLoading(false)}
   };
   const addNfDictionaryWord=async()=>{
-    const word=nfDictionaryWord.trim();if(!word){toastLocal('کلمه را وارد کن.');return}setNfDictionaryBusy(true);
-    try{const {data,error}=await SB.rpc('tadbir_nf_admin_add_word',{p_admin_id:String(user.id),p_category:nfDictionaryCategory,p_word:word});if(error)throw error;if(!data?.ok)throw new Error(data?.reason||'ADD_FAILED');setNfDictionaryWord('');toastLocal('کلمه با موفقیت به فرهنگ بازی اضافه شد ✓');await loadNfDictionary()}catch(e){console.error(e);toastLocal(String(e?.message||'').includes('WORD_ALREADY_EXISTS')?'این کلمه از قبل در فرهنگ وجود دارد.':'افزودن کلمه انجام نشد.')}finally{setNfDictionaryBusy(false)}
+    const word=nfDictionaryWord.trim();
+    if(!word){toastLocal('کلمه را وارد کن.');return}
+    const normalizeWord=v=>String(v||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('fa-IR');
+    const normalized=normalizeWord(word);
+    const duplicate=(nfDictionary||[]).some(x=>String(x.category||'')===String(nfDictionaryCategory||'')&&normalizeWord(x.word)===normalized);
+    if(duplicate){toastLocal('⚠️ این کلمه قبلاً در همین بخش ثبت شده و دوباره ذخیره نمی‌شود.');return}
+    setNfDictionaryBusy(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_admin_add_word',{p_admin_id:String(user.id),p_category:nfDictionaryCategory,p_word:word});
+      if(error)throw error;
+      if(!data?.ok)throw new Error(data?.reason||'ADD_FAILED');
+      setNfDictionaryWord('');
+      toastLocal('کلمه با موفقیت به فرهنگ بازی اضافه شد ✓');
+      await loadNfDictionary();
+    }catch(e){
+      console.error(e);
+      const msg=String(e?.message||e?.details||e?.hint||'');
+      toastLocal(/WORD_ALREADY_EXISTS|duplicate|unique/i.test(msg)?'⚠️ این کلمه قبلاً در فرهنگ وجود دارد و ذخیره نشد.':'افزودن کلمه انجام نشد.');
+    }finally{setNfDictionaryBusy(false)}
   };
   const deleteNfDictionaryWord=async(id)=>{
     if(!window.confirm('این کلمه از فرهنگ بازی حذف شود؟'))return;setNfDictionaryBusy(true);
@@ -6778,6 +6795,7 @@ function NameFamilyGameHub({user,onClose}){
     if(isAdmin){loadNfDictionary();loadNfPendingSuggestions();}
     if(!isAdmin)loadMySuggestions();
     const ch=SB.channel('tadbir-name-family-'+user.id+'-'+Math.random().toString(36).slice(2,8))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_word_suggestions',filter:`student_id=eq.${user.id}`},()=>{if(!isAdmin)loadMySuggestions();})
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests'},()=>loadLobby())
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_rooms'},e=>{if(roomId&&String(e.new?.id||e.old?.id)===String(roomId))loadRoom(roomId);else loadLobby()})
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players'},e=>{if(roomId&&String(e.new?.room_id||e.old?.room_id)===String(roomId))loadRoom(roomId);else loadLobby()})
@@ -6815,28 +6833,85 @@ function NameFamilyGameHub({user,onClose}){
   },[screen,room?.id,room?.status,room?.letter_deadline,room?.round_deadline,room?.results_at,room?.finished_at,players.length]);
 
   const sendInvite=async()=>{
-    if(selectedIds.length<1||selectedIds.length>2){toastLocal('حداقل یک بازیکن دیگر را انتخاب کن.');return}
+    const cleanIds=[...new Set((selectedIds||[]).map(String).filter(id=>id&&id!==String(user.id)))];
+    if(cleanIds.length<1||cleanIds.length>2){toastLocal('حداقل یک بازیکن دیگر را انتخاب کن.');return}
     setBusy(true);
+    setError('');
+    let createdRoomId=null;
     try{
-      const {data:r,error:re}=await SB.from('tadbir_nf_rooms').insert({host_id:user.id,max_players:selectedIds.length+1,total_rounds:selectedIds.length+1}).select().single();
+      // درخواست‌ها را بعد از ساخت اتاق و بازیکن میزبان ثبت می‌کنیم؛
+      // اگر هر مرحله شکست خورد، تمام آثار مرحله‌های قبلی هم پاک می‌شوند.
+      const {data:r,error:re}=await SB.from('tadbir_nf_rooms')
+        .insert({host_id:user.id,max_players:cleanIds.length+1,total_rounds:cleanIds.length+1})
+        .select('*').single();
       if(re)throw re;
-      const {error:pe}=await SB.from('tadbir_nf_players').insert({room_id:r.id,user_id:user.id,seat:0});if(pe)throw pe;
-      const rows=selectedIds.map((id,i)=>({room_id:r.id,from_user:user.id,to_user:id,status:'pending'}));
-      const {error:qe}=await SB.from('tadbir_nf_requests').insert(rows);if(qe)throw qe;
-      setSelectedIds([]);setRoomId(r.id);setRoom(r);setScreen('room');toastLocal('درخواست بازی ارسال شد 🎮');
-    }catch(e){console.error(e);setError('ارسال درخواست بازی انجام نشد.');}
-    finally{setBusy(false)}
+      if(!r?.id)throw new Error('اتاق بازی ساخته نشد.');
+      createdRoomId=r.id;
+
+      const {error:pe}=await SB.from('tadbir_nf_players')
+        .insert({room_id:r.id,user_id:user.id,seat:0});
+      if(pe)throw pe;
+
+      // قبل از ارسال، درخواست تکراریِ فعال برای همین بازیکن را بررسی می‌کنیم.
+      const {data:existing}=await SB.from('tadbir_nf_requests')
+        .select('id,to_user').eq('room_id',r.id).eq('status','pending');
+      if(existing?.length)throw new Error('برای این اتاق درخواست تکراری وجود دارد.');
+
+      const rows=cleanIds.map(id=>({room_id:r.id,from_user:String(user.id),to_user:id,status:'pending'}));
+      const {error:qe}=await SB.from('tadbir_nf_requests').insert(rows);
+      if(qe)throw qe;
+
+      setSelectedIds([]);
+      setRoomId(r.id);setRoom(r);setScreen('room');
+      toastLocal('درخواست بازی با موفقیت ارسال شد 🎮');
+    }catch(e){
+      console.error('name-family send invite:',e);
+      // Rollback کامل تا اتاق خالی و درخواست نیمه‌کاره در دیتابیس نماند.
+      if(createdRoomId){
+        await SB.from('tadbir_nf_requests').delete().eq('room_id',createdRoomId);
+        await SB.from('tadbir_nf_players').delete().eq('room_id',createdRoomId);
+        await SB.from('tadbir_nf_rooms').delete().eq('id',createdRoomId);
+      }
+      const msg=String(e?.message||'');
+      setError(msg&&msg!=='undefined'?`ارسال درخواست بازی انجام نشد: ${msg}`:'ارسال درخواست بازی انجام نشد. دوباره تلاش کن.');
+    }finally{setBusy(false)}
   };
+
   const acceptRequest=async(req)=>{
+    if(!req?.id||!req?.room_id)return;
     setBusy(true);
+    setError('');
     try{
-      const {data:ps,error:pe}=await SB.from('tadbir_nf_players').select('seat').eq('room_id',req.room_id).order('seat');if(pe)throw pe;
-      const used=new Set((ps||[]).map(x=>Number(x.seat)));let seat=0;while(used.has(seat))seat++;
-      const {error:ie}=await SB.from('tadbir_nf_players').insert({room_id:req.room_id,user_id:user.id,seat});if(ie)throw ie;
-      const {error:qe}=await SB.from('tadbir_nf_requests').update({status:'accepted',responded_at:new Date().toISOString()}).eq('id',req.id);if(qe)throw qe;
-      setRoomId(req.room_id);setScreen('room');await loadRoom(req.room_id);toastLocal('به بازی پیوستی! 🎮');
-    }catch(e){console.error(e);setError('پیوستن به بازی انجام نشد.');}
-    finally{setBusy(false)}
+      // اگر به‌علت رفرش دوباره روی قبول زده شد، کاربر دوبار وارد اتاق نشود.
+      const {data:already,error:ae}=await SB.from('tadbir_nf_players')
+        .select('id,seat').eq('room_id',req.room_id).eq('user_id',String(user.id)).maybeSingle();
+      if(ae)throw ae;
+
+      if(!already){
+        const {data:ps,error:pe}=await SB.from('tadbir_nf_players')
+          .select('seat').eq('room_id',req.room_id).order('seat');
+        if(pe)throw pe;
+        const used=new Set((ps||[]).map(x=>Number(x.seat)));
+        let seat=0;while(used.has(seat))seat++;
+        if(seat>2)throw new Error('ظرفیت این اتاق تکمیل شده است.');
+        const {error:ie}=await SB.from('tadbir_nf_players')
+          .insert({room_id:req.room_id,user_id:String(user.id),seat});
+        if(ie)throw ie;
+      }
+
+      const {error:qe}=await SB.from('tadbir_nf_requests')
+        .update({status:'accepted',responded_at:new Date().toISOString()})
+        .eq('id',req.id).eq('to_user',String(user.id)).eq('status','pending');
+      if(qe)throw qe;
+
+      setRoomId(req.room_id);setScreen('room');
+      await loadRoom(req.room_id);
+      toastLocal('به بازی پیوستی! 🎮');
+    }catch(e){
+      console.error('name-family accept request:',e);
+      const msg=String(e?.message||'');
+      setError(msg&&msg!=='undefined'?`پیوستن به بازی انجام نشد: ${msg}`:'پیوستن به بازی انجام نشد. دوباره تلاش کن.');
+    }finally{setBusy(false)}
   };
   const rejectRequest=async(req)=>{await SB.from('tadbir_nf_requests').update({status:'rejected',responded_at:new Date().toISOString()}).eq('id',req.id);loadLobby()};
   const cancelInvite=async(req)=>{await SB.from('tadbir_nf_requests').update({status:'cancelled',responded_at:new Date().toISOString()}).eq('id',req.id);loadLobby()};
@@ -6903,13 +6978,13 @@ function NameFamilyGameHub({user,onClose}){
       {error&&<div className="nf-error">{error}<button onClick={()=>setError('')}>×</button></div>}
 
       {screen==='lobby'&&<div className="nf-lobby">
-        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><p>اسم فامیل را چند نفره و آنلاین بازی کنید</p></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy">الف</div><div className="nf-mini-card c1">چند نفره</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
+        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><p>اسم فامیل را آنلاین بازی کنید</p></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy">الف</div><div className="nf-mini-card c1">آنلاین</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
         {incoming.length>0&&<section className="nf-panel nf-incoming"><div className="nf-panel-title"><span>🔔</span><div><b>درخواست‌های بازی</b><small>یکی از دوستان یا مدیر می‌خواهد وارد میدان شود</small></div><strong>{incoming.length}</strong></div>{incoming.map(r=><div className="nf-request" key={r.id}><div className="nf-user-orb">{(r.from_user_data?.full_name||r.from_user_data?.username||'؟')[0]}</div><div className="nf-request-copy"><b>{r.from_user_data?.full_name||r.from_user_data?.username}</b><small>@{r.from_user_data?.username||''} • دعوت به اسم فامیل</small></div><div className="nf-request-actions"><button className="nf-accept" onClick={()=>acceptRequest(r)} disabled={busy}>قبول ✓</button><button className="nf-reject" onClick={()=>rejectRequest(r)}>رد</button></div></div>)}</section>}
         <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>تیم خودت را بساز</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={loadLobby} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}><div className="nf-avatar">{(u.full_name||u.username||'؟')[0]}</div><div><b>{u.full_name||u.username}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
         {isAdmin&&<section className="nf-panel nf-admin-words-panel" style={{marginTop:12}}><div className="nf-panel-title"><span>📚</span><div><b>فرهنگ واژه‌های اسم فامیل</b><small>مشاهده، افزودن و حذف کلمات معتبر بازی</small></div><button type="button" className="nf-refresh-users" onClick={loadNfDictionary} title="تازه‌سازی فرهنگ">↻</button></div>
           <div className="nf-admin-pending"><div className="nf-admin-subtitle"><b>پیشنهادهای دانش‌آموزان</b><span>{nfPendingSuggestions.length} مورد در انتظار</span></div>{nfPendingLoading?<div className="nf-users-empty">در حال دریافت پیشنهادها...</div>:nfPendingSuggestions.length===0?<div className="nf-users-empty">پیشنهاد در انتظار بررسی وجود ندارد.</div>:nfPendingSuggestions.map(x=><div className="nf-admin-suggestion-row" key={x.id}><div><b>{x.word}</b><small>{x.category_label||x.category} • {x.student_name||'دانش‌آموز'} {x.student_username?'• @'+x.student_username:''}</small></div><div className="nf-admin-suggestion-actions"><button onClick={()=>reviewNfPendingSuggestion(x.id,'approve')} disabled={nfDictionaryBusy}>✓ افزودن</button><button onClick={()=>reviewNfPendingSuggestion(x.id,'reject')} disabled={nfDictionaryBusy}>رد</button><button onClick={()=>deleteNfPendingSuggestion(x.id)} disabled={nfDictionaryBusy}>🗑</button></div></div>)}</div>
           <div className="nf-admin-word-add"><select className="nf-suggestion-input" value={nfDictionaryCategory} onChange={e=>setNfDictionaryCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={nfDictionaryWord} onChange={e=>setNfDictionaryWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')addNfDictionaryWord()}} placeholder="کلمه جدید را وارد کن"/><button className="nf-suggestion-submit" onClick={addNfDictionaryWord} disabled={nfDictionaryBusy}>{nfDictionaryBusy?'در حال ذخیره...':'➕ افزودن به فرهنگ'}</button></div><input className="nf-suggestion-input nf-admin-word-search" value={nfDictionarySearch} onChange={e=>setNfDictionarySearch(e.target.value)} placeholder="جست‌وجو در کلمات موجود..."/>{nfDictionaryLoading?<div className="nf-users-empty">در حال دریافت کلمات موجود...</div>:<div className="nf-admin-word-list">{(()=>{const q=nfDictionarySearch.trim();const rows=(nfDictionary||[]).filter(x=>!q||String(x.word||'').includes(q)||String(x.category_label||'').includes(q));return rows.length?rows.map(x=><div className="nf-admin-word-row" key={x.id}><div><b>{x.word}</b><small>{x.category_label||x.category}</small></div><button type="button" onClick={()=>deleteNfDictionaryWord(x.id)} disabled={nfDictionaryBusy}>🗑</button></div>):<div className="nf-users-empty">کلمه‌ای مطابق جست‌وجو پیدا نشد.</div>})()}</div>}</section>}
-        {!isAdmin&&        <section className={`nf-panel nf-suggestion-panel ${suggestionOpen?'open':''}`} style={{marginTop:12}}><button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(v=>!v)} aria-expanded={suggestionOpen}><span className="nf-suggestion-toggle-icon">💡</span><span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span><span className="nf-suggestion-chevron">⌄</span></button>{suggestionOpen&&<div className="nf-suggestion-body"><div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:8}}><select className="nf-suggestion-input" value={suggestionCategory} onChange={e=>setSuggestionCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={suggestionWord} onChange={e=>setSuggestionWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')submitWordSuggestion()}} placeholder="مثلاً: ژاله"/></div><button className="nf-suggestion-submit" onClick={submitWordSuggestion} disabled={suggestionBusy}>{suggestionBusy?'در حال ارسال...':'✨ ارسال پیشنهاد برای مدیر'}</button>{mySuggestions.length>0&&<div style={{marginTop:12,display:'grid',gap:7}}><small style={{color:'rgba(255,255,255,.45)'}}>پیشنهادهای اخیر من</small>{mySuggestions.slice(0,5).map(x=><div key={x.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,padding:'8px 10px',borderRadius:12,background:'rgba(255,255,255,.035)',border:'1px solid rgba(255,255,255,.06)'}}><span>{x.word} <small style={{color:'rgba(255,255,255,.35)'}}>• {FIELDS.find(f=>f[0]===x.category)?.[1]||x.category}</small></span><span className={`nf-suggestion-status ${x.status}`}>{x.status==='approved'?'✓ افزوده شد':x.status==='rejected'?'رد شد':'⏳ در انتظار'}</span></div>)}</div>}</div>}</section>}
+        {!isAdmin&&        <section className={`nf-panel nf-suggestion-panel ${suggestionOpen?'open':''}`} style={{marginTop:12}}><button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(v=>!v)} aria-expanded={suggestionOpen}><span className="nf-suggestion-toggle-icon">💡</span><span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span><span className="nf-suggestion-chevron">⌄</span></button>{suggestionOpen&&<div className="nf-suggestion-body"><div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:8}}><select className="nf-suggestion-input" value={suggestionCategory} onChange={e=>setSuggestionCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={suggestionWord} onChange={e=>setSuggestionWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')submitWordSuggestion()}} placeholder="مثلاً: ژاله"/></div><button className="nf-suggestion-submit" onClick={submitWordSuggestion} disabled={suggestionBusy}>{suggestionBusy?'در حال ارسال...':'✨ ارسال پیشنهاد برای مدیر'}</button>{mySuggestions.length>0&&<div style={{marginTop:12,display:'grid',gap:7}}><small style={{color:'rgba(255,255,255,.45)'}}>پیشنهادهای اخیر من</small>{mySuggestions.slice(0,5).map(x=><div key={x.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,padding:'8px 10px',borderRadius:12,background:'rgba(255,255,255,.035)',border:'1px solid rgba(255,255,255,.06)'}}><span>{x.word} <small style={{color:'rgba(255,255,255,.35)'}}>• {FIELDS.find(f=>f[0]===x.category)?.[1]||x.category}</small></span><span style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:3}}><span className={`nf-suggestion-status ${x.status}`}>{x.status==='approved'?'✓ قبول شد':x.status==='rejected'?'✗ رد شد':'⏳ در انتظار بررسی'}</span>{x.admin_note&&<small style={{color:'rgba(255,255,255,.42)',fontSize:8}}>{x.admin_note}</small>}</span></div>)}</div>}</div>}</section>}
         {outgoing.length>0&&<section className="nf-panel"><div className="nf-panel-title"><span>⏳</span><div><b>در انتظار پاسخ</b><small>دعوت‌های ارسال‌شده</small></div></div>{outgoing.map(r=><div className="nf-pending" key={r.id}><div><b>{r.to_user_data?.full_name||r.to_user_data?.username}</b><small>منتظر پاسخ است...</small></div><button onClick={()=>cancelInvite(r)}>لغو</button></div>)}</section>}
         {busy&&<div className="nf-loading">در حال هماهنگ‌سازی میدان بازی...</div>}
       </div>}
@@ -8004,7 +8079,7 @@ function Student({user,tab,setTab,onLogout}){
                       <div className="game-card nf-game-card" onClick={()=>setActiveGame('namefamily')}>
                         <div className="game-card-icon nf-game-logo"><span>الف</span><i>✦</i></div>
                         <h4 className="font-bold text-sm">اسم فامیل</h4>
-                        <p className="text-[10px] text-white/40 mt-1">چند نفره • آنلاین و زنده</p>
+                        <p className="text-[10px] text-white/40 mt-1">آنلاین</p>
                       </div>
 
                     </div>
