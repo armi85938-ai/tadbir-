@@ -6755,12 +6755,18 @@ function NameFamilyGameHub({user,onClose}){
     setRoom(r);setPlayers((ps||[]).map(x=>({...x,user:byId[String(x.user_id)]||null})));
     setRoomId(id);setScreen('room');
     if(r.status==='finished'){
-      const {data:ans}=await SB.from('tadbir_nf_answers').select('*').eq('room_id',id).order('round_no').order('submitted_at');
-      setRoundAnswers(ans||[]);
+      const {data:ans,error:ae}=await SB.from('tadbir_nf_answers').select('*').eq('room_id',id).order('round_no').order('submitted_at');
+      if(ae){
+        console.error('name-family final answers:',ae);
+        setRoundAnswers([]);
+        setError('نتیجه نهایی بازی بارگذاری شد، اما دسترسی به پاسخ‌های راندها از دیتابیس مجاز نیست. SQL اصلاح دسترسی پاسخ‌ها را اجرا کن.');
+      }else{
+        setRoundAnswers(ans||[]);
+      }
       setFinalResults((ps||[]).map(x=>({...x,user:byId[String(x.user_id)]||null})).sort((a,b)=>Number(b.score)-Number(a.score)));
     }else if(r.status==='results'){
-      const {data:ans}=await SB.from('tadbir_nf_answers').select('*').eq('room_id',id).eq('round_no',r.current_round).order('total_score',{ascending:false});
-      setRoundAnswers(ans||[]);
+      const {data:ans,error:ae}=await SB.from('tadbir_nf_answers').select('*').eq('room_id',id).eq('round_no',r.current_round).order('total_score',{ascending:false});
+      if(!ae)setRoundAnswers(ans||[]); else console.error('name-family round answers:',ae);
     }
   };
   useEffect(()=>{
@@ -6809,7 +6815,7 @@ function NameFamilyGameHub({user,onClose}){
       if(room.status==='results'&&room.results_at&&Date.now()-new Date(room.results_at).getTime()>4300){
         SB.rpc('tadbir_nf_advance',{p_room_id:room.id}).then(()=>loadRoom(room.id)).catch(()=>{});
       }
-      if(room.status==='finished'&&room.finished_at&&!cleanupRef.current&&Date.now()-new Date(room.finished_at).getTime()>18000){
+      if(room.status==='finished'&&room.finished_at&&!cleanupRef.current&&Date.now()-new Date(room.finished_at).getTime()>60000){
         cleanupRef.current=true;SB.rpc('tadbir_nf_cleanup_finished').then(()=>{}).catch(()=>{});
       }
     };
