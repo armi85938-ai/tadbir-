@@ -6909,6 +6909,22 @@ function NameFamilyGameHub({user,onClose}){
   const fmt=(n)=>`${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
   const scoreFor=(ans)=>Number(ans?.total_score||0);
   const finalSorted=[...finalResults].sort((a,b)=>Number(b.score)-Number(a.score));
+  const nfCategories=[['name','اسم'],['family','فامیل'],['color','رنگ'],['place','شهر'],['body','میوه/غذا']];
+  const getAnswerMap=(a)=>{
+    const raw=a?.answers||a?.answer||a?.draft||{};
+    if(typeof raw==='string'){try{return JSON.parse(raw)||{}}catch{return {}}}
+    return raw&&typeof raw==='object'?raw:{};
+  };
+  const getWord=(a,key)=>{const m=getAnswerMap(a);return String(m?.[key]??a?.[key]??'').trim()};
+  const getCategoryScore=(a,key)=>{
+    const m=a?.category_scores||a?.scores||a?.score_by_category||{};
+    if(typeof m==='string'){try{return Number(JSON.parse(m)?.[key]||0)}catch{return 0}}
+    return Number(m?.[key]||0);
+  };
+  const finalAnswerRows=finalResults.map(p=>{
+    const rows=roundAnswers.filter(a=>String(a.user_id)===String(p.user_id));
+    return {...p,answerRows:rows};
+  });
 
   return <div className="nf-overlay" dir="rtl">
     <div className="nf-shell">
@@ -6937,7 +6953,7 @@ function NameFamilyGameHub({user,onClose}){
         {room.status==='choosing'&&<div className="nf-choose"><div className="nf-turn-banner">{String(turnPlayer?.user_id)===String(user.id)?'نوبت توست؛ یک حرف انتخاب کن!':`نوبت ${turnPlayer?.user?.full_name||'بازیکن'} است؛ صبر کن...`}</div><div className="nf-timer-big choosing">{seconds}</div><div className="nf-letter-grid">{LETTERS.map(l=><button key={l} disabled={String(turnPlayer?.user_id)!==String(user.id)||busy} onClick={()=>chooseLetter(l)}>{l}</button>)}</div><small className="nf-hint">اگر ۱۰ ثانیه تمام شود، سیستم خودش یک حرف را انتخاب می‌کند.</small></div>}
         {room.status==='playing'&&<div className="nf-playing"><div className="nf-playing-head"><div><span className="nf-kicker">LETTER OF THIS ROUND</span><div className="nf-current-letter">{room.current_letter}</div></div><div className={`nf-timer-big ${seconds<=20?'danger':''}`}>{fmt(seconds)}</div></div><div className="nf-category-grid">{FIELDS.map(([key,label,icon])=><label className="nf-field" key={key}><span><i>{icon}</i>{label}</span><input value={answers[key]||''} onChange={e=>changeAnswer(key,e.target.value)} placeholder={`با «${room.current_letter}» بنویس...`} disabled={String(me?.user_id)!==String(user.id)}/></label>)}</div><div className="nf-stop-zone"><div className="nf-stop-caption">{saving?'در حال ذخیره پاسخ...':'همه جواب‌ها را نوشتی؟'}</div><button className="nf-stop-button" onClick={()=>stopRound(false)} disabled={busy||String(me?.user_id)!==String(user.id)}><span>⏹</span><b>استپ!</b><small>پایان راند برای همه</small></button></div></div>}
         {room.status==='results'&&<div className="nf-results"><div className="nf-result-icon">⚡</div><span className="nf-kicker">ROUND COMPLETE</span><h2>راند {room.current_round} تمام شد</h2><p>پاسخ‌ها بررسی شدند؛ راند بعدی تا چند ثانیه دیگر شروع می‌شود.</p><div className="nf-round-score-list">{roundAnswers.map(a=>{const p=playerById[String(a.user_id)];return <div className="nf-round-score" key={a.user_id}><b>{p?.user?.full_name||'بازیکن'}</b><span>{scoreFor(a)} امتیاز</span></div>})}</div></div>}
-        {room.status==='finished'&&<div className="nf-finished"><div className="nf-trophy">🏆</div><span className="nf-kicker">FINAL SCOREBOARD</span><h2>کارنامه نهایی</h2><p>بازی تمام شد؛ نتیجه برای همه نمایش داده شده است.</p><div className="nf-podium">{finalSorted.map((p,i)=><div className={`nf-podium-row rank-${i+1}`} key={p.user_id}><span className="nf-rank">{i===0?'🥇':i===1?'🥈':'🥉'}</span><div className="nf-avatar">{(p.user?.full_name||p.user?.username||'؟')[0]}</div><div className="nf-podium-name"><b>{p.user?.full_name||p.user?.username}</b><small>{i===0?'نفر اول':i===1?'نفر دوم':'نفر سوم'}</small></div><strong>{p.score||0}</strong></div>)}</div><div className="nf-final-note">اطلاعات این اتاق بعد از نمایش نتیجه، به‌صورت خودکار پاک می‌شود.</div></div>}
+        {room.status==='finished'&&<div className="nf-finished"><div className="nf-trophy">🏆</div><span className="nf-kicker">FINAL SCOREBOARD</span><h2>کارنامه نهایی</h2><p>بازی تمام شد؛ نتیجه برای همه نمایش داده شده است.</p><div className="nf-podium">{finalSorted.map((p,i)=><div className={`nf-podium-row rank-${i+1}`} key={p.user_id}><span className="nf-rank">{i===0?'🥇':i===1?'🥈':'🥉'}</span><div className="nf-avatar">{(p.user?.full_name||p.user?.username||'؟')[0]}</div><div className="nf-podium-name"><b>{p.user?.full_name||p.user?.username}</b><small>{i===0?'نفر اول':i===1?'نفر دوم':'نفر سوم'}</small></div><strong>{p.score||0}</strong></div>)}</div><div className="nf-final-answers"><div className="nf-final-answers-title"><b>📝 کلمات درست و غلط بازیکن‌ها</b><small>پاسخ‌های ثبت‌شده هر بازیکن در همه راندها</small></div>{finalAnswerRows.map(p=><div className="nf-player-answers" key={'answers-'+p.user_id}><div className="nf-player-answers-head"><b>{p.user?.full_name||p.user?.username||'بازیکن'}</b><span>{p.score||0} امتیاز</span></div>{p.answerRows.length===0?<div className="nf-no-answer">پاسخی برای این بازیکن ثبت نشده است.</div>:p.answerRows.map((a,ri)=><div className="nf-answer-round" key={(a.id||p.user_id+'-'+ri)}><span className="nf-answer-round-title">راند {a.round_no}</span><div className="nf-answer-chips">{nfCategories.map(([key,label])=>{const word=getWord(a,key);if(!word)return null;const cs=getCategoryScore(a,key);const total=Number(a?.total_score||0);const isGood=cs>0;return <div className={`nf-answer-chip ${isGood?'good':'bad'}`} key={key}><b>{label}:</b><span>{word}</span><small>{isGood?'✓ درست':'✗ غلط'}</small></div>})}</div></div>)}</div>)}</div><div className="nf-final-note">اطلاعات این اتاق بعد از نمایش نتیجه، به‌صورت خودکار پاک می‌شود.</div></div>}
       </div>}
     </div>
   </div>;
@@ -10320,4 +10336,6 @@ body{touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;}
 .blossom-water-status.not-thirsty{color:#ffe8a8;border-color:rgba(251,191,36,.22);}
 .blossom-water-status.thirsty{color:#9ff7c9;border-color:rgba(52,211,153,.22);}
 .blossom-water-tool,.blossom-water-btn-wrap,.blossom-water-hint,.blossom-care-stage{display:none!important;}
+
+.nf-final-answers{margin-top:18px;text-align:right}.nf-final-answers-title{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}.nf-final-answers-title b{font-size:15px}.nf-final-answers-title small{opacity:.6;font-size:11px}.nf-player-answers{padding:12px;margin-top:10px;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:rgba(255,255,255,.025)}.nf-player-answers-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.nf-player-answers-head span{font-weight:800}.nf-answer-round{padding-top:9px;margin-top:9px;border-top:1px solid rgba(255,255,255,.07)}.nf-answer-round-title{font-size:11px;opacity:.55}.nf-answer-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:7px}.nf-answer-chip{display:flex;align-items:center;gap:5px;min-width:0;padding:8px 9px;border-radius:11px;font-size:11px}.nf-answer-chip.good{background:rgba(16,185,129,.10);border:1px solid rgba(16,185,129,.22)}.nf-answer-chip.bad{background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.20)}.nf-answer-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.nf-answer-chip small{margin-right:auto;white-space:nowrap;font-weight:800}.nf-answer-chip.good small{color:#6ee7b7}.nf-answer-chip.bad small{color:#fca5a5}.nf-no-answer{opacity:.55;font-size:11px}@media(max-width:600px){.nf-answer-chips{grid-template-columns:1fr}.nf-final-answers{margin-top:14px}}
 </style>
