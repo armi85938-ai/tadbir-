@@ -3650,6 +3650,38 @@ html[data-tadbir-theme] .nav-bar{
 @media(max-width:620px){.nf-shell{padding:10px 10px 25px}.nf-hero{grid-template-columns:1fr;padding:20px}.nf-hero-art{min-height:170px}.nf-letter-orbit{width:125px;height:125px;font-size:58px}.nf-user-grid{grid-template-columns:1fr}.nf-player-strip{grid-template-columns:1fr}.nf-letter-grid{grid-template-columns:repeat(6,1fr)}.nf-letter-grid button{height:44px}.nf-category-grid{grid-template-columns:1fr}.nf-playing-head{align-items:flex-start}.nf-current-letter{font-size:60px}.nf-timer-big{width:76px;height:76px;font-size:25px}}
 </style>
 
+<style id="tadbir-name-family-android-scroll-fix">
+/* Android: صفحه بازی و لابی باید با یک حرکت انگشت روان اسکرول شوند. */
+.nf-overlay{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+.nf-shell{
+  overflow:visible!important;
+  min-height:100dvh!important;
+  touch-action:pan-y!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+.nf-room,.nf-waiting,.nf-choose,.nf-playing,.nf-results,.nf-finished,
+.nf-panel,.nf-user-grid,.nf-letter-grid,.nf-category-grid{
+  touch-action:pan-y!important;
+}
+.nf-field input,.nf-user-card,.nf-accept,.nf-reject,.nf-pending button,
+.nf-start-invite,.nf-start-game,.nf-back,.nf-close,.nf-refresh-users,
+.nf-letter-grid button,.nf-stop-button{touch-action:manipulation!important;}
+@media(max-width:620px){
+  .nf-overlay{padding-bottom:env(safe-area-inset-bottom)!important;}
+  .nf-shell{padding-bottom:calc(38px + env(safe-area-inset-bottom))!important;}
+  .nf-waiting,.nf-choose,.nf-playing,.nf-results,.nf-finished{
+    min-height:auto!important;
+    padding-top:18px!important;
+    padding-bottom:28px!important;
+  }
+}
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -6636,6 +6668,7 @@ function NameFamilyGameHub({user,onClose}){
   const autoStopRef=useRef(false);
   const cleanupRef=useRef(false);
   const answersRef=useRef(answers);
+  const lobbySyncRef=useRef(false);
   useEffect(()=>{answersRef.current=answers},[answers]);
 
   const toastLocal=(msg)=>{setNotice(msg);setTimeout(()=>setNotice(''),2600)};
@@ -6671,19 +6704,26 @@ function NameFamilyGameHub({user,onClose}){
     const {data}=await SB.from('users').select('id,full_name,username,role,last_seen_at').in('id',clean);
     return data||[];
   };
-  const loadLobby=async()=>{
-    setBusy(true);setUsersLoading(true);setError('');
+  const loadLobby=async({refreshUsers=true}={})=>{
+    // درخواست‌ها باید سریع همگام شوند، اما فهرست مخاطبین نباید هر بار دوباره
+    // از دیتابیس خوانده شود و باعث پرش/خالی‌شدن UI شود.
+    if(lobbySyncRef.current)return;
+    lobbySyncRef.current=true;
+    if(refreshUsers){setBusy(true);setUsersLoading(true);setError('');}
     try{
+      const usersPromise=refreshUsers
+        ? SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name')
+        : Promise.resolve({data:null,error:null});
       const [{data:us,error:ue},{data:inc,error:ie},{data:out,error:oe},{data:acc,error:ace},{data:mine,error:me}]=await Promise.all([
-        SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name'),
+        usersPromise,
         SB.from('tadbir_nf_requests').select('*').eq('to_user',user.id).eq('status','pending').order('created_at',{ascending:false}).limit(20),
         SB.from('tadbir_nf_requests').select('*').eq('from_user',user.id).eq('status','pending').order('created_at',{ascending:false}).limit(20),
         SB.from('tadbir_nf_requests').select('*').eq('from_user',user.id).eq('status','accepted').order('responded_at',{ascending:false}).limit(20),
         SB.from('tadbir_nf_players').select('room_id').eq('user_id',user.id).order('joined_at',{ascending:false}).limit(3)
       ]);
       if(ue)throw ue;if(ie)throw ie;if(oe)throw oe;if(ace)throw ace;if(me)throw me;
-      setUsers((us||[]).filter(x=>String(x.id)!==String(user.id)));
-      const allIds=[...(inc||[]).map(x=>x.from_user),...(out||[]).map(x=>x.to_user)];
+      if(refreshUsers)setUsers((us||[]).filter(x=>String(x.id)!==String(user.id)));
+      const allIds=[...(inc||[]).map(x=>x.from_user),...(out||[]).map(x=>x.to_user),...(acc||[]).map(x=>x.to_user)];
       const people=await getUsersByIds(allIds);
       const byId=Object.fromEntries(people.map(x=>[String(x.id),x]));
       setIncoming((inc||[]).map(x=>({...x,from_user_data:byId[String(x.from_user)]||null})));
@@ -6695,8 +6735,13 @@ function NameFamilyGameHub({user,onClose}){
         const active=(activeRooms||[]).find(x=>x.status!=='lobby');
         if(active){setRoomId(active.id);setScreen('room');}
       }
-    }catch(e){console.error(e);setUsers([]);setError('دریافت اطلاعات بازی انجام نشد. فهرست کاربران را دوباره تازه‌سازی کن.');}
-    finally{setBusy(false);setUsersLoading(false)}
+    }catch(e){
+      console.error(e);
+      if(refreshUsers){setUsers([]);setError('دریافت اطلاعات بازی انجام نشد. فهرست کاربران را دوباره تازه‌سازی کن.')}
+    }finally{
+      lobbySyncRef.current=false;
+      if(refreshUsers){setBusy(false);setUsersLoading(false)}
+    }
   };
   const loadRoom=async(id)=>{
     if(!id)return;
@@ -6721,21 +6766,25 @@ function NameFamilyGameHub({user,onClose}){
   useEffect(()=>{
     loadLobby();
     loadMySuggestions();
+    // Realtime + همگام‌سازی سریع پشتیبان؛ درخواست حداکثر طی حدود ۱ ثانیه دیده می‌شود.
     const ch=SB.channel('tadbir-name-family-user-'+user.id+'-'+Math.random().toString(36).slice(2,8))
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests',filter:`to_user=eq.${user.id}`},()=>loadLobby())
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests',filter:`from_user=eq.${user.id}`},()=>loadLobby())
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_word_suggestions',filter:`student_id=eq.${user.id}`},()=>loadMySuggestions())
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests'},()=>loadLobby({refreshUsers:false}))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_rooms'},()=>loadLobby({refreshUsers:false}))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players'},()=>loadLobby({refreshUsers:false}))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_word_suggestions'},()=>loadMySuggestions())
       .subscribe();
-    return()=>{SB.removeChannel(ch);if(saveTimer.current)clearTimeout(saveTimer.current)};
+    const fastSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadLobby({refreshUsers:false})},1000);
+    return()=>{SB.removeChannel(ch);clearInterval(fastSync);if(saveTimer.current)clearTimeout(saveTimer.current)};
   },[user.id]);
   useEffect(()=>{
     if(!roomId)return;
     const ch=SB.channel('tadbir-name-family-room-'+roomId+'-'+Math.random().toString(36).slice(2,8))
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_rooms',filter:`id=eq.${roomId}`},()=>loadRoom(roomId))
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players',filter:`room_id=eq.${roomId}`},()=>loadRoom(roomId))
-      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests',filter:`room_id=eq.${roomId}`},()=>loadLobby())
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_rooms'},()=>loadRoom(roomId))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players'},()=>loadRoom(roomId))
+      .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests'},()=>loadLobby({refreshUsers:false}))
       .subscribe();
-    return()=>SB.removeChannel(ch);
+    const roomSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadRoom(roomId)},1000);
+    return()=>{SB.removeChannel(ch);clearInterval(roomSync)};
   },[roomId]);
   useEffect(()=>{if(roomId)loadRoom(roomId)},[roomId]);
 
@@ -6800,10 +6849,10 @@ function NameFamilyGameHub({user,onClose}){
     }finally{setBusy(false)}
   };
   const rejectRequest=async(req)=>{
-    try{const {error}=await SB.rpc('tadbir_nf_respond_request',{p_request_id:String(req.id),p_user_id:String(user.id),p_action:'reject'});if(error)throw error;await loadLobby();}catch(e){console.error(e);toastLocal('رد درخواست انجام نشد.')}
+    try{const {error}=await SB.rpc('tadbir_nf_respond_request',{p_request_id:String(req.id),p_user_id:String(user.id),p_action:'reject'});if(error)throw error;await loadLobby({refreshUsers:false});}catch(e){console.error(e);toastLocal('رد درخواست انجام نشد.')}
   };
   const cancelInvite=async(req)=>{
-    try{const {error}=await SB.rpc('tadbir_nf_respond_request',{p_request_id:String(req.id),p_user_id:String(user.id),p_action:'cancel'});if(error)throw error;await loadLobby();}catch(e){console.error(e);toastLocal('لغو درخواست انجام نشد.')}
+    try{const {error}=await SB.rpc('tadbir_nf_respond_request',{p_request_id:String(req.id),p_user_id:String(user.id),p_action:'cancel'});if(error)throw error;await loadLobby({refreshUsers:false});}catch(e){console.error(e);toastLocal('لغو درخواست انجام نشد.')}
   };
   const openRoom=async(id)=>{setBusy(true);try{await loadRoom(id)}finally{setBusy(false)}};
   const startRoom=async()=>{
@@ -6875,7 +6924,7 @@ function NameFamilyGameHub({user,onClose}){
         <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><p>اسم فامیل را آنلاین بازی کنید</p></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy">الف</div><div className="nf-mini-card c1">آنلاین</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
         {incoming.length>0&&<section className="nf-panel nf-incoming"><div className="nf-panel-title"><span>🔔</span><div><b>درخواست‌های بازی</b><small>یکی از دوستان یا مدیر می‌خواهد وارد میدان شود</small></div><strong>{incoming.length}</strong></div>{incoming.map(r=><div className="nf-request" key={r.id}><div className="nf-user-orb">{(r.from_user_data?.full_name||r.from_user_data?.username||'؟')[0]}</div><div className="nf-request-copy"><b>{r.from_user_data?.full_name||r.from_user_data?.username}</b><small>@{r.from_user_data?.username||''} • دعوت به اسم فامیل</small></div><div className="nf-request-actions"><button className="nf-accept" onClick={()=>acceptRequest(r)} disabled={busy}>قبول ✓</button><button className="nf-reject" onClick={()=>rejectRequest(r)}>رد</button></div></div>)}</section>}
         {acceptedOutgoing.length>0&&<section className="nf-panel nf-accepted-panel"><div className="nf-panel-title"><span>✅</span><div><b>بازیکن‌های پذیرفته‌شده</b><small>هر وقت آماده بودی، از همین‌جا وارد اتاق شو و بازی را شروع کن</small></div><strong>{acceptedOutgoing.length}</strong></div>{acceptedOutgoing.map(r=><div className="nf-accepted-room" key={r.id}><div className="nf-user-orb">{(r.to_user_data?.full_name||r.to_user_data?.username||'؟')[0]}</div><div className="nf-request-copy"><b>{r.to_user_data?.full_name||r.to_user_data?.username||'بازیکن'}</b><small>درخواست را قبول کرده ✓</small></div><button className="nf-accept" onClick={()=>openRoom(r.room_id)} disabled={busy}>ورود به اتاق</button></div>)}</section>}
-        <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>تیم خودت را بساز</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={loadLobby} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}><div className="nf-avatar">{(u.full_name||u.username||'؟')[0]}</div><div><b>{u.full_name||u.username}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
+        <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>تیم خودت را بساز</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={()=>loadLobby({refreshUsers:true})} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}><div className="nf-avatar">{(u.full_name||u.username||'؟')[0]}</div><div><b>{u.full_name||u.username}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
         <section className={`nf-panel nf-suggestion-panel ${suggestionOpen?'open':''}`} style={{marginTop:12}}><button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(v=>!v)} aria-expanded={suggestionOpen}><span className="nf-suggestion-toggle-icon">💡</span><span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span><span className="nf-suggestion-chevron">⌄</span></button>{suggestionOpen&&<div className="nf-suggestion-body"><div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:8}}><select className="nf-suggestion-input" value={suggestionCategory} onChange={e=>setSuggestionCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={suggestionWord} onChange={e=>setSuggestionWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')submitWordSuggestion()}} placeholder="مثلاً: ژاله"/></div><button className="nf-suggestion-submit" onClick={submitWordSuggestion} disabled={suggestionBusy}>{suggestionBusy?'در حال ارسال...':'✨ ارسال پیشنهاد برای مدیر'}</button>{mySuggestions.length>0&&<div style={{marginTop:12,display:'grid',gap:7}}><small style={{color:'rgba(255,255,255,.45)'}}>پیشنهادهای اخیر من</small>{mySuggestions.slice(0,5).map(x=><div key={x.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,padding:'8px 10px',borderRadius:12,background:'rgba(255,255,255,.035)',border:'1px solid rgba(255,255,255,.06)'}}><span>{x.word} <small style={{color:'rgba(255,255,255,.35)'}}>• {FIELDS.find(f=>f[0]===x.category)?.[1]||x.category}</small></span><span className={`nf-suggestion-status ${x.status}`}>{x.status==='approved'?'✓ افزوده شد':x.status==='rejected'?'رد شد':'⏳ در انتظار'}</span></div>)}</div>}</div>}</section>
         {outgoing.length>0&&<section className="nf-panel"><div className="nf-panel-title"><span>⏳</span><div><b>در انتظار پاسخ</b><small>دعوت‌های ارسال‌شده</small></div></div>{outgoing.map(r=><div className="nf-pending" key={r.id}><div><b>{r.to_user_data?.full_name||r.to_user_data?.username}</b><small>منتظر پاسخ است...</small></div><button onClick={()=>cancelInvite(r)}>لغو</button></div>)}</section>}
         {busy&&<div className="nf-loading">در حال هماهنگ‌سازی میدان بازی...</div>}
