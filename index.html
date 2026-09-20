@@ -3650,6 +3650,11 @@ html[data-tadbir-theme] .nav-bar{
 @media(max-width:620px){.nf-shell{padding:10px 10px 25px}.nf-hero{grid-template-columns:1fr;padding:20px}.nf-hero-art{min-height:170px}.nf-letter-orbit{width:125px;height:125px;font-size:58px}.nf-user-grid{grid-template-columns:1fr}.nf-player-strip{grid-template-columns:1fr}.nf-letter-grid{grid-template-columns:repeat(6,1fr)}.nf-letter-grid button{height:44px}.nf-category-grid{grid-template-columns:1fr}.nf-playing-head{align-items:flex-start}.nf-current-letter{font-size:60px}.nf-timer-big{width:76px;height:76px;font-size:25px}}
 </style>
 
+<style id="tadbir-name-family-admin-dictionary-fix">
+.nf-admin-word-add{display:grid;grid-template-columns:.8fr 1.4fr auto;gap:8px;align-items:center;margin-top:12px}.nf-admin-word-search{margin-top:9px}.nf-admin-word-list{display:grid;gap:7px;max-height:360px;overflow:auto;margin-top:10px;padding-left:2px}.nf-admin-word-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}.nf-admin-word-row>div{min-width:0;display:flex;align-items:center;gap:9px}.nf-admin-word-row b{font-size:12px}.nf-admin-word-row small{font-size:9px;color:rgba(255,255,255,.38)}.nf-admin-word-row button{width:34px;height:34px;border-radius:10px;border:1px solid rgba(248,113,113,.22);background:rgba(239,68,68,.09);color:#fca5a5;cursor:pointer}.nf-admin-word-row button:disabled{opacity:.45;cursor:not-allowed}.nf-admin-pending{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}.nf-admin-subtitle{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}.nf-admin-subtitle b{font-size:12px}.nf-admin-subtitle span{font-size:9px;color:rgba(255,255,255,.35)}.nf-admin-suggestion-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border-radius:13px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-top:7px}.nf-admin-suggestion-row>div:first-child{min-width:0;display:flex;flex-direction:column;gap:3px}.nf-admin-suggestion-row b{font-size:12px}.nf-admin-suggestion-row small{font-size:8px;color:rgba(255,255,255,.38)}.nf-admin-suggestion-actions{display:flex;gap:5px;flex-shrink:0}.nf-admin-suggestion-actions button{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;border-radius:9px;padding:6px 8px;font-size:9px;cursor:pointer}.nf-admin-suggestion-actions button:first-child{background:rgba(16,185,129,.12);border-color:rgba(52,211,153,.25);color:#86efac}.nf-admin-suggestion-actions button:last-child{color:#fca5a5}.nf-admin-suggestion-actions button:disabled{opacity:.45;cursor:not-allowed}.nf-stop-button.nf-stop-locked{filter:saturate(.55);opacity:.72}
+@media(max-width:520px){.nf-admin-word-add{grid-template-columns:1fr 1fr}.nf-admin-word-add .nf-suggestion-submit{grid-column:1/-1}.nf-admin-suggestion-row{align-items:flex-start;flex-direction:column}.nf-admin-suggestion-actions{width:100%}.nf-admin-suggestion-actions button{flex:1}}
+</style>
+
 <style id="tadbir-name-family-android-scroll-fix">
 /* Android: صفحه بازی و لابی باید با یک حرکت انگشت روان اسکرول شوند. */
 .nf-overlay{
@@ -3682,6 +3687,147 @@ html[data-tadbir-theme] .nav-bar{
   }
 }
 </style>
+
+<style id="tadbir-literary-paper-polish">
+/* ===== Literary / Paper polish — visual only, mobile-safe ===== */
+.nf-overlay{
+  z-index:2147483200!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+.nf-shell{
+  padding-bottom:190px!important;
+  isolation:isolate;
+}
+.nf-overlay:before,
+.nf-overlay:after{
+  content:"";position:fixed;pointer-events:none;z-index:0;border-radius:50%;
+  filter:blur(18px);opacity:.16;animation:nfLiteraryDrift 9s ease-in-out infinite alternate;
+}
+.nf-overlay:before{width:260px;height:260px;right:-90px;top:12%;background:#c084fc}
+.nf-overlay:after{width:220px;height:220px;left:-80px;bottom:12%;background:#f472b6;animation-delay:-4s}
+.nf-shell:after{
+  content:"✦   ❦   ✧   ❧";position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+  color:rgba(245,208,254,.12);font-family:serif;font-size:18px;letter-spacing:9px;
+  pointer-events:none;z-index:0;white-space:nowrap;animation:nfInkFloat 5s ease-in-out infinite;
+}
+@keyframes nfLiteraryDrift{from{transform:translate3d(0,-8px,0) scale(.96)}to{transform:translate3d(0,14px,0) scale(1.06)}}
+@keyframes nfInkFloat{50%{opacity:.8;transform:translateX(-50%) translateY(-6px)}}
+
+/* Paper-like answer fields */
+.nf-category-grid{position:relative;}
+.nf-field{
+  position:relative!important;overflow:hidden!important;
+  background:
+    linear-gradient(180deg,rgba(255,251,235,.97),rgba(239,228,202,.94))!important;
+  border:1px solid rgba(117,83,48,.25)!important;
+  color:#30251b!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.72)!important;
+  transform:rotate(var(--paper-tilt,0deg));
+  transition:transform .22s ease,box-shadow .22s ease!important;
+}
+.nf-field:nth-child(odd){--paper-tilt:-.35deg}
+.nf-field:nth-child(even){--paper-tilt:.35deg}
+.nf-field:hover,.nf-field:focus-within{
+  transform:translateY(-2px) rotate(0deg)!important;
+  box-shadow:0 13px 28px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.85)!important;
+}
+.nf-field:before{
+  content:"";position:absolute;left:12px;right:12px;top:34px;height:1px;
+  background:rgba(92,70,48,.12);box-shadow:0 17px rgba(92,70,48,.08),0 34px rgba(92,70,48,.06);
+  pointer-events:none;
+}
+.nf-field:after{
+  content:"";position:absolute;right:9px;top:8px;width:25px;height:9px;
+  border-top:2px solid rgba(120,86,45,.16);transform:rotate(8deg);pointer-events:none;
+}
+.nf-field>span{
+  position:relative;z-index:2;color:#624b35!important;font-family:'Noto Nastaliq Urdu','Nastaliq','IranNastaliq','B Nazanin',serif!important;
+  font-size:11px!important;font-weight:900!important;
+}
+.nf-field>span i{filter:saturate(.8);}
+.nf-field input{
+  position:relative;z-index:2;
+  background:rgba(255,255,255,.34)!important;
+  color:#241c16!important;
+  border:1px solid rgba(105,76,43,.14)!important;
+  border-radius:9px!important;
+  font-family:'Noto Nastaliq Urdu','Nastaliq','IranNastaliq','B Nazanin',serif!important;
+  box-shadow:inset 0 1px 4px rgba(76,52,28,.08)!important;
+}
+.nf-field input::placeholder{color:rgba(75,56,38,.38)!important}
+.nf-field input:focus{
+  box-shadow:0 0 0 2px rgba(124,58,237,.18),inset 0 1px 4px rgba(76,52,28,.08)!important;
+  border-color:rgba(124,58,237,.35)!important;
+}
+
+/* A subtle literary treatment for the round/game surface */
+.nf-playing,.nf-choose,.nf-results,.nf-finished{position:relative;}
+.nf-playing:before,.nf-results:before,.nf-finished:before{
+  content:"❧";position:absolute;top:4px;left:5%;font-family:serif;font-size:42px;color:rgba(216,180,254,.10);transform:rotate(-18deg);animation:nfInkFloat 4s ease-in-out infinite;
+  pointer-events:none;
+}
+.nf-playing:after,.nf-results:after,.nf-finished:after{
+  content:"✒";position:absolute;right:5%;bottom:8%;font-size:25px;opacity:.08;transform:rotate(-16deg);pointer-events:none;
+}
+.nf-current-letter{font-family:'Noto Nastaliq Urdu','Nastaliq','IranNastaliq','B Nazanin',serif!important;}
+
+/* Suggestion panel: never hides behind the mobile floating navigation */
+.nf-suggestion-panel{
+  position:relative!important;
+  z-index:40!important;
+  scroll-margin-bottom:170px!important;
+}
+.nf-suggestion-body{
+  max-height:min(58dvh,520px)!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  padding:14px 4px 12px!important;
+  scrollbar-width:thin!important;
+}
+.nf-suggestion-body > *{max-width:100%!important;}
+.nf-suggestion-input{
+  min-height:46px!important;
+  box-sizing:border-box!important;
+}
+.nf-suggestion-submit{
+  min-height:48px!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+.nf-suggestion-submit:after{
+  content:"";position:absolute;top:0;bottom:0;width:55px;left:-75px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+  transform:skewX(-18deg);animation:nfButtonShine 3.8s ease-in-out infinite;
+}
+@keyframes nfButtonShine{0%,55%{left:-75px}75%,100%{left:115%}}
+.nf-suggestion-toggle{min-height:48px!important;}
+
+@media(max-width:600px){
+  .nf-overlay{padding-bottom:0!important;}
+  .nf-shell{padding:10px 10px 190px!important;}
+  .nf-suggestion-panel{margin-bottom:18px!important;}
+  .nf-suggestion-body{max-height:52dvh!important;padding-bottom:18px!important;}
+  .nf-suggestion-body > div[style*="gridTemplateColumns"]{grid-template-columns:1fr!important;gap:8px!important;}
+  .nf-suggestion-submit{margin-top:8px!important;}
+  .nf-category-grid{grid-template-columns:1fr!important;gap:9px!important;}
+  .nf-field{padding:13px!important;}
+  .nf-field input{min-height:46px!important;font-size:13px!important;}
+  .nf-shell:after{bottom:86px;font-size:14px;letter-spacing:5px;}
+}
+</style>
+<style id="tadbir-suggestion-safe-layout">
+.nf-suggestion-form-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:8px}
+.nf-my-suggestions{margin-top:12px;display:grid;gap:7px}
+.nf-my-suggestions-title{color:rgba(255,255,255,.45)}
+.nf-my-suggestion-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06)}
+.nf-my-suggestion-row small{color:rgba(255,255,255,.35)}
+@media(max-width:600px){.nf-suggestion-form-grid{grid-template-columns:1fr}.nf-suggestion-body{max-height:52dvh;overflow-y:auto;-webkit-overflow-scrolling:touch}}
+</style>
+
 </head>
 <body>
 <div id="root"></div>
@@ -5499,7 +5645,7 @@ function Admin({user,tab,setTab,onLogout}){
             </div>
           </div>
         )}
-        {tab==='tools'&&(<div className="slide-up">{!['students','profile','achievements','notifications','competitions','settings','questionObjections','namefamily','namefamilyWords'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="admin-tools-grid"><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="settings-icon-box"><Icon d={Icons.users} size={27}/></div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="settings-icon-box"><Icon d={Icons.achievement} size={27}/></div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('questionObjections')}><div className="settings-icon-box question-objection-admin-icon"><Icon d={Icons.alert} size={27}/></div><h3 className="font-black">سوالات اعتراض زده شده</h3><p className="text-xs text-white/40 mt-1">مشاهده متن اعتراض‌های ثبت‌شده برای سؤال‌ها</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('competitions')}><div className="settings-icon-box competition-admin-icon"><Icon d={Icons.trophy} size={27}/></div><h3 className="font-black">مدیریت مسابقات</h3><p className="text-xs text-white/40 mt-1">طراحی مسابقه و مشاهده آثار دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>{setAdminTool('settings');setAdminSettingsView('menu')}}><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div><h3 className="font-black">تنظیمات</h3><p className="text-xs text-white/40 mt-1">تنظیمات مدیریتی سامانه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="settings-icon-box"><Icon d={Icons.profile} size={27}/></div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('namefamily')}><div className="settings-icon-box" style={{background:'linear-gradient(135deg,#d946ef,#ec4899)'}}><span style={{fontSize:24}}>🔤</span></div><h3 className="font-black">اسم فامیل</h3><p className="text-xs text-white/40 mt-1">دریافت درخواست و بازی چندنفره و آنلاین با کاربران</p></div><div className="admin-tool-card" onClick={()=>{setAdminTool('namefamilyWords');loadNfSuggestions()}}><div className="settings-icon-box" style={{background:'linear-gradient(135deg,#06b6d4,#8b5cf6)'}}><span style={{fontSize:24}}>📚</span></div><h3 className="font-black">فرهنگ واژه‌های اسم فامیل</h3><p className="text-xs text-white/40 mt-1">پیشنهادهای دانش‌آموزان را بررسی و به فرهنگ بازی اضافه کن</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">مدیریت اعلان‌ها</h2><p className="text-[10px] text-white/40 mt-1">اعلان را برای همه یا فقط یک دانش‌آموز ارسال کن.</p></div></div><div className="space-y-3"><select className="glass-input" value={notificationForm.target} onChange={e=>setNotificationForm({...notificationForm,target:e.target.value})}><option value="all">📢 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 فقط {s.full_name} (@{s.username})</option>)}</select><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':notificationForm.target==='all'?'🔔 ارسال برای همه دانش‌آموزان':'🔔 ارسال برای دانش‌آموز انتخاب‌شده'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black text-sm">اعلان‌های اخیر</h3><button className="btn-sm bg-white/5" onClick={loadAdminNotifications}>↻ بروزرسانی</button></div>{adminNotifications.length===0?<p className="text-[10px] text-white/35 text-center py-6">هنوز اعلانی ثبت نشده است.</p>:adminNotifications.map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0 flex-1"><h4>{n.title}</h4><p>{n.body}</p></div><button type="button" className="admin-notification-delete shrink-0" title="حذف اعلان" onClick={()=>deleteAdminNotification(n.id)} disabled={notificationDeleting===n.id}><Icon d={Icons.trash} size={16}/></button></div><div className="flex items-center justify-between gap-2 mt-2"><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><span className="badge badge-new">{String(n.target)==='all'?'همه':'یک دانش‌آموز'}</span></div></div>)}</div></div>:adminTool==='questionObjections'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="settings-icon-box question-objection-admin-icon"><Icon d={Icons.alert} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-amber-300 font-black">TADBIR QUESTION REPORTS</span><h2 className="text-xl font-black gradient-text">سوالات اعتراض زده شده</h2><p className="text-[10px] text-white/40 mt-1">اعتراض‌های ثبت‌شده هنگام آزمون را بررسی کن.</p></div><button className="btn-sm bg-white/5 mr-auto" onClick={loadQuestionObjections}>↻</button></div></div>{questionObjectionsLoading?<div className="glass p-8 text-center text-xs text-white/40">در حال دریافت اعتراض‌ها...</div>:questionObjections.length===0?<div className="glass p-8 text-center text-xs text-white/35">هنوز اعتراضی برای سؤال ثبت نشده است.</div>:<div className="space-y-3">{questionObjections.map(o=><div className="glass p-4" key={o.id}><div className="flex items-start gap-3"><div className="settings-icon-box question-objection-admin-icon shrink-0"><Icon d={Icons.alert} size={20}/></div><div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-2"><b className="text-sm">{o.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/35">{o.created_at?new Date(o.created_at).toLocaleString('fa-IR'):''}</span></div><p className="text-[10px] text-white/40 mt-1">@{o.student_username||''}</p><div className="mt-3 rounded-2xl bg-white/[.035] border border-white/8 p-3"><p className="text-[10px] text-white/45">آزمون: <b className="text-white/75">{o.exam_title||o.exam_id}</b></p><p className="text-[10px] text-white/45 mt-1">شناسه سؤال: <b className="text-white/75">{o.question_id}</b></p><p className="text-sm leading-7 mt-3">{o.objection}</p></div></div></div></div>)}</div>}</div>:adminTool==='competitions'?<div className="slide-up"><button onClick={()=>{resetCompetitionForm();setAdminTool('menu')}} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="competition-wide-icon"><Icon d={Icons.trophy} size={27}/></div><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text">مدیریت مسابقات</h2><p className="text-xs text-white/40 mt-1">مسابقه بساز، منتشر کن و آثار دانش‌آموزان را ببین.</p></div></div></div><div className="glass p-4 mb-4 space-y-3"><h3 className="font-black">{competitionEditing?'ویرایش مسابقه':'طراحی مسابقه جدید'}</h3><input className="glass-input" placeholder="عنوان مسابقه" value={competitionForm.title} onChange={e=>setCompetitionForm({...competitionForm,title:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="توضیحات مسابقه" value={competitionForm.description} onChange={e=>setCompetitionForm({...competitionForm,description:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="شرایط شرکت در مسابقه" value={competitionForm.conditions} onChange={e=>setCompetitionForm({...competitionForm,conditions:e.target.value})}/><select className="glass-input" value={competitionForm.target} onChange={e=>setCompetitionForm({...competitionForm,target:e.target.value})}><option value="all">📢 ارسال برای همه دانش‌آموزان</option>{students.map(x=><option key={x.id} value={String(x.id)}>👤 فقط {x.full_name}</option>)}</select><div className="rounded-2xl border border-white/10 bg-white/[.035] p-3"><label className="text-[11px] font-bold block mb-2">زمان پایان ارسال آثار</label><p className="text-[9px] text-white/40 mb-2">شروع مسابقه: امروز • فقط پایان را انتخاب کنید</p><div className="grid grid-cols-2 gap-2"><div><span className="text-[9px] text-white/40 block mb-1">تاریخ پایان</span><input className="glass-input" type="date" value={(competitionForm.expires_at||'').split('T')[0]} onChange={e=>{const t=(competitionForm.expires_at||'').split('T')[1]||'23:59';setCompetitionForm({...competitionForm,expires_at:e.target.value+'T'+t})}}/></div><div><span className="text-[9px] text-white/40 block mb-1">ساعت پایان</span><input className="glass-input" type="time" value={(competitionForm.expires_at||'').split('T')[1]||''} onChange={e=>{const d=(competitionForm.expires_at||'').split('T')[0]||new Date().toISOString().slice(0,10);setCompetitionForm({...competitionForm,expires_at:d+'T'+e.target.value})}}/></div></div></div><label className="competition-upload"><span>🖼️ {competitionForm.poster_url?'تغییر پوستر':'افزودن پوستر مسابقه'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,poster_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.poster_url&&<img className="competition-preview" src={competitionForm.poster_url} alt="پوستر"/>}<label className="competition-upload"><span>🎨 {competitionForm.sample_url?'تغییر نمونه طرح':'افزودن نمونه طرح'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,sample_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.sample_url&&<img className="competition-preview" src={competitionForm.sample_url} alt="نمونه طرح"/>}<div className="flex gap-2"><button className="btn-glass btn-glass-success flex-1" onClick={saveCompetition} disabled={competitionBusy}>{competitionBusy?'در حال ذخیره...':competitionEditing?'✓ ذخیره ویرایش':'🏆 انتشار مسابقه'}</button>{competitionEditing&&<button className="btn-glass flex-1" onClick={resetCompetitionForm}>انصراف</button>}</div></div><div className="competition-admin-grid">{competitions.length===0?<div className="competition-empty">هنوز مسابقه‌ای ساخته نشده است.</div>:competitions.map(c=><div className="competition-admin-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt=""/>}<div className="competition-body"><span className="competition-kicker">مسابقه</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ پایان ارسال</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه"/></details>}<div className="competition-admin-actions"><button className="btn-glass" onClick={()=>editCompetition(c)}>✏️ ویرایش</button>{new Date(c.expires_at)>new Date()&&<button className="btn-glass competition-end-btn" disabled={competitionEnding===c.id} onClick={()=>endCompetition(c.id)}>{competitionEnding===c.id?'در حال اتمام...':'⏹️ اتمام مسابقه'}</button>}<button className="btn-glass btn-glass-danger" onClick={()=>deleteCompetition(c.id)}>🗑️ حذف</button></div><div className="competition-section"><b>آثار ارسالی</b>{competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).length===0?<p>هنوز اثری ارسال نشده است.</p>:competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).map(x=><div className="competition-submission competition-submission-rich" key={x.id}><button type="button" className="competition-submission-image-btn" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>{x.image_url&&<img src={x.image_url} alt="اثر"/>}</button><div className="min-w-0 flex-1"><b className="block truncate">{x.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/40">{new Date(x.created_at).toLocaleString('fa-IR')}</span>{x.review_text&&<p className="competition-review-preview">ارزیابی: {x.review_text}</p>}<div className="competition-submission-actions"><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>🔍 بزرگنمایی</button><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>📝 ارزیابی</button></div></div></div>)}</div></div></div>)}</div></div>:adminTool==='settings'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="settings-panel admin-settings-panel">{adminSettingsView==='menu'?<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR ADMIN SETTINGS</span><h2 className="text-xl font-black gradient-text mt-1">تنظیمات مدیر</h2><p className="text-[9px] text-white/40 mt-1">ظاهر سامانه و حریم خصوصی حساب مدیر</p></div><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button type="button" className="settings-choice" onClick={()=>setAdminSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>حالت روشن یا تیره و رنگ سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button type="button" className="settings-choice" onClick={()=>{setAdminSettingsView('privacy');loadAdminBlockedUsers()}}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>حریم خصوصی و امنیت</b><small>کاربران مسدود و امنیت حساب مدیر</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>:adminSettingsView==='theme'?<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم روی بخش‌های اصلی و پیام‌رسان اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button type="button" className={`theme-mode-btn ${adminThemeMode==='light'?'active':''}`} onClick={()=>setAdminThemeMode('light')}>روشن</button><button type="button" className={`theme-mode-btn ${adminThemeMode==='dark'?'active':''}`} onClick={()=>setAdminThemeMode('dark')}>تیره</button></div><div className="theme-grid">{(adminThemeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#f0f0f2','#111111']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#111116','#f5f5f5']]).map(([id,label,bg,accent])=><button type="button" key={id} className={`theme-card ${adminSiteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>applyAdminTheme(id)}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>:<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">حریم خصوصی و امنیت</h3><p className="text-[9px] text-white/40">مدیریت کاربران مسدود و امنیت حساب</p></div></div><button type="button" className="settings-choice w-full mb-3" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود حساب مدیر را تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><div className="settings-choice blocked-users-panel"><span className="settings-choice-icon"><Icon d={Icons.users} size={22}/></span><span className="settings-choice-copy"><b>کاربران مسدود</b><small>{adminBlockedUsers.length} کاربر مسدود شده</small></span></div><div className="tadbir-blocked-list">{adminBlockedLoading?<div className="text-center text-[10px] text-white/40 py-6">در حال دریافت...</div>:adminBlockedUsers.length===0?<div className="text-center text-[10px] text-white/35 py-6">کاربر مسدودی وجود ندارد.</div>:adminBlockedUsers.map(u=><div className="tadbir-blocked-user" key={u.id}><div><b>{u.full_name||u.username}</b><small>@{u.username}</small></div><button type="button" onClick={()=>unblockAdminUser(u.id)}>رفع مسدودی</button></div>)}</div></>}</div></div>:
+        {tab==='tools'&&(<div className="slide-up">{!['students','profile','achievements','notifications','competitions','settings','questionObjections','namefamily','namefamilyWords'].includes(adminTool)?<><div className="glass p-5 mb-4"><h2 className="text-xl font-black gradient-text">🧰 ابزارهای مدیر</h2><p className="text-xs text-white/40 mt-1">ابزارهای مدیریتی و بازی‌های تعاملی</p></div><div className="admin-tools-grid"><div className="admin-tool-card" onClick={()=>setAdminTool('students')}><div className="settings-icon-box"><Icon d={Icons.users} size={27}/></div><h3 className="font-black">دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">ساخت حساب، نام کاربری، رمز و آخرین بازدید</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('achievements')}><div className="settings-icon-box"><Icon d={Icons.achievement} size={27}/></div><h3 className="font-black">دستاوردهای دانش‌آموزان</h3><p className="text-xs text-white/40 mt-1">مدیریت سکه‌ها و ساخت کد جایزه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('notifications')}><div className="settings-icon-box"><Icon d={Icons.bell} size={27}/></div><h3 className="font-black">ارسال اعلان</h3><p className="text-xs text-white/40 mt-1">ارسال اعلان فوری برای همه دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('questionObjections')}><div className="settings-icon-box question-objection-admin-icon"><Icon d={Icons.alert} size={27}/></div><h3 className="font-black">سوالات اعتراض زده شده</h3><p className="text-xs text-white/40 mt-1">مشاهده متن اعتراض‌های ثبت‌شده برای سؤال‌ها</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('competitions')}><div className="settings-icon-box competition-admin-icon"><Icon d={Icons.trophy} size={27}/></div><h3 className="font-black">مدیریت مسابقات</h3><p className="text-xs text-white/40 mt-1">طراحی مسابقه و مشاهده آثار دانش‌آموزان</p></div><div className="admin-tool-card" onClick={()=>{setAdminTool('settings');setAdminSettingsView('menu')}}><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div><h3 className="font-black">تنظیمات</h3><p className="text-xs text-white/40 mt-1">تنظیمات مدیریتی سامانه</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('profile')}><div className="settings-icon-box"><Icon d={Icons.profile} size={27}/></div><h3 className="font-black">پروفایل</h3><p className="text-xs text-white/40 mt-1">نام، بیوگرافی، تصویر، ←فالوورز و ←فالویینگ</p></div><div className="admin-tool-card" onClick={()=>setAdminTool('namefamily')}><div className="settings-icon-box" style={{background:'linear-gradient(135deg,#d946ef,#ec4899)'}}><span style={{fontSize:24}}>🔤</span></div><h3 className="font-black">اسم فامیل</h3><p className="text-xs text-white/40 mt-1">بازی آنلاین + مدیریت کامل دامنه لغات و پیشنهادهای دانش‌آموزان</p></div></div></>:adminTool==='notifications'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="admin-notice-compose"><div className="flex items-center gap-3 mb-4"><div className="settings-icon-box"><Icon d={Icons.bell} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-purple-300 font-black">TADBIR NOTIFY</span><h2 className="text-xl font-black gradient-text">مدیریت اعلان‌ها</h2><p className="text-[10px] text-white/40 mt-1">اعلان را برای همه یا فقط یک دانش‌آموز ارسال کن.</p></div></div><div className="space-y-3"><select className="glass-input" value={notificationForm.target} onChange={e=>setNotificationForm({...notificationForm,target:e.target.value})}><option value="all">📢 همه دانش‌آموزان</option>{students.map(s=><option key={s.id} value={String(s.id)}>👤 فقط {s.full_name} (@{s.username})</option>)}</select><input className="glass-input" placeholder="عنوان اعلان" value={notificationForm.title} onChange={e=>setNotificationForm({...notificationForm,title:e.target.value})}/><textarea className="glass-input" rows="5" placeholder="متن اعلان را بنویسید..." value={notificationForm.body} onChange={e=>setNotificationForm({...notificationForm,body:e.target.value})}/><button className="btn-glass btn-glass-success" onClick={sendStudentNotification} disabled={notificationBusy}>{notificationBusy?'در حال ارسال...':notificationForm.target==='all'?'🔔 ارسال برای همه دانش‌آموزان':'🔔 ارسال برای دانش‌آموز انتخاب‌شده'}</button></div></div><div className="glass p-4 mt-4"><div className="flex items-center justify-between mb-3"><h3 className="font-black text-sm">اعلان‌های اخیر</h3><button className="btn-sm bg-white/5" onClick={loadAdminNotifications}>↻ بروزرسانی</button></div>{adminNotifications.length===0?<p className="text-[10px] text-white/35 text-center py-6">هنوز اعلانی ثبت نشده است.</p>:adminNotifications.map(n=><div key={n.id} className="notification-card"><div className="flex items-start justify-between gap-2"><div className="min-w-0 flex-1"><h4>{n.title}</h4><p>{n.body}</p></div><button type="button" className="admin-notification-delete shrink-0" title="حذف اعلان" onClick={()=>deleteAdminNotification(n.id)} disabled={notificationDeleting===n.id}><Icon d={Icons.trash} size={16}/></button></div><div className="flex items-center justify-between gap-2 mt-2"><div className="notification-meta">{new Date(n.created_at).toLocaleString('fa-IR')}</div><span className="badge badge-new">{String(n.target)==='all'?'همه':'یک دانش‌آموز'}</span></div></div>)}</div></div>:adminTool==='questionObjections'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="settings-icon-box question-objection-admin-icon"><Icon d={Icons.alert} size={26}/></div><div><span className="text-[8px] tracking-[2px] text-amber-300 font-black">TADBIR QUESTION REPORTS</span><h2 className="text-xl font-black gradient-text">سوالات اعتراض زده شده</h2><p className="text-[10px] text-white/40 mt-1">اعتراض‌های ثبت‌شده هنگام آزمون را بررسی کن.</p></div><button className="btn-sm bg-white/5 mr-auto" onClick={loadQuestionObjections}>↻</button></div></div>{questionObjectionsLoading?<div className="glass p-8 text-center text-xs text-white/40">در حال دریافت اعتراض‌ها...</div>:questionObjections.length===0?<div className="glass p-8 text-center text-xs text-white/35">هنوز اعتراضی برای سؤال ثبت نشده است.</div>:<div className="space-y-3">{questionObjections.map(o=><div className="glass p-4" key={o.id}><div className="flex items-start gap-3"><div className="settings-icon-box question-objection-admin-icon shrink-0"><Icon d={Icons.alert} size={20}/></div><div className="min-w-0 flex-1"><div className="flex items-center justify-between gap-2"><b className="text-sm">{o.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/35">{o.created_at?new Date(o.created_at).toLocaleString('fa-IR'):''}</span></div><p className="text-[10px] text-white/40 mt-1">@{o.student_username||''}</p><div className="mt-3 rounded-2xl bg-white/[.035] border border-white/8 p-3"><p className="text-[10px] text-white/45">آزمون: <b className="text-white/75">{o.exam_title||o.exam_id}</b></p><p className="text-[10px] text-white/45 mt-1">شناسه سؤال: <b className="text-white/75">{o.question_id}</b></p><p className="text-sm leading-7 mt-3">{o.objection}</p></div></div></div></div>)}</div>}</div>:adminTool==='competitions'?<div className="slide-up"><button onClick={()=>{resetCompetitionForm();setAdminTool('menu')}} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="glass p-5 mb-4"><div className="flex items-center gap-3"><div className="competition-wide-icon"><Icon d={Icons.trophy} size={27}/></div><div><span className="competition-kicker">TADBIR COMPETITIONS</span><h2 className="text-xl font-black gradient-text">مدیریت مسابقات</h2><p className="text-xs text-white/40 mt-1">مسابقه بساز، منتشر کن و آثار دانش‌آموزان را ببین.</p></div></div></div><div className="glass p-4 mb-4 space-y-3"><h3 className="font-black">{competitionEditing?'ویرایش مسابقه':'طراحی مسابقه جدید'}</h3><input className="glass-input" placeholder="عنوان مسابقه" value={competitionForm.title} onChange={e=>setCompetitionForm({...competitionForm,title:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="توضیحات مسابقه" value={competitionForm.description} onChange={e=>setCompetitionForm({...competitionForm,description:e.target.value})}/><textarea className="glass-input" rows="3" placeholder="شرایط شرکت در مسابقه" value={competitionForm.conditions} onChange={e=>setCompetitionForm({...competitionForm,conditions:e.target.value})}/><select className="glass-input" value={competitionForm.target} onChange={e=>setCompetitionForm({...competitionForm,target:e.target.value})}><option value="all">📢 ارسال برای همه دانش‌آموزان</option>{students.map(x=><option key={x.id} value={String(x.id)}>👤 فقط {x.full_name}</option>)}</select><div className="rounded-2xl border border-white/10 bg-white/[.035] p-3"><label className="text-[11px] font-bold block mb-2">زمان پایان ارسال آثار</label><p className="text-[9px] text-white/40 mb-2">شروع مسابقه: امروز • فقط پایان را انتخاب کنید</p><div className="grid grid-cols-2 gap-2"><div><span className="text-[9px] text-white/40 block mb-1">تاریخ پایان</span><input className="glass-input" type="date" value={(competitionForm.expires_at||'').split('T')[0]} onChange={e=>{const t=(competitionForm.expires_at||'').split('T')[1]||'23:59';setCompetitionForm({...competitionForm,expires_at:e.target.value+'T'+t})}}/></div><div><span className="text-[9px] text-white/40 block mb-1">ساعت پایان</span><input className="glass-input" type="time" value={(competitionForm.expires_at||'').split('T')[1]||''} onChange={e=>{const d=(competitionForm.expires_at||'').split('T')[0]||new Date().toISOString().slice(0,10);setCompetitionForm({...competitionForm,expires_at:d+'T'+e.target.value})}}/></div></div></div><label className="competition-upload"><span>🖼️ {competitionForm.poster_url?'تغییر پوستر':'افزودن پوستر مسابقه'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,poster_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.poster_url&&<img className="competition-preview" src={competitionForm.poster_url} alt="پوستر"/>}<label className="competition-upload"><span>🎨 {competitionForm.sample_url?'تغییر نمونه طرح':'افزودن نمونه طرح'}</span><input type="file" accept="image/*" onChange={async e=>{try{const v=await readTadbirCompetitionImage(e.target.files[0],1500,.78);setCompetitionForm({...competitionForm,sample_url:v});}catch(err){toast(err.message,'error')}}}/></label>{competitionForm.sample_url&&<img className="competition-preview" src={competitionForm.sample_url} alt="نمونه طرح"/>}<div className="flex gap-2"><button className="btn-glass btn-glass-success flex-1" onClick={saveCompetition} disabled={competitionBusy}>{competitionBusy?'در حال ذخیره...':competitionEditing?'✓ ذخیره ویرایش':'🏆 انتشار مسابقه'}</button>{competitionEditing&&<button className="btn-glass flex-1" onClick={resetCompetitionForm}>انصراف</button>}</div></div><div className="competition-admin-grid">{competitions.length===0?<div className="competition-empty">هنوز مسابقه‌ای ساخته نشده است.</div>:competitions.map(c=><div className="competition-admin-card" key={c.id}>{c.poster_url&&<img className="competition-cover" src={c.poster_url} alt=""/>}<div className="competition-body"><span className="competition-kicker">مسابقه</span><h3 className="competition-title">{c.title}</h3><div className="competition-section"><b>توضیحات</b><p>{c.description}</p></div>{c.conditions&&<div className="competition-section"><b>شرایط</b><p>{c.conditions}</p></div>}<div className="competition-deadline"><span>⏳ پایان ارسال</span><b>{new Date(c.expires_at).toLocaleString('fa-IR')}</b></div>{c.sample_url&&<details className="competition-section"><summary className="font-bold text-xs cursor-pointer">نمونه طرح</summary><img className="competition-preview" src={c.sample_url} alt="نمونه"/></details>}<div className="competition-admin-actions"><button className="btn-glass" onClick={()=>editCompetition(c)}>✏️ ویرایش</button>{new Date(c.expires_at)>new Date()&&<button className="btn-glass competition-end-btn" disabled={competitionEnding===c.id} onClick={()=>endCompetition(c.id)}>{competitionEnding===c.id?'در حال اتمام...':'⏹️ اتمام مسابقه'}</button>}<button className="btn-glass btn-glass-danger" onClick={()=>deleteCompetition(c.id)}>🗑️ حذف</button></div><div className="competition-section"><b>آثار ارسالی</b>{competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).length===0?<p>هنوز اثری ارسال نشده است.</p>:competitionSubmissions.filter(x=>String(x.competition_id)===String(c.id)).map(x=><div className="competition-submission competition-submission-rich" key={x.id}><button type="button" className="competition-submission-image-btn" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>{x.image_url&&<img src={x.image_url} alt="اثر"/>}</button><div className="min-w-0 flex-1"><b className="block truncate">{x.student_name||'دانش‌آموز'}</b><span className="text-[9px] text-white/40">{new Date(x.created_at).toLocaleString('fa-IR')}</span>{x.review_text&&<p className="competition-review-preview">ارزیابی: {x.review_text}</p>}<div className="competition-submission-actions"><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>🔍 بزرگنمایی</button><button type="button" className="btn-sm bg-white/5" onClick={()=>{setSubmissionModal(x);setSubmissionReview(x.review_text||'')}}>📝 ارزیابی</button></div></div></div>)}</div></div></div>)}</div></div>:adminTool==='settings'?<div className="slide-up"><button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button><div className="settings-panel admin-settings-panel">{adminSettingsView==='menu'?<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR ADMIN SETTINGS</span><h2 className="text-xl font-black gradient-text mt-1">تنظیمات مدیر</h2><p className="text-[9px] text-white/40 mt-1">ظاهر سامانه و حریم خصوصی حساب مدیر</p></div><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={27}/></div></div><div className="space-y-2"><button type="button" className="settings-choice" onClick={()=>setAdminSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم سایت</b><small>حالت روشن یا تیره و رنگ سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button type="button" className="settings-choice" onClick={()=>{setAdminSettingsView('privacy');loadAdminBlockedUsers()}}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>حریم خصوصی و امنیت</b><small>کاربران مسدود و امنیت حساب مدیر</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>:adminSettingsView==='theme'?<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم روی بخش‌های اصلی و پیام‌رسان اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button type="button" className={`theme-mode-btn ${adminThemeMode==='light'?'active':''}`} onClick={()=>setAdminThemeMode('light')}>روشن</button><button type="button" className={`theme-mode-btn ${adminThemeMode==='dark'?'active':''}`} onClick={()=>setAdminThemeMode('dark')}>تیره</button></div><div className="theme-grid">{(adminThemeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#f0f0f2','#111111']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#111116','#f5f5f5']]).map(([id,label,bg,accent])=><button type="button" key={id} className={`theme-card ${adminSiteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>applyAdminTheme(id)}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>:<><div className="flex items-center gap-3 mb-3"><button type="button" className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setAdminSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">حریم خصوصی و امنیت</h3><p className="text-[9px] text-white/40">مدیریت کاربران مسدود و امنیت حساب</p></div></div><button type="button" className="settings-choice w-full mb-3" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود حساب مدیر را تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><div className="settings-choice blocked-users-panel"><span className="settings-choice-icon"><Icon d={Icons.users} size={22}/></span><span className="settings-choice-copy"><b>کاربران مسدود</b><small>{adminBlockedUsers.length} کاربر مسدود شده</small></span></div><div className="tadbir-blocked-list">{adminBlockedLoading?<div className="text-center text-[10px] text-white/40 py-6">در حال دریافت...</div>:adminBlockedUsers.length===0?<div className="text-center text-[10px] text-white/35 py-6">کاربر مسدودی وجود ندارد.</div>:adminBlockedUsers.map(u=><div className="tadbir-blocked-user" key={u.id}><div><b>{u.full_name||u.username}</b><small>@{u.username}</small></div><button type="button" onClick={()=>unblockAdminUser(u.id)}>رفع مسدودی</button></div>)}</div></>}</div></div>:
 adminTool==='namefamily'?<NameFamilyGameHub user={user} onClose={()=>setAdminTool('menu')}/>:adminTool==='namefamilyWords'?<div className="slide-up">
   <button onClick={()=>setAdminTool('menu')} className="btn-glass btn-sm mb-4">← بازگشت به ابزارها</button>
   <div className="glass p-5 mb-4">
@@ -6653,7 +6799,7 @@ function TadbirWateringCan({active=false,onWatering}){
 
 function NameFamilyGameHub({user,onClose}){
   const LETTERS=['ا','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
-  const FIELDS=[['name','اسم','👤'],['family','فامیل','🪪'],['color','رنگ','🎨'],['place','شهر یا کشور','🌍'],['body','عضو بدن','🫀']];
+  const FIELDS=[['name','اسم','👤'],['family','فامیل','🪪'],['color','رنگ','🎨'],['place','شهر یا کشور','🌍'],['body','اعضای بدن','🫀']];
   const [screen,setScreen]=useState('lobby');
   const [users,setUsers]=useState([]);
   const [selectedIds,setSelectedIds]=useState([]);
@@ -6677,6 +6823,16 @@ function NameFamilyGameHub({user,onClose}){
   const [suggestionOpen,setSuggestionOpen]=useState(false);
   const [mySuggestions,setMySuggestions]=useState([]);
   const [usersLoading,setUsersLoading]=useState(true);
+  const isAdmin=['admin','manager','administrator','مدیر','مدیر سیستم'].includes(String(user?.role||'').trim().toLowerCase());
+  const [nfDictionary,setNfDictionary]=useState([]);
+  const [nfDictionaryLoading,setNfDictionaryLoading]=useState(false);
+  const [nfDictionaryBusy,setNfDictionaryBusy]=useState(false);
+  const [nfDictionaryCategory,setNfDictionaryCategory]=useState('name');
+  const [nfDictionaryWord,setNfDictionaryWord]=useState('');
+  const [nfDictionarySearch,setNfDictionarySearch]=useState('');
+  const [nfPendingSuggestions,setNfPendingSuggestions]=useState([]);
+  const [nfPendingLoading,setNfPendingLoading]=useState(false);
+  const roundStartedAtRef=useRef({key:'',at:0});
   const saveTimer=useRef(null);
   const autoLetterRef=useRef(false);
   const autoStopRef=useRef(false);
@@ -6712,6 +6868,88 @@ function NameFamilyGameHub({user,onClose}){
     }catch(e){console.error(e);toastLocal('ارسال پیشنهاد انجام نشد.');}
     finally{setSuggestionBusy(false)}
   };
+  const loadNfPendingSuggestions=async()=>{
+    if(!isAdmin)return;
+    setNfPendingLoading(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_admin_suggestions',{p_admin_id:String(user.id)});
+      if(error)throw error;
+      setNfPendingSuggestions(Array.isArray(data)?data:[]);
+    }catch(e){console.error('name-family suggestions:',e);setNfPendingSuggestions([])}
+    finally{setNfPendingLoading(false)}
+  };
+  const reviewNfPendingSuggestion=async(id,action)=>{
+    setNfDictionaryBusy(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:action});
+      if(error)throw error;
+      if(data && data.ok===false)throw new Error(data.reason||'REVIEW_FAILED');
+      toastLocal(action==='approve'?'کلمه به فرهنگ بازی اضافه شد ✓':'پیشنهاد رد شد');
+      await loadNfPendingSuggestions();
+      if(action==='approve')await loadNfDictionary();
+    }catch(e){console.error(e);toastLocal('ثبت نتیجه پیشنهاد انجام نشد.')}
+    finally{setNfDictionaryBusy(false)}
+  };
+  const deleteNfPendingSuggestion=async(id)=>{
+    if(!window.confirm('این پیشنهاد برای همیشه حذف شود؟'))return;
+    setNfDictionaryBusy(true);
+    try{
+      const {error}=await SB.from('tadbir_nf_word_suggestions').delete().eq('id',id);
+      if(error)throw error;
+      setNfPendingSuggestions(v=>v.filter(x=>String(x.id)!==String(id)));
+      toastLocal('پیشنهاد حذف شد ✓');
+    }catch(e){console.error(e);toastLocal('حذف پیشنهاد انجام نشد.')}
+    finally{setNfDictionaryBusy(false)}
+  };
+  const loadNfDictionary=async()=>{
+    if(!isAdmin)return;
+    setNfDictionaryLoading(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_admin_dictionary',{p_admin_id:String(user.id)});
+      if(error)throw error;
+      setNfDictionary(Array.isArray(data)?data:[]);
+    }catch(e){console.error('name-family dictionary:',e);setNfDictionary([]);toastLocal('دریافت دامنه لغات انجام نشد.')}
+    finally{setNfDictionaryLoading(false)}
+  };
+  const addNfDictionaryWord=async()=>{
+    const word=nfDictionaryWord.trim();
+    if(!word){toastLocal('کلمه را وارد کن.');return}
+    const normalizeWord=v=>String(v||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('fa-IR');
+    const duplicate=(nfDictionary||[]).some(x=>String(x.category||'')===String(nfDictionaryCategory||'')&&normalizeWord(x.word)===normalizeWord(word));
+    if(duplicate){toastLocal('⚠️ این کلمه قبلاً در همین بخش ثبت شده.');return}
+    setNfDictionaryBusy(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_admin_add_word',{p_admin_id:String(user.id),p_category:nfDictionaryCategory,p_word:word});
+      if(error)throw error;
+      if(data && data.ok===false)throw new Error(data.reason||'ADD_FAILED');
+      setNfDictionaryWord('');
+      toastLocal('کلمه با موفقیت به دامنه لغات اضافه شد ✓');
+      await loadNfDictionary();
+    }catch(e){
+      console.error(e);
+      const msg=String(e?.message||e?.details||e?.hint||'');
+      toastLocal(/WORD_ALREADY_EXISTS|duplicate|unique/i.test(msg)?'⚠️ این کلمه قبلاً در دامنه لغات وجود دارد.':'افزودن کلمه انجام نشد.')
+    }finally{setNfDictionaryBusy(false)}
+  };
+  const deleteNfDictionaryWord=async(id)=>{
+    if(!window.confirm('این کلمه از دامنه لغات حذف شود؟'))return;
+    setNfDictionaryBusy(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_nf_admin_delete_word',{p_admin_id:String(user.id),p_dictionary_id:Number(id)});
+      if(error)throw error;
+      if(data && data.ok===false)throw new Error(data.reason||'DELETE_FAILED');
+      setNfDictionary(v=>v.filter(x=>String(x.id)!==String(id)));
+      toastLocal('کلمه از دامنه لغات حذف شد.');
+    }catch(e){console.error(e);toastLocal('حذف کلمه انجام نشد.')}
+    finally{setNfDictionaryBusy(false)}
+  };
+
+  useEffect(()=>{
+    if(!isAdmin)return;
+    loadNfDictionary();
+    loadNfPendingSuggestions();
+  },[isAdmin]);
+
   const getUsersByIds=async(ids)=>{
     const clean=[...new Set((ids||[]).filter(Boolean).map(String))];
     if(!clean.length)return [];
@@ -6809,6 +7047,18 @@ function NameFamilyGameHub({user,onClose}){
   useEffect(()=>{if(roomId)loadRoom(roomId)},[roomId]);
 
   useEffect(()=>{
+    if(!room||room.status!=='playing')return;
+    const key=`${room.id}:${room.current_round}`;
+    const storageKey=`tadbir_nf_round_started_${key}`;
+    let started=Number(localStorage.getItem(storageKey)||0);
+    if(!started){started=Date.now();try{localStorage.setItem(storageKey,String(started))}catch{}}
+    roundStartedAtRef.current={key,at:started};
+    const blank={name:'',family:'',color:'',place:'',body:''};
+    setAnswers(blank);
+    answersRef.current=blank;
+  },[room?.id,room?.current_round,room?.status]);
+
+  useEffect(()=>{
     if(screen!=='room'||!room)return;
     const tick=()=>{
       const now=Date.now();
@@ -6904,6 +7154,15 @@ function NameFamilyGameHub({user,onClose}){
   const changeAnswer=(key,value)=>{const next={...answers,[key]:value};setAnswers(next);saveDraft(next)};
   const stopRound=async(auto=false)=>{
     if(!room)return;
+    if(!auto){
+      const key=`${room.id}:${room.current_round}`;
+      let started=Number(localStorage.getItem(`tadbir_nf_round_started_${key}`)||0);
+      if(!started){started=roundStartedAtRef.current.key===key?Number(roundStartedAtRef.current.at||0):Date.now();try{localStorage.setItem(`tadbir_nf_round_started_${key}`,String(started))}catch{}}
+      if(Date.now()-started<10000){
+        toastLocal('⛔ امکان استپ کردن در 10 ثانیه اول بازی وجود ندارد.');
+        return;
+      }
+    }
     setBusy(true);
     try{
       if(saveTimer.current)clearTimeout(saveTimer.current);
@@ -6934,7 +7193,7 @@ function NameFamilyGameHub({user,onClose}){
     ['family','فامیل'],
     ['color','رنگ'],
     ['place','شهر'],
-    ['body','میوه/غذا']
+    ['body','اعضای بدن']
   ];
   // پاسخ‌های جدول tadbir_nf_answers با نام ستون‌های *_answer ذخیره می‌شوند.
   // امتیاز هر دسته نیز در ستون *_score قرار دارد.
@@ -6944,6 +7203,9 @@ function NameFamilyGameHub({user,onClose}){
     const rows=roundAnswers.filter(a=>String(a.user_id)===String(p.user_id));
     return {...p,answerRows:rows};
   });
+  const currentRoundStartKey=room?`${room.id}:${room.current_round}`:'';
+  const currentRoundStartedAt=currentRoundStartKey&&roundStartedAtRef.current.key===currentRoundStartKey?Number(roundStartedAtRef.current.at||0):0;
+  const roomStartedTooSoon=room?.status==='playing'&&currentRoundStartedAt>0&&(Date.now()-currentRoundStartedAt<10000);
 
   return <div className="nf-overlay" dir="rtl">
     <div className="nf-shell">
@@ -6960,7 +7222,44 @@ function NameFamilyGameHub({user,onClose}){
         {incoming.length>0&&<section className="nf-panel nf-incoming"><div className="nf-panel-title"><span>🔔</span><div><b>درخواست‌های بازی</b><small>یکی از دوستان یا مدیر می‌خواهد وارد میدان شود</small></div><strong>{incoming.length}</strong></div>{incoming.map(r=><div className="nf-request" key={r.id}><div className="nf-user-orb">{(r.from_user_data?.full_name||r.from_user_data?.username||'؟')[0]}</div><div className="nf-request-copy"><b>{r.from_user_data?.full_name||r.from_user_data?.username}</b><small>@{r.from_user_data?.username||''} • دعوت به اسم فامیل</small></div><div className="nf-request-actions"><button className="nf-accept" onClick={()=>acceptRequest(r)} disabled={busy}>قبول ✓</button><button className="nf-reject" onClick={()=>rejectRequest(r)}>رد</button></div></div>)}</section>}
         {acceptedOutgoing.length>0&&<section className="nf-panel nf-accepted-panel"><div className="nf-panel-title"><span>✅</span><div><b>بازیکن‌های پذیرفته‌شده</b><small>هر وقت آماده بودی، از همین‌جا وارد اتاق شو و بازی را شروع کن</small></div><strong>{acceptedOutgoing.length}</strong></div>{acceptedOutgoing.map(r=><div className="nf-accepted-room" key={r.id}><div className="nf-user-orb">{(r.to_user_data?.full_name||r.to_user_data?.username||'؟')[0]}</div><div className="nf-request-copy"><b>{r.to_user_data?.full_name||r.to_user_data?.username||'بازیکن'}</b><small>درخواست را قبول کرده ✓</small></div><button className="nf-accept" onClick={()=>openRoom(r.room_id)} disabled={busy}>ورود به اتاق</button></div>)}</section>}
         <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>تیم خودت را بساز</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={()=>loadLobby({refreshUsers:true})} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}><div className="nf-avatar">{(u.full_name||u.username||'؟')[0]}</div><div><b>{u.full_name||u.username}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
-        <section className={`nf-panel nf-suggestion-panel ${suggestionOpen?'open':''}`} style={{marginTop:12}}><button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(v=>!v)} aria-expanded={suggestionOpen}><span className="nf-suggestion-toggle-icon">💡</span><span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span><span className="nf-suggestion-chevron">⌄</span></button>{suggestionOpen&&<div className="nf-suggestion-body"><div style={{display:'grid',gridTemplateColumns:'1fr 1.4fr',gap:8}}><select className="nf-suggestion-input" value={suggestionCategory} onChange={e=>setSuggestionCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={suggestionWord} onChange={e=>setSuggestionWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')submitWordSuggestion()}} placeholder="مثلاً: ژاله"/></div><button className="nf-suggestion-submit" onClick={submitWordSuggestion} disabled={suggestionBusy}>{suggestionBusy?'در حال ارسال...':'✨ ارسال پیشنهاد برای مدیر'}</button>{mySuggestions.length>0&&<div style={{marginTop:12,display:'grid',gap:7}}><small style={{color:'rgba(255,255,255,.45)'}}>پیشنهادهای اخیر من</small>{mySuggestions.slice(0,5).map(x=><div key={x.id} style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,padding:'8px 10px',borderRadius:12,background:'rgba(255,255,255,.035)',border:'1px solid rgba(255,255,255,.06)'}}><span>{x.word} <small style={{color:'rgba(255,255,255,.35)'}}>• {FIELDS.find(f=>f[0]===x.category)?.[1]||x.category}</small></span><span className={`nf-suggestion-status ${x.status}`}>{x.status==='approved'?'✓ افزوده شد':x.status==='rejected'?'رد شد':'⏳ در انتظار'}</span></div>)}</div>}</div>}</section>
+        {isAdmin&&<section className="nf-panel nf-admin-words-panel" style={{marginTop:12}}><div className="nf-panel-title"><span>📚</span><div><b>مدیریت اسم فامیل و دامنه لغات</b><small>همه کلمات، پیشنهادهای دانش‌آموزان، افزودن و حذف</small></div><button type="button" className="nf-refresh-users" onClick={()=>{loadNfDictionary();loadNfPendingSuggestions()}} title="تازه‌سازی فرهنگ و پیشنهادها">↻</button></div>
+          <div className="nf-admin-pending"><div className="nf-admin-subtitle"><b>درخواست‌های دانش‌آموزان</b><span>{nfPendingSuggestions.length} مورد در انتظار</span></div>{nfPendingLoading?<div className="nf-users-empty">در حال دریافت پیشنهادها...</div>:nfPendingSuggestions.length===0?<div className="nf-users-empty">درخواستی برای بررسی وجود ندارد.</div>:nfPendingSuggestions.map(x=><div className="nf-admin-suggestion-row" key={x.id}><div><b>{x.word}</b><small>{x.category_label||x.category} • {x.student_name||'دانش‌آموز'} {x.student_username?'• @'+x.student_username:''}</small></div><div className="nf-admin-suggestion-actions"><button onClick={()=>reviewNfPendingSuggestion(x.id,'approve')} disabled={nfDictionaryBusy}>✓ افزودن</button><button onClick={()=>reviewNfPendingSuggestion(x.id,'reject')} disabled={nfDictionaryBusy}>رد</button><button onClick={()=>deleteNfPendingSuggestion(x.id)} disabled={nfDictionaryBusy}>🗑</button></div></div>)}</div>
+          <div className="nf-admin-word-add"><select className="nf-suggestion-input" value={nfDictionaryCategory} onChange={e=>setNfDictionaryCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={nfDictionaryWord} onChange={e=>setNfDictionaryWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')addNfDictionaryWord()}} placeholder="کلمه جدید را وارد کن"/><button className="nf-suggestion-submit" onClick={addNfDictionaryWord} disabled={nfDictionaryBusy}>{nfDictionaryBusy?'در حال ذخیره...':'➕ افزودن به دامنه لغات'}</button></div>
+          <input className="nf-suggestion-input nf-admin-word-search" value={nfDictionarySearch} onChange={e=>setNfDictionarySearch(e.target.value)} placeholder="جست‌وجو در همه کلمات..."/>
+          {nfDictionaryLoading?<div className="nf-users-empty">در حال دریافت دامنه لغات...</div>:<div className="nf-admin-word-list">{(()=>{const q=nfDictionarySearch.trim();const rows=(nfDictionary||[]).filter(x=>!q||String(x.word||'').includes(q)||String(x.category_label||'').includes(q));return rows.length?rows.map(x=><div className="nf-admin-word-row" key={x.id}><div><b>{x.word}</b><small>{x.category_label||x.category}</small></div><button type="button" onClick={()=>deleteNfDictionaryWord(x.id)} disabled={nfDictionaryBusy} title="حذف کلمه">🗑</button></div>):<div className="nf-users-empty">کلمه‌ای مطابق جست‌وجو پیدا نشد.</div>})()}</div>}
+        </section>}
+        {!isAdmin&&suggestionOpen&&<section className="nf-panel nf-suggestion-panel open" style={{marginTop:12}}>
+          <button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(false)} aria-expanded="true">
+            <span className="nf-suggestion-toggle-icon">💡</span>
+            <span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span>
+            <span className="nf-suggestion-chevron">⌃</span>
+          </button>
+          <div className="nf-suggestion-body">
+            <div className="nf-suggestion-form-grid">
+              <select className="nf-suggestion-input" value={suggestionCategory} onChange={e=>setSuggestionCategory(e.target.value)}>
+                {FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}
+              </select>
+              <input className="nf-suggestion-input" value={suggestionWord} onChange={e=>setSuggestionWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')submitWordSuggestion()}} placeholder="مثلاً: ژاله" />
+            </div>
+            <button type="button" className="nf-suggestion-submit" onClick={submitWordSuggestion} disabled={suggestionBusy}>
+              {suggestionBusy?'در حال ارسال...':'✨ ارسال پیشنهاد برای مدیر'}
+            </button>
+            {mySuggestions.length>0&&<div className="nf-my-suggestions">
+              <small className="nf-my-suggestions-title">پیشنهادهای اخیر من</small>
+              {mySuggestions.slice(0,5).map(x=><div className="nf-my-suggestion-row" key={x.id}>
+                <span>{x.word} <small>• {FIELDS.find(f=>f[0]===x.category)?.[1]||x.category}</small></span>
+                <span className={`nf-suggestion-status ${x.status}`}>{x.status==='approved'?'✓ افزوده شد':x.status==='rejected'?'رد شد':'⏳ در انتظار'}</span>
+              </div>)}
+            </div>}
+          </div>
+        </section>}
+        {!isAdmin&&!suggestionOpen&&<section className="nf-panel nf-suggestion-panel" style={{marginTop:12}}>
+          <button type="button" className="nf-suggestion-toggle" onClick={()=>setSuggestionOpen(true)} aria-expanded="false">
+            <span className="nf-suggestion-toggle-icon">💡</span>
+            <span className="nf-suggestion-toggle-copy"><b>پیشنهاد کلمه</b><small>کلمه‌ای داری که در فرهنگ بازی نیست؟ برای مدیر بفرست.</small></span>
+            <span className="nf-suggestion-chevron">⌄</span>
+          </button>
+        </section>}
         {outgoing.length>0&&<section className="nf-panel"><div className="nf-panel-title"><span>⏳</span><div><b>در انتظار پاسخ</b><small>دعوت‌های ارسال‌شده</small></div></div>{outgoing.map(r=><div className="nf-pending" key={r.id}><div><b>{r.to_user_data?.full_name||r.to_user_data?.username}</b><small>منتظر پاسخ است...</small></div><button onClick={()=>cancelInvite(r)}>لغو</button></div>)}</section>}
         {busy&&<div className="nf-loading">در حال هماهنگ‌سازی میدان بازی...</div>}
       </div>}
@@ -6970,7 +7269,7 @@ function NameFamilyGameHub({user,onClose}){
         <div className="nf-player-strip">{players.map((p,i)=><div className={`nf-player ${Number(p.user_id)===Number(user.id)||String(p.user_id)===String(user.id)?'me':''} ${Number(p.seat)===Number(room.current_turn_index)?'turn':''}`} key={p.user_id}><div className="nf-avatar">{(p.user?.full_name||p.user?.username||'؟')[0]}</div><div><b>{p.user?.full_name||p.user?.username||'بازیکن'}</b><small>{p.score||0} امتیاز {Number(p.seat)===Number(room.current_turn_index)?'• نوبت':''}</small></div></div>)}</div>
         {room.status==='lobby'&&<div className="nf-waiting"><div className="nf-wait-orb">🎲</div><span className="nf-kicker">ROOM READY</span><h2>منتظر بازیکن‌ها...</h2><p>{players.length} نفر از {room.max_players} نفر وارد شده‌اند.</p><div className="nf-seat-row">{Array.from({length:room.max_players}).map((_,i)=><div key={i} className={`nf-seat ${players[i]?'filled':''}`}>{players[i]?(players[i].user?.full_name||'بازیکن').slice(0,9):'خالی'}</div>)}</div>{String(room.host_id)===String(user.id)&&<button className="nf-start-game" disabled={players.length<2||busy} onClick={startRoom}>{players.length<2?'حداقل ۲ نفر لازم است':'🚀 شروع بازی'}</button>}</div>}
         {room.status==='choosing'&&<div className="nf-choose"><div className="nf-turn-banner">{String(turnPlayer?.user_id)===String(user.id)?'نوبت توست؛ یک حرف انتخاب کن!':`نوبت ${turnPlayer?.user?.full_name||'بازیکن'} است؛ صبر کن...`}</div><div className="nf-timer-big choosing">{seconds}</div><div className="nf-letter-grid">{LETTERS.map(l=><button key={l} disabled={String(turnPlayer?.user_id)!==String(user.id)||busy} onClick={()=>chooseLetter(l)}>{l}</button>)}</div><small className="nf-hint">اگر ۱۰ ثانیه تمام شود، سیستم خودش یک حرف را انتخاب می‌کند.</small></div>}
-        {room.status==='playing'&&<div className="nf-playing"><div className="nf-playing-head"><div><span className="nf-kicker">LETTER OF THIS ROUND</span><div className="nf-current-letter">{room.current_letter}</div></div><div className={`nf-timer-big ${seconds<=20?'danger':''}`}>{fmt(seconds)}</div></div><div className="nf-category-grid">{FIELDS.map(([key,label,icon])=><label className="nf-field" key={key}><span><i>{icon}</i>{label}</span><input value={answers[key]||''} onChange={e=>changeAnswer(key,e.target.value)} placeholder={`با «${room.current_letter}» بنویس...`} disabled={String(me?.user_id)!==String(user.id)}/></label>)}</div><div className="nf-stop-zone"><div className="nf-stop-caption">{saving?'در حال ذخیره پاسخ...':'همه جواب‌ها را نوشتی؟'}</div><button className="nf-stop-button" onClick={()=>stopRound(false)} disabled={busy||String(me?.user_id)!==String(user.id)}><span>⏹</span><b>استپ!</b><small>پایان راند برای همه</small></button></div></div>}
+        {room.status==='playing'&&<div className="nf-playing"><div className="nf-playing-head"><div><span className="nf-kicker">LETTER OF THIS ROUND</span><div className="nf-current-letter">{room.current_letter}</div></div><div className={`nf-timer-big ${seconds<=20?'danger':''}`}>{fmt(seconds)}</div></div><div className="nf-category-grid">{FIELDS.map(([key,label,icon])=><label className="nf-field" key={key}><span><i>{icon}</i>{label}</span><input value={answers[key]||''} onChange={e=>changeAnswer(key,e.target.value)} placeholder={`با «${room.current_letter}» بنویس...`} disabled={String(me?.user_id)!==String(user.id)}/></label>)}</div><div className="nf-stop-zone"><div className="nf-stop-caption">{saving?'در حال ذخیره پاسخ...':'همه جواب‌ها را نوشتی؟'}</div><button className={`nf-stop-button ${roomStartedTooSoon?'nf-stop-locked':''}`} onClick={()=>stopRound(false)} disabled={busy||String(me?.user_id)!==String(user.id)}><span>⏹</span><b>استپ!</b><small>{roomStartedTooSoon?'۱۰ ثانیه اول غیرفعال است':'پایان راند برای همه'}</small></button></div></div>}
         {room.status==='results'&&<div className="nf-results"><div className="nf-result-icon">⚡</div><span className="nf-kicker">ROUND COMPLETE</span><h2>راند {room.current_round} تمام شد</h2><p>پاسخ‌ها بررسی شدند؛ راند بعدی تا چند ثانیه دیگر شروع می‌شود.</p><div className="nf-round-score-list">{roundAnswers.map(a=>{const p=playerById[String(a.user_id)];return <div className="nf-round-score" key={a.user_id}><b>{p?.user?.full_name||'بازیکن'}</b><span>{scoreFor(a)} امتیاز</span></div>})}</div></div>}
         {room.status==='finished'&&<div className="nf-finished"><div className="nf-trophy">🏆</div><span className="nf-kicker">FINAL SCOREBOARD</span><h2>کارنامه نهایی</h2><p>بازی تمام شد؛ نتیجه برای همه نمایش داده شده است.</p><div className="nf-podium">{finalSorted.map((p,i)=><div className={`nf-podium-row rank-${i+1}`} key={p.user_id}><span className="nf-rank">{i===0?'🥇':i===1?'🥈':'🥉'}</span><div className="nf-avatar">{(p.user?.full_name||p.user?.username||'؟')[0]}</div><div className="nf-podium-name"><b>{p.user?.full_name||p.user?.username}</b><small>{i===0?'نفر اول':i===1?'نفر دوم':'نفر سوم'}</small></div><strong>{p.score||0}</strong></div>)}</div><div className="nf-final-answers"><div className="nf-final-answers-title"><b>📝 کلمات درست و غلط بازیکن‌ها</b><small>پاسخ‌های ثبت‌شده هر بازیکن در همه راندها</small></div>{finalAnswerRows.map(p=><div className="nf-player-answers" key={'answers-'+p.user_id}><div className="nf-player-answers-head"><b>{p.user?.full_name||p.user?.username||'بازیکن'}</b><span>{p.score||0} امتیاز</span></div>{p.answerRows.length===0?<div className="nf-no-answer">پاسخی برای این بازیکن ثبت نشده است.</div>:p.answerRows.map((a,ri)=><div className="nf-answer-round" key={(a.id||p.user_id+'-'+ri)}><span className="nf-answer-round-title">راند {a.round_no}</span><div className="nf-answer-chips">{nfCategories.map(([key,label])=>{const word=getWord(a,key);if(!word)return null;const cs=getCategoryScore(a,key);const total=Number(a?.total_score||0);const isGood=cs>0;return <div className={`nf-answer-chip ${isGood?'good':'bad'}`} key={key}><b>{label}:</b><span>{word}</span><small>{isGood?'✓ درست':'✗ غلط'}</small></div>})}</div></div>)}</div>)}</div><div className="nf-final-note">اطلاعات این اتاق بعد از نمایش نتیجه، به‌صورت خودکار پاک می‌شود.</div></div>}
       </div>}
