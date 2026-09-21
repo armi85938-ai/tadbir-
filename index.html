@@ -7094,19 +7094,92 @@ function NameFamilyGameHub({user,onClose}){
   const LETTERS=['ا','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
   const FIELDS=[['name','اسم','👤'],['family','فامیل','🪪'],['color','رنگ','🎨'],['place','شهر یا کشور','🌍'],['body','اعضای بدن','🫀']];
   const [screen,setScreen]=useState('lobby');
+  const [showcaseLetterIndex,setShowcaseLetterIndex]=useState(0);
+  const showcaseLetters=['الف','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
   useEffect(()=>{
-    const lines=['اسم: ریحانه','فامیل: رضایی','رنگ: زرد','شهر یا کشور: رشت','اعضای بدن: ابرو','اسم: سارا','فامیل: احمدی','رنگ: آبی','شهر یا کشور: شیراز','اعضای بدن: چشم','اسم: نازنین','فامیل: کریمی','رنگ: سبز','شهر یا کشور: تهران','اعضای بدن: دست'];
-    let cancelled=false, timer=null, i=0, pos=0, deleting=false;
+    if(screen!=='lobby')return;
+    const timer=window.setInterval(()=>setShowcaseLetterIndex(v=>(v+1)%showcaseLetters.length),5000);
+    return()=>window.clearInterval(timer);
+  },[screen]);
+  useEffect(()=>{
+    const scenes=[
+      {label:'اسم',value:'ریحانه'},
+      {label:'فامیل',value:'احمدی',swap:'میرشکاری'},
+      {label:'رنگ',value:'زرد'},
+      {label:'شهر یا کشور',value:'رشت'},
+      {label:'اعضای بدن',value:'ابرو'},
+      {label:'اسم',value:'سارا'},
+      {label:'فامیل',value:'رضایی'},
+      {label:'رنگ',value:'آبی'},
+      {label:'شهر یا کشور',value:'شیراز'},
+      {label:'اعضای بدن',value:'چشم'},
+      {label:'اسم',value:'نازنین'},
+      {label:'فامیل',value:'کریمی'},
+      {label:'رنگ',value:'سبز'},
+      {label:'شهر یا کشور',value:'تهران'},
+      {label:'اعضای بدن',value:'دست'},
+      {label:'رنگ',value:'بنفش'},
+      {label:'اسم',value:'یلدا'},
+      {label:'فامیل',value:'حسینی'},
+      {label:'شهر یا کشور',value:'اصفهان'}
+    ];
+    let cancelled=false,timer=null,sceneIndex=0,pos=0,phase='typing',swapping=false;
+    const textOf=sc=>`${sc.label}: ${sc.value}`;
     const tick=()=>{
       if(cancelled)return;
       const el=document.querySelector('.nf-typewriter-text');
       if(!el){timer=window.setTimeout(tick,120);return;}
-      const target=lines[i];
-      if(!deleting){ pos=Math.min(target.length,pos+1); el.textContent=target.slice(0,pos)+'|'; if(pos===target.length){deleting=true; timer=window.setTimeout(tick,1050);return;} timer=window.setTimeout(tick,70); }
-      else { pos=Math.max(0,pos-1); el.textContent=target.slice(0,pos)+'|'; if(pos===0){deleting=false;i=(i+1)%lines.length;timer=window.setTimeout(tick,250);return;} timer=window.setTimeout(tick,38); }
+      const scene=scenes[sceneIndex%scenes.length],full=textOf(scene),prefix=`${scene.label}: `;
+      if(phase==='typing'){
+        pos=Math.min(full.length,pos+1);
+        el.textContent=full.slice(0,pos)+'|';
+        if(pos===full.length){phase=scene.swap?'hold-before-swap':'hold';timer=window.setTimeout(tick,scene.swap?850:1150);return;}
+        timer=window.setTimeout(tick,55);return;
+      }
+      if(phase==='hold-before-swap'){
+        phase='erase-value';timer=window.setTimeout(tick,35);return;
+      }
+      if(phase==='erase-value'){
+        const keep=prefix.length;
+        pos=Math.max(keep,pos-1);
+        el.textContent=full.slice(0,pos)+'|';
+        if(pos===keep){
+          swapping=true;
+          phase='type-swap';
+          pos=keep;
+          timer=window.setTimeout(tick,180);return;
+        }
+        timer=window.setTimeout(tick,38);return;
+      }
+      if(phase==='type-swap'){
+        const swapped=`${scene.label}: ${scene.swap}`;
+        pos=Math.min(swapped.length,pos+1);
+        el.textContent=swapped.slice(0,pos)+'|';
+        if(pos===swapped.length){phase='hold-after-swap';timer=window.setTimeout(tick,1050);return;}
+        timer=window.setTimeout(tick,55);return;
+      }
+      if(phase==='hold-after-swap'){
+        phase='erase-swapped';timer=window.setTimeout(tick,35);return;
+      }
+      if(phase==='erase-swapped'){
+        const swapped=`${scene.label}: ${scene.swap}`;
+        pos=Math.max(0,pos-1);
+        el.textContent=swapped.slice(0,pos)+'|';
+        if(pos===0){sceneIndex=(sceneIndex+1)%scenes.length;phase='typing';swapping=false;timer=window.setTimeout(tick,260);return;}
+        timer=window.setTimeout(tick,35);return;
+      }
+      if(phase==='hold'){
+        phase='erase-all';timer=window.setTimeout(tick,35);return;
+      }
+      if(phase==='erase-all'){
+        pos=Math.max(0,pos-1);
+        el.textContent=full.slice(0,pos)+'|';
+        if(pos===0){sceneIndex=(sceneIndex+1)%scenes.length;phase='typing';timer=window.setTimeout(tick,260);return;}
+        timer=window.setTimeout(tick,35);
+      }
     };
     timer=window.setTimeout(tick,450);
-    return()=>{cancelled=true;if(timer)window.clearTimeout(timer);};
+    return()=>{cancelled=true;if(timer)window.clearTimeout(timer)};
   },[]);
   const [users,setUsers]=useState([]);
   const [selectedIds,setSelectedIds]=useState([]);
@@ -7606,7 +7679,7 @@ function NameFamilyGameHub({user,onClose}){
       {error&&<div className="nf-error">{error}<button onClick={()=>setError('')}>×</button></div>}
 
       {screen==='lobby'&&<div className="nf-lobby">
-        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><div className="nf-typewriter" aria-live="polite"><span className="nf-typewriter-text"></span></div></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy" aria-label="حرف الف">الف</div><div className="nf-mini-card c1">آنلاین</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
+        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><div className="nf-typewriter" aria-live="polite"><span className="nf-typewriter-text"></span></div></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy" aria-label={`حرف ${showcaseLetters[showcaseLetterIndex]}`} key={showcaseLetterIndex}><span>{showcaseLetters[showcaseLetterIndex]}</span></div><div className="nf-mini-card c1">رقابتی</div><div className="nf-mini-card c2">آنلاین</div></div></div>
         {incoming.length>0&&<section className="nf-panel nf-incoming"><div className="nf-panel-title"><span>🔔</span><div><b>درخواست‌های بازی</b><small>یکی از دوستان یا مدیر می‌خواهد وارد میدان شود</small></div><strong>{incoming.length}</strong></div>{incoming.map(r=><div className="nf-request" key={r.id}>{nfAvatar(r.from_user_data,'nf-user-orb')}<div className="nf-request-copy"><b>{nfDisplayName(r.from_user_data)}</b><small>@{r.from_user_data?.username||''} • دعوت به اسم فامیل</small></div><div className="nf-request-actions"><button className="nf-accept" onClick={()=>acceptRequest(r)} disabled={busy}>قبول ✓</button><button className="nf-reject" onClick={()=>rejectRequest(r)}>رد</button></div></div>)}</section>}
         {acceptedOutgoing.length>0&&<section className="nf-panel nf-accepted-panel"><div className="nf-panel-title"><span>✅</span><div><b>بازیکن‌های پذیرفته‌شده</b><small>هر وقت آماده بودی، از همین‌جا وارد اتاق شو و بازی را شروع کن</small></div><strong>{acceptedOutgoing.length}</strong></div>{acceptedOutgoing.map(r=><div className="nf-accepted-room" key={r.id}>{nfAvatar(r.to_user_data,'nf-user-orb')}<div className="nf-request-copy"><b>{nfDisplayName(r.to_user_data)}</b><small>درخواست را قبول کرده ✓</small></div><button className="nf-accept" onClick={()=>openRoom(r.room_id)} disabled={busy}>ورود به اتاق</button></div>)}</section>}
         <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>بازی خودتو بساز!</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={()=>loadLobby({refreshUsers:true})} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}>{nfAvatar(u)}<div className="nf-user-card-copy"><b>{nfDisplayName(u)}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
@@ -8548,7 +8621,7 @@ function Student({user,tab,setTab,onLogout}){
   return(
     <>
       <div className="min-h-screen pb-24">
-      <div className="header flex justify-between items-center">
+      {tab==='home'&&<div className="header flex justify-between items-center">
         <div>
           <h1 className="text-lg font-black gradient-text">پنل دانش‌آموز</h1>
           <p className="text-xs text-white/40 mt-1">سلام {user.full_name} 👋</p>
@@ -8557,7 +8630,7 @@ function Student({user,tab,setTab,onLogout}){
           <button onClick={openNotificationCenter} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="اعلان‌ها" aria-label="اعلان‌ها"><Icon d={Icons.bell} size={18}/>{notificationUnread>0&&<span className="notification-badge">{notificationUnread>99?'99+':notificationUnread}</span>}</button>
           <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="خروج"><Icon d={Icons.logout} size={18}/></button>
         </div>
-      </div>
+      </div>}
       <div className="content">
         {tab==='home'&&(
           <>
@@ -8730,20 +8803,20 @@ function Student({user,tab,setTab,onLogout}){
                   <div className="slide-up">
                     <h3 className="font-bold mb-3 text-white/70 text-sm">بازی‌های موجود</h3>
                     <div className="grid grid-cols-1 gap-3">
-                      <div className="game-card" onClick={()=>setActiveGame('xo')}>
-                        <div className="game-card-icon bg-gradient-to-br from-indigo-500 to-purple-500">⭕</div>
+                      <div className="game-card tadbir-game-card game-card-xo" onClick={()=>setActiveGame('xo')}>
+                        <div className="game-card-icon tadbir-game-logo"><span>⭕</span><i>✦</i></div>
                         <h4 className="font-bold text-sm">دوز</h4>
                         <p className="text-[10px] text-white/40 mt-1">آنلاین</p>
                       </div>
-                      <div className="game-card" onClick={()=>setActiveGame('breakout')}>
-                        <div className="game-card-icon bg-gradient-to-br from-emerald-500 to-teal-500">🎯</div>
+                      <div className="game-card tadbir-game-card game-card-breakout" onClick={()=>setActiveGame('breakout')}>
+                        <div className="game-card-icon tadbir-game-logo"><span>🎯</span><i>✦</i></div>
                         <h4 className="font-bold text-sm">توپ و راکت</h4>
-                        <p className="text-[10px] text-white/40 mt-1">آفلاین</p>
+                        <p className="text-[10px] text-white/40 mt-1">آنلاین</p>
                       </div>
-                      <div className="game-card nf-game-card" onClick={()=>setActiveGame('namefamily')}>
-                        <div className="game-card-icon nf-game-logo"><span>الف</span><i>✦</i></div>
+                      <div className="game-card tadbir-game-card game-card-namefamily" onClick={()=>setActiveGame('namefamily')}>
+                        <div className="game-card-icon tadbir-game-logo"><span>الف</span><i>✦</i></div>
                         <h4 className="font-bold text-sm">اسم فامیل</h4>
-                        <p className="text-[10px] text-white/40 mt-1">چند نفره • آنلاین و زنده</p>
+                        <p className="text-[10px] text-white/40 mt-1">آنلاین</p>
                       </div>
 
                     </div>
@@ -10033,6 +10106,42 @@ body.nf-name-family-open [class*="floating-bottom"]{
 .theme-preview{height:78px!important;border-radius:18px!important;box-shadow:inset 0 1px rgba(255,255,255,.35),0 8px 18px rgba(0,0,0,.16)!important;margin-bottom:9px!important}
 .theme-card b{position:relative;z-index:1!important;font-size:12px!important}.theme-card small{position:relative;z-index:1!important;font-size:8px!important;opacity:.65}
 @media(max-width:560px){.theme-grid{grid-template-columns:1fr!important}.nf-admin-detail-grid{grid-template-columns:1fr!important}.nf-admin-suggestion-row{flex-direction:column!important}.nf-admin-suggestion-actions{width:100%!important}.nf-admin-suggestion-actions button{flex:1!important}}
+</style>
+
+<style id="tadbir-namefamily-final-polish">
+/* Final requested UI polish: home-only student header, immersive game, animated letter lobby and unified game cards. */
+body.nf-name-family-open .header{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+body.nf-name-family-open .content{padding:0!important;max-width:none!important;width:100%!important;}
+body.nf-name-family-open{overflow:hidden!important;}
+.nf-panel-close-floating{left:18px!important;top:16px!important;width:48px!important;height:48px!important;border-radius:50%!important;font-size:30px!important;}
+.nf-home-x{display:none!important;}
+.nf-letter-orbit{position:relative!important;overflow:visible!important;animation:nfLetterFloat 3.2s ease-in-out infinite,nfLetterGlow 2.8s ease-in-out infinite!important;transform-origin:center!important;}
+.nf-letter-orbit span{display:block;animation:nfLetterPop .65s cubic-bezier(.2,1.5,.35,1) both;text-shadow:0 5px 24px rgba(0,0,0,.28),0 0 25px rgba(255,255,255,.28);}
+.nf-letter-orbit:after{content:'';position:absolute;inset:-18px;border-radius:50%;border:1px solid rgba(255,255,255,.32);box-shadow:0 0 35px rgba(217,70,239,.22),inset 0 0 30px rgba(255,255,255,.08);animation:nfRingSpin 7s linear infinite;}
+.nf-mini-card{z-index:4!important;min-width:76px;text-align:center;font-size:11px!important;padding:9px 13px!important;border-radius:14px!important;background:rgba(255,255,255,.78)!important;color:#315247!important;border:1px solid rgba(69,99,85,.16)!important;box-shadow:0 12px 28px rgba(52,72,61,.13)!important;backdrop-filter:blur(10px)!important;}
+.nf-mini-card.c1{top:24px!important;right:4px!important;animation:nfBadgeFloat 2.8s ease-in-out infinite;}
+.nf-mini-card.c2{bottom:30px!important;left:4px!important;animation:nfBadgeFloat 3.2s ease-in-out infinite reverse;}
+.nf-mini-card.c3{display:none!important;}
+@keyframes nfLetterFloat{0%,100%{transform:translateY(0) rotate(-1deg) scale(1)}50%{transform:translateY(-8px) rotate(1deg) scale(1.025)}}
+@keyframes nfLetterGlow{50%{filter:drop-shadow(0 0 22px rgba(217,70,239,.32))}}
+@keyframes nfLetterPop{0%{opacity:0;transform:scale(.45) rotate(-10deg);filter:blur(5px)}65%{opacity:1;transform:scale(1.12) rotate(2deg);filter:blur(0)}100%{transform:scale(1) rotate(0)}}
+@keyframes nfRingSpin{to{transform:rotate(360deg)}}
+@keyframes nfBadgeFloat{50%{transform:translateY(-5px) rotate(1deg)}}
+.tadbir-game-card{min-height:148px!important;padding:18px 14px!important;border-radius:22px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025))!important;border:1px solid rgba(255,255,255,.13)!important;box-shadow:0 14px 34px rgba(0,0,0,.16)!important;}
+.tadbir-game-card:hover{transform:translateY(-4px)!important;border-color:rgba(255,255,255,.25)!important;box-shadow:0 20px 45px rgba(0,0,0,.22)!important;}
+.tadbir-game-logo{position:relative!important;width:70px!important;height:70px!important;border-radius:22px!important;display:grid!important;place-items:center!important;margin:0 auto 12px!important;overflow:hidden!important;background:linear-gradient(145deg,#8b5cf6,#ec4899)!important;box-shadow:0 10px 28px rgba(139,92,246,.28),inset 0 1px 0 rgba(255,255,255,.45)!important;border:1px solid rgba(255,255,255,.22)!important;font-size:31px!important;}
+.tadbir-game-logo span{position:relative;z-index:2;font-family:"Noto Nastaliq Urdu","Nastaliq","IranNastaliq","B Nazanin",serif!important;font-weight:1000!important;color:#fff!important;text-shadow:0 3px 14px rgba(0,0,0,.35)!important;}
+.tadbir-game-logo i{position:absolute!important;top:7px!important;right:9px!important;font-style:normal!important;font-size:10px!important;color:#fde68a!important;animation:nfLogoTwinkle 1.7s ease-in-out infinite;}
+.tadbir-game-logo:after{content:'';position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent,rgba(255,255,255,.20),transparent 28%);animation:nfLogoSpin 5s linear infinite;}
+.tadbir-game-card h4{position:relative!important;z-index:3!important;}
+.tadbir-game-card p{position:relative!important;z-index:3!important;margin-top:4px!important;color:rgba(255,255,255,.55)!important;}
+@media(max-width:640px){
+  .nf-panel-close-floating{left:18px!important;top:14px!important;width:46px!important;height:46px!important;border-radius:50%!important;font-size:29px!important;}
+  .nf-home-x{display:none!important;}
+  .nf-hero{grid-template-columns:1fr!important;}
+  .nf-hero-art{min-height:205px!important;}
+  .tadbir-game-card{min-height:140px!important;}
+}
 </style>
 </body>
 </html><style id="tadbir-story-final-fix">
