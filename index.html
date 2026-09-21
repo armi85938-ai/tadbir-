@@ -5562,14 +5562,19 @@ function Admin({user,tab,setTab,onLogout}){
     finally{setNfSuggestionsBusy(false)}
   };
   const deleteNfSuggestion=async(id)=>{
-    if(!window.confirm('این پیشنهاد برای همیشه حذف شود؟'))return;
+    if(!window.confirm('این پیشنهاد حذف شود؟'))return;
     setNfSuggestionsBusy(true);
     try{
-      const {error}=await SB.from('tadbir_nf_word_suggestions').delete().eq('id',id);
-      if(error)throw error;
+      // حذف مستقیم ممکن است به‌خاطر RLS دیتابیس مجاز نباشد؛ در آن حالت
+      // پیشنهاد را از صف بررسی خارج می‌کنیم تا همان نتیجه حذف برای مدیر ایجاد شود.
+      const direct=await SB.from('tadbir_nf_word_suggestions').delete().eq('id',id);
+      if(direct.error){
+        const fallback=await SB.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:'reject'});
+        if(fallback.error)throw fallback.error;
+      }
       setNfSuggestions(v=>v.filter(x=>String(x.id)!==String(id)));
       toast('پیشنهاد حذف شد ✓','success');
-    }catch(e){console.error('delete name-family suggestion:',e);toast('حذف پیشنهاد انجام نشد','error');}
+    }catch(e){console.error('delete name-family suggestion:',e);toast('حذف پیشنهاد انجام نشد؛ دسترسی دیتابیس را بررسی کن.','error');}
     finally{setNfSuggestionsBusy(false)}
   };
 
@@ -5842,7 +5847,8 @@ function Admin({user,tab,setTab,onLogout}){
   return(
     <>
       <div className="min-h-screen pb-24">
-      <div className="header flex justify-between items-center">
+      <div className={`header flex justify-between items-center ${tab==='tools'&&adminTool==='namefamily'?'nf-admin-main-header-open':''}`}>
+        {tab==='tools'&&adminTool==='namefamily'&&<button type="button" className="nf-admin-main-close" onClick={()=>setAdminTool('menu')} aria-label="بستن پنل بازی" title="بستن پنل بازی">×</button>}
         <div><h1 className="text-lg font-black gradient-text">پنل مدیریت</h1><p className="text-xs text-white/30 mt-1">{user.full_name}</p></div>
         <div className="flex gap-2">
           <button onClick={()=>{setTab('tools');setAdminTool('notifications');}} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="مدیریت اعلان‌ها"><Icon d={Icons.bell} size={18}/></button>
@@ -7221,11 +7227,14 @@ function NameFamilyGameHub({user,onClose}){
     finally{setNfDictionaryBusy(false)}
   };
   const deleteNfPendingSuggestion=async(id)=>{
-    if(!window.confirm('این پیشنهاد برای همیشه حذف شود؟'))return;
+    if(!window.confirm('این پیشنهاد حذف شود؟'))return;
     setNfDictionaryBusy(true);
     try{
-      const {error}=await SB.from('tadbir_nf_word_suggestions').delete().eq('id',id);
-      if(error)throw error;
+      const direct=await SB.from('tadbir_nf_word_suggestions').delete().eq('id',id);
+      if(direct.error){
+        const fallback=await SB.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:'reject'});
+        if(fallback.error)throw fallback.error;
+      }
       setNfPendingSuggestions(v=>v.filter(x=>String(x.id)!==String(id)));
       toastLocal('پیشنهاد حذف شد ✓');
     }catch(e){console.error(e);toastLocal('حذف پیشنهاد انجام نشد.')}
@@ -7253,8 +7262,12 @@ function NameFamilyGameHub({user,onClose}){
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'ADD_FAILED');
       setNfDictionaryWord('');
+      // بعد از افزودن، کل دامنه لغات را دوباره رفرش نکن؛ این کار باعث پرش لیست و
+      // برگشتن مدیر به ابتدای فهرست می‌شد. اگر RPC ردیف تازه را برگرداند، همان را محلی اضافه کن.
+      if(data && typeof data==='object' && data.id){
+        setNfDictionary(v=>v.some(x=>String(x.id)===String(data.id))?v:v.concat([data]));
+      }
       toastLocal('کلمه با موفقیت به دامنه لغات اضافه شد ✓');
-      await loadNfDictionary();
     }catch(e){
       const msg=String(e?.message||e?.details||e?.hint||e?.code||e||'');
       if(/WORD_ALREADY_EXISTS|ALREADY_EXISTS|DUPLICATE|duplicate|unique/i.test(msg)){
@@ -7582,6 +7595,7 @@ function NameFamilyGameHub({user,onClose}){
 
   return <div className={`nf-overlay ${nightMode?"nf-night":""}`} dir="rtl">
     <div className="nf-shell">
+      <button type="button" className="nf-panel-close-floating" onClick={onClose} aria-label="بستن پنل اسم فامیل" title="بستن پنل اسم فامیل">×</button>
       <div className="nf-stars" aria-hidden="true">{Array.from({length:22}).map((_,i)=><i key={i} style={{'--i':i}}/>)}</div>
       <header className="nf-head">
         <button type="button" className="nf-home-x" onClick={onClose} aria-label="بستن پنل بازی" title="بستن پنل بازی">×</button>
@@ -9943,10 +9957,51 @@ body.nf-name-family-open [class*="floating-bottom"]{
 .nf-hero-copy h1{font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive!important;letter-spacing:-1.1px;text-shadow:0 2px 0 #fff,0 7px 18px rgba(54,78,66,.12);}
 .nf-hero-copy .nf-kicker{font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive!important;font-weight:1000;letter-spacing:1px;}
 @media(max-width:640px){.nf-typewriter{font-size:18px}.nf-typewriter-text{min-width:160px}.nf-panel-title b{font-size:19px!important}.nf-panel-title>span:first-child{width:39px!important;height:39px!important;font-size:22px!important;}}
-.nf-home-x{position:fixed!important;left:18px!important;top:18px!important;width:44px!important;height:44px!important;display:grid!important;place-items:center!important;z-index:2147483000!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;}
-@media(max-width:640px){.nf-home-x{left:10px!important;top:10px!important;width:38px!important;height:38px!important;}}
+.nf-head{position:relative!important;}
+.nf-home-x{position:absolute!important;left:0!important;top:50%!important;transform:translateY(-50%)!important;width:44px!important;height:44px!important;display:grid!important;place-items:center!important;z-index:2147483000!important;pointer-events:auto!important;visibility:visible!important;opacity:1!important;}
+.nf-home-x:hover{transform:translateY(-50%) translateY(-2px) rotate(-3deg)!important;}
+.nf-home-x:active{transform:translateY(-50%) scale(.94)!important;}
+@media(max-width:640px){.nf-home-x{left:0!important;top:50%!important;width:38px!important;height:38px!important;font-size:22px!important;}}
+.nf-admin-main-header-open{position:relative!important;padding-left:54px!important;}
+.nf-admin-main-close{position:absolute!important;left:8px!important;top:50%!important;transform:translateY(-50%)!important;width:40px!important;height:40px!important;border:0!important;border-radius:13px!important;display:grid!important;place-items:center!important;background:linear-gradient(145deg,#ff6b6b,#dc2626)!important;color:#fff!important;font-size:25px!important;font-weight:1000!important;line-height:1!important;cursor:pointer!important;box-shadow:0 7px 18px rgba(220,38,38,.25),inset 0 1px rgba(255,255,255,.28)!important;z-index:30!important;}
+.nf-admin-main-close:hover{transform:translateY(-50%) scale(1.04)!important;}
+.nf-admin-main-close:active{transform:translateY(-50%) scale(.94)!important;}
 </style>
 
+
+<style id="nf-v17-easy-close">
+/* دکمه بستن کاملاً مستقل از هدر بازی: همیشه در گوشه بالای پنل قابل مشاهده است. */
+.nf-panel-close-floating{
+  position:fixed!important;
+  left:12px!important;
+  top:138px!important;
+  width:50px!important;
+  height:50px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:0!important;
+  margin:0!important;
+  border:2px solid rgba(255,255,255,.95)!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,#ff5f6d,#d7263d)!important;
+  color:#fff!important;
+  font-family:Arial,sans-serif!important;
+  font-size:32px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  cursor:pointer!important;
+  z-index:2147483647!important;
+  box-shadow:0 8px 22px rgba(180,20,45,.35),0 2px 0 rgba(130,15,30,.55),inset 0 1px 0 rgba(255,255,255,.4)!important;
+  pointer-events:auto!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.nf-panel-close-floating:hover{transform:scale(1.05)!important;}
+.nf-panel-close-floating:active{transform:scale(.93)!important;}
+@media(max-width:640px){
+  .nf-panel-close-floating{left:10px!important;top:236px!important;width:46px!important;height:46px!important;border-radius:15px!important;font-size:29px!important;}
+}
+</style>
 <style id="admin-namefamily-v16-polish">
 /* Admin name-family: clear hierarchy, explicit category labels, cleaner cards */
 .nf-admin-words-panel{background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(245,249,246,.70))!important;border:1px solid rgba(65,91,79,.16)!important;box-shadow:0 20px 55px rgba(65,91,79,.10)!important}
