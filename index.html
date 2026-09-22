@@ -4210,6 +4210,44 @@ const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 const SB_NF=window.supabase.createClient("https://jqmmylgpesswehvdkvep.supabase.co","sb_publishable_QjwO3A16ExRPhEbzaJi33A_Dc4fAxe2");
 
+/* Name & Family — keep the separate NF database's users mirror synchronized
+   from the site's real custom-auth users table. This fixes the FK/RPC mismatch
+   without touching the main login or moving authentication to the NF database. */
+const nfUsersSyncPromiseRef={current:null};
+async function syncNameFamilyUsers(ids){
+  const wanted=[...new Set((Array.isArray(ids)?ids:[ids]).filter(Boolean).map(String))];
+  if(!wanted.length)return;
+  const key=wanted.sort().join(',');
+  if(nfUsersSyncPromiseRef.current?.key===key)return nfUsersSyncPromiseRef.current.promise;
+  const promise=(async()=>{
+    const {data:rows,error:readError}=await SB.from('users')
+      .select('id,username,password,role,full_name,created_at,last_seen_at')
+      .in('id',wanted);
+    if(readError)throw readError;
+    const users=Array.isArray(rows)?rows.filter(x=>x&&x.id):[];
+    if(users.length!==wanted.length){
+      const found=new Set(users.map(x=>String(x.id)));
+      const missing=wanted.filter(id=>!found.has(id));
+      if(missing.length)throw new Error('NF_USER_NOT_FOUND:'+missing.join(','));
+    }
+    const payload=users.map(x=>({
+      id:String(x.id),username:x.username||'',password:x.password||'',role:x.role||'student',
+      full_name:x.full_name||x.username||'کاربر',created_at:x.created_at||new Date().toISOString(),
+      last_seen_at:x.last_seen_at||null
+    }));
+    const {error}=await SB_NF.from('users').upsert(payload,{onConflict:'id'});
+    if(error)throw error;
+    const {data:verified,error:verifyError}=await SB_NF.from('users').select('id').in('id',wanted);
+    if(verifyError)throw verifyError;
+    const have=new Set((verified||[]).map(x=>String(x.id)));
+    const missingAfter=wanted.filter(id=>!have.has(id));
+    if(missingAfter.length)throw new Error('NF_USER_SYNC_FAILED:'+missingAfter.join(','));
+  })();
+  nfUsersSyncPromiseRef.current={key,promise};
+  try{return await promise}finally{if(nfUsersSyncPromiseRef.current?.promise===promise)nfUsersSyncPromiseRef.current=null}
+}
+
+
 const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
 
@@ -7275,6 +7313,7 @@ function NameFamilyGameHub({user,onClose}){
     if(word.length>60){showSuggestionNotice('کلمه خیلی طولانی است.');return}
     setSuggestionBusy(true);
     try{
+      await syncNameFamilyUsers([user.id]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_submit_word_suggestion',{
         p_user_id:String(user.id),p_category:suggestionCategory,p_word:word
       });
@@ -7305,6 +7344,7 @@ function NameFamilyGameHub({user,onClose}){
     if(!isAdmin)return;
     setNfPendingLoading(true);
     try{
+      await syncNameFamilyUsers([user.id]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_suggestions',{p_admin_id:String(user.id)});
       if(error)throw error;
       setNfPendingSuggestions(Array.isArray(data)?data:[]);
@@ -7314,6 +7354,7 @@ function NameFamilyGameHub({user,onClose}){
   const reviewNfPendingSuggestion=async(id,action)=>{
     setNfDictionaryBusy(true);
     try{
+      await syncNameFamilyUsers([user.id]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:action});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'REVIEW_FAILED');
@@ -7338,11 +7379,35 @@ function NameFamilyGameHub({user,onClose}){
     if(!isAdmin)return;
     setNfDictionaryLoading(true);
     try{
-      const {data,error}=await SB_NF.rpc('tadbir_nf_admin_dictionary',{p_admin_id:String(user.id)});
-      if(error)throw error;
-      setNfDictionary(Array.isArray(data)?data:[]);
-    }catch(e){console.error('name-family dictionary:',e);setNfDictionary([]);toastLocal('دریافت دامنه لغات انجام نشد.')}
-    finally{setNfDictionaryLoading(false)}
+      // منبع اصلی کلمات موجود همان فرهنگ لغات دیتابیس قدیمی است (که ۱۳۷۸ رکورد دارد).
+      // فرهنگ دیتابیس جدید هم خوانده می‌شود و در صورت وجود، بدون حذف کلمات قدیمی به آن اضافه می‌شود.
+      const [oldRpc,nfRes]=await Promise.all([
+        SB.rpc('tadbir_nf_admin_dictionary',{p_admin_id:String(user.id)}),
+        SB_NF.from('tadbir_nf_dictionary')
+          .select('id,category,word,normalized_word,created_at')
+          .order('id',{ascending:true})
+      ]);
+      if(oldRpc.error && nfRes.error)throw oldRpc.error;
+      const oldRows=Array.isArray(oldRpc.data)?oldRpc.data:[];
+      const nfRows=Array.isArray(nfRes.data)?nfRes.data:[];
+      const merged=[...oldRows,...nfRows];
+      const seen=new Set();
+      const rows=merged.filter(x=>{
+        const key=String(x.category||'')+'|'+String(x.normalized_word||x.word||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('fa-IR');
+        if(!key||seen.has(key))return false;
+        seen.add(key);
+        return true;
+      });
+      setNfDictionary(rows);
+      if(!rows.length){
+        console.warn('name-family dictionary read:',oldRpc.error||nfRes.error);
+        toastLocal('هیچ کلمه‌ای در دامنه لغات پیدا نشد.');
+      }
+    }catch(e){
+      console.error('name-family dictionary:',e);
+      setNfDictionary([]);
+      toastLocal('دریافت دامنه لغات انجام نشد.');
+    }finally{setNfDictionaryLoading(false)}
   };
   const addNfDictionaryWord=async()=>{
     const word=nfDictionaryWord.trim();
@@ -7352,6 +7417,7 @@ function NameFamilyGameHub({user,onClose}){
     if(duplicate){toastLocal('⚠️ این کلمه قبلاً در همین بخش ثبت شده.');return}
     setNfDictionaryBusy(true);
     try{
+      await syncNameFamilyUsers([user.id]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_add_word',{p_admin_id:String(user.id),p_category:nfDictionaryCategory,p_word:word});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'ADD_FAILED');
@@ -7372,6 +7438,7 @@ function NameFamilyGameHub({user,onClose}){
     if(!window.confirm('این کلمه از دامنه لغات حذف شود؟'))return;
     setNfDictionaryBusy(true);
     try{
+      await syncNameFamilyUsers([user.id]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_delete_word',{p_admin_id:String(user.id),p_dictionary_id:Number(id)});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'DELETE_FAILED');
@@ -7382,7 +7449,14 @@ function NameFamilyGameHub({user,onClose}){
   };
 
   useEffect(()=>{
+    let alive=true;
+    syncNameFamilyUsers([user?.id]).catch(e=>console.warn('name-family users sync:',e));
+    return()=>{alive=false};
+  },[user?.id]);
+
+  useEffect(()=>{
     if(!isAdmin)return;
+    syncNameFamilyUsers([user?.id]).catch(e=>console.warn('name-family users sync:',e));
     loadNfDictionary();
     loadNfPendingSuggestions();
   },[isAdmin]);
@@ -7411,7 +7485,7 @@ function NameFamilyGameHub({user,onClose}){
     if(refreshUsers){setBusy(true);setUsersLoading(true);setError('');}
     try{
       const usersPromise=refreshUsers
-        ? SB_NF.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name')
+        ? SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name')
         : Promise.resolve({data:null,error:null});
       const [{data:us,error:ue},{data:inc,error:ie},{data:out,error:oe},{data:acc,error:ace},{data:mine,error:me}]=await Promise.all([
         usersPromise,
@@ -7544,6 +7618,7 @@ function NameFamilyGameHub({user,onClose}){
     if(clean.length<1||clean.length>2){toastLocal('حداقل یک بازیکن و حداکثر دو بازیکن انتخاب کن.');return}
     setBusy(true);setError('');
     try{
+      await syncNameFamilyUsers([user.id,...clean]);
       const {data,error}=await SB_NF.rpc('tadbir_nf_create_room_and_invites',{p_host_id:String(user.id),p_to_users:clean});
       if(error)throw error;
       if(!data?.ok)throw new Error(data?.reason||'CREATE_ROOM_FAILED');
