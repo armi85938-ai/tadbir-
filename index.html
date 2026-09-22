@@ -5,12 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a1a">
 <title>سامانه هوشمند آموزشی تدبیر</title>
+<link rel="preload" href="https://unpkg.com/react@18/umd/react.production.min.js" as="script" crossorigin>
+<link rel="preload" href="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" as="script" crossorigin>
+<link rel="preload" href="https://unpkg.com/@babel/standalone/babel.min.js" as="script" crossorigin>
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" as="script" crossorigin>
 <script src="https://cdn.tailwindcss.com"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{font-family:'Vazirmatn',sans-serif;margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -4114,28 +4122,89 @@ body.nf-game-active{overflow:hidden!important}
  .nf-invite-panel .nf-panel-title b{font-size:14px!important}
 }
 </style>
-</head>
+<style id="tadbir-v32-requested-ui">
+/* ===== Fast boot: show a clean login shell immediately while React/Babel initializes ===== */
+#root:empty:before{content:'سامانه تدبـــیر';display:block;position:fixed;inset:0;background:radial-gradient(circle at 50% 15%,rgba(99,102,241,.22),transparent 34%),linear-gradient(145deg,#070817,#110b27 52%,#090713);color:#fff;text-align:center;padding-top:42vh;font:900 24px Vazirmatn,sans-serif;letter-spacing:-.5px}
+#root:empty:after{content:'در حال آماده‌سازی ورود...';display:block;position:fixed;left:50%;top:50%;transform:translateX(-50%);color:rgba(255,255,255,.48);font:500 11px Vazirmatn,sans-serif}
+
+/* ===== Name & Family: make the game its own screen, without the main site header ===== */
+body.nf-name-family-open .header,body.nf-name-family-open .nav-bar{display:none!important}
+.nf-head{display:none!important}
+.nf-shell{padding-top:10px!important}
+.nf-overlay{z-index:2147483000!important}
+
+/* ===== Animated alphabet orb ===== */
+.nf-letter-orbit{will-change:transform,filter,opacity;}
+.nf-alphabet-shift{animation:nfAlphabetShift .72s cubic-bezier(.2,1.35,.35,1) both}
+@keyframes nfAlphabetShift{0%{opacity:0;transform:scale(.58) rotate(-18deg);filter:blur(7px)}45%{opacity:1;transform:scale(1.18) rotate(5deg);filter:blur(0);text-shadow:0 0 28px rgba(76,130,108,.45)}100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0)}}
+.nf-letter-orbit:after{animation:nfAlefRingSpinReverse 13s linear infinite,nfStarOrbitPulse 1.9s ease-in-out infinite!important}
+@keyframes nfStarOrbitPulse{0%,100%{opacity:.45;transform:rotate(-18deg) scale(.9)}50%{opacity:1;transform:rotate(162deg) scale(1.25)}}
+
+/* ===== Immersive exam ===== */
+.exam-immersive{background:radial-gradient(circle at 50% -10%,rgba(129,140,248,.18),transparent 36%),radial-gradient(circle at 100% 80%,rgba(236,72,153,.12),transparent 35%),#08091b;min-height:100dvh!important}
+.exam-immersive .header{position:sticky;top:0;padding:14px 16px 12px;background:linear-gradient(180deg,rgba(8,9,27,.96),rgba(8,9,27,.78));border-bottom:1px solid rgba(255,255,255,.09);box-shadow:0 12px 35px rgba(0,0,0,.25);backdrop-filter:blur(24px);z-index:60}
+.exam-immersive .header h2{font-size:17px;letter-spacing:-.3px}
+.exam-immersive .content{max-width:720px;padding:18px 14px 110px}
+.exam-immersive .content>.glass{position:relative;overflow:hidden;border-radius:28px;padding:20px!important;background:linear-gradient(145deg,rgba(26,27,59,.92),rgba(13,15,35,.94));border:1px solid rgba(255,255,255,.1);box-shadow:0 24px 70px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.08);animation:examCardEnter .55s cubic-bezier(.16,1,.3,1) both}
+.exam-immersive .content>.glass:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#6366f1,#a855f7,#ec4899,#6366f1);background-size:200% 100%;animation:examGlowLine 3s linear infinite}
+@keyframes examCardEnter{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes examGlowLine{to{background-position:200% 0}}
+.exam-immersive .content>.glass>p{font-size:19px;line-height:2.05;margin-top:8px;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.exam-immersive .space-y-2>div{border-radius:20px!important;min-height:66px;display:flex;align-items:center;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;border:1px solid rgba(255,255,255,.09)!important;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:transform .25s,box-shadow .25s,border-color .25s,background .25s}
+.exam-immersive .space-y-2>div:hover{transform:translateY(-3px) scale(1.01);border-color:rgba(129,140,248,.42)!important;box-shadow:0 14px 34px rgba(99,102,241,.16)}
+.exam-immersive .space-y-2>div .w-10{width:44px;height:44px;border-radius:15px;box-shadow:0 5px 16px rgba(0,0,0,.2)}
+.exam-immersive .exam-guide-row{margin:12px 0 10px}
+.exam-immersive .timer-circle-glow{width:76px;height:76px;animation:examTimerFloat 2.2s ease-in-out infinite}
+.exam-immersive .timer-circle-glow svg{filter:drop-shadow(0 0 14px rgba(129,140,248,.72))}
+.exam-immersive .timer-text-glow{font-weight:1000;font-size:15px}
+@keyframes examTimerFloat{50%{transform:translateY(-2px) scale(1.035)}}
+.exam-immersive .w-full.bg-white\/5{height:7px!important;border-radius:999px!important;box-shadow:0 0 20px rgba(129,140,248,.12)}
+.exam-immersive .w-full.bg-white\/5>div{height:100%!important;border-radius:999px!important;box-shadow:0 0 18px rgba(168,85,247,.45);transition:width .5s cubic-bezier(.2,.9,.2,1)}
+.exam-immersive .btn-glass{border-radius:17px;min-height:50px;box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.exam-immersive textarea.glass-input{border-radius:20px;min-height:150px;line-height:2}
+@media(max-width:640px){.exam-immersive .content>.glass{padding:16px!important;border-radius:24px}.exam-immersive .content>.glass>p{font-size:17px}.exam-immersive .timer-circle-glow{width:68px;height:68px}.exam-immersive .content{padding:14px 10px 100px}}
+
+/* Avoid any flash of the old global header while Name & Family mounts. */
+body.nf-name-family-open .header,body.nf-name-family-open .nav-bar{visibility:hidden!important;pointer-events:none!important}
+</style>
+<style>
+/* === Student exam center + Name & Family close button === */
+.nf-close-beautiful{width:76px!important;height:42px!important;min-width:76px!important;border-radius:15px!important;background:linear-gradient(135deg,#ff315d,#c51643)!important;color:#fff!important;border:1px solid rgba(255,255,255,.24)!important;box-shadow:0 10px 26px rgba(211,24,69,.32),inset 0 1px 0 rgba(255,255,255,.3)!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;font-weight:1000!important;transition:transform .22s ease,box-shadow .22s ease,filter .22s ease!important;z-index:30!important}
+.nf-close-beautiful span{font-size:25px!important;line-height:1!important;font-weight:400!important;margin-top:-2px!important}
+.nf-close-beautiful b{font-size:11px!important}
+.nf-close-beautiful:hover{transform:translateY(-2px) scale(1.03)!important;box-shadow:0 15px 34px rgba(211,24,69,.44),inset 0 1px 0 rgba(255,255,255,.4)!important;filter:saturate(1.12)!important}
+.nf-close-beautiful:active{transform:scale(.96)!important}
+.student-exam-page{background:radial-gradient(circle at 8% 5%,rgba(99,102,241,.16),transparent 28%),radial-gradient(circle at 92% 24%,rgba(168,85,247,.13),transparent 30%),linear-gradient(180deg,#08091b 0%,#0b0d20 48%,#08091a 100%)!important}
+.student-exam-page .content{max-width:760px!important;padding-top:22px!important}
+.student-exam-heading{position:relative;overflow:hidden;display:flex;align-items:center;gap:13px;margin:0 0 17px;padding:17px 16px;border-radius:25px;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(99,102,241,.19),rgba(168,85,247,.10) 52%,rgba(255,255,255,.035));box-shadow:0 18px 45px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)}
+.student-exam-heading:before{content:"";position:absolute;inset:-60% -20%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.08) 50%,transparent 65%);transform:translateX(-55%) rotate(5deg);animation:studentExamShine 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes studentExamShine{0%,55%{transform:translateX(-60%) rotate(5deg)}80%,100%{transform:translateX(60%) rotate(5deg)}}
+.student-exam-heading-icon{position:relative;width:51px;height:51px;flex:0 0 51px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(145deg,#818cf8,#7c3aed);box-shadow:0 10px 25px rgba(99,102,241,.32);animation:studentExamFloat 2.8s ease-in-out infinite}
+.student-exam-heading-icon:after{content:"";position:absolute;inset:6px;border:1px solid rgba(255,255,255,.28);border-radius:13px}
+.student-exam-heading-icon span{font-size:23px;color:#fff;filter:drop-shadow(0 3px 8px rgba(0,0,0,.25))}
+@keyframes studentExamFloat{50%{transform:translateY(-4px) rotate(2deg)}}
+.student-exam-kicker{position:relative;display:block;font-size:8px;letter-spacing:1.7px;font-weight:1000;color:#a5b4fc;margin-bottom:3px}
+.student-exam-heading h3{position:relative;margin:0;color:#fff;font-size:19px;font-weight:1000}
+.student-exam-heading p{position:relative;margin:4px 0 0;color:rgba(255,255,255,.45);font-size:10px}
+.student-exam-count{position:relative;margin-right:auto;min-width:58px;text-align:center;padding:8px 9px;border-radius:15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.09)}
+.student-exam-count b{display:block;font-size:20px;line-height:1;font-weight:1000;color:#fff}.student-exam-count small{font-size:8px;color:rgba(255,255,255,.42)}
+.student-exam-page .exam-card-enhanced{position:relative;overflow:hidden;border-radius:24px!important;padding:18px!important;margin-bottom:12px!important;background:linear-gradient(145deg,rgba(24,27,57,.94),rgba(14,16,39,.94))!important;border:1px solid rgba(255,255,255,.09)!important;box-shadow:0 16px 38px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.055)!important;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease!important}
+.student-exam-page .exam-card-enhanced:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#6366f1,#a855f7,#ec4899);opacity:.9}
+.student-exam-page .exam-card-enhanced:after{content:"✦";position:absolute;left:18px;top:14px;color:rgba(165,180,252,.16);font-size:38px;transform:rotate(-15deg)}
+.student-exam-page .exam-card-enhanced:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(0,0,0,.3),0 0 0 1px rgba(129,140,248,.08);border-color:rgba(129,140,248,.24)!important}
+.student-exam-page .exam-card-enhanced h4{font-size:16px;color:#fff;letter-spacing:-.2px}.student-exam-page .exam-card-enhanced p{color:rgba(255,255,255,.48)!important;line-height:1.8}
+.student-exam-page .exam-card-enhanced .badge{border-radius:12px!important;padding:6px 9px!important;font-size:9px!important;border:1px solid rgba(255,255,255,.08)}
+.student-exam-page .exam-card-enhanced .btn-glass{min-height:43px;border-radius:14px!important;background:linear-gradient(135deg,rgba(99,102,241,.88),rgba(124,58,237,.88))!important;border:1px solid rgba(255,255,255,.15)!important;box-shadow:0 9px 22px rgba(79,70,229,.24)!important;font-weight:1000!important;transition:transform .2s ease,filter .2s ease!important}
+.student-exam-page .exam-card-enhanced .btn-glass:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.student-exam-page .exam-card-enhanced .star-rating{filter:drop-shadow(0 3px 7px rgba(250,204,21,.18))}
+@media(max-width:560px){.student-exam-heading{padding:14px 12px;gap:10px}.student-exam-heading-icon{width:46px;height:46px;flex-basis:46px}.student-exam-heading h3{font-size:16px}.student-exam-heading p{font-size:9px}.student-exam-count{min-width:49px}.student-exam-page .exam-card-enhanced{padding:15px!important;border-radius:21px!important}}
+</style>\n</head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 const SB_NF=window.supabase.createClient("https://jqmmylgpesswehvdkvep.supabase.co","sb_publishable_QjwO3A16ExRPhEbzaJi33A_Dc4fAxe2");
-const syncNfUserRecord=async(userId)=>{
-  const id=String(userId||'');
-  if(!id)return;
-  const {data:u,error:ue}=await SB.from('users')
-    .select('id,username,password,role,full_name,created_at,last_seen_at')
-    .eq('id',id).maybeSingle();
-  if(ue)throw ue;
-  if(!u)throw new Error('NF_USER_NOT_FOUND');
-  const {error:ne}=await SB_NF.from('users').upsert({
-    id:String(u.id),username:u.username||'',password:u.password||'',role:u.role||'student',
-    full_name:u.full_name||u.username||'کاربر',created_at:u.created_at||new Date().toISOString(),
-    last_seen_at:u.last_seen_at||null
-  },{onConflict:'id'});
-  if(ne)throw ne;
-};
 
 const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
@@ -5561,7 +5630,6 @@ function Admin({user,tab,setTab,onLogout}){
   const loadNfSuggestions=async()=>{
     setNfSuggestionsLoading(true);
     try{
-      await syncNfUserRecord(user.id);
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_suggestions',{p_admin_id:String(user.id)});
       if(error)throw error;
       setNfSuggestions(data||[]);
@@ -5571,7 +5639,6 @@ function Admin({user,tab,setTab,onLogout}){
   const handleNfSuggestion=async(id,action)=>{
     setNfSuggestionsBusy(true);
     try{
-      await syncNfUserRecord(user.id);
       const {error}=await SB_NF.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:action});
       if(error)throw error;
       toast(action==='approve'?'کلمه به فرهنگ بازی اضافه شد ✓':'پیشنهاد رد شد','success');
@@ -5859,7 +5926,7 @@ function Admin({user,tab,setTab,onLogout}){
 
   return(
     <>
-      <div className="min-h-screen pb-24">
+      <div className="min-h-screen pb-24 student-exam-page">
       <div className="header flex justify-between items-center">
         <div><h1 className="text-lg font-black gradient-text">پنل مدیریت</h1><p className="text-xs text-white/30 mt-1">{user.full_name}</p></div>
         <div className="flex gap-2">
@@ -7107,6 +7174,16 @@ function NameFamilyGameHub({user,onClose}){
   const LETTERS=['ا','ب','پ','ت','ث','ج','چ','ح','خ','د','ذ','ر','ز','ژ','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ک','گ','ل','م','ن','و','ه','ی'];
   const FIELDS=[['name','اسم','👤'],['family','فامیل','🪪'],['color','رنگ','🎨'],['place','شهر یا کشور','🌍'],['body','اعضای بدن','🫀']];
   const [screen,setScreen]=useState('lobby');
+  const [heroLetter,setHeroLetter]=useState('ا');
+  useEffect(()=>{
+    if(screen!=='lobby')return;
+    let i=0;
+    const timer=window.setInterval(()=>{
+      i=(i+1)%LETTERS.length;
+      setHeroLetter(LETTERS[i]);
+    },5000);
+    return()=>window.clearInterval(timer);
+  },[screen]);
   useEffect(()=>{
     const lines=['اسم: ریحانه','فامیل: رضایی','رنگ: زرد','شهر یا کشور: رشت','اعضای بدن: ابرو','اسم: سارا','فامیل: احمدی','رنگ: آبی','شهر یا کشور: شیراز','اعضای بدن: چشم','اسم: نازنین','فامیل: کریمی','رنگ: سبز','شهر یا کشور: تهران','اعضای بدن: دست'];
     let cancelled=false, timer=null, i=0, pos=0, deleting=false;
@@ -7177,22 +7254,6 @@ function NameFamilyGameHub({user,onClose}){
   },[screen]);
 
   const toastLocal=(msg)=>{setNotice(msg);setTimeout(()=>setNotice(''),2600)};
-  const syncNameFamilyUser=async()=>{
-    const id=String(user?.id||'');
-    if(!id)return;
-    const {data:u,error:ue}=await SB.from('users')
-      .select('id,username,password,role,full_name,created_at,last_seen_at')
-      .eq('id',id).maybeSingle();
-    if(ue)throw ue;
-    if(!u)throw new Error('NF_USER_NOT_FOUND');
-    const {error:ne}=await SB_NF.from('users').upsert({
-      id:String(u.id),username:u.username||'',password:u.password||'',role:u.role||'student',
-      full_name:u.full_name||u.username||'کاربر',created_at:u.created_at||new Date().toISOString(),
-      last_seen_at:u.last_seen_at||null
-    },{onConflict:'id'});
-    if(ne)throw ne;
-  };
-
   const loadMySuggestions=async()=>{
     try{
       const {data,error}=await SB_NF.from('tadbir_nf_word_suggestions')
@@ -7210,7 +7271,6 @@ function NameFamilyGameHub({user,onClose}){
     if(word.length>60){showSuggestionNotice('کلمه خیلی طولانی است.');return}
     setSuggestionBusy(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_submit_word_suggestion',{
         p_user_id:String(user.id),p_category:suggestionCategory,p_word:word
       });
@@ -7241,7 +7301,6 @@ function NameFamilyGameHub({user,onClose}){
     if(!isAdmin)return;
     setNfPendingLoading(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_suggestions',{p_admin_id:String(user.id)});
       if(error)throw error;
       setNfPendingSuggestions(Array.isArray(data)?data:[]);
@@ -7251,7 +7310,6 @@ function NameFamilyGameHub({user,onClose}){
   const reviewNfPendingSuggestion=async(id,action)=>{
     setNfDictionaryBusy(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_review_suggestion',{p_suggestion_id:id,p_admin_id:String(user.id),p_action:action});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'REVIEW_FAILED');
@@ -7276,7 +7334,6 @@ function NameFamilyGameHub({user,onClose}){
     if(!isAdmin)return;
     setNfDictionaryLoading(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_dictionary',{p_admin_id:String(user.id)});
       if(error)throw error;
       setNfDictionary(Array.isArray(data)?data:[]);
@@ -7291,7 +7348,6 @@ function NameFamilyGameHub({user,onClose}){
     if(duplicate){toastLocal('⚠️ این کلمه قبلاً در همین بخش ثبت شده.');return}
     setNfDictionaryBusy(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_add_word',{p_admin_id:String(user.id),p_category:nfDictionaryCategory,p_word:word});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'ADD_FAILED');
@@ -7312,7 +7368,6 @@ function NameFamilyGameHub({user,onClose}){
     if(!window.confirm('این کلمه از دامنه لغات حذف شود؟'))return;
     setNfDictionaryBusy(true);
     try{
-      await syncNameFamilyUser();
       const {data,error}=await SB_NF.rpc('tadbir_nf_admin_delete_word',{p_admin_id:String(user.id),p_dictionary_id:Number(id)});
       if(error)throw error;
       if(data && data.ok===false)throw new Error(data.reason||'DELETE_FAILED');
@@ -7332,8 +7387,8 @@ function NameFamilyGameHub({user,onClose}){
     const clean=[...new Set((ids||[]).filter(Boolean).map(String))];
     if(!clean.length)return [];
     const [{data:us},{data:ps}]=await Promise.all([
-      SB.from('users').select('id,full_name,username,role,last_seen_at').in('id',clean),
-      SB.from('profiles').select('user_id,display_name,avatar_url,bio').in('user_id',clean)
+      SB_NF.from('users').select('id,full_name,username,role,last_seen_at').in('id',clean),
+      SB_NF.from('profiles').select('user_id,display_name,avatar_url,bio').in('user_id',clean)
     ]);
     const pm=Object.fromEntries((ps||[]).map(x=>[String(x.user_id),x]));
     return (us||[]).map(x=>({...x,profile:pm[String(x.id)]||null}));
@@ -7352,7 +7407,7 @@ function NameFamilyGameHub({user,onClose}){
     if(refreshUsers){setBusy(true);setUsersLoading(true);setError('');}
     try{
       const usersPromise=refreshUsers
-        ? SB.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name')
+        ? SB_NF.from('users').select('id,full_name,username,role,last_seen_at').neq('id',user.id).order('full_name')
         : Promise.resolve({data:null,error:null});
       const [{data:us,error:ue},{data:inc,error:ie},{data:out,error:oe},{data:acc,error:ace},{data:mine,error:me}]=await Promise.all([
         usersPromise,
@@ -7416,7 +7471,6 @@ function NameFamilyGameHub({user,onClose}){
     }finally{roomLoadRef.current=false;}
   };
   useEffect(()=>{
-    syncNameFamilyUser().catch(e=>console.warn('name-family user sync:',e));
     loadLobby();
     loadMySuggestions();
     // Realtime + همگام‌سازی سریع پشتیبان؛ درخواست حداکثر طی حدود ۱ ثانیه دیده می‌شود.
@@ -7426,7 +7480,7 @@ function NameFamilyGameHub({user,onClose}){
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players'},()=>loadLobby({refreshUsers:false}))
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_word_suggestions'},()=>loadMySuggestions())
       .subscribe();
-    const fastSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadLobby({refreshUsers:false})},2500);
+    const fastSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadLobby({refreshUsers:false})},1000);
     return()=>{SB_NF.removeChannel(ch);clearInterval(fastSync);if(saveTimer.current)clearTimeout(saveTimer.current)};
   },[user.id]);
   useEffect(()=>{
@@ -7436,7 +7490,7 @@ function NameFamilyGameHub({user,onClose}){
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_players'},()=>loadRoom(roomId))
       .on('postgres_changes',{event:'*',schema:'public',table:'tadbir_nf_requests'},()=>loadLobby({refreshUsers:false}))
       .subscribe();
-    const roomSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadRoom(roomId)},2500);
+    const roomSync=setInterval(()=>{if(document.visibilityState!=='hidden')loadRoom(roomId)},1000);
     return()=>{SB_NF.removeChannel(ch);clearInterval(roomSync)};
   },[roomId]);
   useEffect(()=>{if(roomId)loadRoom(roomId)},[roomId]);
@@ -7645,9 +7699,9 @@ function NameFamilyGameHub({user,onClose}){
 
   return <div className={`nf-overlay ${nightMode?"nf-night":""}`} dir="rtl">
     <div className="nf-shell">
+      <button type="button" className="nf-home-x nf-close-visible nf-game-close" onClick={onClose} aria-label="بستن پنل اسم فامیل"><span>×</span></button>
       <div className="nf-stars" aria-hidden="true">{Array.from({length:22}).map((_,i)=><i key={i} style={{'--i':i}}/>)}</div>
       <header className="nf-head">
-        <button type="button" className="nf-home-x" onClick={onClose} aria-label="بازگشت به صفحه اصلی">×</button>
         <div className="nf-brand"><span className="nf-brand-orb">✦</span><div><b>اسم فامیل</b><small>TADBIR ARENA • آنلاین</small></div></div>
         <div className="nf-head-controls"><button type="button" className="nf-theme-toggle" onClick={()=>setNightMode(v=>!v)} aria-label={nightMode?"حالت روز":"حالت شب"}>{nightMode?"🌙":"☀️"}</button></div>
       </header>
@@ -7655,7 +7709,7 @@ function NameFamilyGameHub({user,onClose}){
       {error&&<div className="nf-error">{error}<button onClick={()=>setError('')}>×</button></div>}
 
       {screen==='lobby'&&<div className="nf-lobby">
-        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><div className="nf-typewriter" aria-live="polite"><span className="nf-typewriter-text"></span></div></div><div className="nf-hero-art"><div className="nf-letter-orbit nf-calligraphy" aria-label="حرف الف">الف</div><div className="nf-mini-card c1">آنلاین</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
+        <div className="nf-hero"><div className="nf-hero-copy"><span className="nf-kicker">WORD BATTLE</span><h1>حرف را انتخاب کن؛ <em>قهرمان شو!</em></h1><div className="nf-typewriter" aria-live="polite"><span className="nf-typewriter-text"></span></div></div><div className="nf-hero-art"><div key={heroLetter} className="nf-letter-orbit nf-calligraphy nf-alphabet-shift" aria-label={`حرف ${heroLetter}`}>{heroLetter}</div><div className="nf-mini-card c1">آنلاین</div><div className="nf-mini-card c2">۳ دقیقه</div><div className="nf-mini-card c3">۵ موضوع</div></div></div>
         {incoming.length>0&&<section className="nf-panel nf-incoming"><div className="nf-panel-title"><span>🔔</span><div><b>درخواست‌های بازی</b><small>یکی از دوستان یا مدیر می‌خواهد وارد میدان شود</small></div><strong>{incoming.length}</strong></div>{incoming.map(r=><div className="nf-request" key={r.id}>{nfAvatar(r.from_user_data,'nf-user-orb')}<div className="nf-request-copy"><b>{nfDisplayName(r.from_user_data)}</b><small>@{r.from_user_data?.username||''} • دعوت به اسم فامیل</small></div><div className="nf-request-actions"><button className="nf-accept" onClick={()=>acceptRequest(r)} disabled={busy}>قبول ✓</button><button className="nf-reject" onClick={()=>rejectRequest(r)}>رد</button></div></div>)}</section>}
         {acceptedOutgoing.length>0&&<section className="nf-panel nf-accepted-panel"><div className="nf-panel-title"><span>✅</span><div><b>بازیکن‌های پذیرفته‌شده</b><small>هر وقت آماده بودی، از همین‌جا وارد اتاق شو و بازی را شروع کن</small></div><strong>{acceptedOutgoing.length}</strong></div>{acceptedOutgoing.map(r=><div className="nf-accepted-room" key={r.id}>{nfAvatar(r.to_user_data,'nf-user-orb')}<div className="nf-request-copy"><b>{nfDisplayName(r.to_user_data)}</b><small>درخواست را قبول کرده ✓</small></div><button className="nf-accept" onClick={()=>openRoom(r.room_id)} disabled={busy}>ورود به اتاق</button></div>)}</section>}
         <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>بازی خودتو بساز!</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={()=>loadLobby({refreshUsers:true})} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}>{nfAvatar(u)}<div className="nf-user-card-copy"><b>{nfDisplayName(u)}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
@@ -8219,16 +8273,57 @@ function Student({user,tab,setTab,onLogout}){
     if(max<=0)return 0; const score=(total/max)*20;
     if(score>=20)return 5;if(score>=18)return 4;if(score>=16)return 3;if(score>=14)return 2;if(score>=10)return 1;return 0;
   };
+  const loadAchievementWallet=useCallback(async()=>{
+    const uid=String(user.id);
+    try{
+      const [{data:w,error:walletError},{data:pt,error:trophyError}]=await Promise.all([
+        SB.from('tadbir_wallets').select('balance,earned_stars').eq('user_id',uid).maybeSingle(),
+        SB.from('tadbir_trophy_purchases').select('trophy_id').eq('user_id',uid).order('trophy_id')
+      ]);
+      if(walletError)throw walletError;
+      if(w){
+        setCoinBalance(Number.isFinite(Number(w.balance))?Number(w.balance):0);
+        setEarnedStars(Number.isFinite(Number(w.earned_stars))?Number(w.earned_stars):0);
+      }
+      if(!trophyError)setOwnedTrophyIds((pt||[]).map(x=>Number(x.trophy_id)).filter(Number.isFinite).sort((a,b)=>a-b));
+      return {wallet:w||null,trophies:pt||[]};
+    }catch(err){
+      console.warn('achievement wallet read:',err);
+      return {wallet:null,trophies:[]};
+    }
+  },[user.id]);
+
   const syncAchievementWallet=async(examRows,answerRows)=>{
     try{
-      const totalStars=(examRows||[]).reduce((n,ex)=>n+starsForExam(ex,answerRows),0);
-      const {data:w,error}=await SB.from('tadbir_wallets').select('*').eq('user_id',String(user.id)).maybeSingle();
-      if(error)throw error;
-      if(!w){const {data:nw,error:ie}=await SB.from('tadbir_wallets').insert({user_id:String(user.id),balance:totalStars,earned_stars:totalStars}).select('*').single();if(ie)throw ie;setCoinBalance(Number(nw.balance||0));setEarnedStars(Number(nw.earned_stars||0));}
-      else{let balance=Number(w.balance||0),earned=Number(w.earned_stars||0);if(totalStars>earned){balance+=totalStars-earned;earned=totalStars;await SB.from('tadbir_wallets').update({balance,earned_stars:earned,updated_at:new Date().toISOString()}).eq('user_id',String(user.id));}setCoinBalance(balance);setEarnedStars(earned);}
-      const {data:pt}=await SB.from('tadbir_trophy_purchases').select('trophy_id').eq('user_id',String(user.id)).order('trophy_id');setOwnedTrophyIds((pt||[]).map(x=>Number(x.trophy_id)));
-    }catch(err){console.warn('achievement wallet:',err);}
+      const uid=String(user.id);
+      const [{data:w,error:walletError},{data:pt,error:trophyError}]=await Promise.all([
+        SB.from('tadbir_wallets').select('balance,earned_stars').eq('user_id',uid).maybeSingle(),
+        SB.from('tadbir_trophy_purchases').select('trophy_id').eq('user_id',uid).order('trophy_id')
+      ]);
+      if(walletError)throw walletError;
+      if(w){
+        let balance=Number(w.balance||0);
+        let earned=Number(w.earned_stars||0);
+        const totalStars=(examRows||[]).reduce((n,ex)=>n+starsForExam(ex,answerRows),0);
+        if(totalStars>earned){
+          balance+=totalStars-earned;
+          earned=totalStars;
+          const {data:updated,error:updateError}=await SB.from('tadbir_wallets').update({balance,earned_stars:earned,updated_at:new Date().toISOString()}).eq('user_id',uid).select('balance,earned_stars').maybeSingle();
+          if(!updateError&&updated){balance=Number(updated.balance||balance);earned=Number(updated.earned_stars||earned);}
+        }
+        setCoinBalance(Number.isFinite(balance)?balance:0);
+        setEarnedStars(Number.isFinite(earned)?earned:0);
+      }
+      if(!trophyError)setOwnedTrophyIds((pt||[]).map(x=>Number(x.trophy_id)).filter(Number.isFinite).sort((a,b)=>a-b));
+    }catch(err){
+      console.warn('achievement wallet:',err);
+    }
   };
+  useEffect(()=>{
+    loadAchievementWallet();
+    const t=window.setTimeout(loadAchievementWallet,900);
+    return()=>window.clearTimeout(t);
+  },[loadAchievementWallet]);
   const celebrateTrophy=(t)=>{setCelebration(t);};
   const purchaseTrophy=async(t)=>{
     if(achievementBusy)return;
@@ -8518,7 +8613,7 @@ function Student({user,tab,setTab,onLogout}){
     const q=activeExam.questions[currentQ];
     const progress=((currentQ+1)/activeExam.questions.length)*100;
     return(
-      <div className="min-h-screen">
+      <div className="min-h-screen exam-immersive">
         <div className="header">
           <div className="flex justify-between items-center mb-3">
             <div>
@@ -8691,7 +8786,7 @@ function Student({user,tab,setTab,onLogout}){
               </div>
             </div>
             <PersianCalendar/>
-            <h3 className="font-bold mt-6 mb-3 text-white/70 text-sm">آزمون‌های موجود</h3>
+            <div className="student-exam-heading slide-up"><div className="student-exam-heading-icon"><span>✦</span></div><div><span className="student-exam-kicker">TADBIR • EXAM CENTER</span><h3>آزمون‌های شما</h3><p>آزمون‌های آماده، زمان و نتیجه را یکجا ببین</p></div><div className="student-exam-count"><b>{exams.length}</b><small>آزمون</small></div></div>
             {exams.length===0&&<div className="card text-center py-10 text-white/30">آزمونی نیست</div>}
             {exams.map(ex=>{
               const taken=hasTakenExam(ex.id);
@@ -10096,6 +10191,85 @@ body.nf-name-family-open [class*="floating-bottom"]{
 @media(max-width:560px){.theme-grid{grid-template-columns:1fr!important}.nf-admin-detail-grid{grid-template-columns:1fr!important}.nf-admin-suggestion-row{flex-direction:column!important}.nf-admin-suggestion-actions{width:100%!important}.nf-admin-suggestion-actions button{flex:1!important}}
 </style>
 </body>
+
+<style id="tadbir-namefamily-final-fix-v2">
+/* Final Name & Family controls: always-visible red close button + calm star orbit. */
+.nf-home-x.nf-close-visible{
+  position:fixed!important;
+  top:max(12px,calc(12px + env(safe-area-inset-top)))!important;
+  left:max(12px,calc(12px + env(safe-area-inset-left)))!important;
+  width:46px!important;height:46px!important;min-width:46px!important;
+  display:grid!important;place-items:center!important;
+  padding:0!important;margin:0!important;
+  border:2px solid rgba(255,255,255,.9)!important;
+  border-radius:50%!important;
+  background:linear-gradient(145deg,#ff4d62,#c91536)!important;
+  color:#fff!important;
+  font-family:Arial,sans-serif!important;
+  font-size:31px!important;font-weight:300!important;line-height:1!important;
+  box-shadow:0 7px 0 #8f1028,0 13px 30px rgba(201,21,54,.38),inset 0 2px 0 rgba(255,255,255,.35)!important;
+  z-index:2147483647!important;
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  cursor:pointer!important;
+  transition:transform .2s ease,box-shadow .2s ease!important;
+}
+.nf-home-x.nf-close-visible span{display:block!important;transform:translateY(-1px)!important}
+.nf-home-x.nf-close-visible:hover{transform:translateY(-2px) scale(1.04)!important;box-shadow:0 9px 0 #8f1028,0 17px 34px rgba(201,21,54,.48),inset 0 2px 0 rgba(255,255,255,.4)!important}
+.nf-home-x.nf-close-visible:active{transform:translateY(5px) scale(.96)!important;box-shadow:0 2px 0 #8f1028,0 7px 18px rgba(201,21,54,.3)!important}
+.nf-letter-orbit:after{
+  content:'✦'!important;
+  position:absolute!important;
+  inset:-29px!important;
+  display:grid!important;
+  place-items:start center!important;
+  color:#c88da1!important;
+  font-size:14px!important;
+  opacity:.78!important;
+  pointer-events:none!important;
+  transform-origin:50% 50%!important;
+  animation:nfStarSlowOrbit 10s linear infinite!important;
+}
+@keyframes nfStarSlowOrbit{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+@media(max-width:640px){.nf-home-x.nf-close-visible{width:42px!important;height:42px!important;min-width:42px!important;font-size:28px!important}}
+@media(prefers-reduced-motion:reduce){.nf-letter-orbit:after{animation-duration:20s!important}}
+</style>
+
+<style id="nf-visual-final-2026-09">
+/* Name & Family visual-only final polish: header hidden, close button independent, animated letter */
+.nf-head{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;overflow:hidden!important;}
+.nf-game-close{
+  position:fixed!important;
+  top:max(14px,calc(14px + env(safe-area-inset-top)))!important;
+  left:max(14px,calc(14px + env(safe-area-inset-left)))!important;
+  width:48px!important;height:48px!important;min-width:48px!important;
+  display:grid!important;place-items:center!important;
+  padding:0!important;margin:0!important;
+  border:2px solid rgba(255,255,255,.96)!important;
+  border-radius:50%!important;
+  background:linear-gradient(145deg,#ff5368 0%,#e11d48 58%,#b31337 100%)!important;
+  color:#fff!important;
+  font-family:Arial,sans-serif!important;
+  font-size:32px!important;font-weight:300!important;line-height:1!important;
+  box-shadow:0 6px 0 #8f1028,0 14px 34px rgba(225,29,72,.38),inset 0 2px 0 rgba(255,255,255,.38)!important;
+  z-index:2147483647!important;
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  cursor:pointer!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
+}
+.nf-game-close span{display:block!important;transform:translateY(-1px)!important;}
+.nf-game-close:hover{transform:translateY(-2px) scale(1.06)!important;box-shadow:0 8px 0 #8f1028,0 18px 38px rgba(225,29,72,.5),inset 0 2px 0 rgba(255,255,255,.45)!important;}
+.nf-game-close:active{transform:translateY(4px) scale(.95)!important;box-shadow:0 2px 0 #8f1028,0 8px 20px rgba(225,29,72,.32)!important;}
+.nf-letter-orbit{position:relative!important;will-change:transform,filter,opacity!important;}
+.nf-alphabet-shift{animation:nfAlphabetEnter .82s cubic-bezier(.18,1.4,.3,1) both,nfAlphabetFloat 3.2s ease-in-out .82s infinite!important;}
+@keyframes nfAlphabetEnter{0%{opacity:0;transform:scale(.55) rotate(-24deg);filter:blur(9px)}45%{opacity:1;transform:scale(1.18) rotate(7deg);filter:blur(0);text-shadow:0 0 34px rgba(255,255,255,.55),0 0 70px rgba(168,85,247,.5)}72%{transform:scale(.96) rotate(-2deg)}100%{opacity:1;transform:scale(1) rotate(0);filter:blur(0);text-shadow:0 0 18px rgba(255,255,255,.2)}}
+@keyframes nfAlphabetFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.025)}}
+.nf-letter-orbit:before{transition:transform .8s ease,opacity .8s ease!important;}
+@media(max-width:640px){.nf-game-close{width:44px!important;height:44px!important;min-width:44px!important;font-size:29px!important;top:max(10px,calc(10px + env(safe-area-inset-top)))!important;left:max(10px,calc(10px + env(safe-area-inset-left)))!important;}}
+@media(prefers-reduced-motion:reduce){.nf-alphabet-shift{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}.nf-game-close{transition:none!important;}}
+</style>
 </html><style id="tadbir-story-final-fix">
 /* Final story layout fix: compact glass strip, no overlap with search/contacts. */
 .telegram-stories-strip{
