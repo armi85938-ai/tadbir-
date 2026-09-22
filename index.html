@@ -4198,7 +4198,115 @@ body.nf-name-family-open .header,body.nf-name-family-open .nav-bar{visibility:hi
 .student-exam-page .exam-card-enhanced .btn-glass:hover{transform:translateY(-2px);filter:brightness(1.08)}
 .student-exam-page .exam-card-enhanced .star-rating{filter:drop-shadow(0 3px 7px rgba(250,204,21,.18))}
 @media(max-width:560px){.student-exam-heading{padding:14px 12px;gap:10px}.student-exam-heading-icon{width:46px;height:46px;flex-basis:46px}.student-exam-heading h3{font-size:16px}.student-exam-heading p{font-size:9px}.student-exam-count{min-width:49px}.student-exam-page .exam-card-enhanced{padding:15px!important;border-radius:21px!important}}
-</style>\n</head>
+</style>\n
+<style id="tadbir-exam-visual-v40">
+/* ===== V40 — آزمون مدرن و پنل متن بی‌پاسخ ===== */
+.exam-immersive{
+  position:relative;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(99,102,241,.18),transparent 28%),
+    radial-gradient(circle at 90% 18%,rgba(236,72,153,.13),transparent 25%),
+    radial-gradient(circle at 50% 100%,rgba(14,165,233,.10),transparent 32%),
+    #070914!important;
+}
+.exam-immersive:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.38;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+.exam-topbar{
+  position:sticky!important;top:0;z-index:70!important;
+  padding:14px 16px 13px!important;
+  background:rgba(8,10,25,.78)!important;
+  border-bottom:1px solid rgba(255,255,255,.09)!important;
+  box-shadow:0 16px 45px rgba(0,0,0,.28)!important;
+  backdrop-filter:blur(28px)!important;
+}
+.exam-topbar-main{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:760px;margin:0 auto}
+.exam-title-block{min-width:0;text-align:right}
+.exam-top-kicker{display:block;font-size:8px;letter-spacing:2px;font-weight:1000;color:#a5b4fc;margin-bottom:4px}
+.exam-title-block h2{font-size:18px!important;font-weight:1000!important;margin:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exam-title-block p{display:flex;align-items:center;gap:7px;margin:5px 0 0;font-size:10px;color:rgba(255,255,255,.46)}
+.exam-title-block p i{font-style:normal;color:rgba(255,255,255,.2)}
+.exam-progress-meta{max-width:760px;margin:10px auto 6px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.4)}
+.exam-progress-meta b{color:#c4b5fd;font-size:10px}
+.exam-progress-track{max-width:760px;margin:0 auto;height:8px!important;background:rgba(255,255,255,.055)!important;box-shadow:inset 0 1px 3px rgba(0,0,0,.3),0 0 25px rgba(99,102,241,.08)}
+.exam-progress-fill{position:relative;overflow:hidden;box-shadow:0 0 18px rgba(168,85,247,.42)}
+.exam-progress-fill:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);transform:translateX(-100%);animation:examProgressShine 2.8s linear infinite}
+@keyframes examProgressShine{to{transform:translateX(100%)}}
+
+.exam-immersive .timer-circle-glow{
+  width:92px!important;height:92px!important;flex:none;
+  padding:4px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,.17),rgba(255,255,255,.025) 62%,transparent 63%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 10px 35px rgba(99,102,241,.16),inset 0 0 20px rgba(255,255,255,.04);
+  animation:examTimerFloat 3s ease-in-out infinite;
+}
+.exam-immersive .timer-circle-glow svg{width:84px!important;height:84px!important;filter:drop-shadow(0 0 15px rgba(129,140,248,.55))}
+.exam-immersive .timer-circle-glow circle{stroke-width:6.5}
+.exam-immersive .timer-text-glow{width:100%;line-height:1}
+.exam-immersive .timer-text-glow>div:first-child{font-size:18px!important;letter-spacing:.5px}
+.exam-immersive .timer-text-glow>div:last-child{font-size:7px!important;margin-top:5px!important;color:rgba(255,255,255,.48)!important}
+@keyframes examTimerFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+.exam-immersive .content{position:relative;z-index:1}
+.exam-immersive .content>.glass{background:linear-gradient(145deg,rgba(20,24,50,.95),rgba(10,13,30,.96))!important}
+.exam-info-question{
+  position:relative;overflow:hidden;
+  border-radius:28px!important;padding:20px!important;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(16,185,129,.12),transparent 35%),
+    radial-gradient(circle at 0% 100%,rgba(59,130,246,.10),transparent 32%),
+    linear-gradient(145deg,rgba(20,31,42,.98),rgba(9,18,29,.98))!important;
+  border:1px solid rgba(110,231,183,.20)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.08)!important;
+}
+.exam-info-question:before{content:"";position:absolute;right:-90px;top:-100px;width:230px;height:230px;border-radius:50%;background:rgba(16,185,129,.10);filter:blur(28px);pointer-events:none}
+.exam-info-reading-head{position:relative!important;background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.09)!important;padding:14px!important}
+.exam-info-reading-head>span{background:linear-gradient(135deg,#059669,#0ea5e9)!important;box-shadow:0 10px 28px rgba(14,165,233,.22)!important}
+.exam-info-reading-head b{font-size:14px!important;color:#ecfdf5}
+.exam-info-reading-head small{font-size:10px!important;color:rgba(255,255,255,.58)!important}
+.exam-info-reading-body{position:relative!important;margin-top:14px!important;padding:18px!important;background:rgba(2,8,14,.30)!important;border-color:rgba(255,255,255,.08)!important}
+.exam-info-reading-body img{max-height:360px!important;box-shadow:0 14px 35px rgba(0,0,0,.25)}
+.exam-info-text{font-weight:600!important;line-height:2.2!important;white-space:pre-wrap!important;word-break:break-word}
+.exam-info-understand{margin-top:16px!important;border-radius:20px!important;background:linear-gradient(135deg,#059669,#0284c7)!important;box-shadow:0 16px 38px rgba(14,165,233,.22)!important;min-height:62px}
+.exam-info-understand strong{font-size:13px!important}
+.exam-info-understand small{font-size:9px!important}
+
+.exam-no-score-chip{
+  min-height:44px;display:flex;align-items:center;justify-content:center;
+  padding:9px 11px;border-radius:13px;
+  background:linear-gradient(135deg,rgba(16,185,129,.10),rgba(14,165,233,.08));
+  border:1px solid rgba(110,231,183,.18);color:#a7f3d0;font-size:9px;font-weight:900;text-align:center;
+}
+.exam-text-editor{margin-top:11px;padding:12px;border-radius:18px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.08)}
+.exam-text-editor-title{display:flex;align-items:center;gap:8px;margin-bottom:10px;color:#e0f2fe;font-size:10px}
+.exam-text-editor-title span{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:rgba(99,102,241,.16)}
+.exam-text-editor-grid{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:8px}
+.exam-text-editor-grid label{display:block}
+.exam-text-editor-grid label>span{display:block;font-size:8px;color:rgba(255,255,255,.42);margin-bottom:5px}
+.exam-text-editor-grid select{width:100%;min-height:38px;border:1px solid rgba(255,255,255,.08);border-radius:11px;background:#101426;color:#fff;padding:0 9px;font-size:9px;outline:none}
+.exam-color-control,.exam-size-control{min-height:38px;display:flex;align-items:center;gap:7px;padding:5px 7px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.exam-color-control input{width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:8px;cursor:pointer}
+.exam-color-control code{font-size:8px;color:rgba(255,255,255,.55)}
+.exam-size-control input{width:100%;accent-color:#818cf8}
+.exam-size-control b{font-size:8px;color:#c4b5fd;white-space:nowrap}
+.exam-text-editor-preview{margin-top:10px;min-height:68px;padding:11px;border-radius:12px;background:rgba(255,255,255,.035);border:1px dashed rgba(255,255,255,.10);line-height:1.9;white-space:pre-wrap;word-break:break-word}
+@media(max-width:640px){
+  .exam-topbar{padding:12px 10px!important}
+  .exam-topbar-main{gap:9px}
+  .exam-title-block h2{font-size:15px!important}
+  .exam-title-block p{font-size:9px}
+  .exam-immersive .timer-circle-glow{width:76px!important;height:76px!important}
+  .exam-immersive .timer-circle-glow svg{width:70px!important;height:70px!important}
+  .exam-immersive .timer-text-glow>div:first-child{font-size:15px!important}
+  .exam-text-editor-grid{grid-template-columns:1fr}
+}
+</style>
+
+</head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
@@ -5791,10 +5899,10 @@ function Admin({user,tab,setTab,onLogout}){
     const {data:exam,error}=await SB.from('exams').insert({title:formData.title,description:formData.desc||'',duration_minutes:duration,assigned_to:formData.assigned||'all',created_by:user.id,allow_calculator:!!formData.allowCalculator}).select().single();
     if(error){toast('خطا: '+error.message,'error');setLoading(false);return;}
     for(const q of questions){
-      const payload={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
+      const qIsInfo=q.q_type==='unanswered'; const payload={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:qIsInfo?0:(parseFloat(q.score)||1),order_num:questions.indexOf(q),text_color:q.text_color||'#ffffff',font_size:Math.max(12,Math.min(48,parseInt(q.font_size)||18)),font_family:q.font_family||'Vazirmatn'};
       let {error:qe}=await SB.from('questions').insert(payload);
       if(qe){
-        const fallback={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:parseFloat(q.score)||1,order_num:questions.indexOf(q)};
+        const fallback={exam_id:exam.id,q_text:q.q_text,opt_a:q.opt_a||null,opt_b:q.opt_b||null,opt_c:q.opt_c||null,opt_d:q.opt_d||null,correct_opt:q.correct_opt||null,q_type:q.q_type||'test',image_url:q.image_url||null,opt_a_image:q.opt_a_image||null,opt_b_image:q.opt_b_image||null,opt_c_image:q.opt_c_image||null,opt_d_image:q.opt_d_image||null,score:qIsInfo?0:(parseFloat(q.score)||1),order_num:questions.indexOf(q),text_color:q.text_color||'#ffffff',font_size:Math.max(12,Math.min(48,parseInt(q.font_size)||18)),font_family:q.font_family||'Vazirmatn'};
         const {error:qe2}=await SB.from('questions').insert(fallback);
         if(qe2){toast('خطا در ذخیره سوال: '+qe2.message,'error');setLoading(false);return;}
       }
@@ -5845,7 +5953,7 @@ function Admin({user,tab,setTab,onLogout}){
     }
   };
 
-  const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1}]);
+  const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1,text_color:'#ffffff',font_size:18,font_family:'Vazirmatn'}]);
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
   const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
@@ -6092,9 +6200,9 @@ adminTool==='namefamily'?<NameFamilyGameHub user={user} onClose={()=>setAdminToo
                       <span className="text-xs font-bold text-indigo-300">سوال {i+1}</span>
                       <button onClick={()=>removeQuestion(i)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg"><Icon d={Icons.x} size={14}/></button>
                     </div>
-                    <textarea className="glass-input mb-2 text-sm" placeholder={q.q_type==='unanswered'?'متن توضیح / مطلب آموزشی را بنویسید':'متن سوال'} value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows={q.q_type==='unanswered'?'5':'2'}/>
+                    <textarea className="glass-input mb-2 text-sm" placeholder={q.q_type==='unanswered'?'متن توضیح / مطلب آموزشی را بنویسید':'متن سوال'} value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows={q.q_type==='unanswered'?'5':'2'} style={q.q_type==='unanswered'?{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}:undefined}/>
                     <div className="grid grid-cols-2 gap-2 mb-2">
-                      <input className="glass-input text-sm" type="number" step="0.25" placeholder="نمره سوال" value={q.score||1} onChange={e=>updateQuestion(i,'score',e.target.value)}/>
+                      {q.q_type!=='unanswered'?<input className="glass-input text-sm" type="number" step="0.25" min="0" placeholder="نمره سوال" value={q.score||1} onChange={e=>updateQuestion(i,'score',e.target.value)}/>:<div className="exam-no-score-chip">📖 بدون بارم؛ فقط برای مطالعه</div>}
                       <input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleImageUpload(e.target.files[0],i)}/>
                     </div>
                     {q.image_url&&<p className="text-[11px] text-emerald-400 mb-2">✓ عکس آپلود شد</p>}
@@ -6103,7 +6211,7 @@ adminTool==='namefamily'?<NameFamilyGameHub user={user} onClose={()=>setAdminToo
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='descriptive'?'bg-indigo-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','descriptive')}>تشریحی</button>
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='unanswered'?'bg-emerald-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','unanswered')}>📖 بی‌پاسخ</button>
                     </div>
-                    {q.q_type==='unanswered'&&<div className="exam-unanswered-admin-box"><div className="exam-unanswered-admin-head"><span>📖</span><div><b>بخش بی‌پاسخ</b><small>دانش‌آموز فقط متن را مطالعه می‌کند و بعد از تأیید دیگر نمی‌تواند به این بخش برگردد.</small></div></div><label className="exam-unanswered-upload"><span>🖼️ {q.image_url?'تغییر تصویر':'افزودن تصویر (اختیاری)'}</span><input type="file" accept="image/*" onChange={e=>handleImageUpload(e.target.files[0],i)}/></label>{q.image_url&&<img className="exam-unanswered-preview" src={q.image_url} alt="تصویر بخش بی‌پاسخ"/>}</div>}
+                    {q.q_type==='unanswered'&&<div className="exam-unanswered-admin-box"><div className="exam-unanswered-admin-head"><span>📖</span><div><b>بخش بی‌پاسخ</b><small>این بخش فقط برای مطالعه است و هیچ بارمی ندارد.</small></div></div><div className="exam-text-editor"><div className="exam-text-editor-title"><span>🎨</span><b>قالب‌بندی متن، مثل Word</b></div><div className="exam-text-editor-grid"><label><span>رنگ متن</span><div className="exam-color-control"><input type="color" value={q.text_color||'#ffffff'} onChange={e=>updateQuestion(i,'text_color',e.target.value)}/><code>{q.text_color||'#ffffff'}</code></div></label><label><span>اندازه متن</span><div className="exam-size-control"><input type="range" min="12" max="48" step="1" value={Math.max(12,Math.min(48,parseInt(q.font_size)||18))} onChange={e=>updateQuestion(i,'font_size',e.target.value)}/><b>{Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px</b></div></label><label><span>فونت متن</span><select value={q.font_family||'Vazirmatn'} onChange={e=>updateQuestion(i,'font_family',e.target.value)}><option value="Vazirmatn">Vazirmatn</option><option value="Tahoma">Tahoma</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="monospace">Monospace</option></select></label></div><div className="exam-text-editor-preview" style={{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}}>{q.q_text||'پیش‌نمایش متن اینجا نمایش داده می‌شود...'}</div></div><label className="exam-unanswered-upload"><span>🖼️ {q.image_url?'تغییر تصویر':'افزودن تصویر (اختیاری)'}</span><input type="file" accept="image/*" onChange={e=>handleImageUpload(e.target.files[0],i)}/></label>{q.image_url&&<img className="exam-unanswered-preview" src={q.image_url} alt="تصویر بخش بی‌پاسخ"/>}</div>}
                     {q.q_type==='test'&&(<div className="space-y-3">{['a','b','c','d'].map(o=>(<div key={o} className="option-image-box"><input className="glass-input text-sm mb-2" placeholder={`متن گزینه ${o.toUpperCase()} (اختیاری)`} value={q[`opt_${o}`]||''} onChange={e=>updateQuestion(i,`opt_${o}`,e.target.value)}/><label className="text-[10px] text-white/45 block mb-1">عکس گزینه {o.toUpperCase()}</label><input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleOptionImageUpload(e.target.files[0],i,o)}/>{q[`opt_${o}_image`]&&<img src={q[`opt_${o}_image`]} alt=""/>}</div>))}<select className="glass-input text-sm" value={q.correct_opt||''} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}><option value="">پاسخ صحیح (اختیاری)</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select><button onClick={addQuestion} className="btn-glass btn-sm">＋ افزودن سوال بعدی</button></div>)}
                   </div>
                 ))}
@@ -8511,7 +8619,7 @@ function Student({user,tab,setTab,onLogout}){
           status='graded';
         }
       }
-      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:parseFloat(q.score)||1,status,graded_at:status==='graded'?new Date().toISOString():null});
+      await SB.from('answers').insert({exam_id:activeExam.id,student_id:user.id,question_id:q.id,student_answer:ans,score,max_score:q.q_type==='unanswered'?0:(parseFloat(q.score)||1),status,graded_at:status==='graded'?new Date().toISOString():null});
     }
     toast('✅ پاسخ‌ها ثبت شد!','success');
     setActiveExam(null);
@@ -8581,7 +8689,7 @@ function Student({user,tab,setTab,onLogout}){
     if(examAnswers.length===0)return null;
     const totalScore=examAnswers.reduce((s,a)=>s+parseFloat(a.score||0),0);
     const maxScore=examAnswers.reduce((s,a)=>s+parseFloat(a.max_score||0),0);
-    const percentage=(totalScore/maxScore)*20;
+    const percentage=maxScore>0?(totalScore/maxScore)*20:0;
     return {totalScore,maxScore,percentage:percentage.toFixed(2)};
   };
 
@@ -8614,16 +8722,18 @@ function Student({user,tab,setTab,onLogout}){
     const progress=((currentQ+1)/activeExam.questions.length)*100;
     return(
       <div className="min-h-screen exam-immersive">
-        <div className="header">
-          <div className="flex justify-between items-center mb-3">
-            <div>
-              <h2 className="font-black text-lg gradient-text">{activeExam.title}</h2>
-              <p className="text-[11px] text-white/40 mt-1">سوال {currentQ+1} از {activeExam.questions.length}</p>
+        <div className="header exam-topbar">
+          <div className="exam-topbar-main">
+            <div className="exam-title-block">
+              <span className="exam-top-kicker">TADBIR • EXAM SESSION</span>
+              <h2>{activeExam.title}</h2>
+              <p><span>سوال {currentQ+1}</span><i>•</i><span>{activeExam.questions.length} سوال</span></p>
             </div>
             <CircularTimerGlow timeLeft={timeLeft} totalTime={totalTime}/>
           </div>
-          <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500" style={{width:`${progress}%`}}></div>
+          <div className="exam-progress-meta"><span>پیشرفت آزمون</span><b>{Math.round(progress)}٪</b></div>
+          <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden exam-progress-track">
+            <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500 exam-progress-fill" style={{width:`${progress}%`}}></div>
           </div>
         </div>
         {timeLeft<300&&timeLeft>0&&<div className="bg-red-500/15 text-red-300 p-3 text-center text-sm font-bold animate-pulse border-b border-red-500/20">⚠️ کمتر از ۵ دقیقه!</div>}
@@ -8631,14 +8741,14 @@ function Student({user,tab,setTab,onLogout}){
           <div className="glass p-5 fade-in">
             <div className="flex justify-between items-center mb-3">
               <span className={`badge ${q?.q_type==='test'?'badge-new':q?.q_type==='unanswered'?'badge-info':'badge-approved'}`}>{q?.q_type==='test'?'📝 تستی':q?.q_type==='unanswered'?'📖 بی‌پاسخ':'✍️ تشریحی'}</span>
-              <span className="badge badge-new">⭐ {q?.score||1} نمره</span>
+              {q?.q_type!=='unanswered'&&<span className="badge badge-new">⭐ {q?.score||1} نمره</span>}
             </div>
             {q?.q_type!=='unanswered'&&q?.image_url&&<img src={q.image_url} alt="" className="w-full rounded-xl mb-4 max-h-48 object-contain bg-black/20 border border-white/5"/>}
             {q?.q_type!=='unanswered'&&<p className="mb-5 font-bold leading-relaxed text-lg">{q?.q_text}</p>}
             {q?.q_type==='unanswered'?(
               <div className="exam-info-question">
-                <div className="exam-info-reading-head"><span>📖</span><div><b>این بخش فقط برای مطالعه است</b><small>متن را با دقت کامل بخوانید؛ پس از تأیید امکان بازگشت به این متن وجود ندارد.</small></div></div>
-                <div className="exam-info-reading-body">{q?.image_url&&<img src={q.image_url} alt=""/>}<div className="exam-info-text">{q?.q_text}</div></div>
+                <div className="exam-info-reading-head"><span>📖</span><div><b>متن را با دقت کامل بخوانید</b><small>متن را با دقت کامل بخوانید و سپس به سوالات پاسخ دهید.</small></div></div>
+                <div className="exam-info-reading-body">{q?.image_url&&<img src={q.image_url} alt=""/>}<div className="exam-info-text" style={{color:q?.text_color||"#ffffff",fontSize:`${Math.max(12,Math.min(48,parseInt(q?.font_size)||18))}px`,fontFamily:q?.font_family||"Vazirmatn"}}>{q?.q_text}</div></div>
                 <button type="button" className="exam-info-understand" onClick={requestInfoConfirm} disabled={lockedInfoQuestions.has(String(q?.id))}>
                   <span>✓</span><strong>متن را کامل مطالعه کردم</strong><small>بعد از تأیید، دیگر نمی‌توانی به این متن برگردی</small>
                 </button>
@@ -8698,11 +8808,11 @@ function Student({user,tab,setTab,onLogout}){
           <div className="exam-info-confirm-modal" onClick={e=>e.stopPropagation()}>
             <div className="exam-info-confirm-icon">⚠️</div>
             <span className="exam-hint-kicker">TADBIR • READ & CONFIRM</span>
-            <h3>قبل از ادامه، یک نکته مهم</h3>
-            <p>اگر روی «متن را کامل مطالعه کردم» بزنید، این متن برای شما تأیید می‌شود و <b>دیگر امکان برگشتن و خواندن دوباره آن وجود ندارد.</b></p>
+            <h3>تأیید مطالعه متن</h3>
+            <p>دانش آموز گرامی، پس از اینکه گزینه تأیید را انتخاب کنید، <b>دیگر امکان برگشت به متن وجود نخواهد داشت.</b></p>
             <div className="exam-info-confirm-actions">
               <button type="button" className="btn-glass bg-white/5 flex-1" onClick={()=>setInfoConfirmOpen(false)}>↩️ دوباره می‌خواهم متن را مطالعه کنم</button>
-              <button type="button" className="btn-glass btn-glass-success flex-1" onClick={confirmInfoRead}>✓ متن را بطور کامل مطالعه کردم</button>
+              <button type="button" className="btn-glass btn-glass-success flex-1" onClick={confirmInfoRead}>✓ متن را کامل مطالعه کردم</button>
             </div>
           </div>
         </div>}
