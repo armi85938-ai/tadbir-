@@ -5650,6 +5650,43 @@ const readTadbirCompetitionImage=(file,maxSide=1500,quality=.78)=>new Promise((r
   reader.readAsDataURL(file);
 });
 
+const sanitizeExamRichTextGlobal=(html)=>{
+  const raw=String(html||'');
+  if(!raw)return '';
+  try{
+    const doc=new DOMParser().parseFromString(raw,'text/html');
+    const allowed=new Set(['B','STRONG','I','EM','U','S','BR','SPAN','DIV','P','FONT']);
+    const clean=(node)=>{
+      [...node.children].forEach(el=>{
+        if(!allowed.has(el.tagName)){
+          const frag=document.createDocumentFragment();
+          while(el.firstChild)frag.appendChild(el.firstChild);
+          el.replaceWith(frag);
+          return;
+        }
+        [...el.attributes].forEach(a=>{
+          const name=a.name.toLowerCase();
+          const val=String(a.value||'');
+          if(name==='style'){
+            const safe=[];
+            val.split(';').forEach(part=>{
+              const [k,v]=part.split(':').map(x=>String(x||'').trim());
+              if((k==='color'||k==='font-weight'||k==='font-style'||k==='text-decoration') && v && !/[<>]/.test(v))safe.push(`${k}:${v}`);
+            });
+            if(safe.length)el.setAttribute('style',safe.join(';'));
+            else el.removeAttribute('style');
+          }else if(name==='color' && /^#[0-9a-f]{3,8}$/i.test(val)){
+            el.setAttribute('color',val);
+          }else el.removeAttribute(a.name);
+        });
+        clean(el);
+      });
+    };
+    clean(doc.body);
+    return doc.body.innerHTML;
+  }catch(e){return raw.replace(/<[^>]*>/g,'');}
+};
+
 function Admin({user,tab,setTab,onLogout}){
   // Keep the manager/admin panel isolated from student-only state and tolerate
   // legacy role values without breaking the whole application.
@@ -5953,10 +5990,65 @@ function Admin({user,tab,setTab,onLogout}){
     }
   };
 
+  const sanitizeExamRichText=(html)=>{
+    const raw=String(html||'');
+    if(!raw)return '';
+    try{
+      const doc=new DOMParser().parseFromString(raw,'text/html');
+      const allowed=new Set(['B','STRONG','I','EM','U','S','BR','SPAN','DIV','P','FONT']);
+      const clean=(node)=>{
+        [...node.children].forEach(el=>{
+          if(!allowed.has(el.tagName)){
+            const frag=document.createDocumentFragment();
+            while(el.firstChild)frag.appendChild(el.firstChild);
+            el.replaceWith(frag);
+            return;
+          }
+          [...el.attributes].forEach(a=>{
+            const name=a.name.toLowerCase();
+            const val=String(a.value||'');
+            if(name==='style'){
+              const safe=[];
+              val.split(';').forEach(part=>{
+                const [k,v]=part.split(':').map(x=>String(x||'').trim());
+                if((k==='color'||k==='font-weight'||k==='font-style'||k==='text-decoration') && v && !/[<>]/.test(v))safe.push(`${k}:${v}`);
+              });
+              if(safe.length)el.setAttribute('style',safe.join(';'));
+              else el.removeAttribute('style');
+            }else if(name==='color' && /^#[0-9a-f]{3,8}$/i.test(val)){
+              el.setAttribute('color',val);
+            }else el.removeAttribute(a.name);
+          });
+          clean(el);
+        });
+      };
+      clean(doc.body);
+      return doc.body.innerHTML;
+    }catch(e){return raw.replace(/<[^>]*>/g,'');}
+  };
+  const execExamTextCommand=(i,command,value=null)=>{
+    try{
+      document.execCommand(command,false,value);
+      const editor=document.querySelector(`[data-exam-rich-editor="${i}"]`);
+      if(editor)updateQuestion(i,'q_text',sanitizeExamRichText(editor.innerHTML));
+    }catch(e){console.warn('exam text format:',e)}
+  };
   const addQuestion=()=>setQuestions([...questions,{q_text:'',opt_a:'',opt_b:'',opt_c:'',opt_d:'',opt_a_image:'',opt_b_image:'',opt_c_image:'',opt_d_image:'',correct_opt:'',q_type:'test',image_url:'',score:1,text_color:'#ffffff',font_size:18,font_family:'Vazirmatn'}]);
   const updateQuestion=(i,f,v)=>{const n=[...questions];n[i][f]=v;setQuestions(n);};
   const removeQuestion=(i)=>setQuestions(questions.filter((_,x)=>x!==i));
-  const deleteExam=async(id)=>{if(confirm('حذف آزمون؟')){await SB.from('exams').delete().eq('id',id);loadAll();toast('آزمون حذف شد','success');}};
+  const deleteExam=async(id)=>{
+    if(!id)return;
+    if(!window.confirm('⚠️ این آزمون و تمام پاسخ‌ها و اطلاعات وابسته به آن حذف شود؟\n\nاین عملیات قابل بازگشت نیست.'))return;
+    setLoading(true);
+    try{
+      const {data,error}=await SB.rpc('tadbir_admin_delete_exam',{p_admin_id:String(user.id),p_exam_id:String(id)});
+      if(error)throw error;
+      if(data?.ok===false)throw new Error(data.reason||'DELETE_EXAM_FAILED');
+      await loadAll();
+      toast('آزمون و اطلاعات وابسته با موفقیت حذف شد','success');
+    }catch(e){console.error('delete exam:',e);toast('حذف آزمون انجام نشد: '+(e?.message||'خطای نامشخص'),'error');}
+    finally{setLoading(false)}
+  };
   const changePassword=(student)=>{setPasswordStudent(student);setNewStudentPassword('');};
   const saveStudentPassword=async()=>{if(!passwordStudent)return;const pw=newStudentPassword.trim();if(pw.length<4){toast('رمز جدید باید حداقل ۴ کاراکتر باشد','error');return;}setPasswordSaving(true);const {error}=await SB.from('users').update({password:pw}).eq('id',passwordStudent.id).eq('role','student');setPasswordSaving(false);if(error){toast('خطا در تغییر رمز: '+error.message,'error');return;}setStudents(prev=>prev.map(x=>x.id===passwordStudent.id?{...x,password:pw}:x));setPasswordStudent(null);setNewStudentPassword('');toast('✅ رمز دانش‌آموز تغییر کرد','success');};
   const createStudent=async()=>{
@@ -6200,7 +6292,7 @@ adminTool==='namefamily'?<NameFamilyGameHub user={user} onClose={()=>setAdminToo
                       <span className="text-xs font-bold text-indigo-300">سوال {i+1}</span>
                       <button onClick={()=>removeQuestion(i)} className="p-1.5 bg-red-500/15 text-red-400 rounded-lg"><Icon d={Icons.x} size={14}/></button>
                     </div>
-                    <textarea className="glass-input mb-2 text-sm" placeholder={q.q_type==='unanswered'?'متن توضیح / مطلب آموزشی را بنویسید':'متن سوال'} value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows={q.q_type==='unanswered'?'5':'2'} style={q.q_type==='unanswered'?{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}:undefined}/>
+                    {q.q_type==='unanswered'?<div className="exam-rich-editor-wrap"><div className="exam-rich-toolbar"><button type="button" title="پررنگ" onMouseDown={e=>e.preventDefault()} onClick={()=>execExamTextCommand(i,'bold')}><b>B</b></button><button type="button" title="کج" onMouseDown={e=>e.preventDefault()} onClick={()=>execExamTextCommand(i,'italic')}><i>I</i></button><button type="button" title="زیرخط" onMouseDown={e=>e.preventDefault()} onClick={()=>execExamTextCommand(i,'underline')}><u>U</u></button><label title="رنگ متن"><span>🎨</span><input type="color" defaultValue={q.text_color||'#ffffff'} onChange={e=>execExamTextCommand(i,'foreColor',e.target.value)}/></label><button type="button" title="پاک کردن قالب‌بندی" onMouseDown={e=>e.preventDefault()} onClick={()=>execExamTextCommand(i,'removeFormat')}>Tx</button></div><div data-exam-rich-editor={i} className="exam-rich-editor" contentEditable suppressContentEditableWarning dangerouslySetInnerHTML={{__html:sanitizeExamRichText(q.q_text)}} onInput={e=>updateQuestion(i,'q_text',sanitizeExamRichText(e.currentTarget.innerHTML))} style={{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}}></div><small className="exam-rich-editor-hint">متن را انتخاب کن و فقط همان قسمت را پررنگ، کج، زیرخط‌دار یا رنگی کن.</small></div>:<textarea className="glass-input mb-2 text-sm" placeholder="متن سوال" value={q.q_text} onChange={e=>updateQuestion(i,'q_text',e.target.value)} rows="2"/>}
                     <div className="grid grid-cols-2 gap-2 mb-2">
                       {q.q_type!=='unanswered'?<input className="glass-input text-sm" type="number" step="0.25" min="0" placeholder="نمره سوال" value={q.score||1} onChange={e=>updateQuestion(i,'score',e.target.value)}/>:<div className="exam-no-score-chip">📖 بدون بارم؛ فقط برای مطالعه</div>}
                       <input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleImageUpload(e.target.files[0],i)}/>
@@ -6211,7 +6303,7 @@ adminTool==='namefamily'?<NameFamilyGameHub user={user} onClose={()=>setAdminToo
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='descriptive'?'bg-indigo-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','descriptive')}>تشریحی</button>
                       <button className={`flex-1 py-2 rounded-lg text-xs font-bold ${q.q_type==='unanswered'?'bg-emerald-600':'bg-white/5'}`} onClick={()=>updateQuestion(i,'q_type','unanswered')}>📖 بی‌پاسخ</button>
                     </div>
-                    {q.q_type==='unanswered'&&<div className="exam-unanswered-admin-box"><div className="exam-unanswered-admin-head"><span>📖</span><div><b>بخش بی‌پاسخ</b><small>این بخش فقط برای مطالعه است و هیچ بارمی ندارد.</small></div></div><div className="exam-text-editor"><div className="exam-text-editor-title"><span>🎨</span><b>قالب‌بندی متن، مثل Word</b></div><div className="exam-text-editor-grid"><label><span>رنگ متن</span><div className="exam-color-control"><input type="color" value={q.text_color||'#ffffff'} onChange={e=>updateQuestion(i,'text_color',e.target.value)}/><code>{q.text_color||'#ffffff'}</code></div></label><label><span>اندازه متن</span><div className="exam-size-control"><input type="range" min="12" max="48" step="1" value={Math.max(12,Math.min(48,parseInt(q.font_size)||18))} onChange={e=>updateQuestion(i,'font_size',e.target.value)}/><b>{Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px</b></div></label><label><span>فونت متن</span><select value={q.font_family||'Vazirmatn'} onChange={e=>updateQuestion(i,'font_family',e.target.value)}><option value="Vazirmatn">Vazirmatn</option><option value="Tahoma">Tahoma</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="monospace">Monospace</option></select></label></div><div className="exam-text-editor-preview" style={{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}}>{q.q_text||'پیش‌نمایش متن اینجا نمایش داده می‌شود...'}</div></div><label className="exam-unanswered-upload"><span>🖼️ {q.image_url?'تغییر تصویر':'افزودن تصویر (اختیاری)'}</span><input type="file" accept="image/*" onChange={e=>handleImageUpload(e.target.files[0],i)}/></label>{q.image_url&&<img className="exam-unanswered-preview" src={q.image_url} alt="تصویر بخش بی‌پاسخ"/>}</div>}
+                    {q.q_type==='unanswered'&&<div className="exam-unanswered-admin-box"><div className="exam-unanswered-admin-head"><span>📖</span><div><b>بخش بی‌پاسخ</b><small>این بخش فقط برای مطالعه است و هیچ بارمی ندارد.</small></div></div><div className="exam-text-editor"><div className="exam-text-editor-title"><span>🎨</span><b>قالب‌بندی متن، مثل Word</b></div><div className="exam-text-editor-grid"><label><span>رنگ متن</span><div className="exam-color-control"><input type="color" value={q.text_color||'#ffffff'} onChange={e=>updateQuestion(i,'text_color',e.target.value)}/><code>{q.text_color||'#ffffff'}</code></div></label><label><span>اندازه متن</span><div className="exam-size-control"><input type="range" min="12" max="48" step="1" value={Math.max(12,Math.min(48,parseInt(q.font_size)||18))} onChange={e=>updateQuestion(i,'font_size',e.target.value)}/><b>{Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px</b></div></label><label><span>فونت متن</span><select value={q.font_family||'Vazirmatn'} onChange={e=>updateQuestion(i,'font_family',e.target.value)}><option value="Vazirmatn">Vazirmatn</option><option value="Tahoma">Tahoma</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="monospace">Monospace</option></select></label></div><div className="exam-text-editor-preview" style={{color:q.text_color||'#ffffff',fontSize:`${Math.max(12,Math.min(48,parseInt(q.font_size)||18))}px`,fontFamily:q.font_family||'Vazirmatn'}} dangerouslySetInnerHTML={{__html:sanitizeExamRichText(q.q_text||'پیش‌نمایش متن اینجا نمایش داده می‌شود...')}}/></div><label className="exam-unanswered-upload"><span>🖼️ {q.image_url?'تغییر تصویر':'افزودن تصویر (اختیاری)'}</span><input type="file" accept="image/*" onChange={e=>handleImageUpload(e.target.files[0],i)}/></label>{q.image_url&&<img className="exam-unanswered-preview" src={q.image_url} alt="تصویر بخش بی‌پاسخ"/>}</div>}
                     {q.q_type==='test'&&(<div className="space-y-3">{['a','b','c','d'].map(o=>(<div key={o} className="option-image-box"><input className="glass-input text-sm mb-2" placeholder={`متن گزینه ${o.toUpperCase()} (اختیاری)`} value={q[`opt_${o}`]||''} onChange={e=>updateQuestion(i,`opt_${o}`,e.target.value)}/><label className="text-[10px] text-white/45 block mb-1">عکس گزینه {o.toUpperCase()}</label><input type="file" accept="image/*" className="glass-input text-xs py-2" onChange={e=>handleOptionImageUpload(e.target.files[0],i,o)}/>{q[`opt_${o}_image`]&&<img src={q[`opt_${o}_image`]} alt=""/>}</div>))}<select className="glass-input text-sm" value={q.correct_opt||''} onChange={e=>updateQuestion(i,'correct_opt',e.target.value)}><option value="">پاسخ صحیح (اختیاری)</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select><button onClick={addQuestion} className="btn-glass btn-sm">＋ افزودن سوال بعدی</button></div>)}
                   </div>
                 ))}
@@ -7427,6 +7519,19 @@ function NameFamilyGameHub({user,onClose}){
     }catch(e){console.error(e);toastLocal('ثبت نتیجه پیشنهاد انجام نشد.')}
     finally{setNfDictionaryBusy(false)}
   };
+  const acceptAllNfPendingSuggestions=async()=>{
+    if(!nfPendingSuggestions.length){toastLocal('پیشنهاد در انتظاری وجود ندارد.');return;}
+    if(!window.confirm(`همه ${nfPendingSuggestions.length} پیشنهاد در انتظار پذیرفته شوند؟`))return;
+    setNfDictionaryBusy(true);
+    try{
+      const {data,error}=await SB_NF.rpc('tadbir_nf_accept_all_suggestions',{p_admin_id:String(user.id)});
+      if(error)throw error;
+      if(data?.ok===false)throw new Error(data.reason||'ACCEPT_ALL_FAILED');
+      toastLocal(`همه پیشنهادها پذیرفته شدند ✓ (${Number(data?.approved_count||0)} کلمه)`);
+      await Promise.all([loadNfPendingSuggestions(),loadNfDictionary()]);
+    }catch(e){console.error('accept all name-family suggestions:',e);toastLocal('پذیرش همه پیشنهادها انجام نشد.');}
+    finally{setNfDictionaryBusy(false)}
+  };
   const deleteNfPendingSuggestion=async(id)=>{
     if(!window.confirm('این پیشنهاد برای همیشه حذف شود؟'))return;
     setNfDictionaryBusy(true);
@@ -7822,8 +7927,8 @@ function NameFamilyGameHub({user,onClose}){
         {acceptedOutgoing.length>0&&<section className="nf-panel nf-accepted-panel"><div className="nf-panel-title"><span>✅</span><div><b>بازیکن‌های پذیرفته‌شده</b><small>هر وقت آماده بودی، از همین‌جا وارد اتاق شو و بازی را شروع کن</small></div><strong>{acceptedOutgoing.length}</strong></div>{acceptedOutgoing.map(r=><div className="nf-accepted-room" key={r.id}>{nfAvatar(r.to_user_data,'nf-user-orb')}<div className="nf-request-copy"><b>{nfDisplayName(r.to_user_data)}</b><small>درخواست را قبول کرده ✓</small></div><button className="nf-accept" onClick={()=>openRoom(r.room_id)} disabled={busy}>ورود به اتاق</button></div>)}</section>}
         <section className="nf-panel nf-invite-panel"><div className="nf-panel-title"><span>👥</span><div><b>بازی خودتو بساز!</b><small>بازیکن‌ها را انتخاب کن و درخواست بازی بفرست</small></div><button type="button" className="nf-refresh-users" onClick={()=>loadLobby({refreshUsers:true})} title="تازه‌سازی کاربران">↻</button></div><div className="nf-selected-row">{selectedIds.length===0?<span>هنوز بازیکنی انتخاب نشده</span>:selectedIds.map(id=>{const u=users.find(x=>String(x.id)===String(id));return <div className="nf-chip" key={id}>{u?.full_name||u?.username}<button onClick={()=>setSelectedIds(v=>v.filter(x=>String(x)!==String(id)))}>×</button></div>})}<span className="nf-count">{selectedIds.length+1}/3</span></div>{usersLoading?<div className="nf-users-empty">در حال دریافت فهرست کاربران بازی...</div>:users.length===0?<div className="nf-users-empty"><b>کاربری برای انتخاب پیدا نشد.</b><small>دکمه ↻ را بزن تا فهرست دوباره دریافت شود.</small></div>:<div className="nf-user-grid">{users.map(u=>{const selected=selectedIds.some(id=>String(id)===String(u.id));const full=selectedIds.length>=2&&!selected;const isAdmin=String(u.role||'').toLowerCase().includes('admin')||String(u.role||'').includes('مدیر')||String(u.role||'').toLowerCase().includes('manager');return <button type="button" key={u.id} disabled={full} onClick={()=>setSelectedIds(v=>selected?v.filter(x=>String(x)!==String(u.id)):[...v,String(u.id)])} className={`nf-user-card ${selected?'selected':''}`}>{nfAvatar(u)}<div className="nf-user-card-copy"><b>{nfDisplayName(u)}</b><small>@{u.username} • {isAdmin?'مدیر':'بازیکن'}</small></div><i>{selected?'✓':'+'}</i></button>})}</div>}<button className="nf-start-invite" onClick={sendInvite} disabled={busy||selectedIds.length<1}>{busy?'در حال ارسال...':'📩 ارسال درخواست'}</button></section>
         {isAdmin&&<section className="nf-panel nf-admin-words-panel" style={{marginTop:12}}><div className="nf-panel-title"><span>📚</span><div><b>مدیریت اسم فامیل و دامنه لغات</b><small>همه کلمات، پیشنهادهای دانش‌آموزان، افزودن و حذف</small></div><button type="button" className="nf-refresh-users" onClick={()=>{loadNfDictionary();loadNfPendingSuggestions()}} title="تازه‌سازی فرهنگ و پیشنهادها">↻</button></div>
-          <div className="nf-admin-pending"><div className="nf-admin-subtitle"><b>درخواست‌های دانش‌آموزان</b><span>{nfPendingSuggestions.length} مورد در انتظار</span></div>{nfPendingLoading?<div className="nf-users-empty">در حال دریافت پیشنهادها...</div>:nfPendingSuggestions.length===0?<div className="nf-users-empty">درخواستی برای بررسی وجود ندارد.</div>:nfPendingSuggestions.map(x=>{const cat=nfCategoryMeta(x.category_label||x.category);return <div className="nf-admin-suggestion-row nf-admin-suggestion-rich" key={x.id}><div className="nf-admin-suggestion-main"><div className="nf-admin-word-head"><b>{x.word}</b><span className="nf-admin-category-pill">{cat.icon} دسته: {cat.label}</span></div><small>دانش‌آموز: {x.student_name||'دانش‌آموز'} {x.student_username?'• @'+x.student_username:''}</small><small>شناسه دسته: {cat.key}</small><small>{x.created_at?new Date(x.created_at).toLocaleString('fa-IR'):''}</small></div><div className="nf-admin-suggestion-actions"><button onClick={()=>reviewNfPendingSuggestion(x.id,'approve')} disabled={nfDictionaryBusy}>✓ افزودن</button><button onClick={()=>reviewNfPendingSuggestion(x.id,'reject')} disabled={nfDictionaryBusy}>رد</button><button onClick={()=>deleteNfPendingSuggestion(x.id)} disabled={nfDictionaryBusy}>🗑</button></div></div>})}</div>
-          <div className="nf-admin-word-add"><select className="nf-suggestion-input" value={nfDictionaryCategory} onChange={e=>setNfDictionaryCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={nfDictionaryWord} onChange={e=>setNfDictionaryWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')addNfDictionaryWord()}} placeholder="کلمه جدید را وارد کن"/><button className="nf-suggestion-submit" onClick={addNfDictionaryWord} disabled={nfDictionaryBusy}>{nfDictionaryBusy?'در حال ذخیره...':'➕ افزودن به دامنه لغات'}</button></div>
+          <div className="nf-admin-pending"><div className="nf-admin-subtitle nf-admin-pending-toolbar"><div><b>درخواست‌های دانش‌آموزان</b><span>{nfPendingSuggestions.length} مورد در انتظار</span></div><button type="button" className="nf-accept-all-suggestions" onClick={acceptAllNfPendingSuggestions} disabled={nfDictionaryBusy||nfPendingLoading||nfPendingSuggestions.length===0}>✓ پذیرش همه</button></div>{nfPendingLoading?<div className="nf-users-empty">در حال دریافت پیشنهادها...</div>:nfPendingSuggestions.length===0?<div className="nf-users-empty">درخواستی برای بررسی وجود ندارد.</div>:nfPendingSuggestions.map(x=>{const cat=nfCategoryMeta(x.category_label||x.category);return <div className="nf-admin-suggestion-row nf-admin-suggestion-rich" key={x.id}><div className="nf-admin-suggestion-main"><div className="nf-admin-word-head"><b>{x.word}</b><span className="nf-admin-category-pill">{cat.icon} دسته: {cat.label}</span></div><small>دانش‌آموز: {x.student_name||'دانش‌آموز'} {x.student_username?'• @'+x.student_username:''}</small><small>شناسه دسته: {cat.key}</small><small>{x.created_at?new Date(x.created_at).toLocaleString('fa-IR'):''}</small></div><div className="nf-admin-suggestion-actions"><button onClick={()=>reviewNfPendingSuggestion(x.id,'approve')} disabled={nfDictionaryBusy}>✓ افزودن</button><button onClick={()=>reviewNfPendingSuggestion(x.id,'reject')} disabled={nfDictionaryBusy}>رد</button><button onClick={()=>deleteNfPendingSuggestion(x.id)} disabled={nfDictionaryBusy}>🗑</button></div></div>})}</div>
+          <div className="nf-admin-dictionary-stats"><div><span>📚</span><b>تعداد کل لغات</b><strong>{nfDictionary.length.toLocaleString('fa-IR')}</strong></div><small>تمام لغات فعال فرهنگ بازی</small></div><div className="nf-admin-word-add"><select className="nf-suggestion-input" value={nfDictionaryCategory} onChange={e=>setNfDictionaryCategory(e.target.value)}>{FIELDS.map(([key,label,icon])=><option key={key} value={key}>{icon} {label}</option>)}</select><input className="nf-suggestion-input" value={nfDictionaryWord} onChange={e=>setNfDictionaryWord(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')addNfDictionaryWord()}} placeholder="کلمه جدید را وارد کن"/><button className="nf-suggestion-submit" onClick={addNfDictionaryWord} disabled={nfDictionaryBusy}>{nfDictionaryBusy?'در حال ذخیره...':'➕ افزودن به دامنه لغات'}</button></div>
           <input className="nf-suggestion-input nf-admin-word-search" value={nfDictionarySearch} onChange={e=>setNfDictionarySearch(e.target.value)} placeholder="جست‌وجو در همه کلمات..."/>
           {nfDictionaryLoading?<div className="nf-users-empty">در حال دریافت دامنه لغات...</div>:<div className="nf-admin-word-list">{(()=>{const q=nfDictionarySearch.trim();const rows=(nfDictionary||[]).filter(x=>!q||String(x.word||'').includes(q)||String(x.category_label||'').includes(q));return rows.length?rows.map(x=>{const cat=nfCategoryMeta(x.category_label||x.category);return <div className="nf-admin-word-row nf-admin-word-rich" key={x.id}><div className="nf-admin-word-main"><div className="nf-admin-word-head"><b>{x.word}</b><span className="nf-admin-category-pill">{cat.icon} دسته: {cat.label}</span></div><small>نوع دسته: {cat.label}</small><small>شناسه دسته: {cat.key}</small></div><button type="button" onClick={()=>deleteNfDictionaryWord(x.id)} disabled={nfDictionaryBusy} title="حذف کلمه">🗑</button></div>;}):<div className="nf-users-empty">کلمه‌ای مطابق جست‌وجو پیدا نشد.</div>})()}</div>}
         </section>}
@@ -8748,7 +8853,7 @@ function Student({user,tab,setTab,onLogout}){
             {q?.q_type==='unanswered'?(
               <div className="exam-info-question">
                 <div className="exam-info-reading-head"><span>📖</span><div><b>متن را با دقت کامل بخوانید</b><small>متن را با دقت کامل بخوانید و سپس به سوالات پاسخ دهید.</small></div></div>
-                <div className="exam-info-reading-body">{q?.image_url&&<img src={q.image_url} alt=""/>}<div className="exam-info-text" style={{color:q?.text_color||"#ffffff",fontSize:`${Math.max(12,Math.min(48,parseInt(q?.font_size)||18))}px`,fontFamily:q?.font_family||"Vazirmatn"}}>{q?.q_text}</div></div>
+                <div className="exam-info-reading-body">{q?.image_url&&<img src={q.image_url} alt=""/>}<div className="exam-info-text" style={{color:q?.text_color||"#ffffff",fontSize:`${Math.max(12,Math.min(48,parseInt(q?.font_size)||18))}px`,fontFamily:q?.font_family||"Vazirmatn"}} dangerouslySetInnerHTML={{__html:sanitizeExamRichTextGlobal(q?.q_text)}}/></div>
                 <button type="button" className="exam-info-understand" onClick={requestInfoConfirm} disabled={lockedInfoQuestions.has(String(q?.id))}>
                   <span>✓</span><strong>متن را کامل مطالعه کردم</strong><small>بعد از تأیید، دیگر نمی‌توانی به این متن برگردی</small>
                 </button>
@@ -11732,7 +11837,24 @@ body.nf-name-family-open [class*="floating-bottom"]{
 .exam-info-understand:hover{transform:translateY(-2px)}.exam-info-understand span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);font-weight:1000}.exam-info-understand strong{font-size:12px}.exam-info-understand small{width:100%;font-size:8px;color:rgba(255,255,255,.72)}
 .exam-info-confirm-modal{width:min(92vw,520px);padding:22px;border-radius:28px;background:linear-gradient(145deg,rgba(24,31,47,.99),rgba(10,18,27,.99));border:1px solid rgba(110,231,183,.20);box-shadow:0 35px 100px rgba(0,0,0,.58);text-align:center}
 .exam-info-confirm-icon{width:58px;height:58px;margin:0 auto 10px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(16,185,129,.13));border:1px solid rgba(245,158,11,.20);font-size:28px}.exam-info-confirm-modal h3{font-size:20px;font-weight:1000;margin-top:8px}.exam-info-confirm-modal p{font-size:11px;line-height:2;color:rgba(255,255,255,.56);margin:9px 0 17px}.exam-info-confirm-modal p b{color:#fcd34d}.exam-info-confirm-actions{display:flex;gap:9px}.exam-info-confirm-actions button{min-height:58px;font-size:9px;line-height:1.7}
-.exam-unanswered-admin-box{margin-top:10px;padding:11px;border-radius:20px;background:linear-gradient(145deg,rgba(16,185,129,.08),rgba(59,130,246,.05));border:1px solid rgba(110,231,183,.16)}.exam-unanswered-upload{display:flex;align-items:center;justify-content:center;margin-top:10px;min-height:48px;border-radius:15px;border:1px dashed rgba(110,231,183,.28);background:rgba(255,255,255,.035);font-size:10px;font-weight:900;color:#a7f3d0;cursor:pointer}.exam-unanswered-upload input{display:none}.exam-unanswered-preview{display:block;width:100%;max-height:180px;object-fit:contain;border-radius:15px;margin-top:9px;background:rgba(0,0,0,.15)}
+.exam-unanswered-admin-box{margin-top:10px;padding:11px;border-radius:20px;background:linear-gradient(145deg,rgba(16,185,129,.08),rgba(59,130,246,.05));border:1px solid rgba(110,231,183,.16)}
+.exam-rich-editor-wrap{margin-top:8px;border:1px solid rgba(110,231,183,.16);border-radius:18px;overflow:hidden;background:rgba(0,0,0,.10)}
+.exam-rich-toolbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.035)}
+.exam-rich-toolbar button,.exam-rich-toolbar label{min-width:38px;height:36px;padding:0 9px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-weight:1000}
+.exam-rich-toolbar button:hover,.exam-rich-toolbar label:hover{background:rgba(99,102,241,.20);border-color:rgba(129,140,248,.35)}
+.exam-rich-toolbar label{gap:5px}.exam-rich-toolbar input[type=color]{width:24px;height:24px;padding:0;border:0;background:transparent;cursor:pointer}
+.exam-rich-editor{min-height:145px;padding:14px 15px;outline:none;line-height:2.05;white-space:pre-wrap;word-break:break-word;text-align:right;cursor:text}
+.exam-rich-editor:focus{box-shadow:inset 0 0 0 1px rgba(129,140,248,.24)}
+.exam-rich-editor:empty:before{content:'متن بی‌پاسخ را اینجا بنویسید...';color:rgba(255,255,255,.28);pointer-events:none}
+.exam-rich-editor-hint{display:block;padding:7px 12px 10px;color:rgba(255,255,255,.36);font-size:9px}
+.exam-text-editor-preview{white-space:pre-wrap;line-height:2.05;word-break:break-word;text-align:right}
+.nf-admin-pending-toolbar{align-items:center!important;gap:10px}.nf-admin-pending-toolbar>div{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:1}
+.nf-accept-all-suggestions{border:1px solid rgba(52,211,153,.28);background:linear-gradient(135deg,rgba(16,185,129,.20),rgba(14,165,233,.13));color:#a7f3d0;border-radius:12px;padding:9px 12px;font-size:10px;font-weight:1000;cursor:pointer;white-space:nowrap}
+.nf-accept-all-suggestions:disabled{opacity:.45;cursor:not-allowed}
+.nf-admin-dictionary-stats{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,rgba(99,102,241,.10),rgba(236,72,153,.07));border:1px solid rgba(129,140,248,.16)}
+.nf-admin-dictionary-stats>div{display:flex;align-items:center;gap:9px}.nf-admin-dictionary-stats>div span{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.06);font-size:17px}.nf-admin-dictionary-stats b{font-size:11px}.nf-admin-dictionary-stats strong{font-size:20px;color:#c4b5fd}.nf-admin-dictionary-stats small{font-size:9px;color:rgba(255,255,255,.38)}
+@media(max-width:600px){.nf-admin-pending-toolbar{align-items:stretch!important;flex-direction:column}.nf-admin-pending-toolbar>div{width:100%}.nf-accept-all-suggestions{width:100%}.nf-admin-dictionary-stats{align-items:flex-start;flex-direction:column}.exam-rich-toolbar{gap:5px}.exam-rich-toolbar button,.exam-rich-toolbar label{min-width:36px}}
+.exam-unanswered-upload{display:flex;align-items:center;justify-content:center;margin-top:10px;min-height:48px;border-radius:15px;border:1px dashed rgba(110,231,183,.28);background:rgba(255,255,255,.035);font-size:10px;font-weight:900;color:#a7f3d0;cursor:pointer}.exam-unanswered-upload input{display:none}.exam-unanswered-preview{display:block;width:100%;max-height:180px;object-fit:contain;border-radius:15px;margin-top:9px;background:rgba(0,0,0,.15)}
 .nf-game-finish{min-width:118px!important;padding:10px 15px!important;font-weight:1000!important;background:linear-gradient(135deg,rgba(239,68,68,.95),rgba(234,88,12,.92))!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:0 12px 28px rgba(239,68,68,.22)!important}
 @media(max-width:560px){.exam-info-confirm-actions{flex-direction:column}.exam-info-confirm-actions button{width:100%}.exam-info-text{font-size:14px}}
 </style>\n
