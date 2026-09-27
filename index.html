@@ -5703,6 +5703,11 @@ const sanitizeExamRichTextGlobal=(html)=>{
 };
 
 /* ===== Header name language toggle ===== */
+function tadbirSafeHeaderName(user){
+  const candidates=[user?.full_name,user?.username,user?.name].map(v=>String(v??'').trim()).filter(Boolean);
+  const bad=/^n\s*\/\s*$/i;
+  return candidates.find(v=>!bad.test(v))||'Tadbir';
+}
 function tadbirLatinName(value){
   const s=String(value||'').trim();
   if(!s)return 'Tadbir';
@@ -6165,7 +6170,7 @@ function Admin({user,tab,setTab,onLogout}){
       <div className="min-h-screen pb-24 student-exam-page">
       <div className="header flex justify-between items-center tadbir-profile-header">
         <button type="button" className={`tadbir-name-toggle ${headerNameEnglish?'is-latin':''}`} onClick={()=>setHeaderNameEnglish(v=>!v)} aria-label="تغییر زبان نام">
-          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(user.full_name):user.full_name}</span>
+          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(tadbirSafeHeaderName(user)):tadbirSafeHeaderName(user)}</span>
           <span className="tadbir-name-hint">{headerNameEnglish?'EN':'فا'}</span>
         </button>
         <div className="flex gap-2">
@@ -9004,7 +9009,7 @@ function Student({user,tab,setTab,onLogout}){
       <div className="min-h-screen pb-24">
       <div className="header flex justify-between items-center tadbir-profile-header">
         <button type="button" className={`tadbir-name-toggle ${headerNameEnglish?'is-latin':''}`} onClick={()=>setHeaderNameEnglish(v=>!v)} aria-label="تغییر زبان نام">
-          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(user.full_name):user.full_name}</span>
+          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(tadbirSafeHeaderName(user)):tadbirSafeHeaderName(user)}</span>
           <span className="tadbir-name-hint">{headerNameEnglish?'EN':'فا'}</span>
         </button>
         <div className="flex gap-2">
@@ -9490,6 +9495,13 @@ function Student({user,tab,setTab,onLogout}){
   );
 }
 
+function tadbirIsAdminRole(value){
+  const role=String(value??'').trim().toLowerCase().replace(/[\u200c\u200f\u202a-\u202e]/g,'').replace(/\s+/g,' ');
+  if(!role)return false;
+  return ['admin','manager','administrator','مدیر','مدیر سیستم','مدیریت','مدیر سامانه','مدیر مدرسه'].includes(role)
+    || role.includes('admin') || role.includes('manager') || role.includes('مدیر');
+}
+
 function App(){
   const [user,setUser]=useState(null);
   const [view,setView]=useState('login');
@@ -9497,7 +9509,7 @@ function App(){
   useEffect(()=>{if(view==='login')delete document.documentElement.dataset.tadbirTheme;},[view]);
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){try{const u=JSON.parse(s);setUser(u);const role=String(u.role||'').trim().toLowerCase();setView((role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
+    if(s){try{const u=JSON.parse(s);setUser(u);setView(tadbirIsAdminRole(u.role)?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
   },[]);
   useEffect(()=>{
     if(!user?.id){
@@ -9542,12 +9554,7 @@ function App(){
 
       setUser(account);
       sessionStorage.setItem('edu_user',JSON.stringify(account));
-      const role=String(account.role||'').trim().toLowerCase();
-      setView(
-        (role==='admin'||role==='manager'||role==='administrator'||role==='مدیر'||role==='مدیر سیستم')
-          ? 'admin'
-          : 'student'
-      );
+      setView(tadbirIsAdminRole(account.role)?'admin':'student');
       return true;
     }catch(error){
       console.error('Tadbir login exception:',error);
@@ -10446,6 +10453,9 @@ body.nf-name-family-open [class*="floating-bottom"]{
 @media(max-width:560px){.theme-grid{grid-template-columns:1fr!important}.nf-admin-detail-grid{grid-template-columns:1fr!important}.nf-admin-suggestion-row{flex-direction:column!important}.nf-admin-suggestion-actions{width:100%!important}.nf-admin-suggestion-actions button{flex:1!important}}
 </style>
 
+<style id="tcf-prerequisite-visual">
+.tcf-prereq-modal{position:absolute;inset:0;z-index:100050;display:grid;place-items:center;padding:18px;background:rgba(29,31,58,.28);backdrop-filter:blur(8px);animation:tcfPrereqFade .22s ease}.tcf-prereq-card{width:min(470px,calc(100% - 24px));border:1px solid #dfe2ff;border-radius:30px;padding:25px 20px 20px;text-align:center;background:radial-gradient(circle at 50% -10%,#f1efff 0,#fff 42%,#fafbff 100%);box-shadow:0 30px 90px rgba(45,49,95,.22),inset 0 1px #fff}.tcf-prereq-orb{width:72px;height:72px;margin:-4px auto 10px;border-radius:24px;display:grid;place-items:center;font-size:32px;background:linear-gradient(145deg,#eef2ff,#fce7f3);border:1px solid #e1e5ff;box-shadow:0 12px 30px rgba(99,102,241,.14);animation:tcfPrereqFloat 2.8s ease-in-out infinite}.tcf-prereq-kicker{font-size:9px;font-weight:1000;letter-spacing:1.8px;color:#818cf8;margin-bottom:5px}.tcf-prereq-card h2{font-size:20px;font-weight:1000;color:#292d4a;margin:4px 0 8px}.tcf-prereq-card>p{font-size:10px;line-height:2;color:#70748a;margin:0 auto;max-width:380px}.tcf-prereq-path{margin:17px 0 12px;padding:12px;border-radius:21px;background:#f7f8ff;border:1px solid #e7e9f5}.tcf-prereq-node{display:flex;align-items:center;gap:10px;text-align:right;padding:10px 11px;border-radius:16px;background:#fff;border:1px solid #e7e9f2;box-shadow:0 6px 18px rgba(43,48,90,.05)}.tcf-prereq-node>span{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:#f0f2ff;font-size:20px;flex:none}.tcf-prereq-node small{display:block;font-size:8px;color:#9498aa;margin-bottom:2px}.tcf-prereq-node b{display:block;font-size:11px;color:#34384f}.tcf-prereq-node.target{border-color:#ddd6fe;background:linear-gradient(135deg,#fff,#faf7ff)}.tcf-prereq-node.target>span{background:#f3e8ff}.tcf-prereq-arrow{height:24px;display:grid;place-items:center;color:#8b5cf6;font-size:19px;font-weight:1000}.tcf-prereq-note{padding:10px 12px;border-radius:15px;background:#fff8e7;border:1px solid #fde7ad;color:#8a6a22;font-size:9px;line-height:2;margin-bottom:14px}.tcf-prereq-close{min-width:150px}.tcf-prereq-close:active{transform:translateY(1px)}@keyframes tcfPrereqFade{from{opacity:0}.to{opacity:1}}@keyframes tcfPrereqFloat{50%{transform:translateY(-4px) rotate(-2deg)}}@media(max-width:520px){.tcf-prereq-card{padding:21px 14px 16px;border-radius:25px}.tcf-prereq-card h2{font-size:18px}.tcf-prereq-orb{width:62px;height:62px;font-size:28px;border-radius:20px}}@media(prefers-reduced-motion:reduce){.tcf-prereq-orb{animation:none}.tcf-prereq-modal{animation:none}}
+</style>
 <style id="tcf-v2-enhancements">
 .tcf-learned-box{padding:11px 14px;border-radius:16px;background:#dff7e9;color:#23804f;border:1px solid #b8e8cf;font-weight:900}.tcf-correct{color:#208452}.tcf-average{margin-top:8px;padding:12px;border-radius:15px;background:linear-gradient(135deg,#e7f7ef,#f8e7ef);color:#31564a;font-weight:900}.tcf-timer{padding:8px 12px;border-radius:999px;background:#fff0f2;color:#a4435a;font-weight:1000;white-space:nowrap}.tcf-label{display:block;font-size:11px;font-weight:900;color:#4f5f58;margin-bottom:8px}.tcf-label .tcf-input{margin-top:6px}.tcf-home-icon{position:relative}.tcf-coin-count{font-size:11px!important;font-weight:1000!important;position:absolute;bottom:-8px;right:-8px;background:#fff4c7;color:#9b6b15;padding:3px 6px;border-radius:999px;box-shadow:0 4px 10px #0001}.tcf-admin-row{flex-wrap:wrap}.tcf-answer{margin:8px 0}.tcf-exam-row{align-items:center}.tcf-books{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(145px,1fr))!important;gap:12px!important;align-items:start!important}.tcf-book{min-width:0!important}.tcf-book .tcf-cover{height:175px!important}.tcf-book-copy{padding:10px!important}.tcf-book-copy h3{font-size:12px!important;margin:3px 0!important}.tcf-book-copy p{font-size:8px!important;line-height:1.7!important;min-height:0!important}.tcf-book-meta{font-size:7px!important;gap:4px!important}.tcf-book .tcf-status{font-size:7px!important;padding:4px 6px!important}.tcf-status.fail{background:#ffe4e8!important;color:#a84252!important}.tcf-status.pass{background:#ddf7e8!important;color:#23804f!important}.tcf-status.ready{background:#fff2cf!important;color:#8b681e!important}
 <style id="tcf-library-android-polish">
@@ -10498,7 +10508,7 @@ body.nf-name-family-open [class*="floating-bottom"]{
   async function api(table,method='select',payload=null,filters=[]){const S=sb();if(!S)throw Error('اتصال دیتابیس جدید در صفحه پیدا نشد');let x=S.from(table);if(method==='select')x=x.select('*');else if(method==='insert')x=x.insert(payload).select().single();else if(method==='update')x=x.update(payload).select().single();else if(method==='delete')x=x.delete();for(const f of filters){x=x[f[0]](...f.slice(1))}const r=await x;if(r.error)throw r.error;return r.data}
   function overlay(html){let old=document.getElementById('tcf-overlay');if(old)old.remove();const d=document.createElement('div');d.id='tcf-overlay';d.innerHTML=html;document.body.appendChild(d);return d}
   function close(){document.getElementById('tcf-overlay')?.remove()}
-  function homeRole(){const u=getUser();return u&&['admin','manager','administrator','مدیر','مدیر سیستم'].includes(String(u.role||'').trim().toLowerCase())?'admin':u?'student':null}
+  function homeRole(){const u=getUser();return u&&tadbirIsAdminRole(u.role)?'admin':u?'student':null}
   function activeHome(){const a=qa('.nav-bar .nav-item.active');return a.length && /خانه/.test(a[0].innerText||'')}
   function installHome(){
     const role=homeRole();
@@ -10531,7 +10541,7 @@ body.nf-name-family-open [class*="floating-bottom"]{
 
   async function openStudent(){
     const u=getUser(); if(!u)return;
-    overlay('<div class="tcf-shell"><div class="tcf-head"><div><h1>درس‌های من</h1><p>کتابخانه اختصاصی درس‌های شما</p></div><button class="tcf-btn" id="tcf-close">×</button></div><div id="tcf-body"><div class="tcf-muted">در حال آماده‌سازی کتابخانه…</div></div></div>');
+    overlay('<div class="tcf-shell"><div class="tcf-head"><div><h1>درس‌های من</h1><p>درس های خود را انتخاب کنید،آزمون دهید و پیشرفت کنید</p></div><button class="tcf-btn" id="tcf-close">×</button></div><div id="tcf-body"><div class="tcf-muted">در حال آماده‌سازی کتابخانه…</div></div></div>');
     q('#tcf-close').onclick=close; const body=q('#tcf-body');
     try{
       const as=await api('tadbir_course_assignments','select',null,[['eq','student_id',String(u.id)],['eq','active',true]]);
@@ -10584,13 +10594,26 @@ body.nf-name-family-open [class*="floating-bottom"]{
     if(!st.courses.length)box.innerHTML='<div class="tcf-muted">مدیر هنوز درسی برای شما اختصاص نداده است.</div>';
   }
   async function selectStudentCourse(st,c,root){const u=getUser();const cycle=Math.max(1,...st.ens.map(x=>Number(x.cycle_no||1)));const rows=st.ens.filter(x=>Number(x.cycle_no||1)===cycle);const next=rows.length>=2&&rows.every(x=>['passed','failed'].includes(x.status))?cycle+1:cycle;try{const en=await api('tadbir_course_enrollments','insert',{course_id:c.id,student_id:String(u.id),cycle_no:next,status:'selected'});st.ens.push(en);renderStudentLibrary(root,st,u);alert('درس انتخاب شد.');}catch(e){alert('انتخاب درس انجام نشد: '+e.message)}}
+  function showPrerequisiteNotice(course, prerequisite){
+    const host=document.getElementById('tcf-overlay');
+    if(!host)return;
+    const old=host.querySelector('.tcf-prereq-modal');
+    old?.remove();
+    const modal=document.createElement('div');
+    modal.className='tcf-prereq-modal';
+    modal.innerHTML='<div class="tcf-prereq-card"><div class="tcf-prereq-orb">🔐</div><div class="tcf-prereq-kicker">دسترسی مرحله‌ای</div><h2>این درس هنوز برای شما باز نیست</h2><p>برای ورود به درس <b>«'+esc(course?.title||'این درس')+'»</b> ابتدا باید پیش‌نیاز آن را پاس کنید.</p><div class="tcf-prereq-path"><div class="tcf-prereq-node locked"><span>📘</span><div><small>پیش‌نیاز</small><b>'+esc(prerequisite?.title||'درس پیش‌نیاز')+'</b></div></div><div class="tcf-prereq-arrow">↓</div><div class="tcf-prereq-node target"><span>🎯</span><div><small>درس موردنظر</small><b>'+esc(course?.title||'این درس')+'</b></div></div></div><div class="tcf-prereq-note">ابتدا پیش‌نیاز را مطالعه و با تصمیم مدیر آن را <b>پاس</b> کنید؛ سپس این درس برای شما قابل انتخاب خواهد بود.</div><button type="button" class="tcf-btn primary tcf-prereq-close">متوجه شدم</button></div>';
+    host.appendChild(modal);
+    modal.addEventListener('click',e=>{if(e.target===modal)modal.remove()});
+    modal.querySelector('.tcf-prereq-close').onclick=()=>modal.remove();
+  }
+
   async function openStudentCourse(st,c){
     const prerequisiteId=c.prerequisite_course_id||null;
     if(prerequisiteId){
       const prerequisite=st.courses.find(x=>String(x.id)===String(prerequisiteId));
       const passed=st.ens.some(x=>String(x.course_id)===String(prerequisiteId)&&x.status==='passed');
       if(!passed){
-        alert('برای انتخاب درس «'+String(c.title||'این درس')+'» ابتدا باید درس پیش‌نیاز «'+String(prerequisite?.title||'درس پیش‌نیاز')+'» را پاس کنید.');
+        showPrerequisiteNotice(c,prerequisite);
         return;
       }
     }
