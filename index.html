@@ -10598,14 +10598,17 @@ body.nf-name-family-open [class*="floating-bottom"]{
     const box=q('.tcf-books',root);
     st.courses.forEach(c=>{
       const en=latest(st,c.id),p=prog(st,c.id),avg=courseAverage(st,c.id);
-      const statusHtml=en&&en.status==='passed'?'<em class="tcf-status pass">✓ پاس شده</em>':en&&en.status==='failed'?'<em class="tcf-status fail">✕ رد شده</em>':en&&en.status==='ready_exam'?'<em class="tcf-status ready">🎯 آماده آزمون</em>':'<em class="tcf-status">برای شروع</em>';
-      const card=document.createElement('article');card.className='tcf-book';
+      const cycle=Math.max(1,...st.ens.map(x=>Number(x.cycle_no||1)));
+      const cycleRows=st.ens.filter(x=>Number(x.cycle_no||1)===cycle);
+      const canSelect=!en && cycleRows.length<2;
+      const statusHtml=en&&en.status==='passed'?'<em class="tcf-status pass">✓ پاس شده</em>':en&&en.status==='failed'?'<em class="tcf-status fail">✕ رد شده</em>':en&&en.status==='ready_exam'?'<em class="tcf-status ready">🎯 آماده آزمون</em>':canSelect?'<em class="tcf-status ready">＋ انتخاب درس</em>':'<em class="tcf-status">🔒 ظرفیت تکمیل</em>';
+      const card=document.createElement('article');card.className='tcf-book'+(!en?' tcf-book-unselected':'');
       card.innerHTML='<div class="tcf-cover">'+(c.cover_url?'<img src="'+esc(c.cover_url)+'">':'<div>📘</div>')+'<div class="tcf-cover-status">'+statusHtml+'</div><div class="tcf-cover-shine"></div></div><div class="tcf-book-copy"><h3>'+esc(c.title)+'</h3><div class="tcf-book-meta"><span>📖 '+p.done+'/'+p.total+' درسنامه</span>'+(avg.count?'<strong>⭐ معدل: '+avg.value+'/20</strong>':'<strong>⭐ معدل: —</strong>')+'</div></div>';
-      card.onclick=()=>openStudentCourse(st,c);box.appendChild(card);
+      card.onclick=()=>{if(en)openStudentCourse(st,c);else if(canSelect)selectStudentCourse(st,c,root);else alert('شما در این مرحله حداکثر ۲ درس را انتخاب کرده‌اید. ابتدا وضعیت یکی از درس‌های انتخاب‌شده مشخص شود.');};box.appendChild(card);
     });
     if(!st.courses.length)box.innerHTML='<div class="tcf-muted">مدیر هنوز درسی برای شما اختصاص نداده است.</div>';
   }
-  async function selectStudentCourse(st,c,root){const u=getUser();const cycle=Math.max(1,...st.ens.map(x=>Number(x.cycle_no||1)));const rows=st.ens.filter(x=>Number(x.cycle_no||1)===cycle);const next=rows.length>=2&&rows.every(x=>['passed','failed'].includes(x.status))?cycle+1:cycle;try{const en=await api('tadbir_course_enrollments','insert',{course_id:c.id,student_id:String(u.id),cycle_no:next,status:'selected'});st.ens.push(en);renderStudentLibrary(root,st,u);alert('درس انتخاب شد.');}catch(e){alert('انتخاب درس انجام نشد: '+e.message)}}
+  async function selectStudentCourse(st,c,root){const u=getUser();const prerequisiteId=c.prerequisite_course_id||null;if(prerequisiteId){const prerequisite=st.courses.find(x=>String(x.id)===String(prerequisiteId));const passed=st.ens.some(x=>String(x.course_id)===String(prerequisiteId)&&x.status==='passed');if(!passed){showPrerequisiteNotice(c,prerequisite);return}}const cycle=Math.max(1,...st.ens.map(x=>Number(x.cycle_no||1)));const rows=st.ens.filter(x=>Number(x.cycle_no||1)===cycle);if(rows.length>=2&&!rows.every(x=>['passed','failed'].includes(x.status))){alert('شما در این مرحله حداکثر ۲ درس را می‌توانید انتخاب کنید.');return}const next=rows.length>=2&&rows.every(x=>['passed','failed'].includes(x.status))?cycle+1:cycle;try{const en=await api('tadbir_course_enrollments','insert',{course_id:c.id,student_id:String(u.id),cycle_no:next,status:'selected'});st.ens.push(en);renderStudentLibrary(root,st,u);alert('درس انتخاب شد. حالا می‌توانید وارد درس شوید.');}catch(e){alert('انتخاب درس انجام نشد: '+e.message)}}
   function showPrerequisiteNotice(course, prerequisite){
     const host=document.getElementById('tcf-overlay');
     if(!host)return;
@@ -10629,7 +10632,9 @@ body.nf-name-family-open [class*="floating-bottom"]{
         return;
       }
     }
-    let en=latest(st,c.id);let lesson=null;let questionOpen=false;
+    let en=latest(st,c.id);
+    if(!en){alert('این درس هنوز انتخاب نشده است. ابتدا آن را از کتابخانه «درس‌های من» انتخاب کنید.');return}
+    let lesson=null;let questionOpen=false;
     const ls=st.lessons.filter(x=>String(x.course_id)===String(c.id)).sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0));
     const ex=st.exams.filter(x=>String(x.course_id)===String(c.id));
     const render=()=>{
@@ -10659,7 +10664,7 @@ body.nf-name-family-open [class*="floating-bottom"]{
     const ans=st.answers.filter(a=>String(a.attempt_id)===String(aid));
     const ex=st.exams.find(e=>String(e.id)===String(at.exam_id));
     const course=st.courses.find(c=>String(c.id)===String(ex?.course_id));
-    overlay('<div class="tcf-modal"><div class="tcf-modal-inner"><div class="tcf-head"><div><h1>مرور آزمون</h1><p>'+((at.score!=null)?'نمره: '+at.score+'/20':'در انتظار تصحیح')+'</p></div><button class="tcf-btn" id="tcf-review-back">← بازگشت</button></div><div>'+qs.map((x,i)=>{const a=ans.find(y=>String(y.question_id)===String(x.id));const correct=x.question_type==='test'?(x.options?.[x.correct_answer] ? (x.correct_answer+'. '+x.options[x.correct_answer]) : (x.correct_answer||'—')):(x.correct_answer||'پاسخ صحیح هنوز توسط مدیر ثبت نشده است');const status=x.question_type==='descriptive'?(a?.status==='graded'?'تصحیح شده':'در انتظار تصحیح'):(a?.status==='graded'?'تصحیح خودکار شده':'در انتظار');return '<div class="tcf-q"><h4>سؤال '+(i+1)+' — '+esc(x.question_text)+'</h4><p>پاسخ شما: <b>'+esc(a?.answer||'—')+'</b></p><p>پاسخ درست: <b class="tcf-correct">'+esc(correct)+'</b></p><p>بارم: '+(x.score||1)+' • نمره شما: '+(a?.score??'در انتظار')+' • '+esc(status)+'</p></div>'}).join('')+'</div></div></div>');
+    overlay('<div class="tcf-modal"><div class="tcf-modal-inner"><div class="tcf-head"><div><h1>مرور آزمون</h1><p>'+((at.score!=null)?'نمره: '+at.score+'/20':'در انتظار تصحیح')+'</p></div><button class="tcf-btn" id="tcf-review-back">← بازگشت</button></div><div>'+qs.map((x,i)=>{const a=ans.find(y=>String(y.question_id)===String(x.id));const correct=x.question_type==='test'?(x.options?.[x.correct_answer] ? (x.correct_answer+'. '+x.options[x.correct_answer]) : (x.correct_answer||'—')):(x.correct_answer||'پاسخ صحیح هنوز توسط مدیر ثبت نشده است');const rawAnswer=a?.answer??a?.student_answer??a?.answer_text??'';const studentAnswer=x.question_type==='test'&&rawAnswer&&x.options?.[String(rawAnswer).toUpperCase()]?(String(rawAnswer).toUpperCase()+'. '+x.options[String(rawAnswer).toUpperCase()]):rawAnswer;const status=x.question_type==='descriptive'?(a?.status==='graded'?'تصحیح شده':'در انتظار تصحیح'):(a?.status==='graded'?'تصحیح خودکار شده':'در انتظار');return '<div class="tcf-q"><h4>سؤال '+(i+1)+' — '+esc(x.question_text)+'</h4><p>پاسخ شما: <b>'+esc(studentAnswer||'بدون پاسخ')+'</b></p><p>پاسخ درست: <b class="tcf-correct">'+esc(correct)+'</b></p><p>بارم: '+(x.score||1)+' • نمره شما: '+(a?.score??'در انتظار')+' • '+esc(status)+'</p></div>'}).join('')+'</div></div></div>');
     q('#tcf-review-back').onclick=()=>course?showExamHistory(st,course):close();
   }
 
