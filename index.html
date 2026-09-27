@@ -5702,6 +5702,22 @@ const sanitizeExamRichTextGlobal=(html)=>{
   }catch(e){return raw.replace(/<[^>]*>/g,'');}
 };
 
+/* ===== Header name language toggle ===== */
+function tadbirLatinName(value){
+  const s=String(value||'').trim();
+  if(!s)return 'Tadbir';
+  const map={
+    'ا':'a','آ':'a','أ':'a','إ':'e','ب':'b','پ':'p','ت':'t','ث':'s','ج':'j','چ':'ch','ح':'h','خ':'kh',
+    'د':'d','ذ':'z','ر':'r','ز':'z','ژ':'zh','س':'s','ش':'sh','ص':'s','ض':'z','ط':'t','ظ':'z','ع':'a','غ':'gh',
+    'ف':'f','ق':'gh','ک':'k','ك':'k','گ':'g','ل':'l','م':'m','ن':'n','و':'v','ه':'h','ی':'i','ي':'i','ء':'','ئ':'i','ؤ':'o',
+    ' ':' ','‌':' ','-':'-','_':'_'
+  };
+  let out='';
+  for(const ch of s){out+=map[ch]!==undefined?map[ch]:ch;}
+  out=out.replace(/\s+/g,' ').trim();
+  return out.split(' ').map(w=>w?w.charAt(0).toUpperCase()+w.slice(1):w).join(' ')||'Tadbir';
+}
+
 function Admin({user,tab,setTab,onLogout}){
   // Keep the manager/admin panel isolated from student-only state and tolerate
   // legacy role values without breaking the whole application.
@@ -5739,6 +5755,7 @@ function Admin({user,tab,setTab,onLogout}){
     finally{setQuestionObjectionsLoading(false);}
   };
 
+  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   const [adminThemeMode,setAdminThemeMode]=useState('dark');
   const [adminSiteTheme,setAdminSiteTheme]=useState(()=>{const k=`tadbir_theme_${user.id}`;let t=localStorage.getItem(k)||'dark-purple';if(t==='dark-yellow')t='dark-white';if(t==='light-yellow')t='light-black';localStorage.setItem(k,t);return t;});
   const loadAdminBlockedUsers=async()=>{
@@ -5772,6 +5789,7 @@ function Admin({user,tab,setTab,onLogout}){
   const [achievementAdminBusy,setAchievementAdminBusy]=useState(false);
   const [objectionTick,setObjectionTick]=useState(Date.now());
   const [showAdminProfile,setShowAdminProfile]=useState(false);
+  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   const [unreadCount,setUnreadCount]=useState(0);
   const [notificationForm,setNotificationForm]=useState({title:'',body:'',target:'all'});
   const [notificationBusy,setNotificationBusy]=useState(false);
@@ -6147,8 +6165,11 @@ function Admin({user,tab,setTab,onLogout}){
   return(
     <>
       <div className="min-h-screen pb-24 student-exam-page">
-      <div className="header flex justify-between items-center">
-        <div><h1 className="text-lg font-black gradient-text">پنل مدیریت</h1><p className="text-xs text-white/30 mt-1">{user.full_name}</p></div>
+      <div className="header flex justify-between items-center tadbir-profile-header">
+        <button type="button" className={`tadbir-name-toggle ${headerNameEnglish?'is-latin':''}`} onClick={()=>setHeaderNameEnglish(v=>!v)} aria-label="تغییر زبان نام">
+          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(user.full_name):user.full_name}</span>
+          <span className="tadbir-name-hint">{headerNameEnglish?'EN':'فا'}</span>
+        </button>
         <div className="flex gap-2">
           <button onClick={()=>{setTab('tools');setAdminTool('notifications');}} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="مدیریت اعلان‌ها"><Icon d={Icons.bell} size={18}/></button>
           <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition"><Icon d={Icons.logout} size={18}/></button>
@@ -8982,11 +9003,11 @@ function Student({user,tab,setTab,onLogout}){
   return(
     <>
       <div className="min-h-screen pb-24">
-      <div className="header flex justify-between items-center">
-        <div>
-          <h1 className="text-lg font-black gradient-text">پنل دانش‌آموز</h1>
-          <p className="text-xs text-white/40 mt-1">سلام {user.full_name} 👋</p>
-        </div>
+      <div className="header flex justify-between items-center tadbir-profile-header">
+        <button type="button" className={`tadbir-name-toggle ${headerNameEnglish?'is-latin':''}`} onClick={()=>setHeaderNameEnglish(v=>!v)} aria-label="تغییر زبان نام">
+          <span className="tadbir-name-text" key={headerNameEnglish?'en':'fa'}>{headerNameEnglish?tadbirLatinName(user.full_name):user.full_name}</span>
+          <span className="tadbir-name-hint">{headerNameEnglish?'EN':'فا'}</span>
+        </button>
         <div className="flex gap-2">
           <button onClick={openNotificationCenter} className="notification-bell p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="اعلان‌ها" aria-label="اعلان‌ها"><Icon d={Icons.bell} size={18}/>{notificationUnread>0&&<span className="notification-badge">{notificationUnread>99?'99+':notificationUnread}</span>}</button>
           <button onClick={onLogout} className="p-2.5 bg-white/5 rounded-xl hover:bg-white/10 transition" title="خروج"><Icon d={Icons.logout} size={18}/></button>
@@ -10451,6 +10472,18 @@ body.nf-name-family-open [class*="floating-bottom"]{
 @media(min-width:641px) and (max-width:900px){.tcf-books{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(prefers-reduced-motion:reduce){.tcf-book,.tcf-cover-shine,.tcf-library-head:before,.tcf-library-head:after{animation:none!important}.tcf-book,.tcf-book:hover{transition:none!important;transform:none!important}}
 </style>
+</style>
+
+<style id="tadbir-name-toggle-css">
+.tadbir-profile-header{position:relative;min-height:68px;gap:12px}
+.tadbir-name-toggle{position:relative;display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:7px 4px;color:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;max-width:calc(100vw - 130px);text-align:left}
+.tadbir-name-text{display:inline-block;font-family:"Segoe Script","Brush Script MT","Lucida Handwriting",cursive;font-size:clamp(22px,5.5vw,32px);font-weight:700;letter-spacing:.2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 170px);background:linear-gradient(120deg,#fff,#c4b5fd 45%,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 12px rgba(139,92,246,.25));animation:tadbirNameIn .42s cubic-bezier(.2,.8,.2,1) both}
+.tadbir-name-toggle:not(.is-latin) .tadbir-name-text{font-family:Vazirmatn,Tahoma,sans-serif;font-size:clamp(17px,4.5vw,22px);font-weight:900;letter-spacing:0;direction:rtl}
+.tadbir-name-hint{font-family:Inter,Arial,sans-serif;font-size:8px;font-weight:900;letter-spacing:.7px;opacity:.45;border:1px solid currentColor;border-radius:999px;padding:3px 5px;transition:transform .25s ease,opacity .25s ease}
+.tadbir-name-toggle:active .tadbir-name-hint{transform:scale(.88);opacity:.8}
+@keyframes tadbirNameIn{0%{opacity:0;transform:translateY(8px) scale(.96);filter:blur(5px)}65%{opacity:1;transform:translateY(-2px) scale(1.015);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@media(max-width:520px){.tadbir-profile-header{padding-top:2px;padding-bottom:2px}.tadbir-name-text{max-width:calc(100vw - 150px)}.tadbir-name-toggle{min-height:44px}.tadbir-name-hint{padding:3px 4px}}
+@media(prefers-reduced-motion:reduce){.tadbir-name-text{animation:none}}
 </style>
 <script id="tadbir-courses-final-js">
 (function(){
