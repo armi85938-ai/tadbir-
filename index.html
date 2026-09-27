@@ -5705,8 +5705,11 @@ const sanitizeExamRichTextGlobal=(html)=>{
 /* ===== Header name language toggle ===== */
 function tadbirSafeHeaderName(user){
   const candidates=[user?.full_name,user?.username,user?.name].map(v=>String(v??'').trim()).filter(Boolean);
-  const bad=/^n\s*\/\s*$/i;
-  return candidates.find(v=>!bad.test(v))||'Tadbir';
+  for(const raw of candidates){
+    const cleaned=raw.replace(/(^|\s)n\s*\/\s*(?=\s|$)/gi,' ').replace(/\s{2,}/g,' ').trim();
+    if(cleaned && !/^n\s*\/\s*$/i.test(cleaned)) return cleaned;
+  }
+  return 'Tadbir';
 }
 function tadbirLatinName(value){
   const s=String(value||'').trim();
@@ -5724,6 +5727,7 @@ function tadbirLatinName(value){
 }
 
 function Admin({user,tab,setTab,onLogout}){
+  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   // Keep the manager/admin panel isolated from student-only state and tolerate
   // legacy role values without breaking the whole application.
   const [exams,setExams]=useState([]);
@@ -7467,7 +7471,7 @@ function NameFamilyGameHub({user,onClose}){
   const [stopBurst,setStopBurst]=useState(false);
   const [mySuggestions,setMySuggestions]=useState([]);
   const [usersLoading,setUsersLoading]=useState(true);
-  const isAdmin=tadbirIsAdminRole(user);
+  const isAdmin=['admin','manager','administrator','مدیر','مدیر سیستم'].includes(String(user?.role||'').trim().toLowerCase());
   useEffect(()=>{
     document.body.classList.add('nf-name-family-open');
     return ()=>document.body.classList.remove('nf-name-family-open');
@@ -9496,32 +9500,18 @@ function Student({user,tab,setTab,onLogout}){
 }
 
 function tadbirIsAdminRole(value){
-  // مدیر باید بر اساس هر نوع فیلد رایج نقش شناسایی شود؛ بعضی نسخه‌های دیتابیس
-  // نقش را در role و بعضی نسخه‌ها در user_type/account_type/is_admin نگه می‌دارند.
-  const clean=v=>String(v??'')
-    .normalize('NFKC')
-    .replace(/[\u200b\u200c\u200d\u200e\u200f\u202a-\u202e\ufeff]/g,'')
-    .trim().toLowerCase().replace(/\s+/g,' ');
-  const isRole=v=>{
-    const role=clean(v);
-    if(!role)return false;
-    return ['admin','manager','administrator','superadmin','super-admin','مدیر','مدیر سیستم','مدیریت','مدیر سامانه','مدیر مدرسه','مدیر کل','مدیرکل']
-      .includes(role)
-      || role.includes('admin')
-      || role.includes('manager')
-      || role.includes('مدیر');
-  };
-  if(value && typeof value==='object'){
-    if(value.is_admin===true || value.is_manager===true || value.is_super_admin===true || value.admin===true || value.manager===true)return true;
-    const fields=['role','user_type','account_type','type','access_level','permission','permissions','user_role'];
-    for(const key of fields){
-      const v=value[key];
-      if(Array.isArray(v) && v.some(isRole))return true;
-      if(typeof v==='string' && isRole(v))return true;
-    }
-    return false;
-  }
-  return isRole(value);
+  const role=String(value??'').trim().toLowerCase().replace(/[\u200c\u200f\u202a-\u202e]/g,'').replace(/\s+/g,' ');
+  if(!role)return false;
+  return ['admin','manager','administrator','مدیر','مدیر سیستم','مدیریت','مدیر سامانه','مدیر مدرسه'].includes(role)
+    || role.includes('admin') || role.includes('manager') || role.includes('مدیر') || role.includes('مدیریت');
+}
+
+function tadbirIsAdminAccount(account){
+  if(!account)return false;
+  if(tadbirIsAdminRole(account.role))return true;
+  const extra=[account.user_type,account.account_type,account.type,account.access_level].map(v=>String(v??'').trim());
+  if(extra.some(tadbirIsAdminRole))return true;
+  return account.is_admin===true || account.is_manager===true || account.isAdmin===true || account.isManager===true;
 }
 
 function App(){
@@ -9531,7 +9521,7 @@ function App(){
   useEffect(()=>{if(view==='login')delete document.documentElement.dataset.tadbirTheme;},[view]);
   useEffect(()=>{
     const s=sessionStorage.getItem('edu_user');
-    if(s){try{const u=JSON.parse(s);setUser(u);setView(tadbirIsAdminRole(u)?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
+    if(s){try{const u=JSON.parse(s);setUser(u);setView(tadbirIsAdminAccount(u)?'admin':'student');SB.from('users').update({last_seen_at:new Date().toISOString()}).eq('id',u.id).then(()=>{}).catch(()=>{});}catch(e){sessionStorage.removeItem('edu_user');}}
   },[]);
   useEffect(()=>{
     if(!user?.id){
@@ -9576,7 +9566,7 @@ function App(){
 
       setUser(account);
       sessionStorage.setItem('edu_user',JSON.stringify(account));
-      setView(tadbirIsAdminRole(account)?'admin':'student');
+      setView(tadbirIsAdminAccount(account)?'admin':'student');
       return true;
     }catch(error){
       console.error('Tadbir login exception:',error);
@@ -9593,23 +9583,6 @@ function AppWrapper(){
   return(<ToastProvider><App/></ToastProvider>);
 }
 
-/* Remove the old malformed role/name fragment that some cached builds left above the header. */
-(function(){
-  const bad=/^n\\s*[\\/\\\\]\\s*$/i;
-  const cleanNode=node=>{
-    if(!node||node.nodeType!==3)return;
-    const t=String(node.nodeValue||'').trim();
-    if(bad.test(t)) node.remove();
-  };
-  const sweep=()=>{try{
-    const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
-    nodes.forEach(cleanNode);
-  }catch{}};
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',sweep,{once:true});
-  else sweep();
-  new MutationObserver(()=>sweep()).observe(document.body,{childList:true,subtree:true});
-})();
 ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper/>);
 </script>
 <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none"><defs>
@@ -10547,7 +10520,7 @@ body.nf-name-family-open [class*="floating-bottom"]{
   async function api(table,method='select',payload=null,filters=[]){const S=sb();if(!S)throw Error('اتصال دیتابیس جدید در صفحه پیدا نشد');let x=S.from(table);if(method==='select')x=x.select('*');else if(method==='insert')x=x.insert(payload).select().single();else if(method==='update')x=x.update(payload).select().single();else if(method==='delete')x=x.delete();for(const f of filters){x=x[f[0]](...f.slice(1))}const r=await x;if(r.error)throw r.error;return r.data}
   function overlay(html){let old=document.getElementById('tcf-overlay');if(old)old.remove();const d=document.createElement('div');d.id='tcf-overlay';d.innerHTML=html;document.body.appendChild(d);return d}
   function close(){document.getElementById('tcf-overlay')?.remove()}
-  function homeRole(){const u=getUser();return u&&tadbirIsAdminRole(u)?'admin':u?'student':null}
+  function homeRole(){const u=getUser();return u&&tadbirIsAdminRole(u.role)?'admin':u?'student':null}
   function activeHome(){const a=qa('.nav-bar .nav-item.active');return a.length && /خانه/.test(a[0].innerText||'')}
   function installHome(){
     const role=homeRole();
