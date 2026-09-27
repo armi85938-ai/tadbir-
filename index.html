@@ -5755,7 +5755,6 @@ function Admin({user,tab,setTab,onLogout}){
     finally{setQuestionObjectionsLoading(false);}
   };
 
-  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   const [adminThemeMode,setAdminThemeMode]=useState('dark');
   const [adminSiteTheme,setAdminSiteTheme]=useState(()=>{const k=`tadbir_theme_${user.id}`;let t=localStorage.getItem(k)||'dark-purple';if(t==='dark-yellow')t='dark-white';if(t==='light-yellow')t='light-black';localStorage.setItem(k,t);return t;});
   const loadAdminBlockedUsers=async()=>{
@@ -5789,7 +5788,6 @@ function Admin({user,tab,setTab,onLogout}){
   const [achievementAdminBusy,setAchievementAdminBusy]=useState(false);
   const [objectionTick,setObjectionTick]=useState(Date.now());
   const [showAdminProfile,setShowAdminProfile]=useState(false);
-  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   const [unreadCount,setUnreadCount]=useState(0);
   const [notificationForm,setNotificationForm]=useState({title:'',body:'',target:'all'});
   const [notificationBusy,setNotificationBusy]=useState(false);
@@ -8025,6 +8023,7 @@ function NameFamilyGameHub({user,onClose}){
 
 
 function Student({user,tab,setTab,onLogout}){
+  const [headerNameEnglish,setHeaderNameEnglish]=useState(true);
   const [exams,setExams]=useState([]);
   const [answers,setAnswers]=useState([]);
   const [activeExam,setActiveExam]=useState(null);
