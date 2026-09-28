@@ -15,6 +15,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js" defer></script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://unpkg.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -4328,6 +4329,59 @@ body.nf-name-family-open .header,body.nf-name-family-open .nav-bar{visibility:hi
 const {useState,useEffect,useRef,useCallback,createContext,useContext}=React;
 const SB=window.supabase.createClient("https://ixdsctccqvljdtnjfebt.supabase.co","sb_publishable_KW1w2BRKZ1ig0-b57oVw6A_G2UIAa0h");
 const SB_NF=window.supabase.createClient("https://jqmmylgpesswehvdkvep.supabase.co","sb_publishable_QjwO3A16ExRPhEbzaJi33A_Dc4fAxe2");
+// TADBIR Face Login: biometric data lives only in the separate new Supabase project above.
+// Face biometric data is stored in the separate project; legacy DB is touched only once to verify enrollment ownership.
+const TADBIR_FACE_MODEL_URL='https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights';
+let tadbirFaceModelsPromise=null;
+async function tadbirLoadFaceModels(){
+  if(!window.faceapi)throw new Error('کتابخانه تشخیص چهره هنوز بارگذاری نشده است.');
+  if(!tadbirFaceModelsPromise){
+    tadbirFaceModelsPromise=Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri(TADBIR_FACE_MODEL_URL),
+      faceapi.nets.faceLandmark68TinyNet.loadFromUri(TADBIR_FACE_MODEL_URL),
+      faceapi.nets.faceRecognitionNet.loadFromUri(TADBIR_FACE_MODEL_URL)
+    ]).catch(err=>{tadbirFaceModelsPromise=null;throw err;});
+  }
+  return tadbirFaceModelsPromise;
+}
+const tadbirFaceDetectorOptions=()=>new faceapi.TinyFaceDetectorOptions({inputSize:320,scoreThreshold:0.5});
+async function tadbirFaceDescriptorFromImage(source){
+  await tadbirLoadFaceModels();
+  const result=await faceapi.detectSingleFace(source,tadbirFaceDetectorOptions()).withFaceLandmarks(true).withFaceDescriptor();
+  if(!result)throw new Error('چهره‌ای در تصویر پیدا نشد.');
+  return Array.from(result.descriptor);
+}
+async function tadbirFaceDescriptorFromVideo(video){
+  return tadbirFaceDescriptorFromImage(video);
+}
+async function tadbirFaceSaveProfile(user,descriptor,photoData){
+  // Enrollment is the only face operation that checks the legacy session.
+  const {data:verified,error:verifyError}=await SB.from('users').select('id').eq('id',String(user.id)).eq('username',String(user.username||'')).eq('password',String(user.password||'')).limit(1);
+  if(verifyError||!verified?.[0])throw new Error('برای ثبت چهره، نشست حساب شما معتبر نیست. یک‌بار خارج شوید و دوباره وارد شوید.');
+  const {data,error}=await SB_NF.rpc('tadbir_face_save_profile',{
+    p_user_id:String(user.id),
+    p_username:String(user.username||''),
+    p_full_name:String(user.full_name||''),
+    p_role:String(user.role||'student'),
+    p_descriptor:descriptor,
+    p_photo_data:String(photoData||'')
+  });
+  if(error)throw error;
+  if(data && data.ok===false)throw new Error(data.message||'ذخیره چهره انجام نشد.');
+  return data;
+}
+async function tadbirFaceHasProfile(userId){
+  const {data,error}=await SB_NF.rpc('tadbir_face_get_profile',{p_user_id:String(userId)});
+  if(error)throw error;
+  return data||null;
+}
+async function tadbirFaceMatch(descriptor){
+  const {data,error}=await SB_NF.rpc('tadbir_face_match',{p_descriptor:descriptor});
+  if(error)throw error;
+  const row=Array.isArray(data)?data[0]:data;
+  return row||null;
+}
+
 
 const TADBIR_EMOJIS=['🎓','','✨','🌟','💡','','🎯','🚀','','👏','🔥','','🌈','⭐','🎨','📖','✏️','🧠'];
 const REACTION_EMOJIS=['❤️','👍','😂','😮','😢','🔥','🎉','💯'];
@@ -4592,7 +4646,144 @@ function CircularTimerGlow({timeLeft,totalTime}){
   );
 }
 
-function Login({onLogin}){
+
+function TadbirFaceCamera({onSuccess,onClose}){
+  const videoRef=useRef(null);
+  const streamRef=useRef(null);
+  const scanTimerRef=useRef(null);
+  const aliveRef=useRef(true);
+  const matchingRef=useRef(false);
+  const [state,setState]=useState('loading');
+  const [message,setMessage]=useState('در حال آماده‌سازی تشخیص چهره...');
+  const [busy,setBusy]=useState(false);
+  const stop=()=>{
+    try{if(scanTimerRef.current)clearTimeout(scanTimerRef.current)}catch(e){}
+    scanTimerRef.current=null;
+    try{streamRef.current?.getTracks()?.forEach(t=>t.stop())}catch(e){}
+    streamRef.current=null;
+  };
+  const scan=async()=>{
+    if(!aliveRef.current||state!=='ready'||busy||matchingRef.current||!videoRef.current||videoRef.current.readyState<2)return;
+    try{
+      const result=await faceapi.detectSingleFace(videoRef.current,tadbirFaceDetectorOptions()).withFaceLandmarks(true).withFaceDescriptor();
+      if(!aliveRef.current)return;
+      if(!result){
+        setMessage('صورت خود را داخل کادر قرار دهید…');
+      }else{
+        const score=Number(result.detection?.score||0);
+        if(score<0.5){
+          setMessage('کمی نزدیک‌تر و روبه‌روی دوربین قرار بگیرید…');
+        }else{
+          matchingRef.current=true;
+          setBusy(true);
+          setMessage('چهره پیدا شد؛ در حال ورود…');
+          try{
+            const match=await tadbirFaceMatch(Array.from(result.descriptor));
+            if(!match)throw new Error('این چهره در سامانه ثبت نشده است. ابتدا از بخش حریم خصوصی، چهره خود را ثبت کنید.');
+            stop();
+            await onSuccess(match);
+          }catch(e){
+            console.error('Tadbir face login:',e);
+            matchingRef.current=false;
+            setBusy(false);
+            setMessage(e?.message||'تطبیق چهره انجام نشد. دوباره روبه‌روی دوربین قرار بگیرید.');
+          }
+          return;
+        }
+      }
+    }catch(e){
+      console.error('Tadbir face auto-scan:',e);
+      if(aliveRef.current&&!matchingRef.current)setMessage('در حال بررسی چهره…');
+    }
+    if(aliveRef.current&&!matchingRef.current)scanTimerRef.current=setTimeout(scan,350);
+  };
+  useEffect(()=>{
+    aliveRef.current=true;
+    (async()=>{
+      try{
+        await tadbirLoadFaceModels();
+        if(!navigator.mediaDevices?.getUserMedia)throw new Error('مرورگر شما دسترسی دوربین را پشتیبانی نمی‌کند.');
+        const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'user'},width:{ideal:720},height:{ideal:720}},audio:false});
+        if(!aliveRef.current){stream.getTracks().forEach(t=>t.stop());return;}
+        streamRef.current=stream;
+        if(videoRef.current){
+          videoRef.current.srcObject=stream;
+          await videoRef.current.play();
+        }
+        setState('ready');
+        setMessage('صورت خود را داخل کادر قرار دهید؛ تشخیص و ورود خودکار است.');
+      }catch(e){
+        console.error('Tadbir face camera:',e);setState('error');
+        setMessage(e?.name==='NotAllowedError'?'اجازه استفاده از دوربین داده نشد. از تنظیمات مرورگر اجازه دوربین را فعال کنید.':(e?.message||'دوربین آماده نشد.'));
+      }
+    })();
+    return()=>{aliveRef.current=false;stop()};
+  },[]);
+  useEffect(()=>{
+    if(state==='ready'&&!busy)scan();
+  },[state,busy]);
+  return <div className="tadbir-face-overlay" onClick={onClose}>
+    <div className="tadbir-face-modal" onClick={e=>e.stopPropagation()}>
+      <div className="tadbir-face-head"><div><span>TADBIR • FACE ID</span><h3>ورود با چهره</h3></div><button type="button" onClick={onClose}>×</button></div>
+      <div className="tadbir-face-stage">
+        <video ref={videoRef} className="tadbir-face-video" muted playsInline autoPlay></video>
+        <div className={`tadbir-face-frame ${busy?'is-matched':''}`}><i></i><i></i><i></i><i></i></div>
+        {state==='loading'&&<div className="tadbir-face-loading"><span></span><b>در حال آماده‌سازی...</b></div>}
+        {state==='error'&&<div className="tadbir-face-error">⚠️ {message}</div>}
+      </div>
+      <p className={`tadbir-face-message ${state==='error'?'error':''}`}>{message}</p>
+      <div className="tadbir-face-actions">
+        <button type="button" className="btn-glass" onClick={onClose}>بازگشت</button>
+        <div className="tadbir-face-auto-status">{busy?'✓ چهره تأیید شد؛ ورود در حال انجام است':'● تشخیص خودکار فعال است'}</div>
+      </div>
+    </div>
+  </div>;
+}
+
+function TadbirFaceSettings({user,toast}){
+  const [profile,setProfile]=useState(null);
+  const [loading,setLoading]=useState(true);
+  const [busy,setBusy]=useState(false);
+  const [preview,setPreview]=useState('');
+  const [notice,setNotice]=useState('');
+  const fileRef=useRef(null);
+  useEffect(()=>{let live=true;(async()=>{try{const p=await tadbirFaceHasProfile(user.id);if(live)setProfile(p)}catch(e){console.warn('face profile:',e);if(live)setNotice('برای فعال‌سازی، ابتدا SQL قابلیت چهره را روی دیتابیس جدید اجرا کنید.')}finally{if(live)setLoading(false)}})();return()=>{live=false}},[user.id]);
+  const readImage=async(file)=>{
+    if(!file||!file.type.startsWith('image/'))throw new Error('فقط فایل تصویری انتخاب کنید.');
+    if(file.size>8*1024*1024)throw new Error('حجم عکس باید کمتر از ۸ مگابایت باشد.');
+    const url=URL.createObjectURL(file);
+    try{
+      const img=new Image();img.src=url;await new Promise((res,rej)=>{img.onload=res;img.onerror=rej});
+      const scale=Math.min(1,640/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      return {data:c.toDataURL('image/jpeg',.82),img};
+    }finally{URL.revokeObjectURL(url)}
+  };
+  const choose=async(file)=>{
+    if(!file)return;setNotice('');setBusy(true);
+    try{
+      const {data,img}=await readImage(file);setPreview(data);
+      const descriptor=await tadbirFaceDescriptorFromImage(img);
+      const saved=await tadbirFaceSaveProfile(user,descriptor,data);
+      setProfile(saved||{enabled:true});setNotice('چهره شما با موفقیت ثبت شد. از این پس می‌توانید با دوربین وارد شوید.');toast('ورود با چهره برای حساب شما فعال شد','success');
+    }catch(e){console.error('Tadbir face enrollment:',e);setNotice(e?.message||'ثبت چهره انجام نشد.');toast('ثبت چهره انجام نشد','error')}
+    finally{setBusy(false);if(fileRef.current)fileRef.current.value=''}
+  };
+  return <div className="tadbir-face-settings-card">
+    <div className="tadbir-face-settings-head"><div className="tadbir-face-settings-icon">⌾</div><div><b>ورود با چهره</b><small>یک عکس واضح و روبه‌رو ثبت کنید تا ورود بعدی با دوربین انجام شود.</small></div><span className={profile?'tadbir-face-status on':'tadbir-face-status'}>{profile?'فعال':'خاموش'}</span></div>
+    <div className="tadbir-face-settings-body">
+      <div className="tadbir-face-preview">{preview||profile?.photo_data?<img src={preview||profile.photo_data} alt="چهره ثبت‌شده"/>:<span>◉</span>}</div>
+      <div className="tadbir-face-copy"><b>{loading?'در حال بررسی وضعیت...':profile?'چهره ثبت شده است':'هنوز چهره‌ای ثبت نشده است'}</b><p>برای نتیجه بهتر، فقط یک نفر در عکس باشد، صورت کامل دیده شود و نور مناسب باشد.</p>
+        <label className="tadbir-face-upload"><input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>choose(e.target.files?.[0])} disabled={busy}/><span>{busy?'در حال پردازش چهره...':profile?'تغییر عکس چهره':'ثبت عکس چهره'}</span></label>
+      </div>
+    </div>
+    {notice&&<div className="tadbir-face-notice">{notice}</div>}
+    <div className="tadbir-face-privacy">🔒 تصویر و الگوی چهره در دیتابیس جداگانه قابلیت چهره نگهداری می‌شود و به جدول‌های اصلی سامانه اضافه نمی‌شود.</div>
+  </div>;
+}
+
+function Login({onLogin,onFaceLogin}){
   const [un,setUn]=useState('');
   const [pw,setPw]=useState('');
   const [err,setErr]=useState('');
@@ -4601,6 +4792,8 @@ function Login({onLogin}){
   const [recovery,setRecovery]=useState(false);
   const [recoveryDone,setRecoveryDone]=useState(false);
   const [recoveryUser,setRecoveryUser]=useState('');
+  const [showFaceLogin,setShowFaceLogin]=useState(false);
+  const [faceBusy,setFaceBusy]=useState(false);
   const toast=useToast();
   const submit=async(e)=>{
     e.preventDefault();
@@ -4678,8 +4871,7 @@ function Login({onLogin}){
         <div className="login-panel login-panel-reference slide-up">
           <div className="login-panel-highlight"></div>
           <div className="login-welcome">
-            <h2 className="tadbir-title-real">سامانه تدبـــیر</h2>
-            <p>برای ادامه، وارد حساب کاربری خود شوید</p>
+            <div className="tadbir-login-title-row"><div><h2 className="tadbir-title-real">سامانه تدبـــیر</h2><p>برای ادامه، وارد حساب کاربری خود شوید</p></div><button type="button" className="tadbir-login-face-btn" title="ورود با تشخیص چهره" aria-label="ورود با تشخیص چهره" onClick={()=>setShowFaceLogin(true)}><svg viewBox="0 0 24 24" fill="none"><path d="M8 6H6.8A2.8 2.8 0 0 0 4 8.8V10M16 6h1.2A2.8 2.8 0 0 1 20 8.8V10M8 18H6.8A2.8 2.8 0 0 1 4 15.2V14M16 18h1.2a2.8 2.8 0 0 0 2.8-2.8V14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="7" y="8" width="10" height="8" rx="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="10.2" cy="11.2" r=".8" fill="currentColor"/><circle cx="13.8" cy="11.2" r=".8" fill="currentColor"/><path d="M10 13.7c1.2.8 2.8.8 4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button></div>
           </div>
 
           {!recovery ? (
@@ -4733,6 +4925,7 @@ function Login({onLogin}){
           )}
         </div>
       </div>
+      {showFaceLogin&&<TadbirFaceCamera onClose={()=>setShowFaceLogin(false)} onSuccess={async match=>{setFaceBusy(true);try{const ok=await onFaceLogin(match);if(!ok)toast('حساب متناظر پیدا نشد','error');else toast('ورود با چهره موفق بود 🎉','success')}catch(e){console.error(e);toast('ورود با چهره انجام نشد','error')}finally{setFaceBusy(false);setShowFaceLogin(false)}}}/>}
     </div>
   );
 }
@@ -9156,7 +9349,7 @@ function Student({user,tab,setTab,onLogout}){
                 {toolsTab==='settings'&&(
                   <div className="settings-panel">
                     {settingsView==='menu'&&<><div className="flex items-center justify-between mb-4"><div><span className="text-[8px] tracking-[2px] font-black text-purple-300">TADBIR SETTINGS</span><h3 className="text-xl font-black gradient-text mt-1">تنظیمات</h3></div><div className="settings-icon-box tadbir-settings-round"><Icon d={Icons.settings} size={25}/></div></div><div className="space-y-2"><button className="settings-choice" onClick={()=>setSettingsView('theme')}><span className="settings-choice-icon"><Icon d={Icons.palette} size={22}/></span><span className="settings-choice-copy"><b>تم</b><small>رنگ و حالت روشن یا تیره سامانه را انتخاب کن</small></span><Icon d={Icons.arrowLeft} size={17}/></button><button className="settings-choice" onClick={()=>{setSettingsView('privacy');loadBlockedUsers()}}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>حریم خصوصی و امنیت</b><small>تغییر رمز و مدیریت کاربران مسدود</small></span><Icon d={Icons.arrowLeft} size={17}/></button></div></>}
-{settingsView==='privacy'&&<><div className="flex items-center gap-3 mb-3"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">حریم خصوصی و امنیت</h3><p className="text-[9px] text-white/40">امنیت حساب و کاربران مسدود</p></div></div><button className="settings-choice w-full mb-3" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود حساب خود را تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><div className="settings-choice blocked-users-panel"><span className="settings-choice-icon"><Icon d={Icons.users} size={22}/></span><span className="settings-choice-copy"><b>کاربران مسدود</b><small>{blockedUsers.length} کاربر مسدود شده</small></span></div><div className="tadbir-blocked-list">{blockedLoading?<div className="text-center text-[10px] text-white/40 py-6">در حال دریافت...</div>:blockedUsers.length===0?<div className="text-center text-[10px] text-white/35 py-6">کاربر مسدودی وجود ندارد.</div>:blockedUsers.map(u=><div className="tadbir-blocked-user" key={u.id}><div><b>{u.full_name||u.username}</b><small>@{u.username}</small></div><button type="button" onClick={()=>unblockUser(u.id)}>رفع مسدودی</button></div>)}</div></>}
+{settingsView==='privacy'&&<><div className="flex items-center gap-3 mb-3"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">حریم خصوصی و امنیت</h3><p className="text-[9px] text-white/40">امنیت حساب و کاربران مسدود</p></div></div><button className="settings-choice w-full mb-3" onClick={()=>setShowPasswordModal(true)}><span className="settings-choice-icon"><Icon d={Icons.lock} size={22}/></span><span className="settings-choice-copy"><b>تغییر رمز</b><small>رمز ورود حساب خود را تغییر بده</small></span><Icon d={Icons.arrowLeft} size={17}/></button><TadbirFaceSettings user={user} toast={toast}/><div className="settings-choice blocked-users-panel"><span className="settings-choice-icon"><Icon d={Icons.users} size={22}/></span><span className="settings-choice-copy"><b>کاربران مسدود</b><small>{blockedUsers.length} کاربر مسدود شده</small></span></div><div className="tadbir-blocked-list">{blockedLoading?<div className="text-center text-[10px] text-white/40 py-6">در حال دریافت...</div>:blockedUsers.length===0?<div className="text-center text-[10px] text-white/35 py-6">کاربر مسدودی وجود ندارد.</div>:blockedUsers.map(u=><div className="tadbir-blocked-user" key={u.id}><div><b>{u.full_name||u.username}</b><small>@{u.username}</small></div><button type="button" onClick={()=>unblockUser(u.id)}>رفع مسدودی</button></div>)}</div></>}
                     {settingsView==='theme'&&<><div className="flex items-center gap-3 mb-2"><button className="p-2.5 bg-white/5 rounded-xl" onClick={()=>setSettingsView('menu')}><Icon d={Icons.arrowLeft} size={18}/></button><div><h3 className="text-lg font-black gradient-text">تم سایت</h3><p className="text-[9px] text-white/40">تم انتخابی روی خانه، ابزارها، کارنامه و دایرکت اعمال می‌شود.</p></div></div><div className="theme-mode-row"><button className={`theme-mode-btn ${themeMode==='light'?'active':''}`} onClick={()=>setThemeMode('light')}>☀️ روشن</button><button className={`theme-mode-btn ${themeMode==='dark'?'active':''}`} onClick={()=>setThemeMode('dark')}>🌙 تیره</button></div><div className="theme-grid">{(themeMode==='light'?[['light-purple','روشن بنفش','#ede9fe','#7c3aed'],['light-blue','روشن آبی','#e0f2fe','#2563eb'],['light-pink','روشن صورتی','#fce7f3','#db2777'],['light-black','روشن مشکی','#f0f0f2','#111111']]:[['dark-purple','تیره بنفش','#120b28','#8b5cf6'],['dark-blue','تیره آبی','#061328','#2563eb'],['dark-pink','تیره صورتی','#260917','#db2777'],['dark-white','تیره سفید','#111116','#f5f5f5']]).map(([id,label,bg,accent])=><button key={id} className={`theme-card ${siteTheme===id?'active':''}`} style={{background:`linear-gradient(145deg,${bg},${accent}22)`}} onClick={()=>{setSiteTheme(id);localStorage.setItem(`tadbir_theme_${user.id}`,id);document.documentElement.dataset.tadbirTheme=id;}}><div className="theme-preview" style={{background:`linear-gradient(135deg,${bg},${accent})`}}></div><b>{label}</b><small>اعمال فوری روی سامانه</small></button>)}</div></>}
                   </div>
                 )}
@@ -9573,8 +9766,23 @@ function App(){
       return false;
     }
   };
+  const faceLogin=async(match)=>{
+    try{
+      const legacyId=String(match?.legacy_user_id||'');
+      if(!legacyId)return false;
+      // Only after the new face DB identifies the student do we make one legacy read.
+      const {data,error}=await SB.from('users').select('*').eq('id',legacyId).limit(1);
+      if(error||!data?.[0])return false;
+      const account=data[0];
+      const seen=new Date().toISOString();
+      SB.from('users').update({last_seen_at:seen}).eq('id',account.id).then(()=>{}).catch(()=>{});
+      account.last_seen_at=seen;
+      setUser(account);sessionStorage.setItem('edu_user',JSON.stringify(account));setView(tadbirIsAdminAccount(account)?'admin':'student');
+      return true;
+    }catch(error){console.error('Tadbir face login exception:',error);return false;}
+  };
   const logout=()=>{setUser(null);setView('login');setTab('home');sessionStorage.removeItem('edu_user');};
-  if(view==='login') return <Login onLogin={login}/>;
+  if(view==='login') return <Login onLogin={login} onFaceLogin={faceLogin}/>;
   if(view==='admin') return <Admin user={user} tab={tab} setTab={setTab} onLogout={logout}/>;
   return <Student user={user} tab={tab} setTab={setTab} onLogout={logout}/>;
 }
@@ -10735,6 +10943,12 @@ body.nf-name-family-open [class*="floating-bottom"]{
 },1200);
 })();
 </script>
+
+<style id="tadbir-face-login-v1">
+.tadbir-login-title-row{display:flex;align-items:center;justify-content:center;gap:14px}.tadbir-login-title-row>div{min-width:0}.tadbir-login-face-btn{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;flex:0 0 42px;color:#ddd6fe;background:linear-gradient(145deg,rgba(139,92,246,.22),rgba(59,130,246,.12));border:1px solid rgba(196,181,253,.24);box-shadow:0 10px 28px rgba(76,29,149,.20),inset 0 1px 0 rgba(255,255,255,.10);cursor:pointer;transition:.22s ease}.tadbir-login-face-btn:hover{transform:translateY(-2px) scale(1.03);border-color:rgba(216,180,254,.5);box-shadow:0 14px 34px rgba(124,58,237,.28)}.tadbir-login-face-btn svg{width:23px;height:23px}
+.tadbir-face-overlay{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(3,2,12,.76);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.tadbir-face-modal{width:min(480px,100%);border:1px solid rgba(196,181,253,.20);border-radius:30px;background:linear-gradient(145deg,rgba(22,17,44,.98),rgba(10,10,26,.98));box-shadow:0 30px 100px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07);padding:18px;overflow:hidden}.tadbir-face-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.tadbir-face-head span{font-size:8px;letter-spacing:2px;font-weight:1000;color:#c4b5fd}.tadbir-face-head h3{font-size:20px;font-weight:1000;margin-top:3px}.tadbir-face-head button{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.055);color:#fff;border:1px solid rgba(255,255,255,.08);font-size:25px;line-height:1;cursor:pointer}.tadbir-face-stage{position:relative;height:min(54vh,390px);min-height:270px;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 50% 30%,rgba(139,92,246,.15),transparent 48%),#070711;border:1px solid rgba(255,255,255,.09);display:grid;place-items:center}.tadbir-face-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);background:#05050d}.tadbir-face-frame{position:absolute;width:min(72%,290px);aspect-ratio:1/1.12;border:1px solid rgba(255,255,255,.22);border-radius:44% 44% 38% 38%;box-shadow:0 0 0 999px rgba(0,0,0,.18),0 0 45px rgba(139,92,246,.16);pointer-events:none}.tadbir-face-frame i{position:absolute;width:30px;height:30px;border-color:#c4b5fd}.tadbir-face-frame.is-matched{border-color:#34d399;box-shadow:0 0 0 999px rgba(0,0,0,.14),0 0 55px rgba(52,211,153,.34)}.tadbir-face-frame.is-matched i{border-color:#34d399}.tadbir-face-auto-status{border:1px solid rgba(52,211,153,.18);background:rgba(16,185,129,.09);color:#a7f3d0;border-radius:14px;padding:11px;text-align:center;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;min-height:42px}.tadbir-face-frame i:nth-child(1){top:-1px;left:-1px;border-top:3px solid;border-left:3px solid;border-radius:10px 0 0 0}.tadbir-face-frame i:nth-child(2){top:-1px;right:-1px;border-top:3px solid;border-right:3px solid;border-radius:0 10px 0 0}.tadbir-face-frame i:nth-child(3){bottom:-1px;left:-1px;border-bottom:3px solid;border-left:3px solid;border-radius:0 0 0 10px}.tadbir-face-frame i:nth-child(4){bottom:-1px;right:-1px;border-bottom:3px solid;border-right:3px solid;border-radius:0 0 10px 0}.tadbir-face-loading,.tadbir-face-error{position:absolute;inset:auto 18px 18px;background:rgba(7,7,17,.82);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:11px 13px;text-align:center;font-size:10px;backdrop-filter:blur(12px)}.tadbir-face-loading span{display:inline-block;width:10px;height:10px;border-radius:50%;border:2px solid rgba(255,255,255,.22);border-top-color:#a78bfa;animation:tadbirFaceSpin .8s linear infinite;margin-left:7px;vertical-align:-1px}.tadbir-face-error{color:#fecaca}.tadbir-face-message{min-height:40px;padding:10px 4px 2px;color:rgba(255,255,255,.56);font-size:10px;line-height:1.8;text-align:center}.tadbir-face-message.error{color:#fca5a5}.tadbir-face-actions{display:grid;grid-template-columns:.8fr 1.4fr;gap:9px}.tadbir-face-capture{border:1px solid rgba(196,181,253,.26);border-radius:14px;padding:11px;background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;font-weight:1000;cursor:pointer;box-shadow:0 12px 30px rgba(79,70,229,.25)}.tadbir-face-capture:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}.tadbir-face-capture span{margin-right:7px}.tadbir-face-settings-card{margin:0 0 12px;padding:14px;border-radius:20px;background:linear-gradient(145deg,rgba(139,92,246,.11),rgba(59,130,246,.055));border:1px solid rgba(196,181,253,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}.tadbir-face-settings-head{display:flex;align-items:center;gap:10px}.tadbir-face-settings-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(135deg,rgba(139,92,246,.28),rgba(59,130,246,.16));font-size:24px;color:#ddd6fe}.tadbir-face-settings-head>div:nth-child(2){min-width:0;flex:1}.tadbir-face-settings-head b{display:block;font-size:12px}.tadbir-face-settings-head small{display:block;color:rgba(255,255,255,.42);font-size:8px;line-height:1.7;margin-top:3px}.tadbir-face-status{font-size:8px;font-weight:1000;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.45)}.tadbir-face-status.on{color:#a7f3d0;background:rgba(16,185,129,.12);border:1px solid rgba(52,211,153,.18)}.tadbir-face-settings-body{display:flex;gap:12px;align-items:center;margin-top:13px}.tadbir-face-preview{width:82px;height:82px;border-radius:20px;overflow:hidden;flex:0 0 82px;display:grid;place-items:center;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.09);color:rgba(255,255,255,.2);font-size:30px}.tadbir-face-preview img{width:100%;height:100%;object-fit:cover}.tadbir-face-copy{min-width:0;flex:1}.tadbir-face-copy>b{font-size:11px}.tadbir-face-copy p{font-size:8px;line-height:1.8;color:rgba(255,255,255,.38);margin:4px 0 8px}.tadbir-face-upload{display:inline-flex;align-items:center;justify-content:center;padding:8px 11px;border-radius:11px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.10);font-size:9px;font-weight:900;cursor:pointer;color:#ddd6fe}.tadbir-face-upload input{display:none}.tadbir-face-notice{margin-top:10px;padding:9px 10px;border-radius:12px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);font-size:8px;line-height:1.8;color:rgba(255,255,255,.62)}.tadbir-face-privacy{margin-top:9px;font-size:7px;line-height:1.8;color:rgba(255,255,255,.30)}@keyframes tadbirFaceSpin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.tadbir-face-overlay{padding:10px}.tadbir-face-modal{border-radius:24px;padding:13px}.tadbir-face-stage{min-height:250px;height:58vh}.tadbir-login-face-btn{width:38px;height:38px;flex-basis:38px}.tadbir-face-settings-body{align-items:flex-start}.tadbir-face-preview{width:70px;height:70px;flex-basis:70px}}
+</style>
 </body>
 
 <style id="tadbir-namefamily-final-fix-v2">
